@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<html lang="zh ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>夜未央 || </title>
+    <meta name="author" content="未央">
+    <meta name="description" content=" ">
+    <meta name="keywords" content=" ">
+    <link rel="icon" href="/images/wy.png">
+    <link rel="stylesheet" href="/css/antd.min.css">
+    
+    <link rel="stylesheet" href="/css/full-theme.css">
+    
+    <script src="/js/vue.js"></script>
+    <script src="/js/antd.min.js"></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+
+    <div id="loading"
+        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
+        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
+        <div
+            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
+            <div id="loadcontent"
+                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
+                <div>
+                    <h2>LOADING...</h2>
+                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
+                    <div>
+                        <img src="/dancingkitty.gif" alt="loading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="layout">
+        <transition name="into">
+            <div v-show="show_page" style="display: none;">
+                <div id="menu_show">
+                     
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">夜未央</span>
+        </a>
+        
+        <a href="/">
+            <span>
+                <a-icon type="home" theme="filled" />
+            </span>
+            <span>主页</span>
+        </a>
+        
+        <a href="/about">
+            <span>
+                <a-icon type="idcard" theme="filled" />
+            </span>
+            <span>关于</span>
+        </a>
+        
+        <a href="/archives">
+            <span>
+                <a-icon type="folder" theme="filled" />
+            </span>
+            <span>归档</span>
+        </a>
+        
+        <a href="/like/categories">
+            <span>
+                <a-icon type="book" theme="filled" />
+            </span>
+            <span>目录</span>
+        </a>
+        
+        <a href="/like/tags">
+            <span>
+                <a-icon type="tags" theme="filled" />
+            </span>
+            <span>标签</span>
+        </a>
+        
+    </div>
+
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div :class="'title'" @click="menu_show=!menu_show">
+            <span style="margin-right: 10px;">
+                <a-icon type="appstore" theme="filled" />
+            </span>
+            <span>夜未央</span>
+        </div>
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="home" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">主页</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="idcard" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">关于</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="folder" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">归档</div>
+                </div>
+            </a>
+            
+            <a href="/like/categories">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="book" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">目录</div>
+                </div>
+            </a>
+            
+            <a href="/like/tags">
+                <div class="item">
+                    <div style="min-width:20px; max-width:50px; width: 10%">
+                        <a-icon type="tags" theme="filled" />
+                    </div>
+                    <div style="min-width:100px;max-width: 150%;width: 20%;">标签</div>
+                </div>
+            </a>
+            
+        </div>
+        <div class="curtain" v-show="menu_show"></div>
+    </div>
+
+</nav>
+                </div>
+
+                <div id="main">
+                     
+<link rel="stylesheet" href="/css/post-body.css">
+<div class="article">
+    <div>
+        <h1> </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <a-icon type="calendar" theme="filled" />
+            </span>
+            2021/11/5
+        </span>
+
+        
+
+        
+    </div>
+
+    <div class="content" v-pre>
+        <h1 id="Hackergame-2021-writeups"><a href="#Hackergame-2021-writeups" class="headerlink" title="Hackergame 2021 writeups"></a>Hackergame 2021 writeups</h1><h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>作为新手，第一次参加CTF，题目比MSClub的招新puzzle难得多，但是也好玩得多，前两天有幸短暂地在总榜停留过（或者只是第一天？忘了），最终组内排名第四（因为校内的大佬不在）（GZTime tql，凌晨肝神冲到总榜第四orz，此处附上<a target="_blank" rel="noopener" href="https://blog.gztime.cc/posts/2021/9f04efbd/">wp传送门</a>）。比赛的题目出得都非常得有趣 <del>（除了透明的文件）</del>，对新手来说体验确实不错，也确实是名副其实的pythongame（零基础强行入门），做到灯那题的时候我面对线性非齐次方程组的无穷多解毫无头绪，这彻底燃起了我学线代的激情（？？？），最后我交的第一个错误的flag上了花絮也有小小的惊喜（没错我确实是有备而来hiahiahia）。总体体验良好，明年再来。下面是我做出的几题的wp，内容较水，可酌情移步至<a target="_blank" rel="noopener" href="https://mcfx.us/posts/2021-10-30-hackergame-2021-writeup/">神（mcfx）的wp</a>。</p>
+<hr>
+<h2 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h2><blockquote>
+<p>为了能让大家顺利签到，命题组把每一秒的 flag 都记录下来制成了日记本的一页。你只需要打开日记，翻到 Hackergame 2021 比赛进行期间的任何一页就能得到 flag！</p>
+</blockquote>
+<p>很简单的web题，注意到网址栏的后面的 ?page=&lt;当面的数字&gt;，直接修改，疯狂加0，然后二分法试探，最终在 ?page=1635000000的时候到达当前时间，出flag。</p>
+<h2 id="进制十六——参上"><a href="#进制十六——参上" class="headerlink" title="进制十六——参上"></a>进制十六——参上</h2><blockquote>
+<p>为严防 flag 泄漏以及其他存在于未来所有可能的意外灾难，神通广大的 Z 同学不仅强制要求每一道题目都加上权限和资源的限制，还给所有参与 Hackergame 2021 命题的计算机施加了一层法术结界。任何试图从结界逃逸的 flag 都会被无情抹除。</p>
+<p>而一位明面上是计算机学院的新生，实则为物理学院暗部核心成员的 X 同学，在 Hackergame 2021 命题组已经潜伏多时。妄想趁比赛开始的午时，借阳火正旺之势，冲破 Z 同学的结界，以图片而非明文的形式，将 flag 悄悄传递出来。</p>
+<p>好在 Z 同学法力之深厚，不可管窥蠡测。在 flag 被传出去的前两天，就已预知此事并将图片中的 flag 无声消泯了。</p>
+<p>只是，这位 X 同学，虽然不会退出 Vim，但是似乎对打开十六进制编辑器颇有造诣……</p>
+</blockquote>
+<p><img src="https://hack.lug.ustc.edu.cn/media/629da242-b1b1-5f69-a623-1c13fcedf019/hex_editor.png" alt="Hex"></p>
+<p>同样是很简单的题目，随便找个十六进制编辑器照着抄下然后得出右边的flag（手打真的累，还打错了一个字母）。</p>
+<h2 id="去吧！追寻自由的电波"><a href="#去吧！追寻自由的电波" class="headerlink" title="去吧！追寻自由的电波"></a>去吧！追寻自由的电波</h2><blockquote>
+<p>（前情提要） 为了打破 Z 同学布下的结界，X 同学偷偷搬出社团的业余无线电台试图向外界通讯。</p>
+<p>当然，如果只是这样还远远不够。遵依史称“老爹”的上古先贤的至理名言，必须要“用魔法打败魔法”。X 同学向上级申请到了科大西区同步辐射实验室设备的使用权限，以此打通次元空间，借助到另一个平行宇宙中 Z 同学的法力进行数据对冲，方才于乱中搏得一丝机会，将 flag 用无线电的形式发射了出去。</p>
+<p>考虑到信息的鲁棒性，X 同学使用了无线电中惯用的方法来区分字符串中读音相近的字母。即使如此，打破次元的强大能量扭曲了时空，使得最终接受到的录音的速度有所改变。</p>
+<p>为了保障同步辐射设备的持续运转，组织牺牲了大量的能源，甚至以东北部分地区无计划限电为代价，把这份沉甸甸的录音文件送到了你的手上。而刚刚起床没多久，试图抢签到题一血还失败了的你，可以不辜负同学们对你的殷切期望吗？</p>
+<p>注：flag 花括号内只包含小写字母。</p>
+</blockquote>
+<p>题目说了速度变了，显然是变快了，直接用经典音频隐写软件Audacity打开，Ctrl+A全选，效果-&gt;改变速率，然后随手一拖把改变百分比拖到-70就有非常标准清晰的单词，不看题目都能盲猜是首字母，后来查电报区分字符串中读音相近的字母的方法也确实对应，但是我还是不想自己听，打开翻译软件，嗯，语音识别不错，除了两个花括号我一开始没反应过来把也当成字母了QAQ。</p>
+<h2 id="猫咪问答-Pro-Max"><a href="#猫咪问答-Pro-Max" class="headerlink" title="猫咪问答 Pro Max"></a>猫咪问答 Pro Max</h2><blockquote>
+<p>我猛然一看，就猛然看到这个猫咪问答，我直呼我直呼，上次看到这么这么的发言还是上次，这问答属于是典型的典型了，我之前还没发现，当我发现的时候我已经发现了，这问答就像一个问答，问答的内容充满了内容，我不禁感慨了一句感慨：希望下次看到这么这么的猫咪问答是下次。</p>
+</blockquote>
+<p>题目的废话文学着实是让我涨了见识，这简直简直了，我以前从未想过有如此废话的废话文学，等我看见的时候已经看见了……第一问也是最难的一问，把百度必应谷歌翻烂了也没有，后来终于在一个专门存快照的国外网站上找到了那个已经消失的俱乐部的网页存档，第三问直接在中科大Linux用户协会官网找到，第五问也不难搜（虽然我没想到举报信可以发到这么奇怪的…（呃不知怎么形容，目录？？）去），第四问我看到论文直接望而生畏，搜索data set无果后果断爆破，合理猜测在100以下，但发现居然不行？？？万分怀疑的我试探性地把第二问改成3（或许是我对近五年的理解有问题？），也不行，改成5，行了 <del>（这协会真不要face）</del>，脚本如下：</p>
+<pre><code class="python">import requests as r
+import re
+from tqdm import tqdm
+
+def main():
+    url = &#39;http://202.38.93.111:10001/&#39;
+    payload = &#123;&#39;q1&#39;: 20150504, &#39;q2&#39;: 5,
+               &#39;q3&#39;: &#39;Development Team of Library&#39;, &#39;q4&#39;: 0, &#39;q5&#39;: &#39;/dev/null&#39;&#125;
+    headers = &#123;&#39;Cookie&#39;: &#39;session=eyJ0b2tlbiI6IjQ2Ok1FWUNJUUNyY2xUYU1XcG9sUzZqZzM0Z2IyZnMyeEJBNGtMa01DYnpKV1dERGNKWUJnSWhBT3RQTzBXSnhLMnRmcytWcVRReWd5eHdKMFY2dEZ6bGlycXVNSURHbU9EaSJ9.YXYWYA.2MXfMT2si0FkY-Z9jOc7V4jenTU&#39;&#125;
+    for i in tqdm(range(100)):
+        payload[&#39;q4&#39;] = i
+        _ = r.post(url=url, data=payload, headers=headers).text
+        try:
+            rst = re.findall(
+                r&#39;&lt;div class=&quot;alert alert-secondary&quot; role=&quot;alert&quot;&gt;((?:.|\n)*?)&lt;/div&gt;&#39;, _)[0]
+        except IndexError:
+            s=re.findall(r&#39;(flag&#123;.*?&#125;)&#39;, _)[0]
+            print (&#39;\n&#39;+s)
+            print(&#39;q4答案是&#39;+str(i))
+            break
+
+if __name__ == &#39;__main__&#39;:
+    main()
+</code></pre>
+<h2 id="卖瓜"><a href="#卖瓜" class="headerlink" title="卖瓜"></a>卖瓜</h2><blockquote>
+<p>有一个人前来买瓜。</p>
+<p>HQ：哥们，这瓜多少钱一斤啊？</p>
+<p>你：两块钱一斤。</p>
+<p>HQ：What’s up！这瓜皮子是金子做的还是瓜粒子是金子做的？</p>
+<p>你：你瞧瞧现在哪有瓜啊？这都是大棚的瓜，只有 6 斤一个和 9 斤一个的，你嫌贵我还嫌贵呢。</p>
+<p>（HQ 心里默默一算）</p>
+<p>HQ：给我来 20 斤的瓜。</p>
+<p>你：行！</p>
+<p>HQ：行？这瓜能称出 20 斤吗？</p>
+<p>你：我开水果摊的，还不会称重？</p>
+<p>HQ：我问你这瓜能称出 20 斤吗？</p>
+<p>你：你是故意找茬，是不是？你要不要吧！</p>
+<p>HQ：你这瓜要是刚好 20 斤吗我肯定要啊。那它要是没有怎么办啊？</p>
+<p>你：要是不是 20 斤，我自己吃了它，满意了吧？</p>
+<p>（你开始选瓜称重）</p>
+</blockquote>
+<p>在看过上一年的题目后我直接看出是溢出，但是输入的数字过大后出现了浮点数，于是我上网搜了数据类型，随便复制了一个数（2的多少次方来着？？忘了）过来输入到9斤那，出现了一个大负数，然后我掏出大宝贝（Windows计算器）除以6，结果去掉小数后再输入到6斤那，此时称上有了-2斤，嗯再来一次，-4了，直接再放4个6斤，逃过一劫，得到flag。</p>
+<h2 id="FLAG-助力大红包"><a href="#FLAG-助力大红包" class="headerlink" title="FLAG 助力大红包"></a>FLAG 助力大红包</h2><blockquote>
+<p>“听说没？【大砍刀】平台又双叒做活动啦！参与活动就送 0.5 个 flag 呢，攒满 1 个 flag 即可免费提取！”</p>
+<p>“还有这么好的事情？我也要参加！”</p>
+<p>“快点吧！我已经拿到 flag 了呢！再不参加 flag 就要发完了呢。”</p>
+<p>“那怎么才能参加呢？”</p>
+<p>“这还不简单！点击下面的链接就行”</p>
+</blockquote>
+<p>这应该是让我学到最多东西的一题，看到题目的说明我第一反应就是通过http请求头伪造IP地址，搜到可以通过X-Forwarded-For实现，但中途我试图通过审查元素修改表单数据实现，结果提示前后端地址不匹配（后来才发现我没读题），于是找了个伪造IP地址的插件，这次是后端改了前端还是原来的，两个结合，发现可以成功砍到，手改几次后发现速度来不及，被迫找到Python的实现，一开始没加时间限制发现返回过快，加了个停顿，脚本如下：</p>
+<pre><code class="python">import requests
+import time
+from tqdm import tqdm
+url = &#39;http://202.38.93.111:10888/invite/77632ca2-c165-46ee-a8d2-ba89094b0401&#39;
+ua = &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0) Gecko/20100101 Firefox/93.0&#39;
+for i in tqdm(range(256)):
+    s = (str(i)+&#39;.104.67.89&#39;)
+    params = &#123;&quot;ip&quot;: s,&#125;
+    request = requests.post(url, data=params, headers=&#123;&#39;User-agent&#39;: ua, &#39;X-Forwarded-For&#39;:s&#125;)
+    time.sleep(0.9)
+print(request.text)
+</code></pre>
+<h2 id="Amnesia第一问"><a href="#Amnesia第一问" class="headerlink" title="Amnesia第一问"></a>Amnesia第一问</h2><blockquote>
+<p>你的程序只需要输出字符串 Hello, world!（结尾有无换行均可）并正常结束。</p>
+<p>编译指令：gcc -O file.c -m32</p>
+<p>运行指令：./a.out</p>
+<p>编译器版本：Docker 镜像 ustclug/debian:10 中 apt update &amp;&amp; apt -y upgrade &amp;&amp; apt install -y gcc=4:8.3.0-1 gcc-multilib=4:8.3.0-1 的版本</p>
+<p>轻度失忆</p>
+<p>编译后 ELF 文件的 .data 和 .rodata 段会被清零。</p>
+<p>连接题目：nc 202.38.93.111 10051 或网页终端</p>
+<p>判题脚本：下载</p>
+</blockquote>
+<p>第一问不难，发现直接<code>printf(&quot;Hello,world!&quot;)</code>失败后改成用<code>printf(&quot;%c&quot;,&lt;每个字符的ASCII码&gt;)</code>，但提交后错误，仔细检查发现多了几个奇怪的不可显示字符，应该是直接从网页复制的问题，删掉后提交得到flag，比赛结束后才知道还可以putchar呃呃</p>
+<h2 id="图之上的信息"><a href="#图之上的信息" class="headerlink" title="图之上的信息"></a>图之上的信息</h2><blockquote>
+<p>小 T 听说 GraphQL 是一种特别的 API 设计模式，也是 RESTful API 的有力竞争者，所以他写了个小网站来实验这项技术。</p>
+<p>你能通过这个全新的接口，获取到没有公开出来的管理员的邮箱地址吗？</p>
+</blockquote>
+<p>第一反应是SQL注入，但零基础的我忙活了半天才知道/graphql是端点，查看http请求看到负载语句<code>&#123;query: &quot;&#123; notes(userId: 2) &#123; id↵contents &#125;&#125;&quot;&#125;</code>猜测admin的id是1，于是疯狂查询1的contents，结果回显都是我没有权限，后来搜到了Graphql的IDE找到了存储邮箱的地方，查询得到flag。</p>
+<h2 id="Easy-RSA"><a href="#Easy-RSA" class="headerlink" title="Easy RSA"></a>Easy RSA</h2><blockquote>
+<p>自从 Hackergame 2018 公然揭露了大整数可以被神童口算分解的事实，RSA 在 hackergame 中已经只能处于低分值的地位了。如果不在其名称前面加上 Easy 这个单词，似乎就会显得完全对不起其他题目。</p>
+<p>更何况，在本题的附件中，你还获得了构造 p 和 q 的方式。数理基础扎实的你应该可以轻松解决这些问题吧。</p>
+</blockquote>
+<p>数理杀我的一题，acm的题中有过类似的，威尔逊定理求出p，q不难求，很好，现在是经典RSA了，什么，你问我到底怎么求的p？哦？我还等你讲给我听呢（装傻，阿巴阿巴）。</p>
+
+    </div>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <div id="comment">
+        <div id="gitalk-container">
+        </div>
+    </div>
+    
+</div>
+                     
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 2021 - 2021 夜未央
+            <span class="footer-icon">
+                <a-icon type="flag" theme="filled" /></span>
+            @未央
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
+        
+    </div>
+
+</footer>
+
+<script src="/js/highlight.min.js"></script>
+<script src="/js/particle.js"></script>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+    new Vue({
+        el: "#layout",
+        data: {
+            show_page: false,
+            onload_menu: false,
+            menu_show: false,
+            card_top: 100
+        },
+        created: function () {
+            var that = this
+            window.onload = function () {
+                that.show_page = true
+                document.getElementById("loadcontent").style.opacity = 0
+                setTimeout(function () {
+                    document.getElementById("loadleft").style.width = 0
+                    document.getElementById("loadright").style.width = 0
+                }, 300)
+                setTimeout(function () {
+                    document.getElementById("loading").style = "display:none"
+                }, 600)
+            }
+        },
+        mounted: function () {
+            var that = this
+            window.addEventListener('scroll', function (e) {
+                that.menu_show = false
+            })
+        },
+        methods: {
+            home_click: function () {
+                window.scrollTo({
+                    top: window.innerHeight - 80,
+                    behavior: "smooth",
+                });
+            }
+        }
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: 'hexo-theme-particle',      // The repository of store comments,
+        owner: 'korilin',
+        admin: ['korilin'],
+        language: 'en',
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: true  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+
+</body>
+
+</html>
