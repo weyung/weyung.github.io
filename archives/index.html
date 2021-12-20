@@ -1,207 +1,62 @@
+{% extends '_layout.swig' %}
+{% import '_macro/post-collapse.swig' as post_template %}
+{% import '_macro/sidebar.swig' as sidebar_template %}
 
-<!DOCTYPE html>
-<html lang="zh ">
+{% block title %}{{ __('title.archive') }} | {{ config.title }}{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>夜未央 || 清游</title>
-    <meta name="author" content="未央">
-    <meta name="description" content=" ">
-    <meta name="keywords" content=" ">
-    <link rel="icon" href="/images/wy.png">
-    <link rel="stylesheet" href="/css/antd.min.css">
-    
-    <link rel="stylesheet" href="/css/full-theme.css">
-    
-    <script src="/js/vue.js"></script>
-    <script src="/js/antd.min.js"></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+{% block page_class %}page-archive{% endblock %}
 
-<body>
+{% block content %}
 
-    <div id="loading"
-        style="height: 100vh; width: 100%; position: fixed;display: flex;z-index: 200; justify-content: space-between;">
-        <div id="loadleft" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
-        <div id="loadright" style="width: 50%;background-color: #ffffff;transition: width 0.6s ease-out;"></div>
-        <div
-            style="position: fixed; height: 100vh; width: 100%;display: flex;justify-content: center;align-items: center;">
-            <div id="loadcontent"
-                style="width:400px;height:400px;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px#a3ddfb; text-align:center;opacity:1;transition:opacity 0.3s ease-out;">
-                <div>
-                    <h2>LOADING...</h2>
-                    <p>加载过慢请开启缓存(浏览器默认开启)</p>
-                    <div>
-                        <img src="/dancingkitty.gif" alt="loading">
-                    </div>
-                </div>
-            </div>
-        </div>
+  {#####################}
+  {### ARCHIVE BLOCK ###}
+  {#####################}
+  <div class="post-block archive">
+    <div id="posts" class="posts-collapse">
+      <span class="archive-move-on"></span>
+
+      <span class="archive-page-counter">
+        {% set cheers %}
+        {% set posts_length = site.posts.length %}
+        {% if posts_length > 210 %} {% set cheers = 'excellent' %}
+          {% elif posts_length > 130 %} {% set cheers = 'great' %}
+          {% elif posts_length > 80 %} {% set cheers = 'good' %}
+          {% elif posts_length > 50 %} {% set cheers = 'nice' %}
+          {% elif posts_length > 30 %} {% set cheers = 'ok' %}
+        {% else %}
+          {% set cheers = 'um' %}
+        {% endif %}
+        {{ __('cheers.' + cheers) }}! {{ _p("counter.archive_posts", site.posts.length) }} {{ __('keep_on') }}
+      </span>
+
+      {% for post in page.posts %}
+
+        {# Show year #}
+        {% set year %}
+        {% set post.year = date(post.date, 'YYYY') %}
+
+        {% if post.year !== year %}
+          {% set year = post.year %}
+          <div class="collection-title">
+            <{% if theme.seo %}h2{% else %}h1{% endif %} class="archive-year" id="archive-year-{{ year }}">{{ year }}</{% if theme.seo %}h2{% else %}h1{% endif %}>
+          </div>
+        {% endif %}
+        {# endshow #}
+
+        {{ post_template.render(post) }}
+
+      {% endfor %}
+
     </div>
+  </div>
+  {#########################}
+  {### END ARCHIVE BLOCK ###}
+  {#########################}
 
-    <div id="layout">
-        <transition name="into">
-            <div v-show="show_page" style="display: none;">
-                <div id="menu_show">
-                     
-<nav id="menu">
-    <div class="desktop-menu">
-        <a href="/">
-            <span class="title">夜未央</span>
-        </a>
-        
-        <a href="/">
-            <span>
-                <a-icon type="home" theme="filled" />
-            </span>
-            <span>主页</span>
-        </a>
-        
-        <a href="/friendlinks">
-            <span>
-                <a-icon type="link" theme="" />
-            </span>
-            <span>友链</span>
-        </a>
-        
-    </div>
+  {% include '_partials/pagination.swig' %}
 
-    <div :class="'phone-menu ' + menu_show" id="phone-menu">
-        <div :class="'title'" @click="menu_show=!menu_show">
-            <span style="margin-right: 10px;">
-                <a-icon type="appstore" theme="filled" />
-            </span>
-            <span>夜未央</span>
-        </div>
-        <div class="items" v-show="menu_show">
-            
-            <a href="/">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="home" theme="filled" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">主页</div>
-                </div>
-            </a>
-            
-            <a href="/friendlinks">
-                <div class="item">
-                    <div style="min-width:20px; max-width:50px; width: 10%">
-                        <a-icon type="link" theme="" />
-                    </div>
-                    <div style="min-width:100px;max-width: 150%;width: 20%;">友链</div>
-                </div>
-            </a>
-            
-        </div>
-        <div class="curtain" v-show="menu_show"></div>
-    </div>
+{% endblock %}
 
-</nav>
-                </div>
-
-                <div id="main">
-                    
-<div id="archives">
-    
-    <a-timeline>
-        <a-timeline-item timestamp="2021/12/19" placement="top" color="#a5c2f5">
-            <a-card hoverable>
-                <div class="item-time">2021/12/19</div>
-                <a href="/2021/12/19/一个简单的作业提交平台/">
-                    <h3></h3>
-                </a>
-                <div class="info">
-                    
-
-                    
-                </div>
-            </a-card>
-        </a-timeline-item>
-    </a-timeline>
-    
-    <a-timeline>
-        <a-timeline-item timestamp="2021/11/5" placement="top" color="#a5c2f5">
-            <a-card hoverable>
-                <div class="item-time">2021/11/5</div>
-                <a href="/2021/11/05/Hackergame2021-writeups/">
-                    <h3></h3>
-                </a>
-                <div class="info">
-                    
-
-                    
-                </div>
-            </a-card>
-        </a-timeline-item>
-    </a-timeline>
-    
-</div>
-
-                     
-<footer id="footer">
-    <div class="footer-wrap">
-        <div>
-            © 2021 - 2021 夜未央
-            <span class="footer-icon">
-                <a-icon type="flag" theme="filled" /></span>
-            @未央
-        </div>
-        <div></div>
-        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
-                target="_blank" rel="noopener" href="https://github.com/korilin/hexo-theme-particle">Particle Theme</a></div>
-        
-    </div>
-
-</footer>
-
-<script src="/js/highlight.min.js"></script>
-<script src="/js/particle.js"></script>
-                </div>
-            </div>
-        </transition>
-    </div>
-
-    <script>
-    new Vue({
-        el: "#layout",
-        data: {
-            show_page: false,
-            onload_menu: false,
-            menu_show: false,
-            card_top: 100
-        },
-        created: function () {
-            var that = this
-            window.onload = function () {
-                that.show_page = true
-                document.getElementById("loadcontent").style.opacity = 0
-                setTimeout(function () {
-                    document.getElementById("loadleft").style.width = 0
-                    document.getElementById("loadright").style.width = 0
-                }, 300)
-                setTimeout(function () {
-                    document.getElementById("loading").style = "display:none"
-                }, 600)
-            }
-        },
-        mounted: function () {
-            var that = this
-            window.addEventListener('scroll', function (e) {
-                that.menu_show = false
-            })
-        },
-        methods: {
-            home_click: function () {
-                window.scrollTo({
-                    top: window.innerHeight - 80,
-                    behavior: "smooth",
-                });
-            }
-        }
-    })
-</script>
-
-</body>
-
-</html>
+{% block sidebar %}
+  {{ sidebar_template.render(false) }}
+{% endblock %}
