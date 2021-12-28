@@ -87,7 +87,7 @@
 <meta property="og:description" content="前言这个项目大概是上星期五晚开始做的，之所以现在才写这篇文，纯粹是因为没有时间，刚好今早把高数写完了，CAD又不想动，于是便借此时间简单总结一下。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-12-19T14:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-23T02:25:19.919Z">
+<meta property="article:modified_time" content="2021-12-28T14:29:40.826Z">
 <meta property="article:author" content="未央">
 <meta property="article:tag" content="PHP">
 <meta name="twitter:card" content="summary">
@@ -382,7 +382,7 @@
 <span class="token operator">&lt;</span><span class="token operator">/</span>html<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这题考的是JS前端验证的绕过，解出题后的我深知前端验证的不可靠，便知道敏感的操作限制应该加在后端了。但毕竟前端也得有点拦一下不是，否则累死后端不说，代码冗杂也是一个问题。上百度抄一抄，后端的后缀限制也完成了（解释一下，之所以限制文件后缀，一方面是因为提交的文件格式问题，一方面是安全问题，假若给你上传了一个php木马而我又没加限制访问的情况下，RCE就是件很简单的事情了，之后你可以查看和操作任意权限允许的文件，总之是很危险的事）。<br>在完成后缀的限制后，我又加了如下的诸多验证：</p>
-<p><strong>文件大小非空且大小须小于512KB</strong>：否则给你当网盘使那我服务器也是难顶，而且源文件最大也没什么可能超过10KB，截图预计也是几十KB<br><strong>upload目录的访问限制</strong>：可不能给随便偷了作业看<br><strong>姓名不能为空且不多于4个字</strong>：这个问过课代表，我们班的名字没有超过3个字的<br><strong>学号范围</strong>：086-199，但有一个人的学号孤悬在外，有些奇怪（乐）<br><strong>姓名和学号的联合验证</strong>：这个是前两天才加上去的，主要是忘了之前的军事课有份名单（但是那位竟然是没有的，再处理吧）</p>
+<p>**文件大小非空且大小须小于512KB(后来改成了666KB)**：否则给你当网盘使那我服务器也是难顶，而且源文件最大也没什么可能超过10KB，截图预计也是几十KB<br><strong>upload目录的访问限制</strong>：可不能给随便偷了作业看<br><strong>姓名不能为空且不多于4个字</strong>：这个问过课代表，我们班的名字没有超过3个字的<br><strong>学号范围</strong>：086-199，但有一个人的学号孤悬在外，有些奇怪（乐）<br><strong>姓名和学号的联合验证</strong>：这个是前两天才加上去的，主要是忘了之前的军事课有份名单（但是那位竟然是没有的，再处理吧）</p>
 <h2 id="后端处理逻辑重构"><a href="#后端处理逻辑重构" class="headerlink" title="后端处理逻辑重构"></a>后端处理逻辑重构</h2><p>一开始我是设置先新建（姓名+学号）的一个目录，再逐个文件进行判断，若符合条件则放进目录里，但这就会引发一个问题，如果有文件不符合条件的话目录仍会存在，而为了防止有意或是无意的重复上传导致原文件被覆盖，我又设置了若目录已存在则不能继续放文件,于是我在上机课的时候改成了先全部验证通过再上传目录。</p>
 <h2 id="管理员端"><a href="#管理员端" class="headerlink" title="管理员端"></a>管理员端</h2><p>毕竟作业也不是我收的，如果每次都要我来登录服务器下载未免也太过麻烦，于是我抄了段多级目录压缩的代码，在管理员通过验证后将提交上的作业打包成了个zip，再存储于基于SHA256算法生成的时间哈希值命名的目录中，这样大概便无法被直接扫描出来了。<br>管理员的登录验证我采用的是RSA公钥加密出的一段base64编码的字符串，若在后端用私钥解密后得到明文”admin”便通过验证，但想了想似乎没必要用非对称加密，有空再改。<br>除此之外，我还加了个验证码，但是在Firefox上似乎不能正常刷新，于是就没加在学生端了。</p>
 <h2 id="前端的样式"><a href="#前端的样式" class="headerlink" title="前端的样式"></a>前端的样式</h2><p>这个是我最无奈的地方，个人的美术功底着实是捞得亚匹，布局和配色搞得乱七八糟，在此就希望同学多多与我反馈了。</p>
@@ -428,6 +428,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/12/28/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%88%A4%E9%A2%98%E8%84%9A%E6%9C%AC/" rel="prev" title="一个简单的本地判题脚本">
+                一个简单的本地判题脚本 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -511,7 +515,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -524,7 +528,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

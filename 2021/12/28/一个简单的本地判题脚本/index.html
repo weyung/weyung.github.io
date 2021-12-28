@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/wy.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/wy.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/wy.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言在做程序设计作业的时候，题目经常是要输入10个数字，但用不起Matrix的我只能手动输入，不但麻烦，而且也很难模拟随机过程，想过做一个OJ（在线判题平台），但又苦于不会用Docker，思来想去，就用Python写了个本地判题脚本，虽然还不能防恶意代码，也无法实现内存检查，但基本的输入输出还是能够做到，供君一乐。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个简单的本地判题脚本">
+<meta property="og:url" content="http://example.com/2021/12/28/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%88%A4%E9%A2%98%E8%84%9A%E6%9C%AC/index.html">
+<meta property="og:site_name" content="夜未央">
+<meta property="og:description" content="前言在做程序设计作业的时候，题目经常是要输入10个数字，但用不起Matrix的我只能手动输入，不但麻烦，而且也很难模拟随机过程，想过做一个OJ（在线判题平台），但又苦于不会用Docker，思来想去，就用Python写了个本地判题脚本，虽然还不能防恶意代码，也无法实现内存检查，但基本的输入输出还是能够做到，供君一乐。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-12-28T14:28:38.000Z">
+<meta property="article:modified_time" content="2021-12-28T14:57:56.622Z">
+<meta property="article:author" content="未央">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2021/12/28/一个简单的本地判题脚本/"/>
+
+
+
+
+
+  <title>一个简单的本地判题脚本 | 夜未央</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">夜未央</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">清游</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/index" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/12/28/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%88%A4%E9%A2%98%E8%84%9A%E6%9C%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/wy.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="夜未央">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">一个简单的本地判题脚本</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-12-28T22:28:38+08:00">
+                2021-12-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/12/28/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%88%A4%E9%A2%98%E8%84%9A%E6%9C%AC/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2021/12/28/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%88%A4%E9%A2%98%E8%84%9A%E6%9C%AC/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在做程序设计作业的时候，题目经常是要输入10个数字，但用不起Matrix的我只能手动输入，不但麻烦，而且也很难模拟随机过程，想过做一个OJ（在线判题平台），但又苦于不会用Docker，思来想去，就用Python写了个本地判题脚本，虽然还不能防恶意代码，也无法实现内存检查，但基本的输入输出还是能够做到，供君一乐。</p>
+<span id="more"></span>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><h3 id="Windows下"><a href="#Windows下" class="headerlink" title="Windows下"></a>Windows下</h3><p>鉴于本人是追求实用（能跑就行），同理猜测读者也不关心这到底怎么实现，或者说不着急关心，于是直接附上Windows环境下的Python源码，开盒即用，只需要你有一点Python的基础，会装subprocess和tqdm库就行，然后在脚本所在的目录新建一个名为<code>标准代码</code>的文件夹，并在里面放入一个<code>std.c</code>作为测试输出的基准参照，同理新建一个<code>测试代码</code>的文件夹并放入<code>test.c</code>作为被测试的代码，<strong>同时安装好gcc</strong>，运行脚本，就能大功告成了。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> subprocess
+<span class="token keyword">import</span> random
+<span class="token keyword">import</span> sys
+<span class="token keyword">from</span> tqdm <span class="token keyword">import</span> tqdm
+
+<span class="token keyword">def</span> <span class="token function">random_int_list</span><span class="token punctuation">(</span>start<span class="token punctuation">,</span> stop<span class="token punctuation">,</span> length<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    start<span class="token punctuation">,</span> stop <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span>start<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">(</span>stop<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">if</span> start <span class="token operator">&lt;=</span> stop <span class="token keyword">else</span> <span class="token punctuation">(</span>
+        <span class="token builtin">int</span><span class="token punctuation">(</span>stop<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">(</span>start<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    length <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">abs</span><span class="token punctuation">(</span>length<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">if</span> length <span class="token keyword">else</span> <span class="token number">0</span>
+    random_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>length<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        random_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span>start<span class="token punctuation">,</span> stop<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> random_list
+
+<span class="token keyword">def</span> <span class="token function">iotest</span><span class="token punctuation">(</span>filename<span class="token punctuation">,</span> path<span class="token punctuation">,</span> data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    obj <span class="token operator">=</span> subprocess<span class="token punctuation">.</span>Popen<span class="token punctuation">(</span><span class="token punctuation">[</span>filename<span class="token punctuation">]</span><span class="token punctuation">,</span> stdin<span class="token operator">=</span>subprocess<span class="token punctuation">.</span>PIPE<span class="token punctuation">,</span>
+                           stdout<span class="token operator">=</span>subprocess<span class="token punctuation">.</span>PIPE<span class="token punctuation">,</span> stderr<span class="token operator">=</span>subprocess<span class="token punctuation">.</span>PIPE<span class="token punctuation">,</span> cwd<span class="token operator">=</span>path<span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">"utf-8"</span><span class="token punctuation">,</span>shell<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    obj<span class="token punctuation">.</span>stdin<span class="token punctuation">.</span>write<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+    out_info<span class="token punctuation">,</span> out_error <span class="token operator">=</span> obj<span class="token punctuation">.</span>communicate<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 简单写法，out_info：标准输出</span>
+    <span class="token comment"># print(out_info,out_error)</span>
+    <span class="token keyword">return</span> out_info
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    stdpath <span class="token operator">=</span> <span class="token string">"%s\\标准代码\\"</span> <span class="token operator">%</span> sys<span class="token punctuation">.</span>path<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>      <span class="token comment"># 标准代码所在路径</span>
+    testpath <span class="token operator">=</span> <span class="token string">"%s\\测试代码\\"</span> <span class="token operator">%</span> sys<span class="token punctuation">.</span>path<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>     <span class="token comment"># 测试代码所有路径</span>
+    <span class="token comment">#编译标准及测试代码</span>
+    result <span class="token operator">=</span> subprocess<span class="token punctuation">.</span>check_output<span class="token punctuation">(</span><span class="token string">"gcc -std=c99 -o std std.c"</span><span class="token punctuation">,</span> shell<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> cwd<span class="token operator">=</span>stdpath<span class="token punctuation">)</span>
+    result <span class="token operator">=</span> subprocess<span class="token punctuation">.</span>check_output<span class="token punctuation">(</span><span class="token string">"gcc -std=c99 -o test test.c"</span><span class="token punctuation">,</span> shell<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> cwd<span class="token operator">=</span>testpath<span class="token punctuation">)</span>
+
+    f <span class="token operator">=</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'%s\测试结果.txt'</span> <span class="token operator">%</span> sys<span class="token punctuation">.</span>path<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'w+'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">,</span> newline<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'随机测试中...'</span><span class="token punctuation">)</span>
+    pas<span class="token operator">=</span><span class="token number">0</span>       <span class="token comment"># 通过次数</span>
+    freq<span class="token operator">=</span><span class="token number">10</span>    <span class="token comment"># 测试次数</span>
+    <span class="token keyword">for</span> index <span class="token keyword">in</span> tqdm<span class="token punctuation">(</span><span class="token builtin">range</span><span class="token punctuation">(</span>freq<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 生成测试数据</span>
+        rtest <span class="token operator">=</span> random_int_list<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">99</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>
+        s <span class="token operator">=</span> <span class="token string">''</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> rtest<span class="token punctuation">:</span>
+            s <span class="token operator">=</span> <span class="token string">"%s%s "</span> <span class="token operator">%</span> <span class="token punctuation">(</span>s<span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+        s <span class="token operator">=</span> <span class="token string">"%s\n"</span> <span class="token operator">%</span> s
+        <span class="token comment"># 进行测试</span>
+        output <span class="token operator">=</span> iotest<span class="token punctuation">(</span><span class="token string">".\\test.exe"</span><span class="token punctuation">,</span> testpath<span class="token punctuation">,</span> s<span class="token punctuation">)</span>
+        stdoutput <span class="token operator">=</span> iotest<span class="token punctuation">(</span><span class="token string">".\\std.exe"</span><span class="token punctuation">,</span> stdpath<span class="token punctuation">,</span> s<span class="token punctuation">)</span>
+        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"随机测试 - r,%d数据点\n"</span><span class="token operator">%</span>index<span class="token punctuation">)</span>
+        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"标准输入\n%s"</span> <span class="token operator">%</span> s<span class="token punctuation">)</span>
+        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"实际输出\n%s\n"</span> <span class="token operator">%</span> output<span class="token punctuation">)</span>
+        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"期望输出\n%s\n\n"</span> <span class="token operator">%</span> stdoutput<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> output<span class="token operator">==</span>stdoutput<span class="token punctuation">:</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">'通过「随机测试 - r,%d数据点」测试点\n\n'</span><span class="token operator">%</span>index<span class="token punctuation">)</span>
+            pas<span class="token operator">=</span>pas<span class="token operator">+</span><span class="token number">1</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">'未通过「随机测试 - r,%d数据点」测试点\n\n'</span><span class="token operator">%</span>index<span class="token punctuation">)</span>
+    f<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'随机测试 %d/%d'</span><span class="token operator">%</span><span class="token punctuation">(</span>pas<span class="token punctuation">,</span>freq<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'测试完成'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>同时附上样例标准代码：</p>
+<pre class="line-numbers language-C" data-language="C"><code class="language-C">#include &lt;stdio.h&gt;
+#define N 10
+void inputarray(int *arr);
+void handlearray(int *arr);
+void outputarray(int *arr);
+void swap(int *p,int *q);
+int main()
+&#123;
+    int array[N]&#x3D; &#123;0&#125;;
+    inputarray(array);
+    handlearray(array);
+    outputarray(array);
+    return 0;
+&#125;
+void swap(int *p,int *q)
+&#123;
+    int temp&#x3D;*p;
+    *p&#x3D;*q;
+    *q&#x3D;temp;
+&#125;
+void handlearray(int *arr)
+&#123;
+    int *p&#x3D;arr;
+    int max_index&#x3D;0;
+    int min_index&#x3D;0;
+    int max&#x3D;arr[0];
+    int min&#x3D;arr[0];
+    for(int i&#x3D;1;i&lt;N;i++)
+    &#123;
+        if(*(p+i)&gt;max)
+        &#123;
+            max&#x3D;*(p+i);
+            max_index&#x3D;i;
+        &#125;
+        if(*(p+i)&lt;min)
+        &#123;
+            min&#x3D;*(p+i);
+            min_index&#x3D;i;
+        &#125;
+    &#125;
+    swap((p+max_index),(p+9));
+    swap((p+min_index),(p+0));
+&#125;
+void inputarray(int *arr)
+&#123;
+    int *p&#x3D;arr;
+    for(int i&#x3D;0; i&lt;N; i++)
+    &#123;
+        scanf(&quot;%d&quot;,(p+i));
+    &#125;
+&#125;
+void outputarray(int *arr)
+&#123;
+    int *p&#x3D;arr;
+    for(int i&#x3D;0; i&lt;N; i++)
+    &#123;
+        printf(&quot;%d &quot;,*(p+i));
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以及样例测试代码：</p>
+<pre class="line-numbers language-C" data-language="C"><code class="language-C">#include &lt;stdio.h&gt;
+int main()
+&#123;
+    void inv(int *x, int n);
+    int i, a[10];
+    for (i &#x3D; 0; i &lt; 10; i++)
+        scanf(&quot;%d&quot;, &amp;a[i]);
+    &#x2F;&#x2F;printf(&quot;\n&quot;);
+    inv(a, 10);
+    &#x2F;&#x2F;printf(&quot;The array has been inverted:\n&quot;);
+    for (i &#x3D; 0; i &lt; 10; i++)
+        printf(&quot;%d &quot;, a[i]);
+    &#x2F;&#x2F;printf(&quot;\n&quot;);
+    return 0;
+&#125;
+
+void inv(int *x, int n)
+&#123;
+    int *i, max, min, p, q, *c, *d;
+    max &#x3D; *x;
+    min &#x3D; *(x + 1);
+    c &#x3D; x + 0;
+    d &#x3D; x + 1;
+    for (i &#x3D; x; i &lt; x + 10; i++)
+        if (*i &gt; max)
+        &#123;
+            max &#x3D; *i;
+            c &#x3D; i;
+        &#125;
+    for (i &#x3D; x; i &lt; x + 10; i++)
+        if (*i &lt; min)
+        &#123;
+            min &#x3D; *i;
+            d &#x3D; i;
+        &#125;
+    p &#x3D; *x;
+    *x &#x3D; *d;
+    *d &#x3D; p;
+    q &#x3D; *(x + 9);
+    *(x + 9) &#x3D; *c;
+    *c &#x3D; q;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Linux下的Python源码"><a href="#Linux下的Python源码" class="headerlink" title="Linux下的Python源码"></a>Linux下的Python源码</h3><p>一个现象就是，Linux下进行测试的速度明显比Windows下快，我测试的时候两者甚至相差100余倍，其中原因可留给读者细究。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> subprocess
+<span class="token keyword">import</span> random
+<span class="token keyword">import</span> sys
+<span class="token keyword">from</span> tqdm <span class="token keyword">import</span> tqdm
+
+<span class="token keyword">def</span> <span class="token function">random_int_list</span><span class="token punctuation">(</span>start<span class="token punctuation">,</span> stop<span class="token punctuation">,</span> length<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    start<span class="token punctuation">,</span> stop <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span>start<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">(</span>stop<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">if</span> start <span class="token operator">&lt;=</span> stop <span class="token keyword">else</span> <span class="token punctuation">(</span>
+        <span class="token builtin">int</span><span class="token punctuation">(</span>stop<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">(</span>start<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    length <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">abs</span><span class="token punctuation">(</span>length<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">if</span> length <span class="token keyword">else</span> <span class="token number">0</span>
+    random_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>length<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        random_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span>start<span class="token punctuation">,</span> stop<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> random_list
+
+<span class="token keyword">def</span> <span class="token function">iotest</span><span class="token punctuation">(</span>filename<span class="token punctuation">,</span> path<span class="token punctuation">,</span> data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    obj <span class="token operator">=</span> subprocess<span class="token punctuation">.</span>Popen<span class="token punctuation">(</span><span class="token punctuation">[</span>filename<span class="token punctuation">]</span><span class="token punctuation">,</span> stdin<span class="token operator">=</span>subprocess<span class="token punctuation">.</span>PIPE<span class="token punctuation">,</span>
+                           stdout<span class="token operator">=</span>subprocess<span class="token punctuation">.</span>PIPE<span class="token punctuation">,</span> stderr<span class="token operator">=</span>subprocess<span class="token punctuation">.</span>PIPE<span class="token punctuation">,</span> cwd<span class="token operator">=</span>path<span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span>
+    obj<span class="token punctuation">.</span>stdin<span class="token punctuation">.</span>write<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+    out_info<span class="token punctuation">,</span> out_error <span class="token operator">=</span> obj<span class="token punctuation">.</span>communicate<span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment"># 简单写法，out_info：标准输出</span>
+    <span class="token comment"># print(out_info,out_error)</span>
+    <span class="token keyword">return</span> out_info
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    stdpath <span class="token operator">=</span> <span class="token string">"%s/标准代码/"</span> <span class="token operator">%</span> sys<span class="token punctuation">.</span>path<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>      <span class="token comment"># 标准代码所在路径</span>
+    testpath <span class="token operator">=</span> <span class="token string">"%s/测试代码/"</span> <span class="token operator">%</span> sys<span class="token punctuation">.</span>path<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>     <span class="token comment"># 测试代码所有路径</span>
+    <span class="token comment">#编译标准及测试代码</span>
+    result <span class="token operator">=</span> subprocess<span class="token punctuation">.</span>check_output<span class="token punctuation">(</span><span class="token string">"gcc -std=c99 -o std std.c"</span><span class="token punctuation">,</span> shell<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> cwd<span class="token operator">=</span>stdpath<span class="token punctuation">)</span>
+    result <span class="token operator">=</span> subprocess<span class="token punctuation">.</span>check_output<span class="token punctuation">(</span><span class="token string">"gcc -std=c99 -o test test.c"</span><span class="token punctuation">,</span> shell<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> cwd<span class="token operator">=</span>testpath<span class="token punctuation">)</span>
+
+    f <span class="token operator">=</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'%s/测试结果.txt'</span> <span class="token operator">%</span> sys<span class="token punctuation">.</span>path<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'w+'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">,</span> newline<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'随机测试中...'</span><span class="token punctuation">)</span>
+    pas<span class="token operator">=</span><span class="token number">0</span>       <span class="token comment"># 通过次数</span>
+    freq<span class="token operator">=</span><span class="token number">100</span>    <span class="token comment"># 测试次数</span>
+    <span class="token keyword">for</span> index <span class="token keyword">in</span> tqdm<span class="token punctuation">(</span><span class="token builtin">range</span><span class="token punctuation">(</span>freq<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 生成测试数据</span>
+        rtest <span class="token operator">=</span> random_int_list<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">99</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>
+        s <span class="token operator">=</span> <span class="token string">''</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> rtest<span class="token punctuation">:</span>
+            s <span class="token operator">=</span> <span class="token string">"%s%s "</span> <span class="token operator">%</span> <span class="token punctuation">(</span>s<span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+        s <span class="token operator">=</span> <span class="token string">"%s\n"</span> <span class="token operator">%</span> s
+        <span class="token comment"># 进行测试</span>
+        output <span class="token operator">=</span> iotest<span class="token punctuation">(</span><span class="token string">"./test"</span><span class="token punctuation">,</span> testpath<span class="token punctuation">,</span> s<span class="token punctuation">)</span>
+        stdoutput <span class="token operator">=</span> iotest<span class="token punctuation">(</span><span class="token string">"./std"</span><span class="token punctuation">,</span> stdpath<span class="token punctuation">,</span> s<span class="token punctuation">)</span>
+        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"随机测试 - r,%d数据点\n"</span><span class="token operator">%</span>index<span class="token punctuation">)</span>
+        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"标准输入\n%s"</span> <span class="token operator">%</span> s<span class="token punctuation">)</span>
+        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"实际输出\n%s\n"</span> <span class="token operator">%</span> output<span class="token punctuation">)</span>
+        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"期望输出\n%s\n\n"</span> <span class="token operator">%</span> stdoutput<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> output<span class="token operator">==</span>stdoutput<span class="token punctuation">:</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">'通过「随机测试 - r,%d数据点」测试点\n\n'</span><span class="token operator">%</span>index<span class="token punctuation">)</span>
+            pas<span class="token operator">=</span>pas<span class="token operator">+</span><span class="token number">1</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">'未通过「随机测试 - r,%d数据点」测试点\n\n'</span><span class="token operator">%</span>index<span class="token punctuation">)</span>
+    f<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'随机测试 %d/%d'</span><span class="token operator">%</span><span class="token punctuation">(</span>pas<span class="token punctuation">,</span>freq<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'测试完成'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/12/19/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BD%9C%E4%B8%9A%E6%8F%90%E4%BA%A4%E5%B9%B3%E5%8F%B0/" rel="next" title="一个简单的作业提交平台">
+                <i class="fa fa-chevron-left"></i> 一个简单的作业提交平台
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/wy.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BA%90%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows%E4%B8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">Windows下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux%E4%B8%8B%E7%9A%84Python%E6%BA%90%E7%A0%81"><span class="nav-number">2.2.</span> <span class="nav-text">Linux下的Python源码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">未央</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'naquiv8kljfmeFx6t9aSTTWn-9Nh9j0Va',
+        appKey: 'fneElOQzdSRFC3p43Bd4J69D',
+        placeholder: '说点什么吧',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
