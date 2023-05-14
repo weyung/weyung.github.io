@@ -1,0 +1,151 @@
+version: 5.0.0
+variant: default
+logo: /images/wy.png
+head:
+    favicon: /images/wy.png
+    meta: []
+    rss: /atom.xml
+    open_graph: 
+    structured_data: 
+    manifest:
+        name: weyung's blog
+        short_name: weyung
+        start_url: https://blog.weyung.cc/
+        theme_color: '#ffffff'
+        background_color: '#ffffff'
+        display: standalone
+        icons:
+            -
+                src: /img/icon.svg
+                sizes: 1061x1061
+navbar:
+    menu:
+        主页: /
+        归档: /archives/
+        分类: /categories/
+        标签: /tags/
+        友链: /links/
+        关于: /about/
+    links: 
+footer:
+    links:
+        CC BY-NC 4.0:
+            icon:
+                - fab fa-creative-commons
+                - fab fa-creative-commons-by
+                - fab fa-creative-commons-nc
+            url: https://creativecommons.org/licenses/by-nc/4.0/deed.zh
+article:
+    highlight:
+        theme: atom-one-light
+        clipboard: true
+        fold: unfolded
+    readtime: true
+    licenses:
+        CC BY-NC 4.0:
+            icon:
+                - fab fa-creative-commons
+                - fab fa-creative-commons-by
+                - fab fa-creative-commons-nc
+            text: CC BY-NC 4.0
+            url: https://creativecommons.org/licenses/by-nc/4.0/deed.zh
+search:
+    type: insight
+comment:
+    type: valine
+    app_id: naquiv8kljfmeFx6t9aSTTWn-9Nh9j0Va
+    app_key: fneElOQzdSRFC3p43Bd4J69D
+    placeholder: 说点什么吧
+    avatar: mm
+    avatar_force: false
+    meta:
+        - nick
+        - mail
+        - link
+    page_size: 10
+    lang: zh-CN
+    visitor: false
+    highlight: true
+    record_ip: false
+    server_urls: 
+    emoji_cdn: 
+    emoji_maps: 
+    enable_qq: false
+    required_fields: []
+donates:
+    -
+        type: wechat
+        qrcode: '/images/wechatpay.png'
+sidebar:
+    left:
+        sticky: false
+    right:
+        sticky: false
+widgets:
+    -
+        position: left
+        type: profile
+        author: 未央
+        author_title: 写一些和我一样菜也能看懂的文章
+        location: China
+        avatar: /images/wy.png
+        avatar_rounded: false
+        gravatar: 
+        follow_link: 
+        social_links:
+            GitHub:
+                icon: fab fa-github
+                url: https://github.com/weyung
+            Telegram:
+                icon: fab fa-telegram
+                url: https://t.me/we_yung
+            RSS:
+                icon: fas fa-rss
+                url: /atom.xml
+    -
+        position: left
+        type: categories
+    -
+        position: left
+        type: tags
+    -
+        position: right
+        type: recent_posts
+    -
+        position: right
+        type: archives
+plugins:
+    animejs: true
+    back_to_top: true
+    baidu_analytics:
+        tracking_id: 
+    bing_webmaster:
+        tracking_id: 
+    busuanzi: false
+    cnzz:
+        id: 
+        web_id: 
+    cookie_consent:
+        type: info
+        theme: edgeless
+        static: false
+        position: bottom-left
+        policyLink: https://www.cookiesandyou.com/
+    gallery: false
+    google_analytics:
+        tracking_id: 
+    hotjar:
+        site_id: 
+    katex: true
+    mathjax: true
+    outdated_browser: false
+    progressbar: true
+    statcounter:
+        project: 
+        security: 
+    twitter_conversion_tracking:
+        pixel_id: 
+providers:
+    cdn: jsdelivr
+    fontcdn: google
+    iconcdn: fontawesome
