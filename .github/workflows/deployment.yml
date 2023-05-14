@@ -30,7 +30,7 @@ jobs:
         hexo g
     - name: Deploy to Github Pages
       env:
-        GIT_NAME: WillCAI2020
+        GIT_NAME: weyung
         GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
         REPO: github.com/weyung/weyung.github.io
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
