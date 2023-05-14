@@ -26,6 +26,8 @@ jobs:
         node -v
         npm i -g hexo-cli
         npm i
+        sed -i 's/{{/{$/g' node_modules/nunjucks/src/lexer.js
+        sed -i 's/}}/$}/g' node_modules/nunjucks/src/lexer.js
         hexo clean
         hexo g
     - name: Deploy to Github Pages
