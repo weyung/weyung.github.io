@@ -19,7 +19,7 @@ ChatGPT 确实是好东西
 最终的方案是用阿里云的机子当跳板机去 SSH 美国的机子，`./ssh/config` 配置如下
 
 ```plain
-Host US
+Host <你想叫啥就叫啥>
   HostName <x.x.x.x>
   User <user>
   IdentityFile <~/.ssh/US.pem>
@@ -32,7 +32,7 @@ Host US
 
 Squid 这个东西是 ChatGPT 推荐的，可以直接在机子开个 http 代理，简单方便。安装也是直接 `sudo apt install squid` 就行，然后把 `\etc\squid\squid.conf` 改成如下（不会用 vim 可以用 nano）：
 
-```plain
+```bash
 # ACLs all, manager, localhost, and to_localhost are predefined.
 acl SSL_ports port 443
 acl Safe_ports port 80          # http
@@ -71,6 +71,33 @@ request_header_access From deny all
 然后 `sudo systemstl restart squid`，要等上一会，我应该等了差不多半分钟。
 
 然后我端口转发搞了一天，失败得莫名其妙的，最终就直接用 VSCode SSH 后自带的端口转发顶着先了。
+
+更新：后来用 SSH 的端口转发了，命令如下：
+
+```bash
+ssh -N -L 0.0.0.0:55555:localhost:3128 <your-azure>
+```
+
+这样就可以在本地的 55555 端口访问到远程的 3128 端口了，`0.0.0.0` 是想给同一局域网的其他机子接，不需要的话可以只写端口，`-N` 意思是不启动远程 shell，如果你希望在后台运行可以再加个 `-f`。
+但是这样不够优雅，就再搞了个 systemd 的服务，配置如下：
+
+/etc/systemd/system/ssh-tunnel.service
+
+```bash
+[Unit]
+Description=SSH tunnel service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/ssh ssh -N -L 0.0.0.0:55555:localhost:3128 <your-azure>
+User=<你的用户名>
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+然后 `sudo systemctl daemon-reload` 一下，再 `sudo systemctl start ssh-tunnel` 就行了，`sudo systemctl enable ssh-tunnel` 可以设置开机自启。
 
 ## 参考
 
