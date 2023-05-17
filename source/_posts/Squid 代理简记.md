@@ -30,7 +30,7 @@ Host US
 
 ## Squid
 
-Squid 这个东西是 ChatGPT 推荐的，可以直接在机子开个 http 代理，简单方便。安装也是直接 `sudo apt install squid` 就行，然后把 `\etc\squid\squid.conf` 改成如下：
+Squid 这个东西是 ChatGPT 推荐的，可以直接在机子开个 http 代理，简单方便。安装也是直接 `sudo apt install squid` 就行，然后把 `\etc\squid\squid.conf` 改成如下（不会用 vim 可以用 nano）：
 
 ```plain
 # ACLs all, manager, localhost, and to_localhost are predefined.
