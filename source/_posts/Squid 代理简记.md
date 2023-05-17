@@ -15,10 +15,10 @@ ChatGPT 确实是好东西
 
 ## 服务器
 
-问一个微软学生大使的同学在 Azure 开了台美国的机子，但是 SSH 老是连不上，一试发现是校园网的问题，用我阿里云的服务器去 SSH 就能稳定连上，再不久也发现原来我机场梯子老掉也是校园网的缘故，用阿里云的机子走机场稳定秒开 Google，当时我就气炸了。
+问一个微软学生大使的同学在 Azure 开了台美国的机子（学生邮箱也可以白嫖），但是 SSH 老是连不上，一试发现是校园网的问题，用我阿里云的服务器去 SSH 就能稳定连上，再不久也发现原来我机场梯子老掉也是校园网的缘故，用阿里云的机子走机场稳定秒开 Google，当时我就气炸了。
 最终的方案是用阿里云的机子当跳板机去 SSH 美国的机子，`./ssh/config` 配置如下
 
-```plain
+```bash
 Host <你想叫啥就叫啥>
   HostName <x.x.x.x>
   User <user>
@@ -81,9 +81,8 @@ ssh -N -L 0.0.0.0:55555:localhost:3128 <your-azure>
 这样就可以在本地的 55555 端口访问到远程的 3128 端口了，`0.0.0.0` 是想给同一局域网的其他机子接，不需要的话可以只写端口，`-N` 意思是不启动远程 shell，如果你希望在后台运行可以再加个 `-f`。
 但是这样不够优雅，就再搞了个 systemd 的服务，配置如下：
 
-/etc/systemd/system/ssh-tunnel.service
-
 ```bash
+# /etc/systemd/system/ssh-tunnel.service
 [Unit]
 Description=SSH tunnel service
 After=network.target
