@@ -68,7 +68,7 @@ request_header_access X-Forwarded-For deny all
 request_header_access From deny all
 ```
 
-然后 `sudo systemstl restart squid`，要等上一会，我应该等了差不多半分钟。
+然后 `sudo systemctl restart squid`，要等上一会，我应该等了差不多半分钟。
 
 然后我端口转发搞了一天，失败得莫名其妙的，最终就直接用 VSCode SSH 后自带的端口转发顶着先了。
 
