@@ -44,5 +44,5 @@ jobs:
         git add .
         git config user.name $GIT_NAME
         git config user.email $GIT_EMAIL
-        git commit -m "Site deployed by GitHub Actions"
+        git diff-index --quiet HEAD || git commit -m "Site deployed by GitHub Actions"
         git push --quiet "https://$GH_TOKEN@$REPO" main:main
