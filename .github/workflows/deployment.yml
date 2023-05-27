@@ -37,12 +37,12 @@ jobs:
         REPO: github.com/weyung/weyung.github.io
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
-        cd ./public 
-        git init
-        git remote add origin https://$GH_TOKEN@$REPO
-        git pull origin main
+        git clone "https://$GH_TOKEN@$REPO" old_public
+        mv old_public/.git public/
+        cd public
+        git reset --hard
         git add .
-        git config --global user.name $GIT_NAME
-        git config --global user.email $GIT_EMAIL
+        git config user.name $GIT_NAME
+        git config user.email $GIT_EMAIL
         git commit -m "Site deployed by GitHub Actions"
         git push --quiet "https://$GH_TOKEN@$REPO" main:main
