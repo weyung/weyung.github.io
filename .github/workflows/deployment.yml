@@ -37,12 +37,11 @@ jobs:
         REPO: github.com/weyung/weyung.github.io
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
-        git clone "https://$GH_TOKEN@$REPO" old_public
-        mv old_public/.git public/
-        cd public
-        git reset --hard
+        git config --global user.name $GIT_NAME
+        git config --global user.email $GIT_EMAIL
+        git clone https://$GH_TOKEN@$REPO deploy_repo
+        rsync -av --delete ./public/ ./deploy_repo/
+        cd ./deploy_repo
         git add .
-        git config user.name $GIT_NAME
-        git config user.email $GIT_EMAIL
-        git diff-index --quiet HEAD || git commit -m "Site deployed by GitHub Actions"
-        git push --quiet "https://$GH_TOKEN@$REPO" main:main
+        git commit -m "Site deployed by GitHub Actions"
+        git push "https://$GH_TOKEN@$REPO" main:main
