@@ -49,6 +49,6 @@ jobs:
         git fetch origin main
         git rebase origin/main
         git stash apply
-        git add .
+        git add --all
         git commit -m "Rebase and apply changes"
         git push "https://$GH_TOKEN@$REPO" main:main --quiet
