@@ -39,9 +39,14 @@ jobs:
       run: |
         git config --global user.name $GIT_NAME
         git config --global user.email $GIT_EMAIL
-        git clone https://$GH_TOKEN@$REPO deploy_repo
-        rsync -av --delete ./public/ ./deploy_repo/
-        cd ./deploy_repo
+        cd ./public
+        git init
+        git add .
+        git stash
+        git remote add origin https://$GH_TOKEN@$REPO
+        git fetch origin main:main
+        git checkout main
+        git stash pop
         git add .
         git commit -m "Site deployed by GitHub Actions"
         git push "https://$GH_TOKEN@$REPO" main:main
