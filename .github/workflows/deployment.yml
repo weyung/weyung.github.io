@@ -45,5 +45,6 @@ jobs:
         git add .
         git commit -m "Site deployed by GitHub Actions"
         git branch -M main
-        git pull origin main --rebase=interactive
+        git fetch origin main
+        git rebase origin/main
         git push "https://$GH_TOKEN@$REPO" main:main --quiet
