@@ -1,0 +1,54 @@
+name: Deployment
+
+on:
+  push:
+    branches: [hexo] # only push events on source branch trigger deployment
+
+jobs:
+  hexo-deployment:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v2
+      with:
+        submodules: false
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+
+    - name: Install dependencies & Generate static files
+      run: |
+        node -v
+        npm i -g hexo-cli
+        npm i
+        sed -i 's/{{/{$/g' node_modules/nunjucks/src/lexer.js
+        sed -i 's/}}/$}/g' node_modules/nunjucks/src/lexer.js
+        hexo clean
+        hexo g
+    - name: Deploy to Github Pages
+      env:
+        GIT_NAME: weyung
+        GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
+        REPO: github.com/weyung/weyung.github.io
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      run: |
+        git clone https://$GH_TOKEN@$REPO ./deployed_site
+        rsync -av --delete ./public/ ./deployed_site/
+        cd ./deployed_site
+        git config --global user.name $GIT_NAME
+        git config --global user.email $GIT_EMAIL
+        git add .
+        git commit -m "Site deployed by GitHub Actions"
+        git branch -M main
+        git stash
+        git fetch origin main
+        git rebase origin/main
+        git stash apply
+        git add --all
+        git commit -m "Rebase and apply changes"
+        git push "https://$GH_TOKEN@$REPO" main:main --quiet
