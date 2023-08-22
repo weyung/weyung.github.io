@@ -31,6 +31,8 @@ date: 2021-12-31 16:57:00
 
 [a39](http://www.asuka39.top/) 歩いても、歩いても
 
+[Elapsedf](elapsedf.cn) Think what you want
+
 ********************************
 
 > 欢迎来交换友链ヾ(≧▽≦*)o
