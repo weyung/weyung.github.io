@@ -9,11 +9,11 @@ date: 2021-12-31 16:57:00
 
 [GZTime](https://blog.gztime.cc/) Walking on the Time Axis.
 
-[小傅Fox](https://xfox.me/) 一个博客不写技术的dalao
+[小傅Fox](https://xfox.me/) 一个博客不写技术的 dalao
 
-[Darkyzhou](https://darkyzhou.net) MC爱好者
+[Darkyzhou](https://darkyzhou.net) MC 爱好者
 
-[jiahonzheng](https://blog.jiahonzheng.com) 请叫他++
+[jiahonzheng](https://blog.jiahonzheng.com) 请叫他 ++
 
 [春哥](https://www.zhihu.com/people/ZM_________J) 一人攻沙虐全场
 
@@ -21,7 +21,7 @@ date: 2021-12-31 16:57:00
 
 [Hanmur](https://hanmur.cn) 一位帅气且有趣的学长
 
-[yescallop](https://yescallop.cn) Rust水平相当高
+[yescallop](https://yescallop.cn) Rust 水平相当高
 
 [FluoriteFire](https://fluoritefire.github.io) Walking to a new world
 
