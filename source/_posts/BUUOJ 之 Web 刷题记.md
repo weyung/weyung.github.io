@@ -322,3 +322,4 @@ if($_POST['param1']!==$_POST['param2']&&md5($_POST['param1'])===md5($_POST['para
 打开一看是个目录，有 `/flag.txt`，`/welcome.txt` 和 `hints.txt`，内容分别为 `flag in /fllllllllllllag`，`render` 和 `md5(cookie_secret+md5(filename))` 打开文件的时候 url 变成了 `/file?filename=/xxx.txt&filehash=xxx`，那我想看 flag 的话应该得搞到 flag 文件的 filehash，那首先得搞到 `cookie_secret`。
 题目名字中的 tornado 是一个 Python 的 web 框架，类似 Flask，那么题目是 SSTI 注入，即 Server-Side Template Injection，服务端模板注入。先只传 `filename` 不传 `filehash`，网页跳转到 `/error?msg=Error`，网页内容也是 `Error`，那么考虑对 `msg` 进行注入。
 小插曲：这时候太困睡觉去了，第二天再来搞这题时 BUU 在维护了，开摆！
+test

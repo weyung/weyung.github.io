@@ -28,6 +28,8 @@ jobs:
         npm i
         sed -i 's/{{/{$/g' node_modules/nunjucks/src/lexer.js
         sed -i 's/}}/$}/g' node_modules/nunjucks/src/lexer.js
+        # Only checkout modified files
+        git diff --name-only ${{ github.event.before }} ${{ github.sha }} | xargs git checkout ${{ github.sha }} --
         hexo clean
         hexo g
     - name: Deploy to Github Pages
