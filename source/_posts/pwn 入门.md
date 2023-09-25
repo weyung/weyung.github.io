@@ -20,7 +20,7 @@ ELF 文件中有多个节（ Section ），主要有：
 
 * **.text** 节：即代码段，用来放代码
 * **.rodata** 节：ro 即 read only ，**只读**数据段，用来放静态数据，如果尝试修改会报错
-    > `.rdata`和`.rodata`的区别：两者都是只读数据段，但`.rdata`是 Windows 的常用说法，而 Linux 中则一般称`.rodata`
+    > `.rdata` 和 `.rodata` 的区别：两者都是只读数据段，但 `.rdata` 是 Windows 的常用说法，而 Linux 中则一般称 `.rodata`
 * **.data** 节：数据段，存放**可修改**的数据
 * **.bss** 节：中文不知道叫什么名字的段，也是放**可修改**的数据，但是**没有初始化**，所以不占ELF文件的空间，程序运行时会自动分配内存
 * **.plt** 节和 **.got** 节：外部调用段（也不知道叫什么名字，这个是 AI 给我打的），调用动态链接库的函数的时候会用到
@@ -28,29 +28,29 @@ ELF 文件中有多个节（ Section ），主要有：
 ## Linux下的漏洞缓解措施
 
 有攻就有防，为了不被攻击者随便打烂，一些防范措施是必不可少的。
-在终端里可以执行`checksec --file=文件名`来查看 ELF 文件的保护机制。
+在终端里可以执行 `checksec --file=文件名` 来查看 ELF 文件的保护机制。
 
 1. **NX** ( No eXecute )(没错 X 就是大写，没打错)
     基本规则为**可写权限**与**可执行权限**互斥，即可被修改写入 shellcode 的内存都不可执行，被执行的代码数据不可修改，至于 shellcode 是啥，后面再提。
-    gcc 默认开启，编译加`-z execstack`参数可以关闭
+    gcc 默认开启，编译加 `-z execstack` 参数可以关闭
 2. **Stack Canary**
     Canary 意为金丝雀，以前矿工进入矿井时都会随身带一只金丝雀，通过观察金丝雀的状态来判断氧气浓度等情况。这个保护专门针对栈溢出攻击。
-    gcc 同样默认开启，编译加`fno-stack-protector`参数关闭
+    gcc 同样默认开启，编译加 `fno-stack-protector` 参数关闭
 3. **ASLR** ( Address Space Layout Randomization )
     将程序的堆栈地址和动态链接库的加载地址进行一定的随机化
     ASLR 是系统级的保护机制，关闭要修改 /proc/sys/kernel/randomize_va_space 文件，写入 0 即可
 4. **PIE** ( Position Independent Executable )
     和 ASLR 类似，让 ELF 的地址随机化加载
-    高版本 gcc 默认开启，编译加`-no-pie`参数可以关闭，旧版本则需加`-fpic-pie`参数开启
+    高版本 gcc 默认开启，编译加 `-no-pie` 参数可以关闭，旧版本则需加 `-fpic-pie` 参数开启
 5. **Full RELRO** ( Read-Only Relocation )
-    禁止写入`.got.plt`表
-    gcc 编译加`-z relro`参数开启。
+    禁止写入 `.got.plt` 表
+    gcc 编译加 `-z relro` 参数开启。
 
 ## GOT和PLT
 
-`.plt`表是一段代码，可从内存中读取一个地址然后进行跳转，而`.got.plt`表则存放函数的实际地址。
-实际上，`.got.plt`表是一个函数指针数组，存放 ELF 所有用到的外部函数在内存中的地址，由操作系统初始化。
-题目中如果没开`Full RELRO`保护，那么就有可能通过修改`.got.plt`表中的函数地址来偷梁换柱，比如把表中`puts`的地址换成`system`的地址就能使`puts("\bin\sh")`变成`system("/bin/sh")`，从而拿到 shell 。
+`.plt` 表是一段代码，可从内存中读取一个地址然后进行跳转，而 `.got.plt` 表则存放函数的实际地址。
+实际上，`.got.plt` 表是一个函数指针数组，存放 ELF 所有用到的外部函数在内存中的地址，由操作系统初始化。
+题目中如果没开 `Full RELRO` 保护，那么就有可能通过修改 `.got.plt` 表中的函数地址来偷梁换柱，比如把表中 `puts` 的地址换成 `system` 的地址就能使 `puts("\bin\sh")` 变成 `system("/bin/sh")`，从而拿到 shell 。
 
 ## 常用工具
 
@@ -58,8 +58,8 @@ ELF 文件中有多个节（ Section ），主要有：
 
     拿到程序第一件事——用 IDA 看看伪代码
     分 32 位和 64 位两个版本，**这个打开不行就换另一个**，虽然我也不知道为啥不加个自动识别（）
-    把程序拖进去，弹出一个奇怪的选项框，初学者直接`enter`或者点`OK`就完事，然后进到`IDA View-A`标签页，这里初始时一般是流程图的形式，在此标签页按空格可以切换到普通模式，**记住不是在`Pseudocode-A`按**
-    这时候按`F5`生成伪代码，看到顶上的标签页切到了`Pseudocode-A`， Pseudocode 是伪码的意思，至于这个 A ，你如果再按一次 `F5` 就能新建一个`Pseudocode-B`了（）
+    把程序拖进去，弹出一个奇怪的选项框，初学者直接 `enter`或者点 `OK` 就完事，然后进到 `IDA View-A` 标签页，这里初始时一般是流程图的形式，在此标签页按空格可以切换到普通模式，**记住不是在 `Pseudocode-A` 按**
+    这时候按 `F5` 生成伪代码，看到顶上的标签页切到了 `Pseudocode-A` ， Pseudocode 是伪码的意思，至于这个 A ，你如果再按一次 `F5` 就能新建一个 `Pseudocode-B` 了（）
     然后就可以这点点那点点发现新世界了，嘿嘿
     如下是一些常用的快捷键：
     * 按 `Esc` 可以返回刚才的页面
