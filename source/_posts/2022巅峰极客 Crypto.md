@@ -171,7 +171,7 @@ eP = (mpz(8694229840573103722999959579565187489450818138005222030156495740841851
 ```
 
 这题真的是蚌不住，刚放出来解出数就蹭蹭往上涨，还有点怀疑人生，然后仔细观察题目，一看上面，什么玩意，再看下面，什么玩意。。。
-直接拿第一个数 `long_to_bytes` ，得到flag。
+直接拿第一个数 `long_to_bytes` ，得到 flag。
 
 ## Learning with fault
 
@@ -312,7 +312,7 @@ for x, y in combinations(result, 2):
 
 ### 原理
 
-RSA-CRT签名中计算了：
+RSA-CRT 签名中计算了：
 $$
 \sigma_p=\mu(m)^d\mod \ p \\\\  \sigma_q=\mu(m)^d\mod \ q
 $$
@@ -420,6 +420,7 @@ $$
 
 1. $\det(\mathit{\Lambda})\leq \prod^d_{i=1}||\mathbf{b}_i||\leq 2^{d(d-1)/4}\det(\mathit{\Lambda})$
 2. 对任意线性无关的向量 $\mathbf{x}_1,...,\mathbf{x}_t\in\mathit{\Lambda}$ ，当 $1\leq j \leq t$ 时，有：
+
 $$
 ||\mathbf{b}_j||\leq 2^{(d-1)/2}\max(||\mathbf{x}_1||,...,||\mathbf{x}_t||)
 $$

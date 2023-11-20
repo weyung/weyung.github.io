@@ -24,7 +24,7 @@ chmod u+rw ~/.poshthemes/*.omp.*
 rm ~/.poshthemes/themes.zip
 ```
 
-`oh-my-posh get shell`看看shell，一般是bash的情况下，就在`~/.bashrc`（也可能是`~/.profile`或`~/.bash_profile`）文件追加一行
+`oh-my-posh get shell` 看看 shell，一般是 bash 的情况下，就在 `~/.bashrc`（也可能是 `~/.profile` 或 `~/.bash_profile`）文件追加一行
 
 ```bash
 eval "$(oh-my-posh init bash --config ~/.poshthemes/.kali.omp.json))" # kali为主题名称，可以自己更换其他的
