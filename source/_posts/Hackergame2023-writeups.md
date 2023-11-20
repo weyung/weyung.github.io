@@ -1,6 +1,6 @@
 ---
 title: Hackergame 2023 writeups
-date: 2022-11-05 02:32:00
+date: 2023-11-05 02:32:00
 tags: CTF
 categories: 题解
 ---
@@ -67,11 +67,82 @@ GZTime 还是直线上分，每年的保留节目了属于是。ZRHan 也打到�
 
 ## 旅行照片 3.0
 
+可以直接看官方 wp。学长晚上的行程注意看脖子上带子的文字就行。
+
 ## 赛博井字棋
+
+霸道的力量，用 hackerbar 下到人机下过的位置就行。
 
 ## 奶奶的睡前 flag 故事
 
+截图漏洞，之前见过 Windows 的，谷歌的亲儿子手机就是 Pixel，直接搜 Pixel screenshot hack 就行了。找到网站，手机型号选择最新的不行，换个老点的就可以了。
+
 ## 组委会模拟器
+
+F12 看下请求，发现会先拿到全部 1000 条消息，包含消息 id、内容和时间，点击消息会发消息的 id 到服务端，这样的话我们用 python 直接梭就行了。
+注意要按时间发包，不然会返回“发生了时空穿越”的失败提示。
+
+```python
+import time
+import requests as r
+import json
+import re
+from tqdm import tqdm
+
+url = 'http://202.38.93.111:10021/api/getMessages'
+headers = {'Cookie': <cookie>}
+res = r.post(url, headers=headers).text
+
+
+def delmsg(idd):
+    url = 'http://202.38.93.111:10021/api/deleteMessage'
+    headers = {'Cookie': <cookie>,
+               'Content-Type': 'application/json',}
+    data = {'id': idd}
+    res = r.post(url, headers=headers, data=json.dumps(data)).text
+    res = json.loads(res)
+    if res['success'] == True:
+        return True
+    return res['error']
+start_time = time.time()
+
+js = json.loads(res)
+msg = js['messages']
+msg = list(msg)
+
+for m in msg:
+    pat = re.compile(r'hack\[[a-z]+\]')
+    flag = re.search(pat, m['text'])
+    if flag:
+        m['flag'] = True
+    else:
+        m['flag'] = False
+
+# with open('output.txt', 'w+') as f:
+#     for m in msg:
+#         f.write(f"{m['flag']} {m['text']}\n")
+
+for i in tqdm(range(len(msg))):
+    txt = msg[i]['text']
+    delay = msg[i]['delay']
+    
+    while True:
+        current_time = time.time() - start_time
+        if current_time > delay:
+            if msg[i]['flag']:
+                res = delmsg(i)
+                if res != True:
+                    print(txt)
+                    print(res)
+                break  # 添加退出条件
+            else:
+                break  # 添加退出条件
+
+url = 'http://202.38.93.111:10021/api/getflag'
+res = r.post(url, headers=headers).text
+
+print(json.loads(res))
+```
 
 ## 虫
 
@@ -79,11 +150,33 @@ SSTV，在 github 找个 [Decoder](https://github.com/colaclanth/sstv) 就行，
 
 ## JSON ⊂ YAML?
 
+第一问 GPT 给出的答案五花八门，但是都不行，最后还是去找了文档一个个试试出来的浮点数可以触发。
+第二问 GPT 倒是好使，直接说两个相同的 key 会触发。
+两个 payload 分别是 `{"null": -2E+05}` 和 `{"null": "yes","null":"no"}`。
+
 ## Git? Git 叹号
 
 （标题直接打 ！的话 markdown 报错，看着难受）
+问了 GPT，让我用 `reflog`，如下：
+
+```bash
+$ git reflog
+ea49f0c (HEAD -> main) HEAD@{0}: commit: Trim trailing spaces
+15fd0a1 (origin/main, origin/HEAD) HEAD@{1}: reset: moving to HEAD~
+505e1a3 HEAD@{2}: commit: Trim trailing spaces
+15fd0a1 (origin/main, origin/HEAD) HEAD@{3}: clone: from https://github.com/dair-ai/ML-Course-Notes.git
+```
+
+可以看到，15fd0a1 是撤销的操作，我们用 `diff` 看一下修改了什么就行了：
+
+```bash
+git diff 505e1a3 15fd0a1 --patch
+```
 
 ## HTTP 集邮册
+
+前面两问胡乱试几下就有了。
+最后一问没搞出来。
 
 ## Docker for Everyone
 
@@ -108,8 +201,6 @@ cat /dev/shm/flag 是你想在容器内运行的命令，它会尝试读取并�
 手调即可。
 
 ```python
-
-
 # Th siz of th fil may reduc after XZRJification
 
 def check_equals(left, right):
@@ -158,7 +249,7 @@ if __name__ == '__main__':
 
 ## 小型大语言模型星球
 
-第一问直接问 Am I smart? 就能套出话来了。
+第一问直接问 `Am I smart?` 就能套出话来了。
 第二问已经重装系统了，本地模型都跑不起来，就懒得爆了。
 
 ## 低带宽星球
@@ -211,7 +302,7 @@ int main() {
 ## 黑客马拉松
 
 做的时候就感觉铁定非预期了，但是令人迷惑的是这才是最自然的思路，那非预期是不是算预期呢（）。
-说起来还是第二问给我的解题思路，看第一问看了半天发现第二问更简单，分数也是第二问更低，说明出题人是知道的，这样的顺序真是居心叵测。
+说起来还是第二问给我的解题思路，看第一问看了半天发现第二问更简单，分数也是第二问更低，说明出题人是知道的，这样的题目顺序真是居心叵测。
 第二问直接取 $e = -1 \mod \varphi(N)$ 就过了。
 第一问严格点，还是这么取的话会触发 small loop，因为 $(-1)^2=1$ 嘛，所以取 $e = -3 \mod \varphi(N)$ 就行了。
 两问都是二元 coppersmith 的形式。
@@ -307,6 +398,13 @@ r.close()
 ```
 
 ## 不可加密的异世界 2
+
+关键就是在 GF(257) 里运算后结果还模了 256，所以有一些 256 变成了 0 返回。那么我们看到的 0 就不知道它原来是 0 还是 256 了。
+观察字符的规律，可以发现 ascii 码的最高位一定为 0，那么就可以用异或制造相差 128 的两轮差分，这时候能还原矩阵的大部分，少部分没还原是因为上面的原因。
+这时候如果拿到的向量含 0，就可以用次高位来继续拿一组进行修复，因为我们拿到了向量的大部分，所以可以分别假设次高位为 0 和 1，然后和已知向量进行比较，最像的那个就是正确的。
+这时候基本有一半左右概率还原了，我们可以算一下概率，上面方法出错的可能只会是因为三组向量中有两个 0 同时出现在一个位置或者三 0 合一（极品情况）。对任一元素，三次都不是 0 或者只出一次 0 的概率为 $(\frac{255}{256})^3 + 3 \times \frac{1}{256} \times (\frac{255}{256})^2 = \frac{8388225}{8388608}$，即出现问题的概率为 $\frac{383}{8388608}$，然而即使出了问题，我们也有一半的概率直接猜对（默认猜 0 原本就是 0），所以单个元素出错概率为 $\frac{383}{16777216}$，正确概率为 $\frac{16776833}{16777216}$，那么 128*128=16384 个元素全部正确的概率为 $(\frac{16776833}{16777216})^{16384}\approx 0.687957850470333$。
+当然如果觉得还不够爽可以像我一样再抽一发修正，这样基本很接近 100% 了。
+第二问直接求个特征向量，第三问再套个 CVP，此时维数比较大，LLL 的结果不够理想，需要用 BKZ。
 
 ```python
 from Crypto.Util.number import *
