@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>汇编学习笔记 - weyung</title><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#ffffff"><meta name="application-name" content="weyung&#039;s blog"><meta name="msapplication-TileImage" content="/img/icon.svg"><meta name="msapplication-TileColor" content="#ffffff"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="weyung&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" sizes="1061x1061" href="/img/icon.svg"><link rel="canonical" href="http://blog.weyung.cc/2022/04/06/%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><link rel="alternate" href="/atom.xml" title="weyung" type="application/atom+xml"><link rel="icon" href="/images/wy.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+          Array
+              .from(document.querySelectorAll('.tab-content'))
+              .forEach($tab => {
+                  $tab.classList.add('is-hidden');
+              });
+          Array
+              .from(document.querySelectorAll('.tabs li'))
+              .forEach($tab => {
+                  $tab.classList.remove('is-active');
+              });
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/wy.png" alt="weyung" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives/">归档</a><a class="navbar-item" href="/categories/">分类</a><a class="navbar-item" href="/tags/">标签</a><a class="navbar-item" href="/links/">友链</a><a class="navbar-item" href="/about/">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-04-06T14:21:00.000Z" title="4/6/2022, 10:21:00 PM">2022-04-06</time>发表</span><span class="level-item"><time dateTime="2024-05-08T10:14:15.470Z" title="5/8/2024, 6:14:15 PM">2024-05-08</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="level-item">19 分钟读完 (大约2788个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">汇编学习笔记</h1><div class="content"><p>进行一些笔记的整理</p>
+<span id="more"></span>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上年暑假就学了 x86 汇编的实模式部分，当时用 Onenote 记了一些笔记，后来发现了 Markdown 这个好东西，就决定搬迁一下，也方便我上课查（bushi</p>
+<p>格式有待整理（逃</p>
+<h2 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h2><h3 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h3><table>
+<thead>
+<tr>
+<th align="center">寄存器</th>
+<th align="center">全称</th>
+<th align="center">中文名称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">CS</td>
+<td align="center">Code Segment</td>
+<td align="center">代码段寄存器</td>
+</tr>
+<tr>
+<td align="center">DS</td>
+<td align="center">Data Segment</td>
+<td align="center">数据段寄存器</td>
+</tr>
+<tr>
+<td align="center">ES</td>
+<td align="center">Extra Segment</td>
+<td align="center">附加段寄存器</td>
+</tr>
+<tr>
+<td align="center">SS</td>
+<td align="center">Stack Segment</td>
+<td align="center">栈段</td>
+</tr>
+<tr>
+<td align="center">SP</td>
+<td align="center">Stack Pointer</td>
+<td align="center">栈指针寄存器</td>
+</tr>
+<tr>
+<td align="center">IP</td>
+<td align="center">Instruction Pointer</td>
+<td align="center">指令指针寄存器</td>
+</tr>
+<tr>
+<td align="center">SI</td>
+<td align="center">Source Index</td>
+<td align="center">源索引（变址）寄存器</td>
+</tr>
+<tr>
+<td align="center">DI</td>
+<td align="center">Destination Index</td>
+<td align="center">目标索引寄存器</td>
+</tr>
+<tr>
+<td align="center">AX</td>
+<td align="center">Accumulator</td>
+<td align="center">累加器</td>
+</tr>
+<tr>
+<td align="center">BX</td>
+<td align="center">Base Address Register</td>
+<td align="center">基地址寄存器</td>
+</tr>
+<tr>
+<td align="center">CX</td>
+<td align="center">Counter</td>
+<td align="center">计数器</td>
+</tr>
+<tr>
+<td align="center">DX</td>
+<td align="center">Data</td>
+<td align="center">数据寄存器</td>
+</tr>
+</tbody></table>
+<h3 id="标志寄存器"><a href="#标志寄存器" class="headerlink" title="标志寄存器"></a>标志寄存器</h3><table>
+<thead>
+<tr>
+<th align="center">Index</th>
+<th align="center">名称</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">第0位</td>
+<td align="center">CF</td>
+<td align="center">进位标志，进行算术操作时，如果最高位有向前进位或借位的情况发生，则CF=1，否则CF=0，少数指令除外（如inc和dec）</td>
+</tr>
+<tr>
+<td align="center">第2位</td>
+<td align="center">PF</td>
+<td align="center">奇偶标志，运算结果最低8位，有偶数个为1的比特则PF=1，否则PF=0</td>
+</tr>
+<tr>
+<td align="center">第4位</td>
+<td align="center">AF</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">第6位</td>
+<td align="center">ZF（Zero Flag）</td>
+<td align="center">零标志，当处理器执行一条算数或者逻辑运算指令后，抓住逻辑部件送出的结果除了送到指令中指定位置，还送到一个或非门，如果计算结果为0，ZF被置成1，表示计算结果为零是“真”的，否则清除此位（0）</td>
+</tr>
+<tr>
+<td align="center">第7位</td>
+<td align="center">SF（Sign Flag）</td>
+<td align="center">符号位，如dec计算结果的最高位是比特“0”，SF置“0”，否则置“1”</td>
+</tr>
+<tr>
+<td align="center">第8位</td>
+<td align="center">TF</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">第9位</td>
+<td align="center">IF</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">第10位</td>
+<td align="center">DF（Direction Flag）</td>
+<td align="center">方向标志，可控制movsb和movsw的传送方向</td>
+</tr>
+<tr>
+<td align="center">第11位</td>
+<td align="center">OF</td>
+<td align="center">即溢出标志，用于指示两个有符号数的运算结果是否错误，如果结果正确，则OF=0，否则OF=1</td>
+</tr>
+</tbody></table>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><h3 id="mov"><a href="#mov" class="headerlink" title="mov"></a>mov</h3><p>示例：<br>mov ah,bh<br>mov ax,dx<br>mov [0x02],bl<br>mov ax,[0x06]<br>mov ah,0x05<br>mov word [0x1c],0xf000</p>
+<h3 id="db（Declare-Byte）"><a href="#db（Declare-Byte）" class="headerlink" title="db（Declare Byte）"></a>db（Declare Byte）</h3><p>伪指令，跟在后面的操作数都占一个字节的长度，如果要声明超过一个以上的数据，各个操作数之间必须以逗号隔开</p>
+<h3 id="div"><a href="#div" class="headerlink" title="div"></a>div</h3><ol>
+<li>用16位的二进制数除以8位的二进制数：<br>被除数必须在寄存器AX中，必须先传送到AX寄存器里，除数可以由8位的通用寄存器或者内存单元提供<br>执行后：商在AL中，余数在AH中</li>
+<li>用32位的二进制数除以16位的二进制数：<br>被除数的高16位在DX中，低16位在AX中<br>执行后：商在AX中，余数在DX中</li>
+</ol>
+<h3 id="xor"><a href="#xor" class="headerlink" title="xor"></a>xor</h3><p>0 xor 0 = 0<br>0 xor 1 = 1<br>1 xor 0 = 1<br>1 xor 1 = 0<br>常用于清零</p>
+<h3 id="times"><a href="#times" class="headerlink" title="times"></a>times</h3><p>伪指令，重复后面的指令若干次<br>例：times 100 db 0</p>
+<h3 id="movsb和movsw"><a href="#movsb和movsw" class="headerlink" title="movsb和movsw"></a>movsb和movsw</h3><p>原始数据串的段地址由 DS 指定，偏移地址由 SI 指定，简写为 DS：SI ，目的地址为 ES：DI ，传送的字节数或者字数由 CX 指定，每传送一次， CX 内容减一<br>正向传送时传送操作方向是从内存区域低地址端到高地址端，每传送一个字节或一个字时， SI 和 DI 加 1 或者加 2 ，反向传送则相反</p>
+<h3 id="cld和std"><a href="#cld和std" class="headerlink" title="cld和std"></a>cld和std</h3><p><strong>cld</strong>:将 DF 标志清零，指示传送是正方向的<br><strong>std</strong>:与 <code>cld</code> 相反</p>
+<h3 id="loop"><a href="#loop" class="headerlink" title="loop"></a>loop</h3><p>执行时 CX 减一，若 CX 内容不为零，转移到指定的位置执行，否则顺序后面的指令</p>
+<h3 id="rep"><a href="#rep" class="headerlink" title="rep"></a>rep</h3><p>指令前缀，即 repeat<br>CX 不为零则重复</p>
+<h3 id="inc和dec"><a href="#inc和dec" class="headerlink" title="inc和dec"></a>inc和dec</h3><p><strong>inc</strong>:加一指令，<code>inc bx</code> 和 <code>add bx,1</code> 功能一样，但前者机器码更短，速度更快<br><strong>dec</strong>:减一指令，与 <code>inc</code> 格式相同</p>
+<h3 id="neg"><a href="#neg" class="headerlink" title="neg"></a>neg</h3><p>用 0 减去指令中指定的操作数</p>
+<h3 id="cbw和cwd"><a href="#cbw和cwd" class="headerlink" title="cbw和cwd"></a>cbw和cwd</h3><p>两条指令后都没有操作数<br><strong>cbw</strong>（Convert Byte to Word）：将 AL 中的有符号数扩展到整个 AX<br><strong>cwd</strong>（Convert Word to Double-word）：将 AX 中的有符号数扩展到 DX：AX 中</p>
+<h3 id="idiv"><a href="#idiv" class="headerlink" title="idiv"></a>idiv</h3><p>div 为无符号除尘指令（Unsigned Divide）<br>idiv 指令格式与 div 相同，专门用于计算有符号数</p>
+<h3 id="sub"><a href="#sub" class="headerlink" title="sub"></a>sub</h3><p>与加法指令 <code>add</code> 类似，但处理器没有减法运算电路，故 <code>sub ah,al</code> 等效<br>neg al<br>add ah,al</p>
+<h3 id="cmp"><a href="#cmp" class="headerlink" title="cmp"></a>cmp</h3><p>功能上和 <code>sub</code> 指令相同，但仅影响相应标志位（CF、OF、SF、ZF、AF和PF），而不保留计算结果，因此不会改变两个操作数的原有内容</p>
+<h3 id="or和and"><a href="#or和and" class="headerlink" title="or和and"></a>or和and</h3><table>
+<thead>
+<tr>
+<th>or</th>
+<th>and</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0 xor 0 = 0</td>
+<td>0 xor 0 = 0</td>
+</tr>
+<tr>
+<td>0 xor 1 = 1</td>
+<td>0 xor 1 = 0</td>
+</tr>
+<tr>
+<td>1 xor 0 = 1</td>
+<td>1 xor 0 = 0</td>
+</tr>
+<tr>
+<td>1 xor 1 = 1</td>
+<td>1 xor 1 = 1</td>
+</tr>
+<tr>
+<td>对标志寄存器影响： OF 和 CF 位被清零， SF、ZF、PF 的状态依计算结果而定</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="push和pop"><a href="#push和pop" class="headerlink" title="push和pop"></a>push和pop</h3><p>操作数可以是寄存器或者内存单元，逻辑地址为 SS：SP ，不影响任何标志位<br><strong>push</strong>：执行时将 SP 内容减去操作数的字长，从高地址端向低地址端推进<br><strong>pop</strong>：执行时将 SP 内容加上操作数的字长</p>
+<h3 id="in和out"><a href="#in和out" class="headerlink" title="in和out"></a>in和out</h3><p><code>in</code> 指令是从端口读，一般形式是<br>in al,dx<br>in ax,dx<br>in 指令的操作数必须是寄存器 AL 或者 AX ，用于访问 8 位或 16 位的端口，源操作数应当是寄存器 DX ， <code>in</code> 指令为 2 字节形式时，后一字节是立即数<br> <code>out</code> 指令和 <code>in</code> 指令相反<br>两个指令均不影响任何标志位</p>
+<h3 id="call、ref和retf指令"><a href="#call、ref和retf指令" class="headerlink" title="call、ref和retf指令"></a>call、ref和retf指令</h3><p>8086处理器支持四种调用方式<br>    i. 16位相对近调用。近调用的意思是被调用的目标过程位于当前代码段内，而非另一个不同的代码段，故只需得到偏移地址即可，计算过程为：用目标过程的汇编地址减去当前call指令的汇编地址，再减去当前call指令以字节为单位的长度(3)，保留16位的结果，近调用的特征是在指令中使用关键字”near”，若没有提供任何关键字，则编译器认为该指令是近调用，其机器指令操作数是一个16位的有符号数，被调用过程的首地址必须位于距离当前call指令-32768~32767字节的地方<br>    ii. 16位间接绝对近调用。这种调用也是近调用，只能调用当前代码段内的过程，指令中的操作数不是偏移量，而是被调用过程的真实偏移地址，故称为绝对地址，该偏移地址不直接出现在指令中，而是由16位的通用寄存器或者16位的内存单元间接提供，机器指令的操作是16位的绝对地址，故可以调用当前代码段任何位置处的过程<br>    iii. 16位直接绝对远调用。这种调用属于段间调用，即调用另一个代码段的过程，”16位”是针对偏移地址来说的，而不是限定段地址，”直接”的意思，段地接和偏移地址直接在call指令中给出，先后将CS和IP进行压栈和出栈<br>    iv. 16位间接绝对远调用。同样属于段间调用，”16位”同样用于限定偏移地址，必须使用关键字”far”，例：<br>        proc_1 dw 0x0102,0x2000<br>        call far [proc_1]<br>    0x0102是偏移地址，0x2000是段地址，指令执行时，处理器访问DS指向的数据段，从指令中指定的偏移地址处取得两个字（段地址0x2000和偏移地址0x0102），再将CS和IP分别压栈和取代<br>ref是近返回指令，从栈中弹出一个字到IP中<br>retf是远返回指令，分别从栈中弹出两个字到IP和CS中</p>
+<h3 id="shr、shl、ror、rol"><a href="#shr、shl、ror、rol" class="headerlink" title="shr、shl、ror、rol"></a>shr、shl、ror、rol</h3><p><strong>shr</strong>（Shift logical Right），即逻辑右移指令，将AX中的内容右移4位，执行时将操作数连续右移指定次数，每次溢出的比特被移到CF位，空出的位置用“0”填充，目的操作数可以是8位或16位通用寄存器/内存单元，源操作数可以是1或8位立即数或寄存器CL，当使用CL时，对于目的操作数是内存地址的情况，须使用关键字byte或word等来加限定，如：<br>    shr al,cl<br>    shr byte [bx],cl<br>ror（Rotate Right），即循环右移指令，执行时每右移一次，移出的比特既送到CF位，也送进左边空出的位</p>
+<h3 id="jmp"><a href="#jmp" class="headerlink" title="jmp"></a>jmp</h3><p>若JMP之后是标号，则编译为相对转移指令0xE9，操作数为相对偏移题，执行时IP+操作数+长度，此时为相对近转移<br>8086处理器的无条件转移指令（“16位”意为要转移到的目标位置的偏移地址是16位的）</p>
+<ol>
+<li>相对短转移。操作码为0xEB，操作数是相对于目标位置的偏移量，仅1字节，且为有符号数，故该指令属于段内转移指令，且只允许转移到距离当前-128~127字节的地方，该指令须使用关键字“short”，例：<br> jmp shor infinite</li>
+<li>16位相对近转移。转移范围较相对短转移稍大，操作码为0xE9，操作数为2字节，属于段内转移，可转移到距当前指令-32768~32767字节的地方，该指令应使用关键字“near”</li>
+<li>16位间接绝对近转移。转移到的目标偏移地址不是在指令中直接给出，而是用一个16位的通用寄存器或者内存地址间接给出，关键字“near“可以省略，例：<br> jmp near bx<br> jmp near cx<br> jump_dest dw 0xc000<br> jmp [jump_dest]<br> jmp [bx]</li>
+<li>16位直接绝对远转移。在指令中直接给出段地址和偏移地址的转移指令，例：<br> jmp 0x0000:0x7c00</li>
+<li>16位间接绝对远转移。该指令要使用关键字”far”，例：<br> jump_far dw 0x33c0,0xf000<br> jmp far [jump_far]</li>
+</ol>
+<p><strong>resb</strong>（REServe Byte）、resw和resd指令<br><strong>resb</strong>:从当前位置开始，保留指定数量的字节，但不进行初始化</p>
+<h3 id="mul"><a href="#mul" class="headerlink" title="mul"></a>mul</h3><p>可以用8位的通用寄存器或者内存单元中的数和寄存器AL中的内容相乘，结果是16位，在AX寄存器中，也可以用16位的通用寄存器或者内存单元中的数和寄存器AX中的内容相乘，结果是32位，高16位和低16位分别在DX和AX中，指令执行后，若结果的高一半全为0，则OF和CF清零，否则置1</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>《x86汇编语言——从实模式到保护模式》——李忠 著</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>汇编学习笔记</p><p><a href="http://blog.weyung.cc/2022/04/06/汇编学习笔记/">http://blog.weyung.cc/2022/04/06/汇编学习笔记/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>未央</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-04-06</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2024-05-08</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="CC BY-NC 4.0" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh"><i class="icon fab fa-creative-commons"></i><i class="icon fab fa-creative-commons-by"></i><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E6%B1%87%E7%BC%96/">汇编</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/images/wechatpay.png" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2022/04/11/NTRUEncrypt/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">NTRUEncrypt</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/04/03/Matrix%20%E9%9D%A2%E8%AF%95%20-%20%E5%89%8D%E7%AB%AF%E7%AF%87/"><span class="level-item">Matrix 面试 - 前端篇</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "naquiv8kljfmeFx6t9aSTTWn-9Nh9j0Va",
+            appKey: "fneElOQzdSRFC3p43Bd4J69D",
+            placeholder: "说点什么吧",
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: false,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: false,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/images/wy.png" alt="未央"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">未央</p><p class="is-size-6 is-block">写一些和我一样菜也能看懂的文章</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">35</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">8</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">33</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="GitHub" href="https://github.com/weyung"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Telegram" href="https://t.me/we_yung"><i class="fab fa-telegram"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#前言"><span class="level-left"><span class="level-item">1</span><span class="level-item">前言</span></span></a></li><li><a class="level is-mobile" href="#寄存器"><span class="level-left"><span class="level-item">2</span><span class="level-item">寄存器</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#通用寄存器"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">通用寄存器</span></span></a></li><li><a class="level is-mobile" href="#标志寄存器"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">标志寄存器</span></span></a></li></ul></li><li><a class="level is-mobile" href="#指令"><span class="level-left"><span class="level-item">3</span><span class="level-item">指令</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#mov"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">mov</span></span></a></li><li><a class="level is-mobile" href="#db（Declare-Byte）"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">db（Declare Byte）</span></span></a></li><li><a class="level is-mobile" href="#div"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">div</span></span></a></li><li><a class="level is-mobile" href="#xor"><span class="level-left"><span class="level-item">3.4</span><span class="level-item">xor</span></span></a></li><li><a class="level is-mobile" href="#times"><span class="level-left"><span class="level-item">3.5</span><span class="level-item">times</span></span></a></li><li><a class="level is-mobile" href="#movsb和movsw"><span class="level-left"><span class="level-item">3.6</span><span class="level-item">movsb和movsw</span></span></a></li><li><a class="level is-mobile" href="#cld和std"><span class="level-left"><span class="level-item">3.7</span><span class="level-item">cld和std</span></span></a></li><li><a class="level is-mobile" href="#loop"><span class="level-left"><span class="level-item">3.8</span><span class="level-item">loop</span></span></a></li><li><a class="level is-mobile" href="#rep"><span class="level-left"><span class="level-item">3.9</span><span class="level-item">rep</span></span></a></li><li><a class="level is-mobile" href="#inc和dec"><span class="level-left"><span class="level-item">3.10</span><span class="level-item">inc和dec</span></span></a></li><li><a class="level is-mobile" href="#neg"><span class="level-left"><span class="level-item">3.11</span><span class="level-item">neg</span></span></a></li><li><a class="level is-mobile" href="#cbw和cwd"><span class="level-left"><span class="level-item">3.12</span><span class="level-item">cbw和cwd</span></span></a></li><li><a class="level is-mobile" href="#idiv"><span class="level-left"><span class="level-item">3.13</span><span class="level-item">idiv</span></span></a></li><li><a class="level is-mobile" href="#sub"><span class="level-left"><span class="level-item">3.14</span><span class="level-item">sub</span></span></a></li><li><a class="level is-mobile" href="#cmp"><span class="level-left"><span class="level-item">3.15</span><span class="level-item">cmp</span></span></a></li><li><a class="level is-mobile" href="#or和and"><span class="level-left"><span class="level-item">3.16</span><span class="level-item">or和and</span></span></a></li><li><a class="level is-mobile" href="#push和pop"><span class="level-left"><span class="level-item">3.17</span><span class="level-item">push和pop</span></span></a></li><li><a class="level is-mobile" href="#in和out"><span class="level-left"><span class="level-item">3.18</span><span class="level-item">in和out</span></span></a></li><li><a class="level is-mobile" href="#call、ref和retf指令"><span class="level-left"><span class="level-item">3.19</span><span class="level-item">call、ref和retf指令</span></span></a></li><li><a class="level is-mobile" href="#shr、shl、ror、rol"><span class="level-left"><span class="level-item">3.20</span><span class="level-item">shr、shl、ror、rol</span></span></a></li><li><a class="level is-mobile" href="#jmp"><span class="level-left"><span class="level-item">3.21</span><span class="level-item">jmp</span></span></a></li><li><a class="level is-mobile" href="#mul"><span class="level-left"><span class="level-item">3.22</span><span class="level-item">mul</span></span></a></li></ul></li><li><a class="level is-mobile" href="#参考"><span class="level-left"><span class="level-item">4</span><span class="level-item">参考</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-11-20T18:53:00.000Z">2023-11-21</time></p><p class="title"><a href="/2023/11/21/%E7%90%90%E8%AE%B0-1/">琐记-1</a></p><p class="categories"><a href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-11-04T18:32:00.000Z">2023-11-05</time></p><p class="title"><a href="/2023/11/05/Hackergame2023-writeups/">Hackergame 2023 writeups</a></p><p class="categories"><a href="/categories/%E9%A2%98%E8%A7%A3/">题解</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-09-30T12:58:00.000Z">2023-09-30</time></p><p class="title"><a href="/2023/09/30/2023BricsCTF%20-%20random/">2023BricsCTF - random</a></p><p class="categories"><a href="/categories/%E9%A2%98%E8%A7%A3/">题解</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-09-14T05:09:00.000Z">2023-09-14</time></p><p class="title"><a href="/2023/09/14/BUUOJ%20%E4%B9%8B%20Web%20%E5%88%B7%E9%A2%98%E8%AE%B0/">BUUOJ 之 Web 刷题记</a></p><p class="categories"><a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-05-21T03:39:00.000Z">2023-05-21</time></p><p class="title"><a href="/2023/05/21/%E6%97%A5%E5%B8%B8%E9%97%AE%E9%A2%98%E5%B0%8F%E8%AE%B0/">日常问题小记</a></p><p class="categories"><a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></p></div></article></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/C%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">C语言</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%AD%A6%E4%B9%A0/"><span class="level-start"><span class="level-item">学习</span></span><span class="level-end"><span class="level-item tag">13</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%B0%8F%E7%8E%A9%E6%84%8F/"><span class="level-start"><span class="level-item">小玩意</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%B0%8F%E9%A1%B9%E7%9B%AE/"><span class="level-start"><span class="level-item">小项目</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%B0%E5%AD%A6/"><span class="level-start"><span class="level-item">数学</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"><span class="level-start"><span class="level-item">环境搭建</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%94%9F%E6%B4%BB/"><span class="level-start"><span class="level-item">生活</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E9%A2%98%E8%A7%A3/"><span class="level-start"><span class="level-item">题解</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CTF/"><span class="tag">CTF</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CVP/"><span class="tag">CVP</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Code-server/"><span class="tag">Code-server</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Nginx/"><span class="tag">Nginx</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PHP/"><span class="tag">PHP</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Python/"><span class="tag">Python</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SSL/"><span class="tag">SSL</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VSCode/"><span class="tag">VSCode</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/WSL/"><span class="tag">WSL</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Web/"><span class="tag">Web</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Windows/"><span class="tag">Windows</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pwn/"><span class="tag">pwn</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8/"><span class="tag">二进制安全</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BB%A3%E7%90%86/"><span class="tag">代理</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%89%8D%E7%AB%AF/"><span class="tag">前端</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/"><span class="tag">复变函数</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%AD%A6%E4%B9%A0/"><span class="tag">学习</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/"><span class="tag">密码学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0/"><span class="tag">抽象代数</span><span class="tag">7</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E5%AD%A6/"><span class="tag">数学</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%9D%82%E8%B0%88/"><span class="tag">杂谈</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%9D%90%E6%96%99%E5%8A%9B%E5%AD%A6/"><span class="tag">材料力学</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%BC/"><span class="tag">格</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B1%87%E7%BC%96/"><span class="tag">汇编</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%94%9F%E6%B4%BB/"><span class="tag">生活</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%94%B5%E5%BD%B1/"><span class="tag">电影</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%AE%97%E6%B3%95/"><span class="tag">算法</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/"><span class="tag">计算机</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87/"><span class="tag">论文</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E9%AB%98%E6%95%B0/"><span class="tag">高数</span><span class="tag">3</span></a></div></div></div></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2023/11/"><span class="level-start"><span class="level-item">十一月 2023</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/09/"><span class="level-start"><span class="level-item">九月 2023</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/05/"><span class="level-start"><span class="level-item">五月 2023</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/04/"><span class="level-start"><span class="level-item">四月 2023</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/01/"><span class="level-start"><span class="level-item">一月 2023</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/10/"><span class="level-start"><span class="level-item">十月 2022</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/09/"><span class="level-start"><span class="level-item">九月 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/08/"><span class="level-start"><span class="level-item">八月 2022</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/07/"><span class="level-start"><span class="level-item">七月 2022</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/05/"><span class="level-start"><span class="level-item">五月 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/04/"><span class="level-start"><span class="level-item">四月 2022</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/03/"><span class="level-start"><span class="level-item">三月 2022</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/12/"><span class="level-start"><span class="level-item">十二月 2021</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/11/"><span class="level-start"><span class="level-item">十一月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/images/wy.png" alt="weyung" height="28"></a><p class="is-size-7"><span>&copy; 2024 未央</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC 4.0" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh"><i></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mhchem.min.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
