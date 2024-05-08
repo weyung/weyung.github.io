@@ -32,18 +32,12 @@ jobs:
         git diff --name-only ${{ github.event.before }} ${{ github.sha }} | xargs git checkout ${{ github.sha }} --
         hexo clean
         hexo g
+
     - name: Deploy to Github Pages
-      env:
-        GIT_NAME: weyung
-        GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
-        REPO: github.com/weyung/weyung.github.io
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      run: |
-        git clone "https://$GH_TOKEN@$REPO" temp_deploy
-        cp -r ./public/* temp_deploy/
-        cd temp_deploy
-        git add .
-        git config user.name $GIT_NAME
-        git config user.email $GIT_EMAIL
-        git commit -m "Site deployed by GitHub Actions"
-        git push "https://$GH_TOKEN@$REPO" main:main
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: ./public
+        keep_files: true
+

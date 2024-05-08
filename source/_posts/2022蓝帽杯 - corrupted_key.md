@@ -80,21 +80,21 @@ otherPrimeInfos OtherPrimeInfos OPTIONAL
 }
 ```
 
-一通操作后发现可以拿到 $n$,$e$,CRT 系数（即 $q^{-1}mod\ p$ ）和 $d_q$ 低位，至于怎么拿到的等下再说，这里可以构造等式如下：
+一通操作后发现可以拿到 $n$,$e$,CRT 系数（即 $q^{-1}\mod p$ ）和 $d_q$ 低位，至于怎么拿到的等下再说，这里可以构造等式如下：
 $$
-    t = q^{-1} \ (mod \ p) \\\\
-    tq-1 = 0 \ (mod \ p) \\\\
-    tq^2 - q = 0 \ (mod \ n)
+    t = q^{-1} \pmod p \\\\
+    tq-1 = 0 \pmod p \\\\
+    tq^2 - q = 0 \pmod n
 $$
 然后
 $$
-    ed_q = 1 \ (mod \ q - 1) \\\\
+    ed_q = 1 \pmod{q-1} \\\\
     ed_q - 1 = k(q - 1) \\\\
     f = (dq_h + dq_l)e - 1 + k = kq
 $$
 代入得
 $$
-    tf^2 - kf = 0 \ (mod \ n)
+    tf^2 - kf = 0 \pmod n
 $$
 显然 $k$ 和 $e$ 数量级是相当的， $dq_h$ 的未知高位有512-120=392位，就可以通过 coppersmith 爆破 $k$ 。
 
