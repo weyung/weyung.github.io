@@ -126,6 +126,7 @@ for i in range(256):
 这使我们能够在 256 个变量上创建一个超定的二次方程组，它的初始状态是它的（希望是唯一的）解。我用来解决它的算法是线性化：我们可以将每个单项式（如 $x_1x_2$）视为单独的变量。然后我们将有一个线性方程组，其中 $1 + 256 + \frac{256 \cdot 255}2 = 32897$ 个变量，可以使用 M4RI 解决。实现在 `hax.cpp` 中，它期望 `gen_rels.cpp` 的输出在文件 `list_rels` 中，`output.txt` 的十六进制解码版本在文件 `out_bin` 中。
 
 > M4RI（Method of Four Russians for Inversion，四俄方法的逆运算方法）是一种针对有限域 GF(2) 上的矩阵运算（特别是矩阵求逆）的高效算法。它的名字来源于一种叫做“四俄罗斯算法”的技术，该技术是为了加速某些基本运算而发明的。
+在 Debian 系中可通过 `sudo apt-get install libm4ri-dev` 安装 M4RI 库。
 
 `gen_rel.cpp` 如下：
 
@@ -414,10 +415,39 @@ int main()
 试着用 sage 写了下 `gen_rels.cpp`，直接慢了几十倍，好吧还是 C++ 厉害。（那之前的 MT19937 的题我是不是可以用 C++ 重写来着，又给自己挖个坑）
 
 先看看 `gen_rels.cpp` 干了些啥：对每一个 0-255 的 target，找到 20000 个能让 `f(x) == target` 的 x，然后把这些 x 的每一位都当作一个变量，构造一个矩阵，然后求这个矩阵的核，这个核就是 `f(x) == target` 的所有关系的矩阵表示。这里的矩阵是 20000*2081 的，然后用 M4RI 求核。
+最终求出的每个向量与其对应 s1 expand 出的二次向量的内积都为 0。
 
-再看 `hax.cpp`，
+再看 `hax.cpp`，~~疲软了，有空再来补坑。~~
+时隔大半年回来补了（
 
-疲软了，有空再来补坑。
+这里面真是一堆语法可真是把没学过 C++ 的我搞得一头雾水。
+直接用最憨的方法，一个个看。
+
+函数 `func`： 将 `s1` 转成 `result`
+`deg2_rel` 是一个 32897 维的向量，`deg2_rel64` 是 2081 维的向量，`lin_rel` 是 256 维的向量。
+struct `sym_u64`： 64 维的向量，每一个分量都是一个 `lin_rel`，那么这应该算一个 64*256 的矩阵，并定义其异或、左移、右移、循环左移操作。
+struct `sym_xs256`： 4 个 `sym_u64` 类型的 `s1 s2 s3 s4`，并定义了 `step` 操作，这里不是很懂，按理说这四个状态向量都是 64 位的。
+定义了一个 `krels`，包含 256 个 `std::vector<deg2_rel64>` 类型的元素。每一个 `std::vector<deg2_rel64>` 可以包含任意数量的 `deg2_rel64` 对象。
+
+现在来看 `main` 函数：
+把 `list_rels` 文件中的内容读入到 `krels` 中。
+创建一个 `sym_xs256` 类的实例 `rng`，然后读进 encflag，每读一个字符更新一次 `rng` 的状态。
+对每一个泄露的字节，找到所有 `krels` 中对应的 `big_rels`，然后对每一个 `big_rels`，新建一个类型为 `deg2_rel` 的 `res`，常数项（0 号位）和 `big_rels` 取等，1-64 号位是 $(b_1, b_2, \cdots, b_{64})\cdot(s_1,s_2,\cdots,s_{64})^T$，左边的 $b$ 即为 `big_rels` 的 1-64 号位，右边是 s1 的 64*256 矩阵。后面没看懂。
+
+最后汇总到的一个 `all_rels`，求核得到的矩阵只有一个 32897 维的向量，剥出 1-256 号位得到 `ist`。
+
+整个看下来就是迷迷糊糊的。
+
+黑化了。
+
+I recently contacted the author of this challenge for assistance and was surprised by his quick response. Despite it being 00:30 when I reached out, he replied by 02:30. Given his username, I assumed he was in Russia, but his response time led me to question whether his work and rest schedule is typical or if he is not currently in Russia.
+
+The key to understanding the classes `sym_u64` and `sym_xs256` lies in the fact that the four states can be represented as a 256-bit vector. This representation forms a linear system that omits the non-linear scrambler `f(x)`. Thus, the state transition function can be expressed as a matrix, and the `step` function simply performs matrix multiplication. More specifically, the n-th state is obtained by multiplying the transition matrix $T$ by the initial state $n$ times.
+
+The construction of `res` can be explained as follows:
+
+First, it's important to note that `s1` is a 64x256 matrix which, when multiplied by `ist`, yields the current real state of `s1`. Each `s1[i]` is a 256-dimensional vector; its dot product with `ist` determines the i-th bit of the current `s1`.
+For each `res` in `all_rels`, `res` is computed by multiplying the `big_rel` (a 2081-dimensional vector) by a 2081x256 matrix, which is derived from `s1`.
 
 ## 参考
 
