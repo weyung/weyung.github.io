@@ -13,7 +13,7 @@ categories: 学习
 一个好看的终端确实是第一生产力
 
 ```bash
-# 安装oh-my-posh
+# 安装 oh-my-posh
 sudo wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
 sudo chmod +x /usr/local/bin/oh-my-posh
 # 下载主题
@@ -115,6 +115,19 @@ vim 的三个模式：**命令**模式（ Command mode ），**输入**模式（
 ### top
 
 没啥缩写了，就是 top ，用于实时显示进程的状态。
+
+### grep
+
+```bash
+grep "pattern" filename # 在文件中查找 pattern 字符串
+grep -r "pattern" directory # 在目录中递归查找 pattern 字符串
+```
+
+### du
+
+```bash
+du -h --max-depth=1 | sort -h   # 查看当前目录下各文件夹大小
+```
 
 ## 参考
 

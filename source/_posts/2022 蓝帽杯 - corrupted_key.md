@@ -1,5 +1,5 @@
 ---
-title: 2022蓝帽杯 - corrupted_key
+title: 2022 蓝帽杯 - corrupted_key
 date: 2022-07-16 13:08:00
 tags: [CTF, 密码学]
 categories: 题解
@@ -11,7 +11,7 @@ categories: 题解
 
 ## 题目
 
-给了一个`priv.pem`
+给了一个 `priv.pem`
 
 ```plain
 -----BEGIN RSA PRIVATE KEY-----

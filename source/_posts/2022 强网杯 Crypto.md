@@ -1,5 +1,5 @@
 ---
-title: 2022强网杯 Crypto
+title: 2022 强网杯 Crypto
 date: 2022-08-08 10:03:00
 tags: [CTF, 密码学]
 categories: 题解
