@@ -29,7 +29,7 @@
     "hexo-renderer-stylus": "^2.0.0",
     "hexo-renderer-swig": "^1.1.0",
     "hexo-server": "^2.0.0",
-    "hexo-theme-icarus": "^5.0.1",
+    "hexo-theme-icarus": "^6.1.0",
     "hexo-theme-landscape": "^0.0.3",
     "inferno": "^7.3.3",
     "inferno-create-element": "^7.3.3"
