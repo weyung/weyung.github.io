@@ -1,7 +1,7 @@
 ---
 title: 小 CRT 指数非平衡 RSA 的密码分析论文分析
 date: 2022-05-27 20:25:00
-tags: [数学, 抽象代数, 密码学, 论文]
+tags: [数学, 抽象代数, Crypto, 论文]
 categories: 数学
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Reed-Solomon 纠错码
 date: 2022-09-17T18:22:15+08:00
-tags: [数学,密码学,抽象代数,CTF]
+tags: [数学,Crypto,抽象代数,CTF]
 categories: 题解
 ---
 

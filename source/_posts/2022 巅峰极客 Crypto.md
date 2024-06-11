@@ -1,7 +1,7 @@
 ---
 title: 2022 巅峰极客 Crypto
 date: 2022-08-18 12:47:00
-tags: [CTF, 密码学]
+tags: [CTF, Crypto]
 categories: 题解
 ---
 

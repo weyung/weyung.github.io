@@ -1,7 +1,7 @@
 ---
 title: NTRUEncrypt
 date: 2022-04-11 00:26:00
-tags: [数学,格,抽象代数]
+tags: [数学,格,抽象代数,Crypto]
 categories: 学习
 ---
 NTRUEncrypt 公钥加密系统

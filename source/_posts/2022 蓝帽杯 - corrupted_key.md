@@ -1,7 +1,7 @@
 ---
 title: 2022 蓝帽杯 - corrupted_key
 date: 2022-07-16 13:08:00
-tags: [CTF, 密码学]
+tags: [CTF, Crypto]
 categories: 题解
 ---
 

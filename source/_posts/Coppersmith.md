@@ -1,7 +1,7 @@
 ---
 title: Coppersmith
 date: 2022-10-15 19:30:00
-tags: [数学, 抽象代数, 密码学, 论文]
+tags: [数学, 抽象代数, Crypto, 论文]
 categories: 数学
 ---
 

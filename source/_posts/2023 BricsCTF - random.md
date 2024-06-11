@@ -1,7 +1,7 @@
 ---
-title: 2023BricsCTF - random
+title: 2023 BricsCTF - random
 date: 2023-09-30 20:58:00
-tags: [CTF, 密码学]
+tags: [CTF, Crypto]
 categories: 题解
 ---
 

