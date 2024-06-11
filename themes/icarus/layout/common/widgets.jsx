@@ -1,7 +1,9 @@
-const logger = require('hexo-log')();
+const createLogger = require('hexo-log');
 const { Component } = require('inferno');
 const view = require('hexo-component-inferno/lib/core/view');
 const classname = require('hexo-component-inferno/lib/util/classname');
+
+const logger = createLogger.default();
 
 function formatWidgets(widgets) {
     const result = {};

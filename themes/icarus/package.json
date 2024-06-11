@@ -15,30 +15,30 @@
     "url": "https://github.com/ppoffice/hexo-theme-icarus/issues"
   },
   "engines": {
-    "node": ">=12.4.0"
+    "node": ">=14"
   },
   "scripts": {
     "lint": "eslint --ext .js --ext .jsx --ext .json ."
   },
   "devDependencies": {
-    "eslint": "^8.6.0",
+    "eslint": "^8.56.0",
     "eslint-config-hexo": "^5.0.0",
-    "eslint-plugin-json": "^3.0.0",
-    "eslint-plugin-react": "^7.17.0"
+    "eslint-plugin-json": "^3.1.0",
+    "eslint-plugin-react": "^7.33.2"
   },
   "dependencies": {
     "bulma-stylus": "0.8.0",
-    "deepmerge": "^4.2.2",
-    "hexo": "^7.2.0",
-    "hexo-component-inferno": "^3.1.1",
+    "deepmerge": "^4.3.1",
+    "hexo": "^7.1.1",
+    "hexo-component-inferno": "^3.1.0",
     "hexo-log": "^4.1.0",
-    "hexo-pagination": "^2.0.0",
+    "hexo-pagination": "^3.0.0",
     "hexo-renderer-inferno": "^1.0.2",
     "hexo-renderer-stylus": "^3.0.1",
-    "hexo-util": "^3.3.0",
+    "hexo-util": "^3.2.0",
     "inferno": "^8.2.3",
     "inferno-create-element": "^8.2.3",
-    "moment": "^2.22.2",
-    "semver": ">=5.0.0"
+    "moment": "^2.30.1",
+    "semver": "^7.5.4"
   }
 }
