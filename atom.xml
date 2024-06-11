@@ -58,69 +58,6 @@
     
     <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
     
-  </entry>
-  
-  <entry>
-    <title>{{ post.title }}</title>
-    <link href="{{ post.permalink | uriencode }}"/>
-    <id>{{ post.permalink | uriencode }}</id>
-    <published>{{ post.date.toISOString() }}</published>
-    <updated>{{ post.updated.toISOString() }}</updated>
-    
-    <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
-    
-    
-    <summary type="html">{{ post.excerpt }}</summary>
-    
-    
-    
-    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
-    
-    
-    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
-    
-    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
-    
-  </entry>
-  
-  <entry>
-    <title>{{ post.title }}</title>
-    <link href="{{ post.permalink | uriencode }}"/>
-    <id>{{ post.permalink | uriencode }}</id>
-    <published>{{ post.date.toISOString() }}</published>
-    <updated>{{ post.updated.toISOString() }}</updated>
-    
-    <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
-    
-    
-    <summary type="html">{{ post.excerpt }}</summary>
-    
-    
-    
-    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
-    
-    
-    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
-    
-  </entry>
-  
-  <entry>
-    <title>{{ post.title }}</title>
-    <link href="{{ post.permalink | uriencode }}"/>
-    <id>{{ post.permalink | uriencode }}</id>
-    <published>{{ post.date.toISOString() }}</published>
-    <updated>{{ post.updated.toISOString() }}</updated>
-    
-    <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
-    
-    
-    <summary type="html">{{ post.excerpt }}</summary>
-    
-    
-    
-    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
-    
-    
     <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
     
   </entry>
@@ -187,54 +124,6 @@
     
     <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
     
-    
-    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
-    
-    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
-    
-  </entry>
-  
-  <entry>
-    <title>{{ post.title }}</title>
-    <link href="{{ post.permalink | uriencode }}"/>
-    <id>{{ post.permalink | uriencode }}</id>
-    <published>{{ post.date.toISOString() }}</published>
-    <updated>{{ post.updated.toISOString() }}</updated>
-    
-    <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
-    
-    
-    <summary type="html">{{ post.excerpt }}</summary>
-    
-    
-    
-    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
-    
-    
-    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
-    
-    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
-    
-  </entry>
-  
-  <entry>
-    <title>{{ post.title }}</title>
-    <link href="{{ post.permalink | uriencode }}"/>
-    <id>{{ post.permalink | uriencode }}</id>
-    <published>{{ post.date.toISOString() }}</published>
-    <updated>{{ post.updated.toISOString() }}</updated>
-    
-    <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
-    
-    
-    <summary type="html">{{ post.excerpt }}</summary>
-    
-    
-    
-    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
-    
-    
-    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
     
     <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
     
@@ -326,6 +215,186 @@
     
     <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
     
+  </entry>
+  
+  <entry>
+    <title>{{ post.title }}</title>
+    <link href="{{ post.permalink | uriencode }}"/>
+    <id>{{ post.permalink | uriencode }}</id>
+    <published>{{ post.date.toISOString() }}</published>
+    <updated>{{ post.updated.toISOString() }}</updated>
+    
+    <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
+    
+    
+    <summary type="html">{{ post.excerpt }}</summary>
+    
+    
+    
+    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
+    
+    
+    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
+    
+    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
+    
+  </entry>
+  
+  <entry>
+    <title>{{ post.title }}</title>
+    <link href="{{ post.permalink | uriencode }}"/>
+    <id>{{ post.permalink | uriencode }}</id>
+    <published>{{ post.date.toISOString() }}</published>
+    <updated>{{ post.updated.toISOString() }}</updated>
+    
+    <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
+    
+    
+    <summary type="html">{{ post.excerpt }}</summary>
+    
+    
+    
+    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
+    
+    
+    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
+    
+    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
+    
+  </entry>
+  
+  <entry>
+    <title>{{ post.title }}</title>
+    <link href="{{ post.permalink | uriencode }}"/>
+    <id>{{ post.permalink | uriencode }}</id>
+    <published>{{ post.date.toISOString() }}</published>
+    <updated>{{ post.updated.toISOString() }}</updated>
+    
+    <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
+    
+    
+    <summary type="html">{{ post.excerpt }}</summary>
+    
+    
+    
+    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
+    
+    
+    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
+    
+    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
+    
+  </entry>
+  
+  <entry>
+    <title>{{ post.title }}</title>
+    <link href="{{ post.permalink | uriencode }}"/>
+    <id>{{ post.permalink | uriencode }}</id>
+    <published>{{ post.date.toISOString() }}</published>
+    <updated>{{ post.updated.toISOString() }}</updated>
+    
+    <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
+    
+    
+    <summary type="html">{{ post.excerpt }}</summary>
+    
+    
+    
+    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
+    
+    
+    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
+    
+    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
+    
+  </entry>
+  
+  <entry>
+    <title>{{ post.title }}</title>
+    <link href="{{ post.permalink | uriencode }}"/>
+    <id>{{ post.permalink | uriencode }}</id>
+    <published>{{ post.date.toISOString() }}</published>
+    <updated>{{ post.updated.toISOString() }}</updated>
+    
+    <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
+    
+    
+    <summary type="html">{{ post.excerpt }}</summary>
+    
+    
+    
+    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
+    
+    
+    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
+    
+    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
+    
+  </entry>
+  
+  <entry>
+    <title>{{ post.title }}</title>
+    <link href="{{ post.permalink | uriencode }}"/>
+    <id>{{ post.permalink | uriencode }}</id>
+    <published>{{ post.date.toISOString() }}</published>
+    <updated>{{ post.updated.toISOString() }}</updated>
+    
+    <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
+    
+    
+    <summary type="html">{{ post.excerpt }}</summary>
+    
+    
+    
+    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
+    
+    
+    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
+    
+  </entry>
+  
+  <entry>
+    <title>{{ post.title }}</title>
+    <link href="{{ post.permalink | uriencode }}"/>
+    <id>{{ post.permalink | uriencode }}</id>
+    <published>{{ post.date.toISOString() }}</published>
+    <updated>{{ post.updated.toISOString() }}</updated>
+    
+    <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
+    
+    
+    <summary type="html">{{ post.excerpt }}</summary>
+    
+    
+    
+    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
+    
+    
+    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
+    
+  </entry>
+  
+  <entry>
+    <title>{{ post.title }}</title>
+    <link href="{{ post.permalink | uriencode }}"/>
+    <id>{{ post.permalink | uriencode }}</id>
+    <published>{{ post.date.toISOString() }}</published>
+    <updated>{{ post.updated.toISOString() }}</updated>
+    
+    <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
+    
+    
+    <summary type="html">{{ post.excerpt }}</summary>
+    
+    
+    
+    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
+    
+    
+    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
+    
+    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
+    
     <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
     
     <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
@@ -404,75 +473,6 @@
     <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
     
     <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
-    
-    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
-    
-    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
-    
-  </entry>
-  
-  <entry>
-    <title>{{ post.title }}</title>
-    <link href="{{ post.permalink | uriencode }}"/>
-    <id>{{ post.permalink | uriencode }}</id>
-    <published>{{ post.date.toISOString() }}</published>
-    <updated>{{ post.updated.toISOString() }}</updated>
-    
-    <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
-    
-    
-    <summary type="html">{{ post.excerpt }}</summary>
-    
-    
-    
-    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
-    
-    
-    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
-    
-    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
-    
-  </entry>
-  
-  <entry>
-    <title>{{ post.title }}</title>
-    <link href="{{ post.permalink | uriencode }}"/>
-    <id>{{ post.permalink | uriencode }}</id>
-    <published>{{ post.date.toISOString() }}</published>
-    <updated>{{ post.updated.toISOString() }}</updated>
-    
-    <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
-    
-    
-    <summary type="html">{{ post.excerpt }}</summary>
-    
-    
-    
-    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
-    
-    
-    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
-    
-    <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
-    
-  </entry>
-  
-  <entry>
-    <title>{{ post.title }}</title>
-    <link href="{{ post.permalink | uriencode }}"/>
-    <id>{{ post.permalink | uriencode }}</id>
-    <published>{{ post.date.toISOString() }}</published>
-    <updated>{{ post.updated.toISOString() }}</updated>
-    
-    <content type="html"><![CDATA[{{ post.content | noControlChars | safe }}]]></content>
-    
-    
-    <summary type="html">{{ post.excerpt }}</summary>
-    
-    
-    
-    <category term="{{ category.name }}" scheme="{{ category.permalink }}"/>
-    
     
     <category term="{{ tag.name }}" scheme="{{ tag.permalink }}"/>
     
