@@ -10838,11 +10838,6 @@ article.article .content code {
   background: transparent;
   overflow-wrap: break-word;
 }
-article.article .content blockquote {
-  background: #eef3fc;
-  border-left: 4.5px solid #3273dc;
-  border-radius: 4.5px;
-}
 article.article .content blockquote.pullquote {
   float: right;
   max-width: 50%;
