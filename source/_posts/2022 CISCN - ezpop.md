@@ -235,4 +235,5 @@ def _encode_params(data):
         return data
 ```
 
-其中
+其中 `@staticmethod` 修饰的方法是静态方法，就是可以直接通过类名调用，不需要实例化。
+可以看到，`data` 参数会被 `urlencode` 处理，这就是当年失败的原因。
