@@ -29,7 +29,7 @@
       switchTab();
       window.addEventListener('hashchange', switchTab, false);
   })();
-  </script><!-- hexo injector head_end end --></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/wy.png" alt="weyung" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives/">归档</a><a class="navbar-item" href="/categories/">分类</a><a class="navbar-item" href="/tags/">标签</a><a class="navbar-item" href="/links/">友链</a><a class="navbar-item" href="/about/">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-06-20T17:53:00.000Z" title="6/21/2024, 1:53:00 AM">2024-06-21</time>发表</span><span class="level-item"><time dateTime="2024-06-26T14:54:05.999Z" title="6/26/2024, 10:54:05 PM">2024-06-26</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="level-item">9 分钟读完 (大约1354个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">信息论笔记</h1><div class="content"><p>还是复习。</p>
+  </script><!-- hexo injector head_end end --></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/wy.png" alt="weyung" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives/">归档</a><a class="navbar-item" href="/categories/">分类</a><a class="navbar-item" href="/tags/">标签</a><a class="navbar-item" href="/links/">友链</a><a class="navbar-item" href="/about/">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-06-20T17:53:00.000Z" title="6/21/2024, 1:53:00 AM">2024-06-21</time>发表</span><span class="level-item"><time dateTime="2024-06-26T15:09:45.530Z" title="6/26/2024, 11:09:45 PM">2024-06-26</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="level-item">13 分钟读完 (大约1904个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">信息论笔记</h1><div class="content"><p>还是复习。</p>
 <span id="more"></span>
 
 <h2 id="第一章-绪论"><a href="#第一章-绪论" class="headerlink" title="第一章 绪论"></a>第一章 绪论</h2><p>不提</p>
@@ -37,13 +37,34 @@
 <p>（1）求信源的熵 H(X)。<br>| 事件 | 数目 | 单事件的概率 | 概率的和 |<br>| :— | :— | :———– | :——- |<br>| 赛4场获冠军（AAAA） | 1 | 1/16 | 1/16 |<br>| 赛5场获冠军（前 4 场 B 胜 1 场） | 4 | 1/32 | 1/8 |<br>| 赛6场获冠军（前 5 场 B 胜 2 场） | 10 | 1/64 | 5/32 |<br>| 赛7场获冠军（前 6 场 B 胜 3 场） | 20 | 1/128 | 5/32 |<br>| <strong>总概率</strong> |   |   | 1/2 |</p>
 <p>$H(X) = 2 \times \left[ (1/16) \log_2 16 + 4 \times (1/32) \log_2 32 + 10 \times (1/64) \log_2 64 + 20 \times (1/128) \log_2 128 \right] = 186/32 = 5.8125 $ 比特/符号</p>
 <p>（2）求事件“两队打满 7 场”所提供的信息量。<br>“两队打满7场”事件数为 40，所求概率为 $40 \times (1/128) = 5/16$ ，事件“两队打满7场”所提供的信息量为<br>$$I_1 = -\log_2 (5/16) = 1.6781 \text{ bit}$$<br>（3）列出 A 队前 3 场都失利的所有情形，求“A 队前 3 场都失利”所提供的信息量。<br>如表所示：<br>| 事件 | 概率 | 结果 |<br>| :— | :— | :— |<br>| BBBB | 1/16 | B 夺冠 |<br>| BBBAB | 1/32 | B 夺冠 |<br>| BBBAAB | 1/64 | B 夺冠 |<br>| BBBAAAB | 1/128 | B 夺冠 |<br>| BBBAAAA | 1/128 | A 夺冠 |</p>
-<p>$$I_2 = \log_2 8 = 3 \text{ bit}$$</p>
-<p>（4）求事件“A 队在前 3 场获胜的条件下又取得冠军”所提供的信息量。</p>
-<p><strong>习题</strong> 2.7</p>
-<p><strong>习题</strong> 2.16</p>
-<h2 id="第三章-离散信源"><a href="#第三章-离散信源" class="headerlink" title="第三章 离散信源"></a>第三章 离散信源</h2><p><strong>习题</strong> 3.9</p>
-<p><strong>习题</strong> 3.10</p>
-<p><strong>习题</strong> 3.15</p>
+<p>$$I_2 = \log_2 8 = 3 \text{ bit}$$<br>（4）求事件“A 队在前 3 场获胜的条件下又取得冠军”所提供的信息量。<br>A队在前3场失利的条件下又取得冠军的条件概率为<br>$$\frac{1/128}{1/16 + 1/32 + 1/64 + 2 \times (1/128)}  = \frac{1}{16}$$<br>“A队在前3场失利的条件下又取得冠军”的信息量为<br>$$I_3 = \log_2 16 = 4 \text{ bit}$$</p>
+<p><strong>习题</strong> 2.7<br>已知随机变量 $X, Y$ 的联合概率分布为 $P_{XY}(a_k, b_j)$ ，满足：<br>$P_X(a_1) = 1/2$, $P_X(a_2) = P_X(a_3) = 1/4$,<br>$P_Y(b_1) = 2/3$, $P_Y(b_2) = P_Y(b_3) = 1/6$。试求能使 $H(XY)$ 取最大值的 $XY$ 的联合概率分布。</p>
+<p><strong>习题</strong> 2.16<br>两随机变量 $X, Y$ ，联合概率 $p(x,y)$ 如下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>y=0</th>
+<th>y=1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>x=0</td>
+<td>1/8</td>
+<td>3/8</td>
+</tr>
+<tr>
+<td>x=1</td>
+<td>3/8</td>
+<td>1/8</td>
+</tr>
+</tbody></table>
+<p>$Z = X \cdot Y$（一般乘积），试计算：</p>
+<p>(1) $H(X), H(Y), H(Z), H(XZ), H(YZ), H(XYZ)$;<br>(2) $H(X|Y), H(Y|X), H(X|Z), H(Z|X), H(Y|Z), H(Z|Y), H(Z|YZ), H(Y|XZ), H(Z|XY)$;<br>(3) $I(X;Y), I(X;Z), I(Y;Z), I(X;Y|Z), I(Y;Z|X), I(X;Z|Y)$。</p>
+<h2 id="第三章-离散信源"><a href="#第三章-离散信源" class="headerlink" title="第三章 离散信源"></a>第三章 离散信源</h2><p><strong>习题</strong> 3.9<br>设 $x_1, x_2, \cdots, x_{n-1}, x_n, \cdots$ 为平稳序列（未必是马氏链），那么下面的论断哪些是正确的？对正确的进行证明，对错误的举出反例。（提示：下面论断至少有一个是错的）<br>(1) $H(X_n | X_0) = H(X_{n-1} | X_0)$;<br>(2) $H(X_n | X_0) \geq H(X_{n-1} | X_0)$;<br>(3) $H(X_n | X_1, X_2, \cdots, X_{n-1})$ 是 $n$ 的增函数;<br>(4) $H(X_n | X_1, X_2, \cdots, X_{n-1}, X_{n+1}, \cdots, X_{2n})$ 是 $n$ 的非增函数。</p>
+<p><strong>习题</strong> 3.10<br>一个 2 状态马氏链的转移概率矩阵为<br>$$P = \begin{pmatrix} 3/4 &amp; 1/4 \ 1/4 &amp; 3/4 \end{pmatrix}$$<br>并假定初始状态概率矢量为 $p^{(0)} = (1 \ 0)$；求<br>(1) $P^n$ 和 $p^{(n)}$, $n = 1, 2, 3$；<br>(2) $P^n$ 和 $p^{(n)}$ 的一般形式。</p>
+<p><strong>习题</strong> 3.15<br>3.15 黑白气象传真图的消息只有黑色和白色两种，即信源 $X={\text{黑}, \text{白}}$ ；设黑色出现的概率为 $p(\text{黑}) = 0.3$ ，白色的出现概率 $p(\text{白}) = 0.7$ ：</p>
+<p>(1) 假设图上黑白消息出现前后没有关联，求熵 $H(X)$ ；<br>(2) 假设消息前后有关联，其依赖关系为 $P(\text{白}|\text{白}) = 0.9$, $P(\text{黑}|\text{白}) = 0.1$, $P(\text{白}|\text{黑}) = 0.2$, $P(\text{黑}|\text{黑}) = 0.8$，求此一阶马氏链的熵率 $H_2$；<br>(3) 分别求上述两种信源的剩余度，并比较 $H(X)$ 和 $H_2$ 的大小，并说明其物理意义。</p>
 <p><strong>习题</strong> 3.21</p>
 <h2 id="第四章-连续信息与连续信源"><a href="#第四章-连续信息与连续信源" class="headerlink" title="第四章 连续信息与连续信源"></a>第四章 连续信息与连续信源</h2><p><strong>习题</strong> 4.1</p>
 <p><strong>习题</strong> 4.13</p>
