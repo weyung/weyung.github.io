@@ -29,14 +29,88 @@
       switchTab();
       window.addEventListener('hashchange', switchTab, false);
   })();
-  </script><!-- hexo injector head_end end --></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/wy.png" alt="weyung" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives/">归档</a><a class="navbar-item" href="/categories/">分类</a><a class="navbar-item" href="/tags/">标签</a><a class="navbar-item" href="/links/">友链</a><a class="navbar-item" href="/about/">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-06-20T17:53:00.000Z" title="6/21/2024, 1:53:00 AM">2024-06-21</time>发表</span><span class="level-item"><time dateTime="2024-06-27T08:23:28.819Z" title="6/27/2024, 4:23:28 PM">2024-06-27</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="level-item">41 分钟读完 (大约6086个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">信息论笔记</h1><div class="content"><p>还是复习。</p>
+  </script><!-- hexo injector head_end end --></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/wy.png" alt="weyung" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives/">归档</a><a class="navbar-item" href="/categories/">分类</a><a class="navbar-item" href="/tags/">标签</a><a class="navbar-item" href="/links/">友链</a><a class="navbar-item" href="/about/">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-06-20T17:53:00.000Z" title="6/21/2024, 1:53:00 AM">2024-06-21</time>发表</span><span class="level-item"><time dateTime="2024-06-27T08:25:12.062Z" title="6/27/2024, 4:25:12 PM">2024-06-27</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="level-item">41 分钟读完 (大约6090个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">信息论笔记</h1><div class="content"><p>还是复习。</p>
 <span id="more"></span>
 
 <h2 id="第一章-绪论"><a href="#第一章-绪论" class="headerlink" title="第一章 绪论"></a>第一章 绪论</h2><p>不提</p>
 <h2 id="第二章-离散信息的度量"><a href="#第二章-离散信息的度量" class="headerlink" title="第二章 离散信息的度量"></a>第二章 离散信息的度量</h2><p><strong>习题</strong> 2.6<br>在某地篮球联赛的每个赛季中，最终只有 A、B 两队进入决赛争夺冠军。决赛采用 7 场 4 胜制，首先赢得 4 场胜利的球队获得冠军，并结束比赛。把产生冠军的事件 x 用 A、B 两队各场次比赛结果表示，作为信源 X 产生的随机事件，例如：AAAA 表示事件“A 队前 4 场获得冠军”；ABBAAA 表示事件“ A 队在第 1、4、5、6 场取胜获得冠军（而 B 队在第 2、3 场取胜）”……假设两队在每场比赛中的取胜机会均等，每场比赛只有“A 胜”或“B 胜”两种结果，并且各场比赛的结果是彼此独立的。</p>
-<p>（1）求信源的熵 H(X)。<br>| 事件 | 数目 | 单事件的概率 | 概率的和 |<br>| :— | :— | :———– | :——- |<br>| 赛4场获冠军（AAAA） | 1 | 1/16 | 1/16 |<br>| 赛5场获冠军（前 4 场 B 胜 1 场） | 4 | 1/32 | 1/8 |<br>| 赛6场获冠军（前 5 场 B 胜 2 场） | 10 | 1/64 | 5/32 |<br>| 赛7场获冠军（前 6 场 B 胜 3 场） | 20 | 1/128 | 5/32 |<br>| <strong>总概率</strong> |   |   | 1/2 |</p>
+<p>（1）求信源的熵 H(X)。</p>
+<table>
+<thead>
+<tr>
+<th align="left">事件</th>
+<th align="left">数目</th>
+<th align="left">单事件的概率</th>
+<th align="left">概率的和</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">赛4场获冠军（AAAA）</td>
+<td align="left">1</td>
+<td align="left">1/16</td>
+<td align="left">1/16</td>
+</tr>
+<tr>
+<td align="left">赛5场获冠军（前 4 场 B 胜 1 场）</td>
+<td align="left">4</td>
+<td align="left">1/32</td>
+<td align="left">1/8</td>
+</tr>
+<tr>
+<td align="left">赛6场获冠军（前 5 场 B 胜 2 场）</td>
+<td align="left">10</td>
+<td align="left">1/64</td>
+<td align="left">5/32</td>
+</tr>
+<tr>
+<td align="left">赛7场获冠军（前 6 场 B 胜 3 场）</td>
+<td align="left">20</td>
+<td align="left">1/128</td>
+<td align="left">5/32</td>
+</tr>
+<tr>
+<td align="left"><strong>总概率</strong></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">1/2</td>
+</tr>
+</tbody></table>
 <p>$H(X) = 2 \times \left[ (1/16) \log_2 16 + 4 \times (1/32) \log_2 32 + 10 \times (1/64) \log_2 64 + 20 \times (1/128) \log_2 128 \right] = 186/32 = 5.8125 $ 比特/符号</p>
-<p>（2）求事件“两队打满 7 场”所提供的信息量。<br>“两队打满7场”事件数为 40，所求概率为 $40 \times (1/128) = 5/16$ ，事件“两队打满7场”所提供的信息量为<br>$$I_1 = -\log_2 (5/16) = 1.6781 \text{ bit}$$<br>（3）列出 A 队前 3 场都失利的所有情形，求“A 队前 3 场都失利”所提供的信息量。<br>如表所示：<br>| 事件 | 概率 | 结果 |<br>| :— | :— | :— |<br>| BBBB | 1/16 | B 夺冠 |<br>| BBBAB | 1/32 | B 夺冠 |<br>| BBBAAB | 1/64 | B 夺冠 |<br>| BBBAAAB | 1/128 | B 夺冠 |<br>| BBBAAAA | 1/128 | A 夺冠 |</p>
+<p>（2）求事件“两队打满 7 场”所提供的信息量。<br>“两队打满7场”事件数为 40，所求概率为 $40 \times (1/128) = 5/16$ ，事件“两队打满7场”所提供的信息量为<br>$$I_1 = -\log_2 (5/16) = 1.6781 \text{ bit}$$<br>（3）列出 A 队前 3 场都失利的所有情形，求“A 队前 3 场都失利”所提供的信息量。<br>如表所示：</p>
+<table>
+<thead>
+<tr>
+<th align="left">事件</th>
+<th align="left">概率</th>
+<th align="left">结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">BBBB</td>
+<td align="left">1/16</td>
+<td align="left">B 夺冠</td>
+</tr>
+<tr>
+<td align="left">BBBAB</td>
+<td align="left">1/32</td>
+<td align="left">B 夺冠</td>
+</tr>
+<tr>
+<td align="left">BBBAAB</td>
+<td align="left">1/64</td>
+<td align="left">B 夺冠</td>
+</tr>
+<tr>
+<td align="left">BBBAAAB</td>
+<td align="left">1/128</td>
+<td align="left">B 夺冠</td>
+</tr>
+<tr>
+<td align="left">BBBAAAA</td>
+<td align="left">1/128</td>
+<td align="left">A 夺冠</td>
+</tr>
+</tbody></table>
 <p>$$I_2 = \log_2 8 = 3 \text{ bit}$$<br>（4）求事件“A 队在前 3 场获胜的条件下又取得冠军”所提供的信息量。<br>A队在前 3 场失利的条件下又取得冠军的条件概率为<br>$$\frac{1/128}{1/16 + 1/32 + 1/64 + 2 \times (1/128)}  = \frac{1}{16}$$<br>“A队在前 3 场失利的条件下又取得冠军”的信息量为<br>$$I_3 = \log_2 16 = 4 \text{ bit}$$</p>
 <p><strong>习题</strong> 2.7<br>已知随机变量 $X, Y$ 的联合概率分布为 $P_{XY}(a_k, b_j)$ ，满足：<br>$P_X(a_1) = 1/2$, $P_X(a_2) = P_X(a_3) = 1/4$,<br>$P_Y(b_1) = 2/3$, $P_Y(b_2) = P_Y(b_3) = 1/6$。试求能使 $H(XY)$ 取最大值的 $XY$ 的联合概率分布。</p>
 <p>因为 $H(XY) \leq H(X) + H(Y)$，<strong>当且仅当 $X, Y$ 独立时，等号成立</strong>。所以当 $X, Y$ 独立时，$H(XY)$ 取最大值。因此 $XY$ 的联合概率分布为</p>
@@ -66,7 +140,7 @@
 <p>$P_X(0) = 1/2$，即 $P(X=0) = 1/2$，下同<br>$P_X(1) = 1/2$</p>
 <p>$P_Y(0) = 1/2$<br>$P_Y(1) = 1/2$</p>
 <p>由表知，$x=0$ 和 $y=0$ 都能让 Z 为 0，故<br>$P_Z(0) = 1/8+3/8+3/8 = 7/8$<br>$P_Z(1) = 1/8$</p>
-<p>(1)<br>主要利用自信息的平均值为熵，即<br>$$<br>H(X) = E_{p(x)}[-\log p(x)]<br>$$<br>注意 $\log$ 默认是以 2 为底的<br>$$<br>H(X) = H(1/2) = 1 \text{ 比特/符号}\\<br>H(Y) = H(1/2) = 1 \text{ 比特/符号}\\<br>H(Z) = H(1/8) = 0.544 \text{ 比特/符号}\\<br>H(XZ) = H(1/2, 3/8, 1/8) = 1.406 \text{ 比特/符号}\\<br>H(YZ) = H(XZ) = 1.406 \text{ 比特/符号}\\<br>H(XYZ) = H(1/8, 3/8, 3/8, 1/8) = 1.811 \text{ 比特/符号}<br>$$</p>
+<p>(1)<br>主要利用自信息的平均值为熵，即<br>$$<br>H(X) = E_{p(x)}[-\log p(x)]<br>$$<br>注意 $\log$ 默认是以 2 为底的<br>$$<br>\begin{aligned}<br>H(X) = H(1/2) = 1 \text{ 比特/符号}\\<br>H(Y) = H(1/2) = 1 \text{ 比特/符号}\\<br>H(Z) = H(1/8) = 0.544 \text{ 比特/符号}\\<br>H(XZ) = H(1/2, 3/8, 1/8) = 1.406 \text{ 比特/符号}\\<br>H(YZ) = H(XZ) = 1.406 \text{ 比特/符号}\\<br>H(XYZ) = H(1/8, 3/8, 3/8, 1/8) = 1.811 \text{ 比特/符号}<br>\end{aligned}<br>$$</p>
 <p>(2)<br>主要利用熵的可加性，即 $H(XY) = H(X) + H(Y|X)$<br>$$<br>H(X | Y) = H(XY) - H(Y) = 1.811 - 1 = 0.811 \text{ 比特/符号}\\<br>H(Y | X) = H(XY) - H(X) = 1.811 - 1 = 0.811 \text{ 比特/符号}\\<br>H(X | Z) = H(XZ) - H(Z) = 1.406 - 0.544 = 0.862 \text{ 比特/符号}\\<br>H(Z | X) = H(XZ) - H(X) = 1.406 - 1 = 0.406 \text{ 比特/符号}\\<br>H(Y | Z) = H(YZ) - H(Z) = 1.406 - 0.544 = 0.862 \text{ 比特/符号}\\<br>H(Z | Y) = H(YZ) - H(Y) = 1.406 - 1 = 0.406 \text{ 比特/符号}\\<br>H(X | YZ) = H(XYZ) - H(YZ) = 1.811 - 1.406 = 0.405 \text{ 比特/符号}\\<br>H(Y | XZ) = H(XYZ) - H(XZ) = 1.811 - 1.406 = 0.405 \text{ 比特/符号}\\<br>H(Z | XY) = H(XYZ) - H(XY) = 1.811 - (1/8, 3/8, 3/8, 1/8) = 0<br>$$</p>
 <p>(3)<br>主要利用平均互信息与熵的关系，即<br>$$<br>I(X;Y) = H(X) - H(X | Y) = H(Y) - H(Y | X) = H(X) + H(Y) - H(XY)<br>$$<br>$$<br>I(X;Y) = H(X) - H(X | Y) = 1 - 0.811 = 0.189 \text{ 比特/符号}\\<br>I(X;Z) = H(X) - H(X | Z) = 1 - 0.862 = 0.138 \text{ 比特/符号}\\<br>I(Y;Z) = H(Y) - H(Y | Z) = 1 - 0.862 = 0.138 \text{ 比特/符号}\\<br>I(X; Y | Z) = H(X | Z) - H(X | YZ) = 0.862 - 0.405 = 0.457 \text{ 比特/符号}\\<br>I(Y; Z | X) = H(Y | X) - H(Y | XZ) = 0.811 - 0.405 = 0.406 \text{ 比特/符号}\\<br>I(X; Z | Y) = H(X | Y) - H(X | YZ) = 0.811 - 0.405 = 0.406 \text{ 比特/符号}<br>$$</p>
 <h2 id="第三章-离散信源"><a href="#第三章-离散信源" class="headerlink" title="第三章 离散信源"></a>第三章 离散信源</h2><p><strong>习题</strong> 3.9<br>设 $x_1, x_2, \cdots, x_{n-1}, x_n, \cdots$ 为平稳序列（未必是马氏链），那么下面的论断哪些是正确的？对正确的进行证明，对错误的举出反例。（提示：下面论断至少有一个是错的）<br>(1) $H(X_n | X_0) = H(X_{-n} | X_0)$;<br>正确，由于平稳性有<br>$$H(X_{-n} | X_0) = H(X_0 X_n) = H(X_0 X_n) - H(X_n) = H(X_n X_0) - H(X_0) = H(X_n | X_0)$$<br>(2) $H(X_n | X_0) \geqslant H(X_{n-1} | X_0)$;<br>错误，若 $x_0, \cdots, x_{n-1}, x_n$ 构成马氏链，则<br>$$I(X_0 ; X_{n-1}) \geqslant I(X_0 ; X_n) \implies H(X_{n-1}) - H(X_{n-1} | X_0) \geqslant H(X_n) - H(X_n | X_0) \\<br>\implies -H(X_{n-1} | X_0) \geqslant -H(X_n | X_0) \ (\text{利用平稳性}) \implies H(X_n | X_0) \geqslant H(X_{n-1} | X_0)$$<br>但如果序列具有周期性，且周期为 $n$，其中，$x_0, x_1, \cdots, x_n$ 是独立同分布的二元等概率序列，则<br>$$x_k = x_{k-n} \ (k \geqslant n) \implies x_0 = x_n \implies H(X_n | X_0) = 0, \ H(X_{n-1} | X_0) = H(X_{n-1}) = \log 2 \\<br>\implies H(X_n | X_0) &lt; H(X_{n-1} | X_0)$$<br>(3) $H(X_n | X_1X_2\cdots X_{n-1})$ 是 $n$ 的增函数;<br>错误<br><strong>定理 3.3</strong> 对任意离散平稳信源，若 $H_1(X) &lt; \infty$ ，有：</p>
@@ -100,7 +174,7 @@
 <p>$$<br>\begin{pmatrix}<br>U^N \\<br>V^N<br>\end{pmatrix} =<br>\begin{pmatrix}<br>A &amp; 0 \\<br>0 &amp; B<br>\end{pmatrix}<br>\begin{pmatrix}<br>x \\<br>y<br>\end{pmatrix} +<br>\begin{pmatrix}<br>\alpha \\<br>\beta<br>\end{pmatrix}<br>$$</p>
 <p>令 $C = \begin{pmatrix} A &amp; 0 \\ 0 &amp; B \end{pmatrix}, z = \begin{pmatrix} x \\ y \end{pmatrix}, \gamma = \begin{pmatrix} \alpha \\ \beta \end{pmatrix}, \begin{pmatrix} U^N \\ V^N \end{pmatrix} = Cz + \gamma$</p>
 <p>$$<br>I(U^N; V^N) = h(U^N) + h(V^N) - h(U^N V^N) = h(Ax + \alpha) + h(By + \beta) - h(Cz + \gamma) \\<br>= h(X^N) + \log |\det(A)| + h(Y^N) + \log |\det(B)| - h(X^N Y^N) - \log |\det(C)| \\<br>= h(X^N) + h(Y^N) - h(X^N Y^N) = I(X^N; Y^N)<br>$$</p>
-<p>上面用到了行列式的性质：<br>$$<br>\det(C) = \begin{vmatrix} A &amp; 0 \ 0 &amp; B \end{vmatrix} = \det(A) \det(B)<br>$$</p>
+<p>上面用到了行列式的性质：<br>$$<br>\det(C) = \begin{vmatrix} A &amp; 0 \\ 0 &amp; B \end{vmatrix} = \det(A) \det(B)<br>$$</p>
 <h2 id="第五章-无失真信源编码"><a href="#第五章-无失真信源编码" class="headerlink" title="第五章 无失真信源编码"></a>第五章 无失真信源编码</h2><p><strong>习题</strong> 5.1<br>有一信源，它有 6 个可能的输出，其概率分布见下表，表中给出了对应的码 A，B，C，D，E 和 F。问：</p>
 <p>(1) 这些码中哪些是即时码；<br>(2) 哪些是唯一可译码，并对所有唯一可译码，求出其平均码长 $\overline{L}$ 。</p>
 <table>
