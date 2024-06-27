@@ -29,7 +29,7 @@
       switchTab();
       window.addEventListener('hashchange', switchTab, false);
   })();
-  </script><!-- hexo injector head_end end --></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/wy.png" alt="weyung" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives/">归档</a><a class="navbar-item" href="/categories/">分类</a><a class="navbar-item" href="/tags/">标签</a><a class="navbar-item" href="/links/">友链</a><a class="navbar-item" href="/about/">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-06-20T17:53:00.000Z" title="6/21/2024, 1:53:00 AM">2024-06-21</time>发表</span><span class="level-item"><time dateTime="2024-06-27T08:59:25.190Z" title="6/27/2024, 4:59:25 PM">2024-06-27</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="level-item">41 分钟读完 (大约6116个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">信息论笔记</h1><div class="content"><p>还是复习。</p>
+  </script><!-- hexo injector head_end end --></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/wy.png" alt="weyung" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives/">归档</a><a class="navbar-item" href="/categories/">分类</a><a class="navbar-item" href="/tags/">标签</a><a class="navbar-item" href="/links/">友链</a><a class="navbar-item" href="/about/">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-06-20T17:53:00.000Z" title="6/21/2024, 1:53:00 AM">2024-06-21</time>发表</span><span class="level-item"><time dateTime="2024-06-27T18:02:50.282Z" title="6/28/2024, 2:02:50 AM">2024-06-28</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="level-item">1 小时读完 (大约7119个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">信息论笔记</h1><div class="content"><p>还是复习。</p>
 <span id="more"></span>
 
 <h2 id="第一章-绪论"><a href="#第一章-绪论" class="headerlink" title="第一章 绪论"></a>第一章 绪论</h2><p>不提</p>
@@ -45,25 +45,25 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">赛4场获冠军（AAAA）</td>
+<td align="left">赛 4 场获冠军（AAAA）</td>
 <td align="left">1</td>
 <td align="left">1/16</td>
 <td align="left">1/16</td>
 </tr>
 <tr>
-<td align="left">赛5场获冠军（前 4 场 B 胜 1 场）</td>
+<td align="left">赛 5 场获冠军（前 4 场 B 胜 1 场）</td>
 <td align="left">4</td>
 <td align="left">1/32</td>
 <td align="left">1/8</td>
 </tr>
 <tr>
-<td align="left">赛6场获冠军（前 5 场 B 胜 2 场）</td>
+<td align="left">赛 6 场获冠军（前 5 场 B 胜 2 场）</td>
 <td align="left">10</td>
 <td align="left">1/64</td>
 <td align="left">5/32</td>
 </tr>
 <tr>
-<td align="left">赛7场获冠军（前 6 场 B 胜 3 场）</td>
+<td align="left">赛 7 场获冠军（前 6 场 B 胜 3 场）</td>
 <td align="left">20</td>
 <td align="left">1/128</td>
 <td align="left">5/32</td>
@@ -76,6 +76,7 @@
 </tr>
 </tbody></table>
 <p>$H(X) = 2 \times \left[ (1/16) \log_2 16 + 4 \times (1/32) \log_2 32 + 10 \times (1/64) \log_2 64 + 20 \times (1/128) \log_2 128 \right] = 186/32 = 5.8125 $ 比特/符号</p>
+<p>注意到上面乘 2 是因为 A 队和 B 队的概率是相等的。</p>
 <p>（2）求事件“两队打满 7 场”所提供的信息量。<br>“两队打满7场”事件数为 40，所求概率为 $40 \times (1/128) = 5/16$ ，事件“两队打满7场”所提供的信息量为<br>$$I_1 = -\log_2 (5/16) = 1.6781 \text{ bit}$$<br>（3）列出 A 队前 3 场都失利的所有情形，求“A 队前 3 场都失利”所提供的信息量。<br>如表所示：</p>
 <table>
 <thead>
@@ -111,6 +112,7 @@
 <td align="left">A 夺冠</td>
 </tr>
 </tbody></table>
+<p>概率和就是 1/8，所以有</p>
 <p>$$I_2 = \log_2 8 = 3 \text{ bit}$$<br>（4）求事件“A 队在前 3 场获胜的条件下又取得冠军”所提供的信息量。<br>A队在前 3 场失利的条件下又取得冠军的条件概率为<br>$$\frac{1/128}{1/16 + 1/32 + 1/64 + 2 \times (1/128)}  = \frac{1}{16}$$<br>“A队在前 3 场失利的条件下又取得冠军”的信息量为<br>$$I_3 = \log_2 16 = 4 \text{ bit}$$</p>
 <p><strong>习题</strong> 2.7<br>已知随机变量 $X, Y$ 的联合概率分布为 $P_{XY}(a_k, b_j)$ ，满足：<br>$P_X(a_1) = 1/2$, $P_X(a_2) = P_X(a_3) = 1/4$,<br>$P_Y(b_1) = 2/3$, $P_Y(b_2) = P_Y(b_3) = 1/6$。试求能使 $H(XY)$ 取最大值的 $XY$ 的联合概率分布。</p>
 <p>因为 $H(XY) \leq H(X) + H(Y)$，<strong>当且仅当 $X, Y$ 独立时，等号成立</strong>。所以当 $X, Y$ 独立时，$H(XY)$ 取最大值。因此 $XY$ 的联合概率分布为</p>
@@ -140,10 +142,11 @@
 <p>$P_X(0) = 1/2$，即 $P(X=0) = 1/2$，下同<br>$P_X(1) = 1/2$</p>
 <p>$P_Y(0) = 1/2$<br>$P_Y(1) = 1/2$</p>
 <p>由表知，$x=0$ 和 $y=0$ 都能让 Z 为 0，故<br>$P_Z(0) = 1/8+3/8+3/8 = 7/8$<br>$P_Z(1) = 1/8$</p>
-<p>(1)<br>主要利用自信息的平均值为熵，即<br>$$<br>H(X) = E_{p(x)}[-\log p(x)]<br>$$<br>注意 $\log$ 默认是以 2 为底的<br>$$<br>\begin{aligned}<br>H(X) = H(1/2) = 1 \text{ 比特/符号}\\<br>H(Y) = H(1/2) = 1 \text{ 比特/符号}\\<br>H(Z) = H(1/8) = 0.544 \text{ 比特/符号}\\<br>H(XZ) = H(1/2, 3/8, 1/8) = 1.406 \text{ 比特/符号}\\<br>H(YZ) = H(XZ) = 1.406 \text{ 比特/符号}\\<br>H(XYZ) = H(1/8, 3/8, 3/8, 1/8) = 1.811 \text{ 比特/符号}<br>\end{aligned}<br>$$</p>
-<p>(2)<br>主要利用熵的可加性，即 $H(XY) = H(X) + H(Y|X)$<br>$$<br>\begin{aligned}<br>H(X | Y) = H(XY) - H(Y) = 1.811 - 1 = 0.811 \text{ 比特/符号}\\<br>H(Y | X) = H(XY) - H(X) = 1.811 - 1 = 0.811 \text{ 比特/符号}\\<br>H(X | Z) = H(XZ) - H(Z) = 1.406 - 0.544 = 0.862 \text{ 比特/符号}\\<br>H(Z | X) = H(XZ) - H(X) = 1.406 - 1 = 0.406 \text{ 比特/符号}\\<br>H(Y | Z) = H(YZ) - H(Z) = 1.406 - 0.544 = 0.862 \text{ 比特/符号}\\<br>H(Z | Y) = H(YZ) - H(Y) = 1.406 - 1 = 0.406 \text{ 比特/符号}\\<br>H(X | YZ) = H(XYZ) - H(YZ) = 1.811 - 1.406 = 0.405 \text{ 比特/符号}\\<br>H(Y | XZ) = H(XYZ) - H(XZ) = 1.811 - 1.406 = 0.405 \text{ 比特/符号}\\<br>H(Z | XY) = H(XYZ) - H(XY) = 1.811 - (1/8, 3/8, 3/8, 1/8) = 0<br>\end{aligned}<br>$$</p>
+<p>(1)<br>主要利用自信息的平均值为熵，即<br>$$<br>H(X) = E_{p(x)}[-\log p(x)]<br>$$<br>注意 $\log$ 默认是以 2 为底的<br>比如 $H(XZ)$，先列出所有可能，知 $P(X=0, Z=0) = 1/2$，$P(X=1, Z=0) = 3/8$，$P(X=1, Z=1) = 1/8$，所以 $H(XZ) = -(1/2) \log (1/2) - (3/8) \log (3/8) - (1/8) \log (1/8) = 1.406$ 比特/符号<br>$$<br>\begin{aligned}<br>H(X) = H(1/2) = 1 \text{ 比特/符号}\\<br>H(Y) = H(1/2) = 1 \text{ 比特/符号}\\<br>H(Z) = H(1/8) = 0.544 \text{ 比特/符号}\\<br>H(XZ) = H(1/2, 3/8, 1/8) = 1.406 \text{ 比特/符号}\\<br>H(YZ) = H(XZ) = 1.406 \text{ 比特/符号}\\<br>H(XYZ) = H(1/8, 3/8, 3/8, 1/8) = 1.811 \text{ 比特/符号}<br>\end{aligned}<br>$$</p>
+<p>(2)<br>主要利用熵的可加性，即 $H(XY) = H(X) + H(Y|X)$<br>$$<br>\begin{aligned}<br>H(X | Y) = H(XY) - H(Y) = 1.811 - 1 = 0.811 \text{ 比特/符号}\\<br>H(Y | X) = H(XY) - H(X) = 1.811 - 1 = 0.811 \text{ 比特/符号}\\<br>H(X | Z) = H(XZ) - H(Z) = 1.406 - 0.544 = 0.862 \text{ 比特/符号}\\<br>H(Z | X) = H(XZ) - H(X) = 1.406 - 1 = 0.406 \text{ 比特/符号}\\<br>H(Y | Z) = H(YZ) - H(Z) = 1.406 - 0.544 = 0.862 \text{ 比特/符号}\\<br>H(Z | Y) = H(YZ) - H(Y) = 1.406 - 1 = 0.406 \text{ 比特/符号}\\<br>H(X | YZ) = H(XYZ) - H(YZ) = 1.811 - 1.406 = 0.405 \text{ 比特/符号}\\<br>H(Y | XZ) = H(XYZ) - H(XZ) = 1.811 - 1.406 = 0.405 \text{ 比特/符号}\\<br>H(Z | XY) = H(XYZ) - H(XY) = 1.811 - H(1/8, 3/8, 3/8, 1/8) = 0<br>\end{aligned}<br>$$</p>
 <p>(3)<br>主要利用平均互信息与熵的关系，即<br>$$<br>I(X;Y) = H(X) - H(X | Y) = H(Y) - H(Y | X) = H(X) + H(Y) - H(XY)<br>$$<br>$$<br>\begin{aligned}<br>I(X;Y) = H(X) - H(X | Y) = 1 - 0.811 = 0.189 \text{ 比特/符号}\\<br>I(X;Z) = H(X) - H(X | Z) = 1 - 0.862 = 0.138 \text{ 比特/符号}\\<br>I(Y;Z) = H(Y) - H(Y | Z) = 1 - 0.862 = 0.138 \text{ 比特/符号}\\<br>I(X; Y | Z) = H(X | Z) - H(X | YZ) = 0.862 - 0.405 = 0.457 \text{ 比特/符号}\\<br>I(Y; Z | X) = H(Y | X) - H(Y | XZ) = 0.811 - 0.405 = 0.406 \text{ 比特/符号}\\<br>I(X; Z | Y) = H(X | Y) - H(X | YZ) = 0.811 - 0.405 = 0.406 \text{ 比特/符号}<br>\end{aligned}<br>$$</p>
-<h2 id="第三章-离散信源"><a href="#第三章-离散信源" class="headerlink" title="第三章 离散信源"></a>第三章 离散信源</h2><p><strong>习题</strong> 3.9<br>设 $x_1, x_2, \cdots, x_{n-1}, x_n, \cdots$ 为平稳序列（未必是马氏链），那么下面的论断哪些是正确的？对正确的进行证明，对错误的举出反例。（提示：下面论断至少有一个是错的）<br>(1) $H(X_n | X_0) = H(X_{-n} | X_0)$;<br>正确，由于平稳性有<br>$$H(X_{-n} | X_0) = H(X_0 X_n) = H(X_0 X_n) - H(X_n) = H(X_n X_0) - H(X_0) = H(X_n | X_0)$$<br>(2) $H(X_n | X_0) \geqslant H(X_{n-1} | X_0)$;<br>错误，若 $x_0, \cdots, x_{n-1}, x_n$ 构成马氏链，则<br>$$I(X_0 ; X_{n-1}) \geqslant I(X_0 ; X_n) \implies H(X_{n-1}) - H(X_{n-1} | X_0) \geqslant H(X_n) - H(X_n | X_0) \\<br>\implies -H(X_{n-1} | X_0) \geqslant -H(X_n | X_0) \ (\text{利用平稳性}) \implies H(X_n | X_0) \geqslant H(X_{n-1} | X_0)$$<br>但如果序列具有周期性，且周期为 $n$，其中，$x_0, x_1, \cdots, x_n$ 是独立同分布的二元等概率序列，则<br>$$x_k = x_{k-n} \ (k \geqslant n) \implies x_0 = x_n \implies H(X_n | X_0) = 0, \ H(X_{n-1} | X_0) = H(X_{n-1}) = \log 2 \\<br>\implies H(X_n | X_0) &lt; H(X_{n-1} | X_0)$$<br>(3) $H(X_n | X_1X_2\cdots X_{n-1})$ 是 $n$ 的增函数;<br>错误<br><strong>定理 3.3</strong> 对任意离散平稳信源，若 $H_1(X) &lt; \infty$ ，有：</p>
+<h2 id="第三章-离散信源"><a href="#第三章-离散信源" class="headerlink" title="第三章 离散信源"></a>第三章 离散信源</h2><p>重点公式：$\pi^T = \pi^T P$</p>
+<p><strong>习题</strong> 3.9<br>设 $x_1, x_2, \cdots, x_{n-1}, x_n, \cdots$ 为平稳序列（未必是马氏链），那么下面的论断哪些是正确的？对正确的进行证明，对错误的举出反例。（提示：下面论断至少有一个是错的）<br>(1) $H(X_n | X_0) = H(X_{-n} | X_0)$;<br>正确，由于平稳性有<br>$$H(X_{-n} | X_0) = H(X_0 X_n) = H(X_0 X_n) - H(X_n) = H(X_n X_0) - H(X_0) = H(X_n | X_0)$$<br>(2) $H(X_n | X_0) \geqslant H(X_{n-1} | X_0)$;<br>错误，若 $x_0, \cdots, x_{n-1}, x_n$ 构成马氏链，则<br>$$I(X_0 ; X_{n-1}) \geqslant I(X_0 ; X_n) \implies H(X_{n-1}) - H(X_{n-1} | X_0) \geqslant H(X_n) - H(X_n | X_0) \\<br>\implies -H(X_{n-1} | X_0) \geqslant -H(X_n | X_0) \ (\text{利用平稳性}) \implies H(X_n | X_0) \geqslant H(X_{n-1} | X_0)$$<br>但如果序列具有周期性，且周期为 $n$，其中，$x_0, x_1, \cdots, x_n$ 是独立同分布的二元等概率序列，则<br>$$x_k = x_{k-n} \ (k \geqslant n) \implies x_0 = x_n \implies H(X_n | X_0) = 0, \ H(X_{n-1} | X_0) = H(X_{n-1}) = \log 2 \\<br>\implies H(X_n | X_0) &lt; H(X_{n-1} | X_0)$$<br>(3) $H(X_n | X_1X_2\cdots X_{n-1})$ 是 $n$ 的增函数;<br>错误<br><strong>定理 3.3</strong> 对任意离散平稳信源，若 $H_1(X) &lt; \infty$ ，有：</p>
 <p>① $H(X_N | X_1\cdots X_{N-1})$ 不随 $N$ 而增加；<br>② $H_N(X) \geqslant H(X_N | X_1 \cdots X_{N-1})$；<br>③ $H_N(X)$ 不随 $N$ 而增加；<br>④ $H_\infty(X)$ 存在，且 $H_\infty(X) = \lim_{N \to \infty} H(X_N | X_1 \cdots X_{N-1})$</p>
 <p>(4) $H(X_n | X_1, \cdots, X_{n-1}, X_{n+1}, \cdots, X_{2n})$ 是 $n$ 的非增函数。<br>正确<br>$$H(X_{n+1} | X_1, \cdots, X_n, X_{n+2}, \cdots, X_{2n+2}) = H(X_n | X_0, \cdots, X_{n-1}, X_{n+1}, \cdots, X_{2n+1}) \\<br>\leqslant H(X_n | X_1, \cdots, X_{n-1}, X_{n+1}, \cdots, X_{2n})$$</p>
 <p><strong>习题</strong> 3.10<br>一个 2 状态马氏链的转移概率矩阵为<br>$$P = \begin{pmatrix} 3/4 &amp; 1/4 \\ 1/4 &amp; 3/4 \end{pmatrix}$$<br>并假定初始状态概率矢量为 $p^{(0)} = (1 \ 0)$；求<br>(1) $P^n$ 和 $p^{(n)}$, $n = 1, 2, 3$；<br>$$<br>P^1 = P = \begin{pmatrix} 3/4 &amp; 1/4 \\ 1/4 &amp; 3/4 \end{pmatrix}, \quad<br>P^2 = P \times P = \begin{pmatrix} 3/4 &amp; 1/4 \\ 1/4 &amp; 3/4 \end{pmatrix} \begin{pmatrix} 3/4 &amp; 1/4 \\ 1/4 &amp; 3/4 \end{pmatrix} = \begin{pmatrix} 5/8 &amp; 3/8 \\ 3/8 &amp; 5/8 \end{pmatrix}<br>$$<br>$$<br>P^3 = P^2 \times P = \begin{pmatrix} 5/8 &amp; 3/8 \\ 3/8 &amp; 5/8 \end{pmatrix} \begin{pmatrix} 3/4 &amp; 1/4 \\ 1/4 &amp; 3/4 \end{pmatrix} = \begin{pmatrix} 9/16 &amp; 7/16 \\ 7/16 &amp; 9/16 \end{pmatrix}<br>$$<br>所以，有<br>$$p^{(1)} = p^{(0)} P = \begin{pmatrix} 3/4 &amp; 1/4 \end{pmatrix} ; \quad p^{(2)} = p^{(0)} P^2 = \begin{pmatrix} 5/8 &amp; 3/8 \end{pmatrix} ; \quad p^{(3)} = p^{(0)} P^3 = \begin{pmatrix} 9/16 &amp; 7/16 \end{pmatrix}$$</p>
@@ -330,52 +333,74 @@
 <p>编码效率为：<br>$$<br>\eta = \frac{H(X)}{R} = \frac{2.622}{2.7} \approx 97.11%<br>$$</p>
 <p>(2) 将信源符号编成香农码，求平均码长、码长的方差，以及码率和编码效率。<br>无参考答案。</p>
 <h2 id="第六章-离散信道及其容量"><a href="#第六章-离散信道及其容量" class="headerlink" title="第六章 离散信道及其容量"></a>第六章 离散信道及其容量</h2><p><strong>习题</strong> 6.6<br>设二元对称信道的概率转移矩阵为<br>$$\begin{pmatrix} 3/4 &amp; 1/4 \\ 1/4 &amp; 3/4 \end{pmatrix}$$</p>
-<p>(1) 若 $p(0) = 1/3$ ，求 $I(x=0;y=1), I(x=1;Y), I(X;Y)$ 。<br>(2) 求该信道的容量及其达到容量时的输入概率分布。</p>
+<p>(1) 若 $p(0) = 1/3$ ，求 $I(x=0;y=1), I(x=1;Y), I(X;Y)$ 。<br>设输出概率为 $q_0, q_1$，有<br>$$<br>(q_0, q_1) = (p_0, p_1)P = \left(1/3 \quad 2/3\right) \begin{pmatrix} 3/4 &amp; 1/4 \\ 1/4 &amp; 3/4 \end{pmatrix} = \left(5/12 \quad 7/12\right)<br>$$<br>$$<br>\begin{aligned}I(x=0; y=1) = \log \frac{p(y=1|x=0)}{p(y=1)} = \log_2 \frac{1/4}{7/12} = -1.22 \text{ bit} \\<br>I(x=1; Y) = \sum_j p_{ij} \log \frac{p_{ij}}{q_j} = \frac{1}{4} \log_2 \frac{1/4}{5/12} + \frac{3}{4} \log_2 \frac{3/4}{7/12} = 0.088 \text{ 比特/符号} \\<br>I(x=0; Y) = \sum_j p_{ij} \log \frac{p_{ij}}{q_j} = \frac{3}{4} \log_2 \frac{3/4}{5/12} + \frac{1}{4} \log_2 \frac{1/4}{7/12} = 0.33 \text{ 比特/符号} \\<br>I(X; Y) = \sum_i p(x) I(x; Y) = \frac{1}{3} I(x=0; Y) + \frac{2}{3} I(x=1; Y) = 0.169 \text{ 比特/符号}<br>\end{aligned}<br>$$</p>
+<p>(2) 求该信道的容量及其达到容量时的输入概率分布。<br>该信道为二元对称信道，达到容量时输入等概，即 $p_0 = p_1 = 1/2$，输出也等概。<br>$$<br>C = 1 - H\left(\frac{1}{4}\right) = 1 - 0.811 = 0.189 \text{ 比特/符号}<br>$$</p>
 <p><strong>习题</strong> 6.11<br>一个离散无记忆信道如图6.22所示：</p>
-<p>(1) 写出该信道的转移概率矩阵；<br>(2) 该信道是否为对称信道？<br>(3) 求该信道的信道容量；<br>(4) 求达到信道容量时的输出概率分布。</p>
-<p><strong>习题</strong> 6.12<br>一个 Z 信道的转移概率如图6.23所示：</p>
-<p>(1) 求信道容量；<br>(2) 若将两个同样的 Z 信道串接，求串接后信道的转移概率矩阵；<br>(3) 求 (2) 中串接信道的容量和达到容量时的输入的概率分布；<br>(4) 将 n 个同样的 Z 信道串接，求串接后信道的转移概率矩阵和信道容量。</p>
-<p><strong>习题</strong> 6.14<br>给定如图6.25所示的级联信道，求：</p>
-<p>(1) $X$ 与 $Y$ 之间的信道容量 $C_1$；<br>(2) $Y$ 与 $Z$ 之间的信道容量 $C_2$；<br>(3) $X$ 与 $Z$ 之间的信道容量 $C_3$ 及达到容量时的输入概率分布。</p>
+<p>(1) 写出该信道的转移概率矩阵；<br>信道的转移概率矩阵为<br>$$<br>P = \begin{pmatrix}<br>1/2 &amp; 1/4 &amp; 1/4 \<br>0 &amp; 1 &amp; 0 \<br>1/4 &amp; 1/4 &amp; 1/2<br>\end{pmatrix}<br>$$<br>(2) 该信道是否为对称信道？<br>该信道不是对称信道。<br>(3) 求该信道的信道容量；<br>由 $P \beta = -h$，可得<br>$$<br>\begin{pmatrix}<br>1/2 &amp; 1/4 &amp; 1/4 \\<br>0 &amp; 1 &amp; 0 \\<br>1/4 &amp; 1/4 &amp; 1/2<br>\end{pmatrix}<br>\begin{pmatrix}<br>\beta_0 \\<br>\beta_1 \\<br>\beta_2<br>\end{pmatrix} =<br>\begin{pmatrix}<br>\frac12\log \frac12 + \frac14\log \frac14 + \frac14\log \frac14 \\<br>0 \\<br>\frac12\log \frac12 + \frac14\log \frac14 + \frac14\log \frac14<br>\end{pmatrix}<br>$$</p>
+<p>解得 $\beta_0 = -2, \beta_1 = 0, \beta_2 = -2$。</p>
+<p>$$<br>C = \log (2^{-2} + 2^0 + 2^{-2}) = \log_2 \frac{3}{2} = 0.585 \text{ 比特/符号}<br>$$<br>(4) 求达到信道容量时的输出概率分布。<br>$$<br>q_0 = q_2 = \frac{1}{6}, \quad q_1 = \frac{2}{3}<br>$$</p>
+<p>$$<br>p_0 = p_2 = \frac{2}{9}, \quad p_1 = \frac{5}{9}<br>$$</p>
+<p><strong>习题</strong> 6.12<br>一个 Z 信道的转移概率如图6.23所示：<br>(1) 求信道容量；<br>？考试考这个我似了算了<br>信道转移矩阵为<br>$$<br>P = \begin{pmatrix}<br>1 &amp; 0 \<br>\epsilon &amp; 1-\epsilon<br>\end{pmatrix}, \quad P^{-1} = \begin{pmatrix}<br>1 &amp; 0 \<br>\frac{-\epsilon}{1-\epsilon} &amp; \frac{1}{1-\epsilon}<br>\end{pmatrix}<br>$$<br>$$<br>h = \begin{pmatrix}<br>0 \<br>H(\epsilon)<br>\end{pmatrix}, \quad \beta = -P^{-1} h = \begin{pmatrix}<br>0 \<br>-\frac{H(\epsilon)}{1-\epsilon}<br>\end{pmatrix}, \quad q_0 = \frac{1}{1+2^{-\frac{H(\epsilon)}{1-\epsilon}}}, \quad q_1 = \frac{2^{-\frac{H(\epsilon)}{1-\epsilon}}}{1+2^{-\frac{H(\epsilon)}{1-\epsilon}}}<br>$$</p>
+<p>$$<br>(p_0\quad p_1) = (q_0\quad q_1) P^{-1} = \left( 1-\frac{\epsilon^{\frac{\epsilon}{1-\epsilon}}}{1+(1-\epsilon)\epsilon^\frac{\epsilon}{1-\epsilon}} \quad \frac{\epsilon^{\frac{\epsilon}{1-\epsilon}}}{1+(1-\epsilon)\epsilon^\frac{\epsilon}{1-\epsilon}} \right)<br>$$</p>
+<p>输入概率均大于零，所以信道容量为<br>$$<br>C = \log \left( 1 + 2^{-\frac{H(\epsilon)}{1-\epsilon}} \right)<br>$$<br>(2) 若将两个同样的 Z 信道串接，求串接后信道的转移概率矩阵；<br>(3) 求 (2) 中串接信道的容量和达到容量时的输入的概率分布；<br>(4) 将 n 个同样的 Z 信道串接，求串接后信道的转移概率矩阵和信道容量。</p>
+<p><strong>习题</strong> 6.14<br>给定如图6.25所示的级联信道，求：<br>感觉这题答案有点问题<br>(1) $X$ 与 $Y$ 之间的信道容量 $C_1$；<br>由于 $X$ 与 $Y$ 之间的信道转移概率矩阵为<br>$$<br>P_1 = \begin{pmatrix}<br>1 - \epsilon &amp; \epsilon \<br>\epsilon &amp; 1 - \epsilon<br>\end{pmatrix}<br>$$</p>
+<p>所以信道为弱对称信道，当输入等概时达到容量。</p>
+<p>$$<br>C_1 = \log 2 - H(\epsilon) = \log 2 + \epsilon \log \epsilon + (1 - \epsilon) \log (1 - \epsilon)<br>$$<br>(2) $Y$ 与 $Z$ 之间的信道容量 $C_2$；<br>$Y$ 和 $Z$ 之间的信道转移矩阵为<br>$$<br>P_2 = \begin{pmatrix}<br>3/4 &amp; 0 &amp; 1/4 \<br>0 &amp; 3/4 &amp; 1/4<br>\end{pmatrix}<br>$$</p>
+<p>由于信道为弱对称信道，当 $p_1 = p_2 = 1/2$ 时达到信道容量 $C_2$，此时输出概率分布为 $(3/8, 3/8, 1/4)$，所以信道容量<br>$$<br>C_2 = H(3/8, 3/8, 1/4) - H(1/4, 3/4) = 3/4 \text{ 比特/符号}<br>$$<br>(3) $X$ 与 $Z$ 之间的信道容量 $C_3$ 及达到容量时的输入概率分布。<br>$X$ 和 $Z$ 之间的转移概率矩阵 $P_3 = P_1 \times P_2$，所以<br>$$<br>P_3 = \begin{pmatrix}<br>1 - \epsilon &amp; \epsilon \<br>\epsilon &amp; 1 - \epsilon<br>\end{pmatrix}<br>\begin{pmatrix}<br>3/4 &amp; 1/4 &amp; 0 \<br>0 &amp; 1/4 &amp; 3/4<br>\end{pmatrix}=<br>\begin{pmatrix}<br>3(1-\epsilon)/4 &amp; 1/4 &amp; (3\epsilon)/4 \<br>(3\epsilon)/4 &amp; 1/4 &amp; 3(1-\epsilon)/4<br>\end{pmatrix}<br>$$</p>
+<p>该信道是弱对称信道，当输入等概率分布时达到信道容量 $C_3$，此时<br>$$<br>q_0 = q_1 = 3/8,\quad q_2 = 1/4<br>$$</p>
+<p>所以<br>$$<br>C_3 = H \left( \frac{3}{8}, \frac{3}{8}, \frac{1}{4} \right) - H \left( \frac{3(1-\epsilon)}{4}, \frac{1}{4}, \frac{3\epsilon}{4} \right) = \frac{3}{4} [\log 2 - H(\epsilon)]<br>$$</p>
+<p>输入等概时达到容量。</p>
 <h2 id="第七章-有噪信道编码"><a href="#第七章-有噪信道编码" class="headerlink" title="第七章 有噪信道编码"></a>第七章 有噪信道编码</h2><p><strong>习题</strong> 7.3<br>一信道输入符号集 $A = {0,1/2,1}$ ，输出符号集 $B = {0, 1}$ ，信道的转移概率矩阵为<br>$$P = \begin{pmatrix} 1 &amp; 0 \\ 1/2 &amp; 1/2 \\ 0 &amp; 1 \end{pmatrix}$$</p>
 <p>现有 4 个等概率消息通过此信道输出，若选择这样的信道编码：$C_b: {a_1, a_2, 1/2, 1/2}$, $a_i = 0$ 或 $1 \ (i = 1, 2)$ ，码长为 4，并选择如下译码规则：<br>$$f: (y_1, y_2, y_3, y_4) = (y_1, y_2, 1/2, 1/2)$$</p>
-<p>(1) 编码后信息传输速率等于多少？<br>(2) 证明在此译码规则下，对于码字的译码错误率 $P_E^{(i)} = 0, i = 1, 2, 3, 4$ 。</p>
+<p>(1) 编码后信息传输速率等于多少？<br>编码后信息传输速率：<br>$$<br>R = \frac{\log_2 4}{4} = 0.5 \text{ 比特/符号}<br>$$<br>(2) 证明在此译码规则下，对于码字的译码错误率 $P_E^{(i)} = 0, i = 1, 2, 3, 4$ 。<br>设 4 个消息的编码分别为：(0, 0, 1/2, 1/2)，(0, 1, 1/2, 1/2)，(1, 0, 1/2, 1/2)，(1, 1, 1/2, 1/2)，通过信道传输后，每个码字的前两位无差错，所以不同的码字的传输得到不同的译码结果，无译码错误。</p>
 <p><strong>习题</strong> 7.4<br>一个二元对称信道的转移概率矩阵为<br>$$P = \begin{pmatrix} 1-p &amp; p \\ p &amp; 1-p \end{pmatrix} \ (p &lt; 1/2)$$</p>
 <p>信道输入符号 0,1 的概率分别为 $\omega, 1 - \omega$ 。</p>
-<p>(1) 求利用 MAP 准则的判决函数和平⻓错误率。<br>(2) 求利用 ML 准则的判决函数和平⻓错误率。<br>(3) 什么时候上述两准则的判决结果相同？</p>
+<p>(1) 求利用 MAP 准则的判决函数和平均错误率。<br>MAP 准则</p>
+<p>联合概率矩阵：<br>$$<br>\begin{pmatrix}<br>(1-p) \omega &amp; p \omega \\<br>p(1-\omega) &amp; (1-p)(1-\omega)<br>\end{pmatrix}<br>$$</p>
+<p>当接收到 “0” 时：<br>若 $(1-p) \omega \geqslant p (1-\omega)$，则判断为 “0”；反之，则判断为 “1”。</p>
+<p>所以<br>$$<br>G(y=0) = \begin{cases}<br>0 &amp; (\omega \geqslant p) \\<br>1 &amp; (\omega &lt; p)<br>\end{cases}<br>$$</p>
+<p>同理，得<br>$$<br>G(y=1) = \begin{cases}<br>0 &amp; (\omega \geqslant 1-p) \\<br>1 &amp; (\omega &lt; 1-p)<br>\end{cases}<br>$$</p>
+<p>因为 $p &lt; \frac{1}{2}$，所以 $1-p &gt; p$。可总结如下：</p>
+<ul>
+<li><p>MAP 判决函数：<br>$$<br>G(y) = \begin{cases}<br>0 &amp; (\omega \geqslant 1-p) \\<br>1 &amp; (\omega &lt; p)<br>\end{cases}<br>$$<br>$$<br>G(y=0) = 0, \quad G(y=1) = 1 \quad (p \leqslant \omega &lt; 1-p)<br>$$</p>
+</li>
+<li><p>平均错误率：<br>$$<br>p_E = \begin{cases}<br>1-\omega &amp; (\omega \geqslant 1-p) \\<br>\omega &amp; (\omega &lt; p) \\<br>p &amp; (p \leqslant \omega &lt; 1-p)<br>\end{cases}<br>$$</p>
+<p>或<br>$$<br>p_E = \min(1-\omega, \omega, p)<br>$$<br>(2) 求利用 ML 准则的判决函数和平均错误率。<br>利用 ML 准则</p>
+</li>
+</ul>
+<p>当接收到 “0” 时，若 $(1-p) \geqslant p$，则判断为“0”；反之，则判断为 “1”，而根据题意有 $1-p &gt; p$。</p>
+<p>所以<br>$$<br>G(y=0) = 0<br>$$</p>
+<p>同理，得<br>$$<br>G(y=1) = 1<br>$$</p>
+<p>所以，有</p>
+<ul>
+<li><p>ML 判决函数：<br>$$<br>G(y=0) = 0, \quad G(y=1) = 1<br>$$</p>
+</li>
+<li><p>平均错误率：<br>$$<br>p_E = p<br>$$</p>
+</li>
+</ul>
+<p>(3) 什么时候上述两准则的判决结果相同？<br>当 $p &lt; \omega \leqslant 1-p$ 时，上述两准则的判决结果相同。</p>
 <h2 id="第八章-波形信道"><a href="#第八章-波形信道" class="headerlink" title="第八章 波形信道"></a>第八章 波形信道</h2><p>这个例题是关于离散时间无记忆加性噪声信道的输入和输出的互信息、信道容量及其概率分布的求解。具体问题和解答如下：</p>
 <p><strong>习题</strong> 8.3</p>
 <p>一个离散时间无记忆加性噪声信道的输入 $ X $ 限制在 $[-2,2]$，独立于 $ X $ 的噪声 $ Z $ 在 $[-1,1]$ 区间均匀分布，熵为 $ h(Z) $。信道输出 $ Y $ 的熵为 $ h(Y) $。</p>
-<ol>
-<li>写出信道输入 $ X $ 与输出 $ Y $ 的平均互信息 $ I(X;Y) $ 的表达式。</li>
-<li>求信道容量和达到容量时的输出概率分布。</li>
-<li>求达到容量时的输入概率分布。</li>
-</ol>
-<p><strong>解</strong>：</p>
-<ol>
-<li><p>$ I(X;Y) $ 的表达式： $ I(X;Y) = h(Y) - h(Z) $。</p>
-</li>
-<li><p>因为 $ -2 \le X \le 2 $， $ -1 \le Z \le 1 $。所以 $ y = x + z $，噪声熵 $ h(Z) = \log(1 + 1) = \log 2 $，所以当 $ Y $ 有最大熵时，信道达到容量，此时 $ Y $ 应在 $[-3,3]$ 范围均匀分布，$ Y $ 的分布密度为<br>$$ p_Y(y) = \begin{cases}<br>\frac{1}{6} &amp; -3 &lt; y &lt; 3 \\<br>0 &amp; \text{其他}<br>\end{cases} $$</p>
-<p> 信道容量 $ \max I(X;Y) = \log 2 (3 + 3) - \log 2 = \log 2 3 = 1.585 $ 比特/自由度。</p>
-</li>
-<li><p>因为 $ y = x + z $，且 $ x $ 与 $ z $ 相互独立，则 $ y $ 的概率密度可以由 $ x $ 与 $ z $ 的概率密度卷积得到，设 $ p_X(x) \leftrightarrow X(\omega) $, $ p_Z(z) \leftrightarrow Z(\omega) $, $ p_Y(y) \leftrightarrow Y(\omega) $，其中 $ \leftrightarrow $ 表示傅里叶变换关系，有 $ X(\omega) Z(\omega) = Y(\omega) $。</p>
-</li>
-</ol>
+<p>（1）写出信道输入 $ X $ 与输出 $ Y $ 的平均互信息 $ I(X;Y) $ 的表达式。<br>（2）求信道容量和达到容量时的输出概率分布。<br>（3）求达到容量时的输入概率分布。</p>
+<p>（1）$ I(X;Y) $ 的表达式： $ I(X;Y) = h(Y) - h(Z) $。</p>
+<p>（2）因为 $ -2 \leqslant X \leqslant 2 $， $ -1 \leqslant Z \leqslant 1 $，$ y = x + z $，所以 $y$ 的范围是：$-3&lt;y&lt;3$，噪声熵 $ h(Z) = \log(1 + 1) = \log 2 $，所以当 $ Y $ 有最大熵时，信道达到容量，此时 $ Y $ 应在 $(-3,3)$ 范围均匀分布，$ Y $ 的分布密度为<br>   $$ p_Y(y) = \begin{cases}<br>   1/6 &amp; -3 &lt; y &lt; 3 \\<br>   0 &amp; \text{其他}<br>   \end{cases} $$</p>
+<p>信道容量 $ \max I(X;Y) = \log_2 (3 + 3) - \log_2 2 = \log_2 3 = 1.585 $ 比特/自由度。</p>
+<p>（3）因为 $ y = x + z $，且 $ x $ 与 $ z $ 相互独立，则 $ y $ 的概率密度可以由 $ x $ 与 $ z $ 的概率密度卷积得到，设 $ p_X(x) \leftrightarrow X(\omega) $, $ p_Z(z) \leftrightarrow Z(\omega) $, $ p_Y(y) \leftrightarrow Y(\omega) $，其中 $ \leftrightarrow $ 表示傅里叶变换关系，有 $ X(\omega) Z(\omega) = Y(\omega) $。</p>
 <p>$$<br>Y(\omega) = \int_{-3}^{3} \left(\frac{1}{6}\right) e^{-j\omega y} dy = \frac{\sin(3\omega)}{3\omega}<br>$$</p>
 <p>$$<br>Z(\omega) = \int_{-1}^{1} \left(\frac{1}{2}\right) e^{-j\omega z} dz = \frac{\sin \omega}{\omega}<br>$$</p>
 <p>$$<br>X(\omega) = \frac{Y(\omega)}{Z(\omega)} = \frac{1}{3} (2 \cos 2\omega + 1)<br>$$</p>
 <p>做反变换，得</p>
-<p>$$<br>X(\omega) = \frac{1}{3} (2 \cos 2\omega + 1) = \frac{1}{3} \left[ \delta(x-2) + \delta(x+2) + \delta(x) \right]<br>$$</p>
+<p>$$<br>X(\omega) = \frac{Y(\omega)}{Z(\omega)} = \frac{1}{3} (2 \cos 2\omega + 1) \rightarrow \frac{1}{3} \left[ \delta(x-2) + \delta(x+2) + \delta(x) \right]<br>$$</p>
 <p>所以达到容量时，$ X $ 的概率分布是</p>
 <p>$$<br>p(x=0) = p(x=-2) = p(x=2) = \frac{1}{3}<br>$$</p>
-<p>通过傅里叶变换和反变换，我们得到了 $ X $ 的概率分布，这也就是在信道达到容量时输入的概率分布。</p>
 <p><strong>习题</strong> 8.6</p>
 <p>设离散时间连续信道的输入与输出分别为 $ X^N = (X_1, \cdots, X_N) $ 和 $ Y^N = (Y_1, \cdots, Y_N) $，试证明：</p>
 <p>（1）信源无记忆时，有 $I(X^N; Y^N) \geqslant \sum_{i=1}^N I(X_i; Y_i)$，当且仅当信道无记忆时等式成立。<br>$$<br>\begin{aligned}<br>\sum_{i=1}^N I(X_i; Y_i) - I(X^N; Y^N) &amp;= \sum_{i=1}^N [H(X_i) - H(X_i | Y_i)] - \sum_{i=1}^N H(X_i) + H(X^N | Y^N) \\<br>&amp;= H(X^N | Y^N) - \sum_{i=1}^N H(X_i | Y_i) \\<br>&amp;= \sum_{i=1}^N H(X_i | Y^NX_1X_2\cdots X_{i-1}) - \sum_{i=1}^N H(X_i | Y_i) \leqslant 0<br>\end{aligned}<br>$$<br>故：<br>$$<br>I(X^N; Y^N) \geqslant \sum_{i=1}^N I(X_i; Y_i)<br>$$</p>
 <p>（2）信道无记忆时，有 $I(X^N; Y^N) \leqslant \sum_{i=1}^N I(X_i; Y_i)$，当且仅当信源无记忆时等式成立。<br>$$<br>\begin{aligned}<br>I(X^N; Y^N) - \sum_{i=1}^N I(X_i; Y_i) &amp;= H(Y^N) - H(Y^N | X^N) - \sum_{i=1}^N [H(Y_i) - H(Y_i | X_i)] \\<br>&amp;= H(Y^N) - \sum_{i=1}^N H(Y_i) \leqslant 0<br>\end{aligned}<br>$$<br>故：<br>$$<br>I(X^N; Y^N) \leqslant \sum_{i=1}^N I(X_i; Y_i)<br>$$</p>
 <p>综上所述，当信源和信道无记忆时，这两个等式分别成立。</p>
 <h2 id="第九章-信息率失真函数"><a href="#第九章-信息率失真函数" class="headerlink" title="第九章 信息率失真函数"></a>第九章 信息率失真函数</h2><p>不用考，不学啦！</p>
-</div><div class="article-licensing box"><div class="licensing-title"><p>信息论笔记</p><p><a href="https://blog.weyung.cc/2024/06/21/信息论笔记/">https://blog.weyung.cc/2024/06/21/信息论笔记/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>未央</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2024-06-21</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2024-06-27</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="CC BY-NC 4.0" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh"><i class="icon fab fa-creative-commons"></i><i class="icon fab fa-creative-commons-by"></i><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/">信息论</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/images/wechatpay.png" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2024/06/21/%E4%BF%A1%E5%8F%B7%E4%B8%8E%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">信号与系统笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2024/06/05/2022%20CISCN%20-%20ezpop/"><span class="level-item">2022 CISCN - ezpop</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
+</div><div class="article-licensing box"><div class="licensing-title"><p>信息论笔记</p><p><a href="https://blog.weyung.cc/2024/06/21/信息论笔记/">https://blog.weyung.cc/2024/06/21/信息论笔记/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>未央</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2024-06-21</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2024-06-28</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="CC BY-NC 4.0" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh"><i class="icon fab fa-creative-commons"></i><i class="icon fab fa-creative-commons-by"></i><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/">信息论</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/images/wechatpay.png" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2024/06/21/%E4%BF%A1%E5%8F%B7%E4%B8%8E%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">信号与系统笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2024/06/05/2022%20CISCN%20-%20ezpop/"><span class="level-item">2022 CISCN - ezpop</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
             el: '#valine-thread',
             appId: "naquiv8kljfmeFx6t9aSTTWn-9Nh9j0Va",
             appKey: "fneElOQzdSRFC3p43Bd4J69D",
