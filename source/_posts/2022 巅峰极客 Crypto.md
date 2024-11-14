@@ -314,12 +314,13 @@ for x, y in combinations(result, 2):
 
 RSA-CRT 签名中计算了：
 $$
-\sigma_p=\mu(m)^d\mod \ p \\\\  \sigma_q=\mu(m)^d\mod \ q
+\sigma_p=\mu(m)^d \mod{p} \\\\
+\sigma_q=\mu(m)^d\mod{q}
 $$
 然后签名 $\sigma=\sigma_p\cdot\alpha+\sigma_q\cdot\beta$ ，其中 $\alpha=q\cdot(q^{-1}\mod\ p)$ ， $\beta=p\cdot(p^{-1}\mod\ q)$ 。
 题目中给出 6 对签名，每对签名用 CRT 不难算出
 $$
-v=\sigma_p\cdot\alpha+\sigma_q\cdot\beta \mod N\cdot N'
+v=\sigma_p\cdot\alpha+\sigma_q\cdot\beta \mod {N\cdot N'}
 $$
 其中 $\sigma_p$ 和 $\sigma_q$ 和 $N/2$ 一个数量级， $\alpha$ 和 $\beta$ 又和 $N$ 一个数量级，故右式远小于 $N\cdot N'$ ，那么**上式在整数域上是成立的**。
 一对算不出，但是多对可以，组成向量，有：
@@ -355,8 +356,8 @@ $$
 $$
 这样的向量，所以这肯定是可行的。对这些向量 $\boldsymbol{z}$ ，我们计算 $\gcd(\boldsymbol{v}-\boldsymbol{z},N)$ 。我们将因此很快在其中找到 $\gcd(\boldsymbol{v}-\boldsymbol{x},N)$ ，因为 $\boldsymbol{x}$ 是一个 $(L')^\bot$ 中长度 $\leq\sqrt{\ell N}$ 的向量。但根据 $\boldsymbol{v}$ 的定义，我们有：
 $$
-\boldsymbol{v}=\boldsymbol{x}\mod p\\\\
-\boldsymbol{v}=\boldsymbol{y}\mod q
+\boldsymbol{v}=\boldsymbol{x}\mod{p} \\\\
+\boldsymbol{v}=\boldsymbol{y}\mod{q}
 $$
 故 $\gcd(\boldsymbol{v}-\boldsymbol{x},N)=p$ ，从而分解 $N$ 。
 
@@ -476,7 +477,7 @@ $$
 可以证明，这是一个关于空间维数 $n$ 、格维数 $d$ 和 $||\mathbf{b}_j||$ 比特长度的任何上界的确定性多项式时间算法。在实践中，不需要选择这样大的常数 $c$ ，因为 LLL 算法的理论界非常悲观。（翻译了这么久都看不懂，我也很悲观.jpg）
 
 > 笔者注记：
-$\lceil$和$\rceil$表示向上取整，例如$\lceil 1.2 \rceil = 2$。
+$\lceil$ 和 $\rceil$ 表示向上取整，例如 $\lceil 1.2 \rceil = 2$。
 
 #### 实现
 

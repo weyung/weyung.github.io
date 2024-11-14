@@ -29,7 +29,7 @@ categories: 题解
 >
 >只是，这位 X 同学，虽然不会退出 Vim，但是似乎对打开十六进制编辑器颇有造诣……
 
-![Hex](https://hack.lug.ustc.edu.cn/media/629da242-b1b1-5f69-a623-1c13fcedf019/hex_editor.png)
+![Hex](https://github.com/USTC-Hackergame/hackergame2021-writeups/raw/master/official/%E8%BF%9B%E5%88%B6%E5%8D%81%E5%85%AD%E2%80%94%E2%80%94%E5%8F%82%E4%B8%8A/src/hex_editor.png)
 
 同样是很简单的题目，随便找个十六进制编辑器照着抄下然后得出右边的 flag （手打真的累，还打错了一个字母）。
 
