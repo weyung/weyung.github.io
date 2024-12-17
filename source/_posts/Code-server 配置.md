@@ -1,5 +1,5 @@
 ---
-title: Code-server配置
+title: Code-server 配置
 date: 2022-03-30 00:49:00
 tags: [Windows,WSL,VSCode,Code-server]
 categories: 环境搭建
