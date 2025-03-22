@@ -98,6 +98,7 @@ print("enc =", [P.xy(), Q.xy(), encP.xy(), encQ.xy()])
 每次都会跑出一个 flag mod N，flag 比较大的情况要多出几次做 CRT，实测一般大概 200 次左右出完整的。
 远程环境 10 秒一个 `getPrime(160)`，太逆天了。
 一开始跑出来了一个，队友没交直接把容器关了，放生一个 flag，差点 GG，还好又跑出来了，就是一血没了。
+非预期图一乐，没啥学习价值。
 
 ```python
 from pwn import *
