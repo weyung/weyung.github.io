@@ -7,6 +7,7 @@ categories: 环境搭建
 
 一句话：VSCode 确实是一个好东西
 <!--more-->
+
 ## 前言
 
 > 在用 VSCode 前，我写 C 一直用的是 VS2019 ，直到我看见了 GZTime 学长写的 [Visual Studio Code Guide](https://blog.gztime.cc/posts/2020/6b9b4626/) 一文并照着配了后，我乐了，原来 VSCode 如此好用。首先作为一个编辑器，它比 VS2019 这个 IDE 小了太多（一个几十 MB ，一个 10 个 GB ），其次，它配上 gcc 可以避免 VS2019 由于 msvc 导致的 `scanf_s` 等一堆 `_s`（或许我的表述不是太严谨，但差不多是这个意思）。

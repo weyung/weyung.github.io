@@ -5,8 +5,7 @@ tags: [CTF, Crypto]
 categories: 题解
 ---
 
-队友把 flag 放生了，差点没重捕回来。
-
+队友把 flag 放生了，差点没重捕回来
 <!--more-->
 
 ## qaq

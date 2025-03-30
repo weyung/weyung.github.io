@@ -5,7 +5,7 @@ tags: [CTF, Crypto]
 categories: 题解
 ---
 
-特种兵 CTF 南京站，就打了两道密码，写一下。
+特种兵 CTF 南京站，就打了两道密码，写一下
 <!--more-->
 
 ## notiv

@@ -7,6 +7,7 @@ categories: 题解
 
 打 Hackergame 的第三年。
 <!--more-->
+
 ## Summary
 
 又是一年 Hackergame，今年终于进了一次前 100，总排 72，math 榜也能看到我。

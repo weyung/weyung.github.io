@@ -26,9 +26,9 @@ jobs:
         node -v
         npm i -g hexo-cli
         npm i
+        # Fix nunjucks template syntax issue, or it will cause LaTeX compilation problems
         sed -i 's/{{/{$/g' node_modules/nunjucks/src/lexer.js
         sed -i 's/}}/$}/g' node_modules/nunjucks/src/lexer.js
-        # Only checkout modified files
         git diff --name-only ${{ github.event.before }} ${{ github.sha }} | xargs git checkout ${{ github.sha }} --
         hexo clean
         hexo g

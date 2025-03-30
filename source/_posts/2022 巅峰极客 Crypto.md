@@ -5,7 +5,7 @@ tags: [CTF, Crypto]
 categories: 题解
 ---
 
-有瓜吃，美滋滋。
+有瓜吃，美滋滋
 <!--more-->
 
 题目质量一般，知识问答还全是搬运今年 ciscn 的。
