@@ -31,7 +31,7 @@ date: 2021-12-31 16:57:00
 
 [Elapsedf](https://elapsedf.cn) Think what you want
 
-[Pazuris](https://pazuris.cn) Fear neither hardship nor darkness
+[Pazuris](https://blog.pazuris.cn) Fear neither hardship nor darkness
 
 [yring](https://yring-me.com) 冥冥之中 自有天意
 
