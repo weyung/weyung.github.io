@@ -195,6 +195,11 @@ web359 开始就是正经题目了，访问得到一个登录页面
 
 ## CSRF
 
+CSRF（Cross-Site Request Forgery）中文翻译过来就是跨站请求伪造攻击。
+我一度分不清 CSRF 和 XSS 的区别，大致区别就是 XSS 利用的是**用户对指定网站的信任**，CSRF 利用的是**网站对用户网页浏览器的信任**。
+
 ## 参考
 
 <https://xz.aliyun.com/news/10663>
+<https://blog.csdn.net/qq_43378996/article/details/123910614>
+<https://en.wikipedia.org/wiki/Cross-site_request_forgery>

@@ -726,10 +726,10 @@ $$
 $$
 \begin{pmatrix}
 1 & 0 & 0 & \cdots & 0 & KA \\\\
-0 & 1 & 0 & \cdots & 0 & K^2A \\\\
+0 & 1 & 0 & \cdots & 0 & KA^2 \\\\
 \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\\\
-1 & 1 & 1 & \cdots & 1 & K^mA \\\\
-0 & 0 & 0 & \cdots & 1 & K\cdot 2^{n/2+k}A \\\\
+0 & 0 & 0 & \cdots & 1 & KA^m \\\\
+0 & 0 & 0 & \cdots & 0 & K\cdot 2^{n/2+k} \\\\
 \end{pmatrix}
 $$
 
