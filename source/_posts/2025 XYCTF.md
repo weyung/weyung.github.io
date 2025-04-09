@@ -770,6 +770,190 @@ $k$ 应该比 $\log_2mW$ 大很多，不然 step 6 的判定就很难起作用�
 
 代码一坨屎就先不放了，就注意一下 step 7 的意思是不用选全部的 output，比如第一轮用 $Y_0$ 到 $Y_{31}$，第二轮用 $Y_1$ 到 $Y_{32}$，第三轮用 $Y_2$ 到 $Y_{33}$，依次类推，而且实际上也不会只剩下一个，会剩下 4 至 16 个左右。
 
+改好了，端上巧克力味的史，为了方便读者理解整个流程，没有做太多的简化
+
+```python
+from sage.all import *
+from tqdm import trange
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
+from hashlib import md5
+
+class LCG:
+    def __init__(self, seed, a, b):
+        self.seed = seed
+        self.a = a
+        self.b = b
+        self.m = 2**128
+
+    def next(self):
+        self.seed = (self.seed * self.a + self.b) % self.m
+        return (self.seed >> 64) ^ (self.seed % 2**64)
+
+class lfsr:
+    # 我被裁了/(ㄒoㄒ)/~~
+    pass
+
+a = 47026247687942121848144207491837523525
+output = [17861431650111939539, 15632044669542972472, 18085804805519111109, 11630394250634164303, 10914687109985225138, 7348450425255618214, 10796029302647050328, 14267824433700366397, 9363967587530173835, 8995382728269798714, 3504283765121786984, 1312349325731613524, 10716889342831891752, 12298317818779713512, 8701992888199838445, 7261196699430834071, 4670657923849978944, 9833942603152121381, 18304734854303383637, 15945503654626665549, 6509330987395005461, 223169047706410182, 12990946817252956584, 3884858487227858459, 6366350447244638553, 10326924732676590049, 12989931141522347344, 9197940263960765675, 2481604167192102429, 1409946688030505107, 9263229900540161832, 266892958530212020, 14298569012977896930, 17318088100106133211, 4224045753426648494, 650161332435727275, 9488449142549049042, 8916910451165068139, 10116136382602356010, 6604992256480748513, 7375827593997920567, 1661095751967623288, 4143230452547340203, 4145435984742575053, 10465207027576409947, 16146447204594626029, 2807803679403346199, 10857432394281592897, 1494771564147200381, 2085795265418108023, 11756240132299985418, 13802520243518071455, 1191829597542202169, 16603089856395516862, 12517247819572559598, 14148806699104849454, 8174845389550768121, 15565523852832475714, 10046639095828632930, 15353735627107824646, 7003433641698461961, 11217699328913391211, 6392630836483027655, 7918524192972397836]
+
+n = 128
+m = 32
+k = 9
+WW = 2
+step = 9
+
+print(k, int(log(m*WW, 2)))
+
+def get_w(n, m, k, WW, A):
+    M = matrix(ZZ, m+1, m+1)
+    K = 2**200
+    for i in range(m):
+        M[i, i] = 1
+        M[i, m] = K*a**(i+1)
+    M[m, m] = K*2**(n//2+k)
+    for w in M.BKZ():
+        w = w[:-1]
+        lhs = sum([w[i]*A**(i+1) for i in range(m)]) % 2**(n//2+k)
+        if max(list(map(abs, w))) == WW and lhs == 0:
+            print("Found w successfully")
+            return w
+    raise ValueError("No suitable w found")
+
+# w = get_w(n, m, k, WW, a)
+
+# known_lsb9 = None
+# for windows in trange(0, 64-m):
+#     candidate = []
+#     for guessX0 in range(2**step):
+#         for guessB in range(2**step):
+#             X = [guessX0]
+#             for _ in range(1, 64+1):
+#                 X.append((X[-1]*a + guessB) % 2**k)
+#             X_star = [((output[i] ^ X[i]) % 2**k)*2**(n//2) for i in range(64)]
+#             Z = sum(w[i-windows]*(X_star[i+1] - X_star[i]) for i in range(windows, windows+m)) % 2**(n//2+k)
+#             delta = min(Z, abs(Z-2**(n//2+k)))
+#             if delta < 2*m*WW*2**(n//2):
+#                 candidate.append((X[0], guessB))
+#     if known_lsb9 is None:
+#         known_lsb9 = list(set(candidate))
+#     else:
+#         known_lsb9 = list(set(known_lsb9) & set(candidate))
+#     print(len(known_lsb9))
+#     if len(known_lsb9) == 16:    # after observing, we found 16 is the minimum, even not 16 is small enough
+#         break
+
+# print(known_lsb9)
+
+known_lsb9 = [(53, 69), (458, 255), (201, 67), (310, 1), (54, 257), (202, 255), (310, 257), (309, 325), (54, 1), (53, 325), (457, 67), (458, 511), (201, 323), (202, 511), (457, 323), (309, 69)]
+known_lsb16 = []
+m = 32
+k = 16
+WW = 3
+step = 7
+w = get_w(n, m, k, WW, a)
+for X0low, Blow in known_lsb9:
+    tmp = None
+    for windows in trange(0, 64-m):
+        candidate = []
+        for guessX0 in range(2**step):
+            for guessB in range(2**step):
+                X = [guessX0*2**9 + X0low]
+                guessB = guessB * 2**9 + Blow
+                for _ in range(1, 64+1):
+                    X.append((X[-1]*a + guessB) % 2**k)
+                X_star = [((output[i] ^ X[i]) % 2**k)*2**(n//2) for i in range(64)]
+                Z = sum(w[i-windows]*(X_star[i+1] - X_star[i]) for i in range(windows, windows+m)) % 2**(n//2+k)
+                delta = min(Z, abs(Z-2**(n//2+k)))
+                if delta < 2*m*WW*2**(n//2):
+                    candidate.append((X[0], guessB))
+
+        if tmp is None:
+            tmp = list(set(candidate))
+        else:
+            tmp = list(set(tmp) & set(candidate))
+        # print(len(tmp))
+        if len(tmp) == 0 or len(tmp) == 4:    # 4 groups is the best situation
+            break
+    known_lsb16 += tmp
+print(known_lsb16)
+
+def known_lsbx2knownlsbk(known_lsbx, m, k, WW, step=4):
+    w = get_w(n, m, k, WW, a)
+    known_lsbk = []
+    for X0low, Blow in known_lsbx:
+        tmp = None
+        for windows in range(0, 64-m):
+            candidate = []
+            for guessX0 in range(2**step):
+                for guessB in range(2**step):
+                    X = [guessX0*2**(k-step) + X0low]
+                    guessB = guessB * 2**(k-step) + Blow
+                    for _ in range(1, 64+1):
+                        X.append((X[-1]*a + guessB) % 2**k)
+                    X_star = [((output[i] ^ X[i]) % 2**k)*2**(n//2) for i in range(64)]
+                    Z = sum(w[i-windows]*(X_star[i+1] - X_star[i]) for i in range(windows, windows+m)) % 2**(n//2+k)
+                    delta = min(Z, abs(Z-2**(n//2+k)))
+                    if delta < 2*m*WW*2**(n//2):
+                        candidate.append((X[0], guessB))
+
+            if tmp is None:
+                tmp = list(set(candidate))
+            else:
+                tmp = list(set(tmp) & set(candidate))
+            # print(len(tmp))
+            if len(tmp) == 0 or len(tmp) == 4:    # 4 groups is the best situation
+                break
+        known_lsbk += tmp
+    return known_lsbk
+
+# known_lsb16 = [(14949, 29941), (47717, 62709), (14949, 62709), (47717, 29941), (50586, 335), (17818, 33103), (17818, 335), (50586, 33103), (47718, 32433), (14950, 32433), (14950, 65201), (47718, 65201), (50585, 63379), (17817, 30611), (50585, 30611), (17817, 63379)]
+known_lsb20 = known_lsbx2knownlsbk(known_lsb16, 48, 20, 2)  # For a fix k, adjust m and WW until it works
+print(len(known_lsb20))
+known_lsb24 = known_lsbx2knownlsbk(known_lsb20, 32, 24, 3)
+print(len(known_lsb24))
+known_lsb28 = known_lsbx2knownlsbk(known_lsb24, 40, 28, 3)
+print(len(known_lsb28))
+known_lsb32 = known_lsbx2knownlsbk(known_lsb28, 40, 32, 4)
+print(len(known_lsb32))
+known_lsb36 = known_lsbx2knownlsbk(known_lsb32, 40, 36, 4)
+print(len(known_lsb36))
+known_lsb40 = known_lsbx2knownlsbk(known_lsb36, 40, 40, 4)
+print(len(known_lsb40))
+known_lsb44 = known_lsbx2knownlsbk(known_lsb40, 40, 44, 4)
+print(len(known_lsb44))
+known_lsb48 = known_lsbx2knownlsbk(known_lsb44, 40, 48, 4)
+print(len(known_lsb48))
+known_lsb52 = known_lsbx2knownlsbk(known_lsb48, 40, 52, 4)
+print(len(known_lsb52))
+known_lsb56 = known_lsbx2knownlsbk(known_lsb52, 40, 56, 5)
+print(len(known_lsb56))
+known_lsb60 = known_lsbx2knownlsbk(known_lsb56, 40, 60, 5)
+print(len(known_lsb60))
+known_lsb64 = known_lsbx2knownlsbk(known_lsb60, 40, 64, 5)
+print(len(known_lsb64))
+print(known_lsb64)
+
+enc = b'l\x8bd,\xa3\xe7\x87*\xca\n\xd7\x11\xd6n=\xeaS`\xa4w\x94(\xb9\xf9\xb9\xc6\xe3\xc2\xfb\xdb\x80\xf6\x9f\xc7\xd1F"`{;V\xa7}Z\xc0\xc0\xf6<'
+
+for seed, b_low in known_lsb64:
+    X0_low = seed
+    X0_high = (seed ^ output[0]) % 2**64
+    X0 = (X0_high << 64) | X0_low
+    X1_low = (a*X0 + b_low) % 2**64
+    X1_high = (X1_low ^ output[1]) % 2**64
+    X1 = (X1_high << 64) | X1_low
+    b = (X1 - a*X0) % 2**128
+    seed = (X0 - b)*pow(a, -1, 2**128) % 2**128
+    lcg = LCG(seed, a, b)
+    if [lcg.next() for _ in [0] * 64] == output:
+        try:
+            flag = AES.new(key=md5(str(seed).encode()).digest(), mode=AES.MODE_ECB).decrypt(enc)
+            print(unpad(flag, 16).decode())
+        except:
+            pass
+```
+
 ### choice
 
 又是 MT19937 小练习，复用 Division 的代码就行了
