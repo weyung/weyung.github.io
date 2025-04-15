@@ -10,7 +10,7 @@ categories: 渗透
 
 ## 前言
 
-自从听说 Docker 给 root 会导致安全风险，潜意识就觉得 Docker 里的 root 和宿主机的 root 是一回事，但是被问到的时候面试官又说特权模式才会有风险，特权用户无所吊谓，不然 NameSpace 干嘛的呢？
+自从听说 Docker 给 root 会导致安全风险，潜意识就觉得 Docker 里的 root 和宿主机的 root 是一回事，但是被问到的时候面试官又说特权模式才会有风险，特权用户无所吊谓，不然 Namespaces 干嘛的呢？
 
 ## 前置知识
 
@@ -111,29 +111,31 @@ $ ls -l /usr/bin/ping
 做渗透测试的时候也可以用 `find / -perm -4000` 命令查找 SUID 文件，利用它们来提权。
 日常的生产实践还是优先使用 `sudo` 或者 Capabilities 机制来控制权限，SUID 只在必要时使用。
 
-### NameSpace
+### Namespaces
 
 Docker 有三大核心机制：
 
-- Namespace：隔离进程空间
+- Namespaces：隔离进程空间
 - Cgroups：限制资源使用
 - UnionFS：分层文件系统
 
-那么其中 NameSpace 其实是有很多种的：
+那么其中 Namespaces 其实是有很多种的：
 
-- Pid Namespace：进程 ID 隔离
-- UTS Namespace：主机名隔离
-- Mount Namespace：挂载点隔离
-- IPC Namespace：进程间通信隔离
-- Network Namespace：网络隔离
+- Pid Namespaces：进程 ID 隔离
+- UTS Namespaces：主机名隔离
+- Mount Namespaces：挂载点隔离
+- IPC Namespaces：进程间通信隔离
+- Network Namespaces：网络隔离
 
-接下来的就是我们今天的主角：User Namespace，用户隔离。
+接下来的就是我们今天的主角：User Namespaces，用户隔离。
 
-## User Namespace
+## User Namespaces
 
-User Namespace 是 Linux 内核提供的一种隔离机制，可以将容器内的用户 ID 映射到宿主机的用户 ID，从而实现用户层面的隔离。
-但是，这个 User Namespace **不是默认开启的**，需要在 Docker 的配置文件中进行设置。
+User Namespaces 是 Linux 内核提供的一种隔离机制，可以将容器内的用户 ID 映射到宿主机的用户 ID，从而实现用户层面的隔离。
+但是，这个 User Namespaces **不是默认开启的**，需要在 Docker 的配置文件中进行设置。
 也就是说，**默认情况下，Docker 里的 root 跟宿主机的 root 就是一回事**，被面试官忽悠了，绷。
+
+以下面的挂载 procfs 逃逸为例，没开 User Namespaces 的情况下，宿主机的 root 直接就被拿下了。
 
 ## Docker 逃逸
 
@@ -231,7 +233,17 @@ gcc t.c -o t
 nc -lvnp <your_host_port>
 ```
 
-shell 就弹出来了。
+宿主机 root 的 shell 就弹出来了。
+
+现在说说原理：Linux 有一个核心转储（core dump）机制，当进程崩溃时，内核会将进程的内存映像保存到一个文件，用于调试。
+
+而 `/proc/sys/kernel/core_pattern` 定义了核心转储文件的生成规则。其格式分为现和：
+
+1. 静态路径：如 `/var/crash/core.%p`（`%p` 表示进程 PID）。
+2. 管道命令：以 | 开头时，内核会将 core dump 内容通过管道传递给指定程序，格式为：
+`| /path/to/program %p [其他参数]`
+
+相信这时候你也看出来了，上面的利用方式实际上是将 core dump 的内容作为参数传递给了 `/tmp/t.py`，而 `/tmp/t.py` 被 root 执行，从而反弹出 shell。
 
 #### 拓展之 OverlayFS
 
@@ -310,6 +322,7 @@ lrwxrwxrwx  1 root root   72  3月 20 15:05 JVXDIO6M3RVT6N6O2ETGZQ5IY4 -> ../78e
 ### 安全隐患
 
 未知攻，焉知防？
+先说说 Docker 的安全隐患，Docker 的安全隐患主要分为三类：
 
 1. 宿主机的操作系统本身就存在安全隐患
     我们知道，Docker 跟宿主机是共享内核的，所以如果宿主机的内核存在漏洞，那么 Docker 也会受到影响。比如著名的脏牛提权漏洞（CVE-2016-5195）。
@@ -349,5 +362,6 @@ lrwxrwxrwx  1 root root   72  3月 20 15:05 JVXDIO6M3RVT6N6O2ETGZQ5IY4 -> ../78e
 
 ## 参考
 
-[Isolate containers with a user namespace](https://docs.docker.com/engine/security/userns-remap/#about-remapping-and-subordinate-user-and-group-ids)
+[Isolate containers with a user Namespaces](https://docs.docker.com/engine/security/userns-remap/#about-remapping-and-subordinate-user-and-group-ids)
 [Docker 魔法解密：探索 UnionFS 与 OverlayFS](https://zhuanlan.zhihu.com/p/679328995)
+[T Wiki](https://wiki.teamssix.com/)

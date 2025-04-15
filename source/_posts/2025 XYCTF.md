@@ -139,7 +139,7 @@ arch ash base64 bbconfig busybox cat chattr chgrp chmod chown cp date dd df dmes
 
 ### ezsql(手动滑稽)
 
-随便试几下发现 `username` 字段可以注入，`password` 输什么都会被转义，且存在空格过滤，于是使用 `tab` 作为空格绕过，payload 如下：
+随便试几下发现 `username` 字段可以注入，`password` 输什么都会被转义，且存在空格过滤，参考[这篇文章](https://www.freebuf.com/articles/web/426189.html)使用 `tab` 作为空格绕过，payload 如下：
 
 ```sql
 username='%09OR%091=1%09#&password=1
