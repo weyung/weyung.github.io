@@ -39,6 +39,8 @@ date: 2021-12-31 16:57:00
 
 [Lst4r](https://lst4r-max.github.io) 小铁大客户
 
+[夏槿](https://uniya.work) 的小屋
+
 ********************************
 
 > 欢迎来交换友链ヾ(≧▽≦*)o
@@ -46,6 +48,6 @@ date: 2021-12-31 16:57:00
 ```yaml
 - name: weyung
   link: https://blog.weyung.cc
-  avatar: https://blog.weyung.cc/images/wy.png
+  avatar: https://blog.weyung.cc/images/avatar.png
   descr: 写一些和我一样菜也能看懂的文章
 ```
