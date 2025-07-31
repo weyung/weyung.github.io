@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>计组笔记 - weyung</title><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#ffffff"><meta name="application-name" content="weyung&#039;s blog"><meta name="msapplication-TileImage" content="/img/icon.svg"><meta name="msapplication-TileColor" content="#ffffff"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="weyung&#039;s blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" sizes="1061x1061" href="/img/icon.svg"><link rel="canonical" href="https://blog.weyung.cc/2024/06/05/Course/%E8%AE%A1%E7%BB%84%E7%AC%94%E8%AE%B0/"><link rel="alternate" href="/atom.xml" title="weyung" type="application/atom+xml"><link rel="icon" href="/images/wy.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/wy.png" alt="weyung" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives/">归档</a><a class="navbar-item" href="/categories/">分类</a><a class="navbar-item" href="/tags/">标签</a><a class="navbar-item" href="/links/">友链</a><a class="navbar-item" href="/about/">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-06-04T18:10:00.000Z" title="6/5/2024, 2:10:00 AM">2024-06-05</time>发表</span><span class="level-item"><time dateTime="2025-07-31T07:34:35.338Z" title="7/31/2025, 3:34:35 PM">2025-07-31</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="level-item">1 小时读完 (大约8675个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">计组笔记</h1><div class="content"><p>功夫再高，也怕挂科。</p>
+<span id="more"></span>
+
+<p>有时间还是把视频看一遍为好，UP 主讲得挺好的。</p>
+<h2 id="第一章-概述"><a href="#第一章-概述" class="headerlink" title="第一章 概述"></a>第一章 概述</h2><p>CPU 主要由<strong>运算器</strong>和<strong>控制器</strong>组成。<br>高速缓存 cache 采用 SRAM，内存采用 DRAM。<br>MIPS 和 ARM 都属于 RISC（Reduced Instruction Set Computer），x86 属于 CISC（Complex Instruction Set Computer）。<br><strong>Amdahl 定律</strong>：$t_{new} = t_{related}/S + t_{unrelated}$，$S$ 为<strong>加速比</strong>。</p>
+<p>时钟周期数 = 指令数 x 平均每条指令所需周期数（即 cycles = IC x CPI）<br>CPU 执行时间 = 指令数 x CPI x 时钟周期长（即 CPUtimes = IC x CPI x T）<br>或 <strong>CPUtimes = IC x CPI / f</strong></p>
+<p><strong>能耗</strong> = 负载电容 x 电压^2 = $CU^2$<br><strong>功耗</strong> = 1/2 x 负载电容 x 电压^2 x 开关频率 = $\frac12 CU^2 f$</p>
+<p><strong>七个伟大思想</strong>：使用抽象简化设计、加速大概率事件、通过并行提高性能、 通过流水线提高性能、 通过预测提高性能、存储器层次、通过冗余提高可靠性。</p>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>MIPS 一共有 32 个 <strong>32 位</strong>的寄存器<br>程序中的变量放在<strong>保存寄存器</strong>（store reg）中：<code>$s0~7</code> 共 8 个<br>运算的临时变量放在<strong>临时寄存器</strong>（temp reg）中：<code>$t0~9</code> 共 10 个<br><strong>零寄存器</strong>（zero reg）：<code>$zero</code>，常用于赋值为 0</p>
+<p>三类指令：<br><strong>运算指令</strong>：<code>add</code>、<code>sub</code>、<code>mul</code>、<code>div</code>、<code>and</code>、<code>or</code>、<code>xor</code>、<code>nor</code>、<code>slt</code>、<code>sll</code>、<code>srl</code>、<code>sra</code><br><strong>数据传送指令</strong>：<code>lw</code>、<code>sw</code>、<code>lui</code><br><strong>决策指令</strong>：<code>beq</code>、<code>bne</code>、<code>j</code>、<code>jal</code>、<code>jr</code></p>
+<p>三种指令格式：<br>R 型：<code>op rd, rs, rt</code><br>I 型：<code>op rt, rs, imm</code><br>J 型：<code>op target</code></p>
+<h3 id="算术运算指令"><a href="#算术运算指令" class="headerlink" title="算术运算指令"></a>算术运算指令</h3><p>如 a, b, c 三个变量分别存放在 <code>$s0, $s1, $s2</code> 中，要计算 <code>c = a + b</code>，则汇编代码为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add $s2, $s0, $s1</span><br></pre></td></tr></table></figure>
+
+<p>计算 <code>c = a - b</code>，则汇编代码为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sub $s2, $s0, $s1</span><br></pre></td></tr></table></figure>
+
+<p>加立即数，假设变量 <code>i</code> 位于 <code>$s0</code>，要计算 <code>i = i + 1</code>，则汇编代码为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addi $s0, $s0, 1</span><br></pre></td></tr></table></figure>
+
+<p>要减就<strong>把立即数设为负数</strong>，故 MIPS 无 <code>subi</code> 指令。</p>
+<h3 id="逻辑运算指令"><a href="#逻辑运算指令" class="headerlink" title="逻辑运算指令"></a>逻辑运算指令</h3><p>比较简单，<code>nor</code> 为或非，就是先或再非，与 0 或非可以实现取反。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sll $s2, $s0, 2 # $s2 = $s0 &lt;&lt; 2</span><br></pre></td></tr></table></figure>
+
+<h3 id="运算指令例子"><a href="#运算指令例子" class="headerlink" title="运算指令例子"></a>运算指令例子</h3><p>result(<code>$s3</code>) = a(<code>$s0</code>) - 10 + (b(<code>$s1</code>) + c(<code>$s2</code>) * 5)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sll $t0, $s2, 2     # $t0 = c * 4</span><br><span class="line">add $t1, $t0, $s2   # $t1 = c * 5</span><br><span class="line">add $t2, $t1, $s1   # $t2 = b + c * 5</span><br><span class="line">addi $t3, $s0, -10  # $t3 = a - 10</span><br><span class="line">add $s3, $t3, $t2   # $s3 = a - 10 + (b + c * 5)</span><br></pre></td></tr></table></figure>
+
+<h3 id="寄存器-存储器数据传送"><a href="#寄存器-存储器数据传送" class="headerlink" title="寄存器-存储器数据传送"></a>寄存器-存储器数据传送</h3><p><code>lw</code> 即 load word<br>假设数组 <code>a</code> 基址存放在 <code>$s1</code> 中，要把 <code>a[5]</code> 的值传送到 <code>$s0</code> 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lw $s0, 20($s1)</span><br></pre></td></tr></table></figure>
+
+<p><code>a[0]</code> 到 <code>a[5]</code> 的距离是 5 个字，而<strong>在 MIPS 中，一个字是 4 个字节</strong>，所以 <code>a[5]</code> 的地址是 <code>a</code> 的基址加上 20。<br>把 <code>$t0</code> 的值传送到 <code>a[2]</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sw $t0, 8($s1)</span><br></pre></td></tr></table></figure>
+
+<h3 id="寄存器间数据传送"><a href="#寄存器间数据传送" class="headerlink" title="寄存器间数据传送"></a>寄存器间数据传送</h3><p>把 <code>$t0</code> 的值传送到 <code>$s1</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">addi $s1, $t0, 0</span><br><span class="line">add $s1, $t0, $zero</span><br><span class="line">move $s1, $t0           # move 是伪指令，等价于 add $s1, $t0, $zero</span><br></pre></td></tr></table></figure>
+
+<p>把常数 10 传送到 <code>$s2</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">addi $s2, $zero, 10</span><br><span class="line">li $s2, 10              # li 是伪指令，即 load immediate</span><br></pre></td></tr></table></figure>
+
+<h3 id="装载-32-位立即数"><a href="#装载-32-位立即数" class="headerlink" title="装载 32 位立即数"></a>装载 32 位立即数</h3><p>把 10A2 7FFF 放进 <code>$s2</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lui $s2, 0x10A2         # load upper immediate</span><br><span class="line">ori $s2, $s2, 0x7FFF    # or immediate</span><br></pre></td></tr></table></figure>
+
+<p>这里不能用 <code>addi</code>，因为如果低 16 位的最高位是 1，那么会被当作负数，造成结果错误。</p>
+<p>例：<strong>数组元素运算与赋值</strong><br><code>a[i] = a[0] + 100000</code>，数组 <code>a</code> 的基址存放在 <code>$s0</code> 中，<code>i</code> 存放在 <code>$s1</code> 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">lw $t0, 0($s0)          # $t0 = a[0]</span><br><span class="line">lui $t1, 1              # notice: 100000 = 0x186A0 &gt; 0xFFFF</span><br><span class="line">ori $t1, $t1, 0x86A0</span><br><span class="line">add $t2, $t0, $t1       # $t2 = a[0] + 100000</span><br><span class="line">sll $t3, $s1, 2         # $t3 = i * 4</span><br><span class="line">add $t4, $s0, $t3       # $t4 = &amp;a[i]</span><br><span class="line">sw $t2, 0($t4)          # a[i] = a[0] + 100000</span><br></pre></td></tr></table></figure>
+
+<h3 id="决策指令"><a href="#决策指令" class="headerlink" title="决策指令"></a>决策指令</h3><p><code>beq</code> 即 branch equal，<code>bne</code> 即 branch not equal<br><code>j</code> 即 jump，无条件跳转<br>例子：将如下代码翻译成 MIPS 汇编代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (i == j) f = g + h;</span><br><span class="line"><span class="keyword">else</span> f = g - h;</span><br></pre></td></tr></table></figure>
+
+<p>假设 <code>f, g, h</code> 分别存放在 <code>$s0, $s1, $s2</code> 中，<code>i, j</code> 分别存放在 <code>$s3, $s4</code> 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">beq $s3, $s4, Else</span><br><span class="line">add $s0, $s1, $s2</span><br><span class="line">j Exit</span><br><span class="line">Else:</span><br><span class="line">sub $s0, $s1, $s2</span><br><span class="line">Exit:</span><br></pre></td></tr></table></figure>
+
+<p><code>slt</code> 即 set on less than，即小于则置位，否则清零（复位）<br>比如 <code>$s0 = 0, $s1 = 0, $s2 = 1</code>，则：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slt $s0, $s1, $s2</span><br></pre></td></tr></table></figure>
+
+<p><code>$s0</code> 的会被置为 1，因为 0 &lt; 1。</p>
+<p>例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (a[i] == k) i++;</span><br></pre></td></tr></table></figure>
+
+<p>假设 <code>i</code> 存放在 <code>$s3</code>，<code>k</code> 存放在 <code>$s5</code>，<code>a</code> 的基址存放在 <code>$s6</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Loop:</span><br><span class="line">sll $t0, $s3, 2     # $t0 = i * 4</span><br><span class="line">add $t1, $s6, $t0   # $t1 = &amp;a[i]</span><br><span class="line">lw $t2, 0($t1)      # $t2 = a[i]</span><br><span class="line">beq $t2, $s5, Exit  # if a[i] == k, exit</span><br><span class="line">addi $s3, $s3, 1    # i++</span><br><span class="line">j Loop</span><br><span class="line">Exit:</span><br></pre></td></tr></table></figure>
+
+<h3 id="指令格式"><a href="#指令格式" class="headerlink" title="指令格式"></a>指令格式</h3><h4 id="R-型指令"><a href="#R-型指令" class="headerlink" title="R 型指令"></a>R 型指令</h4><p>指令中含三个寄存器的运算指令都属于 R 型（register type）指令，格式为 <code>op rd, rs, rt</code>。<br>32 位的 MIPS 指令一共分为 6 个字段：</p>
+<ul>
+<li>操作码（opcode）：6 位</li>
+<li>源寄存器 1（register source 1，rs）：5 位</li>
+<li>源寄存器 2（register source 2，rt，叫 rt 应该是因为 t 是 s 的下一个字母）：5 位</li>
+<li>目的寄存器（register destination，rd）：5 位</li>
+<li>移位量（shamt）：5 位</li>
+<li>功能码（funct）：6 位</li>
+</ul>
+<p>MIPS 有 32 个寄存器，所以 5 位就可以表示全部的 32 个寄存器，所以 <strong>rs、rt、rd 都是 5 位</strong>。<br><strong>R 型指令的 opcode 都是 0</strong>，由 6 位功能码指定操作，<code>$t0 ~ $t7</code> 的编号是 8-15，<code>$s0 ~ $s7</code> 的编号是 16-23，<code>add</code> 的 funct 是 32，<code>sub</code> 的 funct 是 34。<br><code>sll/srl</code> 也是 R 型指令，没有第二个源寄存器，rt 被置为 0，用 <code>shamt</code> 表示移位量。</p>
+<h4 id="I-型指令"><a href="#I-型指令" class="headerlink" title="I 型指令"></a>I 型指令</h4><p><code>addi</code> 和 <code>ori</code> 都属于 I 型（immediate type）指令，格式为 <code>op rt, rs, imm</code>。<br>I 型指令用 opcode 表示操作，rs 表示源寄存器，rt 表示目的寄存器，并把 rd-shamt-funct 三个字段合并成了 16 位的 imm，即立即数。</p>
+<p><code>lw</code> 和 <code>sw</code> 也是 I 型指令，但是 <strong>rt 表示目的寄存器，rs 表示基址寄存器，和上面相反</strong>，imm 表示偏移量，这两个指令的操作码分别是 35 和 43。</p>
+<p>I 型指令还有 <code>beq</code> 和 <code>bne</code>，用于分支。</p>
+<h4 id="J-型指令"><a href="#J-型指令" class="headerlink" title="J 型指令"></a>J 型指令</h4><p><code>j</code> 和 <code>jal</code> 都属于 J 型（jump type）指令，格式为 <code>op target</code>。</p>
+<h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><p>支持过程的三大寄存器：4 个<strong>参数寄存器</strong> <code>$a0 ~ $a3</code>，两个<strong>返回值寄存器</strong> <code>$v0 ~ $v1</code>，<strong>返回地址寄存器</strong> <code>$ra</code>。</p>
+<p><code>jal</code> 即 jump and link，跳转到标签并<strong>保存返回地址</strong>到寄存器 <code>$ra</code>，由调用者主程序使用。<br><code>jr</code> 即 jump register，跳转到寄存器中的地址，由被调用者过程使用，一般是 <code>jr $ra</code>。</p>
+<p>两个栈指针寄存器 <code>$sp</code>（stack pointer） 和 <code>$fp</code> （frame pointer），分别表示栈指针和帧指针。在过程调用时，<strong>如果要用到保存寄存器，就要先压入栈中，调用结束后再弹出</strong>。</p>
+<p>还有一个全局指针寄存器 <code>$gp</code>，便于寻找位置固定的数据，如主程序使用的变量、声明为 static 的变量，统称静态变量。</p>
+<p>一般程序在内存中有 5 个段，地址从低到高依次为</p>
+<ol>
+<li>保留段</li>
+<li>代码段</li>
+<li>静态数据段</li>
+<li>堆段（动态数据段）</li>
+<li>栈段</li>
+</ol>
+<p><strong>堆由低向高增长，栈由高向低增长</strong>，双向奔赴，实现了内存空间的高效利用。</p>
+<h3 id="寻址"><a href="#寻址" class="headerlink" title="寻址"></a>寻址</h3><p>R 型指令都是寄存器寻址。<br>I 型指令第三个操作数（即第二个源操作数）是立即数的指令采用立即数寻址。<code>lw</code> 和 <code>sw</code> 采用基址偏移寻址。<code>beq</code> 和 <code>bne</code> 采用 PC(program counter) 相对寻址，<strong>分支 32 位地址 = PC + 4 + 字地址偏移量</strong>。<br>J 型指令都是伪直接寻址，因为 J 型指令是由 6 位操作码和 26 位目标地址组成的，寻址时<strong>先左移 2 位形成 28 位字节地址，再和 PC 的高 4 位拼接成 32 位地址</strong>。</p>
+<p>假设第一行代码的地址是 10000，对如下代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Loop:</span><br><span class="line">sll $t1, $s3, 2         # Temp reg $t1 = i * 4</span><br><span class="line">add $t1, $t1, $s6       # $t1 = address of save[i]</span><br><span class="line">lw $t0, 0($t1)          # Temp reg $t0 = save[i]</span><br><span class="line">bne $t0, $s5, Exit      # go to Exit if save[i] != k</span><br><span class="line">addi $s3, $s3, 1        # i = i + 1</span><br><span class="line">j Loop                  # go to Loop</span><br><span class="line">Exit:</span><br></pre></td></tr></table></figure>
+
+<p><code>bne $t0, $s5, Exit</code> 中的立即数应该是 2，这里可以大概理解成隔了两条指令，而 <code>j Loop</code> 中的立即数稍微麻烦，首先因为 PC 的高 4 位是一样的，都是全 0，所以只需要考虑低 28 位，<code>Loop</code> 的地址是 10000，右移 2 位就是 100，所以 <code>j Loop</code> 的立即数是 100 （十进制的 4）的<strong>补码</strong>。</p>
+<p>PC 相对寻址的范围是 (PC + 4) - 2e17 ~ (PC + 4 + 2e17 - 4)，大约是前后各 128 KB。<br>伪直接寻址的范围是和 PC 高 4 位相同的一切地址，即 256 MB。<br>要分支到更远的地址，就要把 <code>beq</code> 或者 <code>bne</code> 切换一下，然后下面跟一个 <code>j</code> 指令。<br>比如 <code>beq $s0, $s1, L1</code> 就换成如下代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bne $s0, $s1, L2</span><br><span class="line">j L1</span><br><span class="line">L2:</span><br></pre></td></tr></table></figure>
+
+<p>扩展跳转范围就直接换成 <code>jr</code> 指令，把目标地址放在寄存器中即可。<br>32 位系统最多只能支持 4 GB 的内存，所以 32 位的寄存器已经支持全部的内存寻址了。</p>
+<h3 id="C-语言的-4-个翻译层次"><a href="#C-语言的-4-个翻译层次" class="headerlink" title="C 语言的 4 个翻译层次"></a>C 语言的 4 个翻译层次</h3><p>编译器将高级语言文件（.c）翻译成汇编文件（.asm），然后由汇编器将汇编文件翻译成机器码文件（.obj），再由链接器将机器码文件链接成可执行文件（.exe），最后由加载器将可执行文件加载到内存中执行。</p>
+<h2 id="算术运算"><a href="#算术运算" class="headerlink" title="算术运算"></a>算术运算</h2><h3 id="整数的表示"><a href="#整数的表示" class="headerlink" title="整数的表示"></a>整数的表示</h3><p>以下以 8 位二进制数为例：<br>无符号整数很好理解，就是 8 位全用来表示数值，如 0000 0000 表示 0，1111 1111 表示 255。<br><strong>原码</strong>：用最高位表示正负号，其余 7 位表示绝对值<br><strong>反码</strong>：将最高位为 0 的原码按位取反表示负数<br><strong>补码</strong>：按位取反再加 1</p>
+<p>符号扩展：<br>16 位扩展到 32 位时，将最高位（即符号位）复制到高 16 位。</p>
+<p>大端编址和小端编址：<br><strong>大端编址是将高位放在低地址</strong>，小端编址是将高位放在高地址。</p>
+<p>比如 0xFFE0 在内存中时<br>大端编址：<br>低 8 位：0xFF<br>高 8 位：0xE0<br>小端编址：<br>低 8 位：0xE0<br>高 8 位：0xFF</p>
+<h3 id="ALU"><a href="#ALU" class="headerlink" title="ALU"></a>ALU</h3><p>符号位进位称为上溢，符号位借位称为下溢，统称溢出。</p>
+<p>比较简单的 32 位 ALU 是行波进位加法器，即<strong>每一位都是一个全加器</strong>，每个全加器有三个输入：两个加数和上一位的进位，两个输出：和位和进位。<br>但是每次进位都要过一次或门和与门，就产生了 64 个门延迟。</p>
+<p>为了加快进位，进而加速加法运算，现在广泛采用<strong>超前进位加法器</strong>，通过将进位分为 4 位一组，抽象成每组的进行，实现加法器的并行执行。</p>
+<p>要执行 n 位加法，求出 n 是 4 的几次方，并向上取整，再乘 2 加 1，就是超前进位加法器的门延迟。<br>用数学表达式表示就是 $2 \times \lceil \log_4 n \rceil + 1$，<strong>n 为 16 时是 5，n 为 32 和 64 时都是 7</strong>。</p>
+<p>除法中，规定<strong>余数和被除数同号</strong>，比如 -7/2 = -3 余 -1，而不是商 -4 余 1。</p>
+<p>MIPS 中的乘除指令有 4 条，<code>mult</code> 和 <code>div</code> 是有符号的乘法和除法，<code>multu</code> 和 <code>divu</code> 是无符号的乘法和除法，均为双操作数 R 型指令。<br><code>mfhi</code> 和 <code>mflo</code> 分别是将乘法和除法的高 32 位和低 32 位传送到寄存器中，均为单操作数 R 型指令。</p>
+<h3 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h3><p>IEEE 754 标准规定了浮点数的表示方法，<strong>32 位单精度浮点数由 1 位符号位、8 位指数位和 23 位尾数位组成</strong>。注意<strong>指数要加 127 的偏差</strong>，同时这里的<strong>尾数是指小数点后的部分</strong>，因为二进制的科学计数法里，只要不是 0.0，那么小数点前的部分一定是 1。<br>举个例子 -0.00101 = -1.01 x 2^-3，很明显，因为是负数，所以符号位是 1，指数位是 -3 + 127 = 124，尾数位是 01（后面补 0）。<br><strong>64 位双精度浮点数由 1 位符号位、11 位指数位和 52 位尾数位组成，指数偏差是 1023。</strong></p>
+<p>MIPS 中增加了单独的 32 个单精度浮点寄存器 <code>$f0 ~ $f31</code>，一对单精度浮点寄存器组合成一个双精度寄存器，以偶数编号。</p>
+<p><code>add.s</code> 和 <code>sub.s</code> 是单精度浮点数的加减法，<code>mul.s</code> 和 <code>div.s</code> 是单精度浮点数的乘除法，s 换成 d 就是双精度浮点数的运算。<br>比较两个浮点数大小，用 <code>c.eq.s</code> 和 <code>c.lt.s</code>，分别表示等于和小于，为真时用 <code>bc1t</code> 跳转，为假时用 <code>bc1f</code> 跳转。</p>
+<blockquote>
+<p>这里我查了一下应该是 <code>bc1t</code> 和 <code>bc1f</code>，但是课本写的是 <code>bclt</code> 和 <code>bclf</code>，我觉得应该是笔误。</p>
+</blockquote>
+<p>IEEE 754 在运算时引入了两个尾数位，分别是保护位和舍入位，运算误差不超过 0.5 个 ulp（unit in the last place，即尾数最低位）。</p>
+<h2 id="处理器"><a href="#处理器" class="headerlink" title="处理器"></a>处理器</h2><p>最核心的部分。</p>
+<h3 id="数字逻辑基础"><a href="#数字逻辑基础" class="headerlink" title="数字逻辑基础"></a>数字逻辑基础</h3><p><strong>组合逻辑不含存储器</strong>，给定输入时输出唯一确定，如 ALU。<br><strong>状态逻辑（又称时序逻辑）含存储器</strong>，至少拥有两个输入：数据输入和<strong>时钟输入</strong>和一个输出。<br>总线表示数据信息多于一位的信号线，在数字电路图中加粗表示并标记位宽，由于 MIPS-32 采用 32 位字，所以当总线为 32 位时不必写出位宽。</p>
+<h3 id="指令周期"><a href="#指令周期" class="headerlink" title="指令周期"></a>指令周期</h3><p>一条 MIPS 指令的执行分为 5 个阶段，统称一个<strong>指令周期</strong>，分别是：</p>
+<ol>
+<li>取指令（IF，Instruction Fetch）：从内存中取指令</li>
+<li>指令译码（ID，Instruction Decode）：译码并取寄存器</li>
+<li>执行（EX，Execute）：执行指令</li>
+<li>访存（MEM，Memory）：访问内存</li>
+<li>写回（WB，Write Back）：写回结果</li>
+</ol>
+<p>R 型指令和 <code>lw/sw/beq</code> 在 IF 的时候都是根据 PC 从存储器中取出指令。<br>R 型指令在 ID 时取源操作数 rs 和 rt，在 EX 时执行运算，没有 MEM，因为三个操作数都是寄存器，WB 时将结果写回 rd。<br><code>lw/sw</code> 在 ID 时取基址寄存器 rs，并将偏移量 imm 符号扩展，EX 时计算内存地址，<code>lw</code> 在 MEM 时从内存中取数据，WB 时写回寄存器 rt，<code>sw</code> 在 MEM 时将数据写入内存，WB 时不做任何操作。<br><code>beq</code> 在 ID 时取 rs 和 rt，将字地址符号扩展并左移两位，EX 时比较 rs 和 rt，计算分支地址，MEM 时写回 PC，WB 时不做任何操作。</p>
+<p>在单周期实现中，每条指令都在一个时钟周期内完成，CPI 为 1。<br>多周期实现中可以缩减时钟周期到一个阶段的长度，一条指令占用几个阶段，就执行几个周期。</p>
+<h3 id="指令周期与流水级"><a href="#指令周期与流水级" class="headerlink" title="指令周期与流水级"></a>指令周期与流水级</h3><p>与指令周期的五个阶段相对应，把数据通路分为五个流水级，形成流水线（pipeline）。<br>时钟周期数 = 指令数 + 流水级级数 - 1（cycles = IC + stages - 1）。<br>理想加速比 = 流水级级数（$S_{理想}$ = stages）。<br><strong>理想条件为：1.每个流水级时间等长 2.流水线没有开销 3.指令数足够多。</strong><br>省略流水周期可能导致两条指令抢占同一流水级的硬件部件，引发<strong>结构冒险</strong>（structural hazard），解决的通行方法是添加硬件。</p>
+<h3 id="数据冒险产生原因及其解决办法"><a href="#数据冒险产生原因及其解决办法" class="headerlink" title="数据冒险产生原因及其解决办法"></a>数据冒险产生原因及其解决办法</h3><p>产生原因：由于取到的指令需要的数据还没有准备好，导致指令不能在预定的时钟周期内执行。</p>
+<p>解决办法：<br>1）<strong>数据旁路</strong>：将数据从一个流水级传递到另一个流水级，而不是等到写回阶段再传递。<br>2）<strong>先写后读</strong>：对寄存器堆操作时，前半个周期写，后半个周期读，可以减少一次数据冒险。<br>3）<strong>插入气泡</strong>：在流水线中插入一个空操作，让后面的指令等待，直到数据准备好。</p>
+<p>ALU 运算结果引出旁路传到另一个 ALU，叫做 ALU-ALU 旁路，从 MEM 级传到 ALU 叫做 MEM-ALU 旁路，两个旁路都有时，称为<strong>全旁路</strong>。</p>
+<h3 id="控制冒险产生原因及其解决办法"><a href="#控制冒险产生原因及其解决办法" class="headerlink" title="控制冒险产生原因及其解决办法"></a>控制冒险产生原因及其解决办法</h3><p>产生原因：由于取到的指令并不是需要的指令，而导致指令不能在预定的时钟周期内执行。<br>说具体点，比如 <code>beq</code> 指令在 EX 阶段后才知道是否要跳转，但是在 ID 阶段已经取到了下一条指令，如果要跳转，就要把下一条指令丢弃，导致控制冒险。</p>
+<p>解决办法：<br>1）<strong>缩短分支延迟</strong>：将分支地址计算从 EX 级提前到 ID 级；<br>2）<strong>动态分支预测</strong>：通过查找指令地址观察上一次执行该指令时分支是否发生，如果上次执行时分支发生，就从上次分支发生的地方开始取新的指令；<br>3）<strong>延迟分支调度</strong>：编译器通过分析代码用不影响分支的一条指令填充到分支延迟时间槽。</p>
+<h3 id="流水线性能"><a href="#流水线性能" class="headerlink" title="流水线性能"></a>流水线性能</h3><p>流水线在同一时间处理多条指令的不同阶段，实现指令级并行。<br>由时钟周期长度决定的<strong>吞吐率是评价流水线性能的重要指标</strong>。<br>在两个流水级间插入<strong>流水线寄存器</strong>，以左右两个流水级命名，分别叫 IF/ID、ID/EX、EX/MEM、MEM/WB。<br>流水线的时钟周期是由最慢的流水级决定的。<br>流水线的控制信号在译码时产生，逐级递减。<br><strong>前半个周期写寄存器堆，后半个周期读寄存器堆，可以减少一次数据冒险。</strong></p>
+<h3 id="控制单元信号"><a href="#控制单元信号" class="headerlink" title="控制单元信号"></a>控制单元信号</h3><table>
+<thead>
+<tr>
+<th>控制信号</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RegDst</td>
+<td>启用 rd</td>
+</tr>
+<tr>
+<td>ALUSrc</td>
+<td>imm 输入 ALU</td>
+</tr>
+<tr>
+<td>MemtoReg</td>
+<td>存储器写回</td>
+</tr>
+<tr>
+<td>RegWrite</td>
+<td>写寄存器堆</td>
+</tr>
+<tr>
+<td>MemRead</td>
+<td>读存储器</td>
+</tr>
+<tr>
+<td>MemWrite</td>
+<td>写存储器</td>
+</tr>
+<tr>
+<td>Branch</td>
+<td>分支</td>
+</tr>
+<tr>
+<td>ALUOp1 / ALUOp0</td>
+<td>ALU 操作码</td>
+</tr>
+</tbody></table>
+<p>以指令 <code>and rd, rs, rt</code> 为例，<code>RegDst</code> 为 1，没有立即数，所以 <code>ALUSrc</code> 为 0，没有任何与存储器有关的操作，所以 <code>MemtoReg MemRead MemWrite</code> 均为 0，不是 <code>beq</code>，所以 Branch 也为 0，然后 R 型指令的 <code>ALUOp</code> 信号都是 10。</p>
+<p>加速比 = 改进前的时钟周期数 / 改进后的时钟周期数</p>
+<h2 id="存储层次"><a href="#存储层次" class="headerlink" title="存储层次"></a>存储层次</h2><h3 id="cache-和内存"><a href="#cache-和内存" class="headerlink" title="cache 和内存"></a>cache 和内存</h3><p>L1-L3 <strong>高速缓存</strong><br>cache 通常集成在 CPU 中，采用静态随机访问存储器（SRAM）集成电路，由双稳态触发器构成，每 B（byte） 由 6-8 个晶体管组成，硬件规模较大<br>L4 <strong>内存</strong><br>采用动态随机访问存储器（DRAM）集成电路，使用电容保存电荷，进而存储数据，每 B 仅使用一个晶体管，硬件规模远小于 SRAM（密度大于 SRAM），由于电荷只能短暂留存，需要周期性地将一行上的数据读出后重新写入，完成刷新<br>SRAM 和 DRAM 在断电后很快丢失数据，称为易失性存储器（volatile memory）<br>L5 <strong>二级存储器或辅存</strong><br>磁盘每个盘片由数万道磁道组成，每个磁道又被分为几千个扇区，扇区是最小的存储单位。<br>现在多使用闪存，一种集成电路制造的电可擦除可编程只读存储器（EEPROM），数据更快，功耗更低。<br>磁盘和闪存断电后不丢失数据，称为非易失性存储器（non-volatile memory）</p>
+<h3 id="局部性原理"><a href="#局部性原理" class="headerlink" title="局部性原理"></a>局部性原理</h3><p>对一条程序正在执行的指令来说<br>如果该指令位于<strong>循环体</strong>中，很可能不久后会被再次访问——<strong>时间局部性</strong><br>如果该指令位于<strong>循环体</strong>或<strong>顺序指令流</strong>中，将要执行的指令往往地址相近——<strong>空间局部性</strong></p>
+<p>那么就可以将内存中的一小块数据/指令复制到 cache 中，以提高访问速度。</p>
+<h3 id="命中与缺失"><a href="#命中与缺失" class="headerlink" title="命中与缺失"></a>命中与缺失</h3><p>访存即访问内存，分为读取和写入。<br>访存指令 = MEM-reg 数据传送指令 = L-S 指令（即 lw 和 sw 指令）<br>CPU 访问内存时，都会优先访问 cache，如果 cache 中有数据，就是<strong>命中</strong>，否则就是<strong>缺失</strong>。<br>命中/缺失占访存次数的比例叫做命中率（HR，Hit Rate）和缺失率（MR，Miss Rate），满足 HR + MR = 1。</p>
+<h3 id="访存阻塞周期数"><a href="#访存阻塞周期数" class="headerlink" title="访存阻塞周期数"></a>访存阻塞周期数</h3><p>CPU 访问 cache 的时间称为命中时间，通常只有 1T<br>CPU 访问内存比访问 cache <strong>多出来的时间</strong>称为<strong>缺失代价</strong>（Miss Penalty）<br>注意访问内存比直接访问 cache 多出来的<strong>额外开销</strong>，才是缺失代价</p>
+<p>定义一个程序的 L-S 指令数目为访存次数（MAC，Memory Access Count）<br>定义程序中 L-S 指令占总指令数的比重为访存率（MAR，Memory Access Rate）<br>为了评价存储器性能，我们将程序执行的周期 cycles 分为 CPU 执行周期数 + 访存阻塞周期数两部分<br>访存阻塞周期数 = 访存次数 x 缺失率 x 缺失代价 = MAC x MR x MP</p>
+<h3 id="直接映射"><a href="#直接映射" class="headerlink" title="直接映射"></a>直接映射</h3><h4 id="块号"><a href="#块号" class="headerlink" title="块号"></a>块号</h4><p>cache 块号 = 内容块号 % cache 块数<br>对 $2^n$ 个块的 cache，cache 块号 = 内存二进制<strong>块号</strong>的后 n 位<br>注意内存的块号是地址的前 30 位，<br>假设 cache 有 1K（即 $2^{10}$ 个块），对访存地址 0000 0000 0000 0000 0000 0000 0011 1100，其块号是 00 0000 0000 0000 0000 0000 0000 1111，对应的 cache 块号是 00 0000 1111</p>
+<h4 id="内存地址字段"><a href="#内存地址字段" class="headerlink" title="内存地址字段"></a>内存地址字段</h4><p>可以把 32 位内存地址分成三段<br><strong>① 标记位 ② 索引位 ③ 块内（字节）偏移</strong><br>索引位就是 cache 块号，后面的两位指示具体访问块中的哪个字节<br>索引位前面的高位是标记位，结合索引位就能唯一确定内存中的块</p>
+<p>cache 最前面还要加上一个<strong>有效位</strong>，用于标记 cache 中的块是否有效</p>
+<h4 id="cache-位数计算"><a href="#cache-位数计算" class="headerlink" title="cache 位数计算"></a>cache 位数计算</h4><p>处理器访存读写的数据通常为一个 32 位字，<strong>一字一块根本不能利用空间局部性</strong>。</p>
+<p>假设一个 16 KB 数据的 cache，块大小为 4 个字，地址为 32 位，问该 cache 总共需要多少字节？<br>首先块大小是 4 个字即 16 字节，所以块偏移应该占 4 位，16 KB/16 B = 1 K = 1024，所以索引位应该占 10 位，剩下的 18 位就是标记位。<br>对每个块，还要有一个<strong>有效位</strong>，所以一个块就有 1 + 18（地址标记） + 16*8 = 147 个 bit<br>总容量就是 147 x 1024 = 150528 bit = 18792 B = 18.375 KB<br>注意这里如果题目换成 16 KB 的 cache 也<strong>默认是 16 KB 数据的 cache</strong>，不是 16 KB 容量的 cache。</p>
+<h4 id="缺失分类-3C-模型"><a href="#缺失分类-3C-模型" class="headerlink" title="缺失分类 3C 模型"></a>缺失分类 3C 模型</h4><p>根据产生原因，缺失分为以下三大类：</p>
+<ol>
+<li>首次访问 cache 中没有的块必然产生的缺失，称为<strong>冷启动强制缺失</strong>（Compulsory Miss）</li>
+<li>由于 cache 的容量不能容纳程序执行需要的所有块，部分块被替换后再次调入 cache，称为<strong>容量缺失</strong>（Capacity Miss）</li>
+<li>多个内存块竞争映射到同一个 cache 块，导致仍需使用的块被替换，称为<strong>冲突碰撞缺失</strong>（Conflict Miss）</li>
+</ol>
+<p>都是 C 开头的，所以称为 3C 模型</p>
+<p>适当增加块大小（同时也会减少块数）可以更好地利用空间局部性，减少强制缺失；但是块数减少会增加冲突缺失。<br>加大 cache 容量可以减少容量缺失</p>
+<h4 id="缺失处理和写策略"><a href="#缺失处理和写策略" class="headerlink" title="缺失处理和写策略"></a>缺失处理和写策略</h4><p>cache 访问缺失处理的步骤为：</p>
+<ol>
+<li>将 PC + 4 - 4（即当前指令的地址）写回 PC，并阻塞处理器</li>
+<li>访问内存，将内存块写入 cache</li>
+<li>再次访问 cache 并命中</li>
+</ol>
+<p>当 CPU 把新数据写入内存块时，又要把数据写到 cache，保持内存和 cache 内容一致<br>方式一：CPU 和 cache 同时开始写内存，称为<strong>写直达</strong>（Write Through），但是开销很大，可改进为<strong>缓冲</strong>，CPU 较快写入缓冲后执行其他操作，缓冲再慢慢写入内存<br>方式二：CPU 只写入 cache，仅当这个 cache 块被替换时才写入内存，称为<strong>写回</strong>（Write Back）</p>
+<h3 id="全相联映射"><a href="#全相联映射" class="headerlink" title="全相联映射"></a>全相联映射</h3><p>内存块可能映射到任何一个 cache 块，称为<strong>全相联映射</strong>（Fully Associative Mapping）<br>内存块可进入任何一个 cache 块，只要 cache 中有空位，就可以直接进入，不会产生冲突缺失<br>如果 cache 已满，则替换掉最长时间没有使用过的内存块，称为<strong>最近最少使用</strong>（Least Recently Used，LRU）替换策略<br>查找时需要比较每一块的标记位，开销过大，只适用于块数较少的 cache</p>
+<h3 id="组相联映射"><a href="#组相联映射" class="headerlink" title="组相联映射"></a>组相联映射</h3><p>将直接映射和全相联映射折中，对 cache 块进行分组，一个内存块直接映射到一个组，但分配到组内的哪一块较为自由，也就是在一个组内全相联，这种映射方式称为<strong>组相联映射</strong>（Set Associative Mapping）<br>一组包含 n 块则称为 n 路组相联，其相联度为 n<br>直接映射就是 1 路组相联，全相联就是相联度 = 块数的组相联</p>
+<p>cache 组号 = 内存块号 % cache 组数<br>对 $2^n$ 个组的 cache，cache 组号 = 内存二进制<strong>块号</strong>的后 n 位</p>
+<h4 id="缺失处理、写策略、替换策略"><a href="#缺失处理、写策略、替换策略" class="headerlink" title="缺失处理、写策略、替换策略"></a>缺失处理、写策略、替换策略</h4><p>全相联和组相联的缺失处理过程和直接映射相同<br>替换策略采用 LRU，用 1 位来编号记录 2 路组相联一组最久没有使用的块，用 2 位来编号记录 4 路组相联一组最久没有使用的块，以此类推，这个编号称为 LRU 位<br>实际上，LRU 的开销仍然较大，很多 4 路组相联的系统也只是近似实现 LRU</p>
+<p><strong>例</strong> 假设一个 cache 有 4096 个块，块大小为 4 个字，地址为 32 位，请计算两路组相联、全相联中 cache 的总位数。</p>
+<p>4 个字就是 16 个字节，用 4 位表示块偏移；两路组相联就是每组有两个块，那么就是 2048 即 $2^{11}$ 组，用 11 位表示索引位，剩下的 17 位就是标记位，那么对每个块就有 1 + 17 + 16 x 8 = 146 位，总共就是 146 x 4096 = 598016 位 = 74752 B = 73.0 KB</p>
+<h3 id="cache-性能评价：AMAT-与-CPI"><a href="#cache-性能评价：AMAT-与-CPI" class="headerlink" title="cache 性能评价：AMAT 与 CPI"></a>cache 性能评价：AMAT 与 CPI</h3><p>平均访存时间（Average Memory Access Time，AMAT）是评价 cache 性能的重要指标，用周期数表示即可，不一定要化成秒<br><strong>平均访存时间 = 命中时间 + 缺失率 x 缺失代价</strong>（AMAT = HT + MR x MP）</p>
+<p><strong>例</strong> 设处理器基本 CPI 为 1，时钟频率为 4 GHz。设访存指令占指令数的 20%，一级 cache 缺失率为 10%，速度可满足处理器全速运行；现增加一个二级 cache，访问时间为 5 ns，全局缺失率为 2.5%，访问主存的时间为 100 ns。二级 cache 局部缺失率和该处理器的 CPI 为多少？</p>
+<p>缺失率 = 2.5% / 10% = 25%<br>时钟频率为 4 GHz，那么时钟周期就是 0.25 ns，5 ns = 20 个时钟周期，100 ns = 400 个时钟周期<br>CPI = 1 + 20 x 20% x 10% + 400 x 20% x 2.5% = 3.4<br>若题干改为：一级 cache 中每条指令的缺失率为 2%，二级 cache 使得访问主存的缺失率减少到 0.5%<br>则 CPI = 1 + 20 x 2% + 400 x 0.5% = 1 + 0.4 + 2 = 3.4</p>
+<h3 id="多核-CPU-中的-cache-一致性"><a href="#多核-CPU-中的-cache-一致性" class="headerlink" title="多核 CPU 中的 cache 一致性"></a>多核 CPU 中的 cache 一致性</h3><p>最常用的 cache 一致性协议是监听（Snooping）协议，每个 cache 都监听其他 cache 的读写操作，当有 cache 写入数据时，其他 cache 会将该数据置为无效，这称为写时无效协议（Write Invalidate Protocol）<br>使两个核的写操作一前一后的机制称为<strong>写串行化</strong>（Write Serialization）</p>
+<h3 id="广义-cache"><a href="#广义-cache" class="headerlink" title="广义 cache"></a>广义 cache</h3><p>任意两级相邻的存储器中较高的一级都可以称为较低一级存储器的广义的 cache<br>高速缓存是内存的 cache，同样，内存是磁盘的 cache，TLB 快表是页表的 cache</p>
+<h3 id="虚拟地址转换为物理地址"><a href="#虚拟地址转换为物理地址" class="headerlink" title="虚拟地址转换为物理地址"></a>虚拟地址转换为物理地址</h3><p>虚拟内存的空间大于物理内存<br>磁盘和内存之间交换的块称为<strong>页</strong>（Page）<br>对 4 KB 即 $2^{12}$ B 的页，需要 12 位表示页内偏移<br>虚拟页号通过查询页表（Page Table）转换为物理页号，由于内存和磁盘中页大小相同，<strong>页内偏移和物理页号拼接形成物理地址</strong></p>
+<h3 id="页表和页表项-页表寄存器-缺页处理"><a href="#页表和页表项-页表寄存器-缺页处理" class="headerlink" title="页表和页表项 页表寄存器 缺页处理"></a>页表和页表项 页表寄存器 缺页处理</h3><p>每个进程都有一张页表，存放自己的内存空间<br>页表首地址存放在<strong>页表寄存器</strong>（Page Table Register，PTR）中<br>页表项记录每个虚拟地址对应的物理地址<br>和高速缓存类似，页表中需要一个有效位来识别访问的页是否在内存中<br>访问页不在内存时，产生一次<strong>缺页</strong>，此时需要读取磁盘用于扩充物理内存的部分，即<strong>交换区</strong>（Swap Space）</p>
+<h3 id="替换策略-写策略"><a href="#替换策略-写策略" class="headerlink" title="替换策略 写策略"></a>替换策略 写策略</h3><p>当一个进程的物理内存空间占满时，从磁盘交换区中调入内存的块需要替换掉内存中的某一块<br>使用<strong>引用位</strong>（Reference Bit）来近似实现 LRU 替换算法</p>
+<p>由于磁盘访问时间长达几千万个时钟周期，所以需要尽量减少访问磁盘特别是写入磁盘的操作<br>因为内存中的页只能使用写回机制写入磁盘<br>还需要在页表中添加一个<strong>脏位</strong>（Dirty Bit），用于标记页是否被修改过，被修改过的才需要写回磁盘</p>
+<h3 id="TLB-快表"><a href="#TLB-快表" class="headerlink" title="TLB 快表"></a>TLB 快表</h3><p>页表位于内存中，CPU 访存时，需要先拿着虚拟地址访存读取页表得到物理地址，再真正进行访存<br>为了加快第一次物理地址的访存，引入了页表的 cache，即 TLB（Translation Lookaside Buffer）</p>
+<p>页表将每一个虚拟页号作为索引，因此不需要类似于标记位的字段，但是 TLB 只保存部分虚拟页号的映射信息<br>故 TLB 需要将虚拟页号作为标记位，并保留页表中全部信息，即 3 个标志位和物理页号</p>
+<h3 id="可靠性与可用性评价"><a href="#可靠性与可用性评价" class="headerlink" title="可靠性与可用性评价"></a>可靠性与可用性评价</h3><p>从开始使用到失效的时间间隔称为平均无故障时间（Mean Time To Failure，MTTF）<br>应对故障从而提高 MTTF 的策略有：故障避免、故障容忍、故障预报<br>一年的时长比上 MTTF 得到年失效率（Annual Failure Rate，AFR），即 AFR = 一年 / MTTF</p>
+<p>恢复一个系统功能的时间为平均维修时间（Mean Time To Repair，MTTR）<br>从开始使用到失效维修结束为平均失效间隔时间（Mean Time Between Failures，MTBF）<br>可用性定义为系统正常工作时间与两次服务中断间隔时间之比<br>MTBF = MTTF + MTTR<br>可用性 = MTTF / MTBF</p>
+<h3 id="奇偶校验码-汉明距离"><a href="#奇偶校验码-汉明距离" class="headerlink" title="奇偶校验码 汉明距离"></a>奇偶校验码 汉明距离</h3><p>在奇校验中，校验位确保整个校验码有奇数个 1，偶校验则相反<br>任意两个合法校验码之间至少相差的位数称为汉明距离（码距）<br>奇偶校验码距为 2，能实现<strong>检测一位错</strong>（Single Error Detection，SED），但不能定位错误</p>
+<h3 id="汉明码"><a href="#汉明码" class="headerlink" title="汉明码"></a>汉明码</h3><p>对 8 位数据 1001 1010 编入偶校验的汉明校验码</p>
+<ol>
+<li>从左往右第 1、2、4、8 位挖空</li>
+<li>其他位依次填入数据</li>
+<li>对校验位 p1，检测 1、3、5、7 位<br> 对校验位 p2，检测 2、3、6、7、10、11 位<br> 对校验位 p4，检测 8、9、10、11、12 位</li>
+</ol>
+<p>如下表所示</p>
+<table>
+<thead>
+<tr>
+<th>位号</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>偶校验结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>分类位号</td>
+<td><strong>p1</strong></td>
+<td><strong>p2</strong></td>
+<td>d1</td>
+<td><strong>p4</strong></td>
+<td>d2</td>
+<td>d3</td>
+<td>d4</td>
+<td><strong>p8</strong></td>
+<td>d5</td>
+<td>d6</td>
+<td>d7</td>
+<td>d8</td>
+<td>-</td>
+</tr>
+<tr>
+<td>数据</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>-</td>
+</tr>
+<tr>
+<td>p1 覆盖</td>
+<td>√</td>
+<td></td>
+<td>√</td>
+<td></td>
+<td>√</td>
+<td></td>
+<td>√</td>
+<td></td>
+<td>√</td>
+<td></td>
+<td>√</td>
+<td></td>
+<td>1</td>
+</tr>
+<tr>
+<td>p2 覆盖</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+<td></td>
+<td></td>
+<td>√</td>
+<td>√</td>
+<td></td>
+<td></td>
+<td>√</td>
+<td>√</td>
+<td></td>
+<td>1</td>
+</tr>
+<tr>
+<td>p4 覆盖</td>
+<td></td>
+<td></td>
+<td></td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>√</td>
+<td>1</td>
+</tr>
+<tr>
+<td>p8 覆盖</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>所以其汉明码为 011100101010<br>汉明码码距为 3，能够定位一位错，对该位取反可实现纠正一位错（Single Error Correction，SEC）<br>定位步骤：</p>
+<ol>
+<li>根据新的码字，重新进行汉明码校验编码</li>
+<li>将新旧两组校验位从右往左写，按位异或</li>
+<li>结果即为出错位号</li>
+</ol>
+<p>如果码距为 4，能够检测两位错，但不能纠正</p>
+<h2 id="从客户端到云的并行处理器"><a href="#从客户端到云的并行处理器" class="headerlink" title="从客户端到云的并行处理器"></a>从客户端到云的并行处理器</h2><p>第四章讨论指令级并行，这一章讨论的是<strong>任务级并行</strong>，主要通过<strong>多核</strong>和<strong>多线程</strong>实现。<br>单指令流多数据流（SIMD）计算机对<strong>向量</strong>数据进行操作，性能优于标量机。<br>Roofline 模型被广泛用于评价并行<strong>浮点</strong>计算机的性能。</p>
+<p>汇编语言拥有<strong>编译器输出语言</strong>和<strong>编程语言</strong>两种角色。<br>使用汇编语言编程的情况：<br>1）性能要求极端苛刻，如控制汽车刹车的嵌入式系统<br>2）需要深入硬件底层优化程序<br>3）需要使用定制指令<br>4）为没有可用编译器的老旧计算机编写程序</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1je4y1Q7BK">https://www.bilibili.com/video/BV1je4y1Q7BK</a></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>计组笔记</p><p><a href="https://blog.weyung.cc/2024/06/05/Course/计组笔记/">https://blog.weyung.cc/2024/06/05/Course/计组笔记/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>未央</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2024-06-05</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-07-31</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="CC BY-NC 4.0" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh"><i class="icon fab fa-creative-commons"></i><i class="icon fab fa-creative-commons-by"></i><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E6%B1%87%E7%BC%96/">汇编</a><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AE%A1%E7%BB%84/">计组</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/images/wechatpay.png" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2024/06/05/CTF/2022%20CISCN%20-%20ezpop/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">2022 CISCN - ezpop</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2024/06/04/HackTheBox%20%E7%AC%94%E8%AE%B0%20-%202/"><span class="level-item">HackTheBox 笔记 - 2</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "naquiv8kljfmeFx6t9aSTTWn-9Nh9j0Va",
+            appKey: "fneElOQzdSRFC3p43Bd4J69D",
+            placeholder: "说点什么吧",
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: false,
+            highlight: true,
+            recordIP: true,
+            
+            
+            
+            enableQQ: false,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/images/wy.png" alt="未央"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">未央</p><p class="is-size-6 is-block">写一些和我一样菜也能看懂的文章</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">58</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">9</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">42</p></a></div></div></nav><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="GitHub" href="https://github.com/weyung"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="Telegram" href="https://t.me/we_yung"><i class="fab fa-telegram"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="me noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#第一章-概述"><span class="level-left"><span class="level-item">1</span><span class="level-item">第一章 概述</span></span></a></li><li><a class="level is-mobile" href="#指令"><span class="level-left"><span class="level-item">2</span><span class="level-item">指令</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#算术运算指令"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">算术运算指令</span></span></a></li><li><a class="level is-mobile" href="#逻辑运算指令"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">逻辑运算指令</span></span></a></li><li><a class="level is-mobile" href="#运算指令例子"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">运算指令例子</span></span></a></li><li><a class="level is-mobile" href="#寄存器-存储器数据传送"><span class="level-left"><span class="level-item">2.4</span><span class="level-item">寄存器-存储器数据传送</span></span></a></li><li><a class="level is-mobile" href="#寄存器间数据传送"><span class="level-left"><span class="level-item">2.5</span><span class="level-item">寄存器间数据传送</span></span></a></li><li><a class="level is-mobile" href="#装载-32-位立即数"><span class="level-left"><span class="level-item">2.6</span><span class="level-item">装载 32 位立即数</span></span></a></li><li><a class="level is-mobile" href="#决策指令"><span class="level-left"><span class="level-item">2.7</span><span class="level-item">决策指令</span></span></a></li><li><a class="level is-mobile" href="#指令格式"><span class="level-left"><span class="level-item">2.8</span><span class="level-item">指令格式</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#R-型指令"><span class="level-left"><span class="level-item">2.8.1</span><span class="level-item">R 型指令</span></span></a></li><li><a class="level is-mobile" href="#I-型指令"><span class="level-left"><span class="level-item">2.8.2</span><span class="level-item">I 型指令</span></span></a></li><li><a class="level is-mobile" href="#J-型指令"><span class="level-left"><span class="level-item">2.8.3</span><span class="level-item">J 型指令</span></span></a></li></ul></li><li><a class="level is-mobile" href="#过程"><span class="level-left"><span class="level-item">2.9</span><span class="level-item">过程</span></span></a></li><li><a class="level is-mobile" href="#寻址"><span class="level-left"><span class="level-item">2.10</span><span class="level-item">寻址</span></span></a></li><li><a class="level is-mobile" href="#C-语言的-4-个翻译层次"><span class="level-left"><span class="level-item">2.11</span><span class="level-item">C 语言的 4 个翻译层次</span></span></a></li></ul></li><li><a class="level is-mobile" href="#算术运算"><span class="level-left"><span class="level-item">3</span><span class="level-item">算术运算</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#整数的表示"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">整数的表示</span></span></a></li><li><a class="level is-mobile" href="#ALU"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">ALU</span></span></a></li><li><a class="level is-mobile" href="#浮点数"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">浮点数</span></span></a></li></ul></li><li><a class="level is-mobile" href="#处理器"><span class="level-left"><span class="level-item">4</span><span class="level-item">处理器</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#数字逻辑基础"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">数字逻辑基础</span></span></a></li><li><a class="level is-mobile" href="#指令周期"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">指令周期</span></span></a></li><li><a class="level is-mobile" href="#指令周期与流水级"><span class="level-left"><span class="level-item">4.3</span><span class="level-item">指令周期与流水级</span></span></a></li><li><a class="level is-mobile" href="#数据冒险产生原因及其解决办法"><span class="level-left"><span class="level-item">4.4</span><span class="level-item">数据冒险产生原因及其解决办法</span></span></a></li><li><a class="level is-mobile" href="#控制冒险产生原因及其解决办法"><span class="level-left"><span class="level-item">4.5</span><span class="level-item">控制冒险产生原因及其解决办法</span></span></a></li><li><a class="level is-mobile" href="#流水线性能"><span class="level-left"><span class="level-item">4.6</span><span class="level-item">流水线性能</span></span></a></li><li><a class="level is-mobile" href="#控制单元信号"><span class="level-left"><span class="level-item">4.7</span><span class="level-item">控制单元信号</span></span></a></li></ul></li><li><a class="level is-mobile" href="#存储层次"><span class="level-left"><span class="level-item">5</span><span class="level-item">存储层次</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#cache-和内存"><span class="level-left"><span class="level-item">5.1</span><span class="level-item">cache 和内存</span></span></a></li><li><a class="level is-mobile" href="#局部性原理"><span class="level-left"><span class="level-item">5.2</span><span class="level-item">局部性原理</span></span></a></li><li><a class="level is-mobile" href="#命中与缺失"><span class="level-left"><span class="level-item">5.3</span><span class="level-item">命中与缺失</span></span></a></li><li><a class="level is-mobile" href="#访存阻塞周期数"><span class="level-left"><span class="level-item">5.4</span><span class="level-item">访存阻塞周期数</span></span></a></li><li><a class="level is-mobile" href="#直接映射"><span class="level-left"><span class="level-item">5.5</span><span class="level-item">直接映射</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#块号"><span class="level-left"><span class="level-item">5.5.1</span><span class="level-item">块号</span></span></a></li><li><a class="level is-mobile" href="#内存地址字段"><span class="level-left"><span class="level-item">5.5.2</span><span class="level-item">内存地址字段</span></span></a></li><li><a class="level is-mobile" href="#cache-位数计算"><span class="level-left"><span class="level-item">5.5.3</span><span class="level-item">cache 位数计算</span></span></a></li><li><a class="level is-mobile" href="#缺失分类-3C-模型"><span class="level-left"><span class="level-item">5.5.4</span><span class="level-item">缺失分类 3C 模型</span></span></a></li><li><a class="level is-mobile" href="#缺失处理和写策略"><span class="level-left"><span class="level-item">5.5.5</span><span class="level-item">缺失处理和写策略</span></span></a></li></ul></li><li><a class="level is-mobile" href="#全相联映射"><span class="level-left"><span class="level-item">5.6</span><span class="level-item">全相联映射</span></span></a></li><li><a class="level is-mobile" href="#组相联映射"><span class="level-left"><span class="level-item">5.7</span><span class="level-item">组相联映射</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#缺失处理、写策略、替换策略"><span class="level-left"><span class="level-item">5.7.1</span><span class="level-item">缺失处理、写策略、替换策略</span></span></a></li></ul></li><li><a class="level is-mobile" href="#cache-性能评价：AMAT-与-CPI"><span class="level-left"><span class="level-item">5.8</span><span class="level-item">cache 性能评价：AMAT 与 CPI</span></span></a></li><li><a class="level is-mobile" href="#多核-CPU-中的-cache-一致性"><span class="level-left"><span class="level-item">5.9</span><span class="level-item">多核 CPU 中的 cache 一致性</span></span></a></li><li><a class="level is-mobile" href="#广义-cache"><span class="level-left"><span class="level-item">5.10</span><span class="level-item">广义 cache</span></span></a></li><li><a class="level is-mobile" href="#虚拟地址转换为物理地址"><span class="level-left"><span class="level-item">5.11</span><span class="level-item">虚拟地址转换为物理地址</span></span></a></li><li><a class="level is-mobile" href="#页表和页表项-页表寄存器-缺页处理"><span class="level-left"><span class="level-item">5.12</span><span class="level-item">页表和页表项 页表寄存器 缺页处理</span></span></a></li><li><a class="level is-mobile" href="#替换策略-写策略"><span class="level-left"><span class="level-item">5.13</span><span class="level-item">替换策略 写策略</span></span></a></li><li><a class="level is-mobile" href="#TLB-快表"><span class="level-left"><span class="level-item">5.14</span><span class="level-item">TLB 快表</span></span></a></li><li><a class="level is-mobile" href="#可靠性与可用性评价"><span class="level-left"><span class="level-item">5.15</span><span class="level-item">可靠性与可用性评价</span></span></a></li><li><a class="level is-mobile" href="#奇偶校验码-汉明距离"><span class="level-left"><span class="level-item">5.16</span><span class="level-item">奇偶校验码 汉明距离</span></span></a></li><li><a class="level is-mobile" href="#汉明码"><span class="level-left"><span class="level-item">5.17</span><span class="level-item">汉明码</span></span></a></li></ul></li><li><a class="level is-mobile" href="#从客户端到云的并行处理器"><span class="level-left"><span class="level-item">6</span><span class="level-item">从客户端到云的并行处理器</span></span></a></li><li><a class="level is-mobile" href="#参考"><span class="level-left"><span class="level-item">7</span><span class="level-item">参考</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-07-31T07:18:00.000Z">2025-07-31</time></p><p class="title"><a href="/2025/07/31/Study/CodeQL%20%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%93%AA%E9%87%8C%E6%88%91%E4%B9%9F%E4%B8%8D%E7%9F%A5%E9%81%93%E5%95%8A%E5%95%8A%E5%95%8A/">CodeQL 从入门到哪里我也不知道啊啊啊</a></p><p class="categories"><a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-04-14T14:50:00.000Z">2025-04-14</time></p><p class="title"><a href="/2025/04/14/CVE/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8B%20CVE-2016-5195/">漏洞分析之 CVE-2016-5195</a></p><p class="categories"><a href="/categories/%E6%B8%97%E9%80%8F/">渗透</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-04-11T06:36:00.000Z">2025-04-11</time></p><p class="title"><a href="/2025/04/11/CVE/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B9%8B%20CVE-2021-44228/">漏洞分析之 CVE-2021-44228</a></p><p class="categories"><a href="/categories/%E6%B8%97%E9%80%8F/">渗透</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-04-09T12:01:00.000Z">2025-04-09</time></p><p class="title"><a href="/2025/04/09/Java%20%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">Java 基础概念</a></p><p class="categories"><a href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2025-04-09T07:57:00.000Z">2025-04-09</time></p><p class="title"><a href="/2025/04/09/%E6%98%A5%E7%A7%8B%E4%BA%91%E5%A2%83%E7%AC%94%E8%AE%B0%20-%201/">春秋云境笔记 - 1</a></p><p class="categories"><a href="/categories/%E6%B8%97%E9%80%8F/">渗透</a></p></div></article></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/C%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">C语言</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%AD%A6%E4%B9%A0/"><span class="level-start"><span class="level-item">学习</span></span><span class="level-end"><span class="level-item tag">21</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%B0%8F%E7%8E%A9%E6%84%8F/"><span class="level-start"><span class="level-item">小玩意</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%B0%8F%E9%A1%B9%E7%9B%AE/"><span class="level-start"><span class="level-item">小项目</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%B0%E5%AD%A6/"><span class="level-start"><span class="level-item">数学</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%B8%97%E9%80%8F/"><span class="level-start"><span class="level-item">渗透</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"><span class="level-start"><span class="level-item">环境搭建</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/%E7%94%9F%E6%B4%BB/"><span class="level-start"><span class="level-item">生活</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E9%A2%98%E8%A7%A3/"><span class="level-start"><span class="level-item">题解</span></span><span class="level-end"><span class="level-item tag">15</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CTF/"><span class="tag">CTF</span><span class="tag">18</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CVP/"><span class="tag">CVP</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Code-server/"><span class="tag">Code-server</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Crypto/"><span class="tag">Crypto</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GPT/"><span class="tag">GPT</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Golang/"><span class="tag">Golang</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Java/"><span class="tag">Java</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Nginx/"><span class="tag">Nginx</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PHP/"><span class="tag">PHP</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Python/"><span class="tag">Python</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SSL/"><span class="tag">SSL</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VSCode/"><span class="tag">VSCode</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/WSL/"><span class="tag">WSL</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Web/"><span class="tag">Web</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Windows/"><span class="tag">Windows</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pwn/"><span class="tag">pwn</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8/"><span class="tag">二进制安全</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BB%A3%E7%90%86/"><span class="tag">代理</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BF%A1%E5%8F%B7%E4%B8%8E%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0/"><span class="tag">信号与系统笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/"><span class="tag">信息论</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%89%8D%E7%AB%AF/"><span class="tag">前端</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/"><span class="tag">复变函数</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%AD%A6%E4%B9%A0/"><span class="tag">学习</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0/"><span class="tag">抽象代数</span><span class="tag">7</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E5%AD%A6/"><span class="tag">数学</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%9D%82%E8%B0%88/"><span class="tag">杂谈</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%9D%90%E6%96%99%E5%8A%9B%E5%AD%A6/"><span class="tag">材料力学</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%BC/"><span class="tag">格</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B1%87%E7%BC%96/"><span class="tag">汇编</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%97%E9%80%8F/"><span class="tag">渗透</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%94%9F%E6%B4%BB/"><span class="tag">生活</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%94%B5%E5%BD%B1/"><span class="tag">电影</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%AE%97%E6%B3%95/"><span class="tag">算法</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/"><span class="tag">计算机</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%BB%84/"><span class="tag">计组</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87/"><span class="tag">论文</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90/"><span class="tag">静态分析</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E9%9D%A2%E8%AF%95/"><span class="tag">面试</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E9%AB%98%E6%95%B0/"><span class="tag">高数</span><span class="tag">3</span></a></div></div></div></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2025/07/"><span class="level-start"><span class="level-item">七月 2025</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/04/"><span class="level-start"><span class="level-item">四月 2025</span></span><span class="level-end"><span class="level-item tag">7</span></span></a></li><li><a class="level is-mobile" href="/archives/2025/03/"><span class="level-start"><span class="level-item">三月 2025</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2024/12/"><span class="level-start"><span class="level-item">十二月 2024</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2024/11/"><span class="level-start"><span class="level-item">十一月 2024</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2024/06/"><span class="level-start"><span class="level-item">六月 2024</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/archives/2024/05/"><span class="level-start"><span class="level-item">五月 2024</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/11/"><span class="level-start"><span class="level-item">十一月 2023</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/09/"><span class="level-start"><span class="level-item">九月 2023</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/05/"><span class="level-start"><span class="level-item">五月 2023</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/04/"><span class="level-start"><span class="level-item">四月 2023</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2023/01/"><span class="level-start"><span class="level-item">一月 2023</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/10/"><span class="level-start"><span class="level-item">十月 2022</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/09/"><span class="level-start"><span class="level-item">九月 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/08/"><span class="level-start"><span class="level-item">八月 2022</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/07/"><span class="level-start"><span class="level-item">七月 2022</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/05/"><span class="level-start"><span class="level-item">五月 2022</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/04/"><span class="level-start"><span class="level-item">四月 2022</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/03/"><span class="level-start"><span class="level-item">三月 2022</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/12/"><span class="level-start"><span class="level-item">十二月 2021</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/archives/2021/11/"><span class="level-start"><span class="level-item">十一月 2021</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/images/wy.png" alt="weyung" height="28"></a><p class="is-size-7"><span>&copy; 2025 未央</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="CC BY-NC 4.0" href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh"><i></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/mhchem.min.js" defer></script><script>window.addEventListener("load", function() {
+            document.querySelectorAll('[role="article"] > .content').forEach(function(element) {
+                renderMathInElement(element);
+            });
+        });</script><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
