@@ -1,7 +1,7 @@
 ---
 title: 2022 CISCN - ezpop
 date: 2024-06-05 15:52:00
-tags: [CTF, web]
+tags: [CTF, Web]
 categories: 题解
 ---
 
