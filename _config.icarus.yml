@@ -73,7 +73,7 @@ donates:
         qrcode: '/images/wechatpay.png'
 sidebar:
     left:
-        sticky: false
+        sticky: true
     right:
         sticky: false
 widgets:
