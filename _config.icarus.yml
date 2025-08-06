@@ -1,8 +1,8 @@
 version: 6.1.0
 variant: default
-logo: /images/wy.png
+logo: /images/avatar.png
 head:
-    favicon: /images/wy.png
+    favicon: /images/avatar.png
     meta: []
     rss: /atom.xml
     open_graph: 
@@ -52,26 +52,21 @@ article:
 search:
     type: insight
 comment:
-    type: valine
-    app_id: naquiv8kljfmeFx6t9aSTTWn-9Nh9j0Va
-    app_key: fneElOQzdSRFC3p43Bd4J69D
-    placeholder: 说点什么吧
-    avatar: mm
-    avatar_force: false
-    meta:
-        - nick
-        - mail
-        - link
-    page_size: 10
-    lang: zh-CN
-    visitor: false
-    highlight: true
-    record_ip: true
-    server_urls: 
-    emoji_cdn: 
-    emoji_maps: 
-    enable_qq: false
-    required_fields: []
+    type: gitalk
+    client_id: Ov23liZICny9gzonCGrB
+    client_secret: 981fa1606044826bfd6953fd28aacf56127f96c4
+    repo: weyung.github.io
+    owner: weyung
+    admin:
+        - weyung
+    per_page: 20                    # 可选填
+    distraction_free_mode: false    # 可选填
+    pager_direction: last           # 可选填
+    create_issue_manually: false    # 可选填
+    proxy:                          # 可选填
+    flip_move_options:              # 可选填
+    enable_hotkey: true             # 可选填
+    language: zh-CN                 # 可选填
 donates:
     -
         type: wechat
@@ -88,7 +83,7 @@ widgets:
         author: 未央
         author_title: 写一些和我一样菜也能看懂的文章
         location: China
-        avatar: /images/wy.png
+        avatar: /images/avatar.png
         avatar_rounded: false
         gravatar: 
         follow_link: 
