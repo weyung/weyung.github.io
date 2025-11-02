@@ -28,7 +28,7 @@ if error: pass
 那么我们可以用 CodeQL 来查找这种冗余的 `if` 语句。
 使用以下 CodeQL 查询：
 
-```ql
+```sql
 import python
 
 from If ifstmt, Stmt pass
@@ -48,7 +48,84 @@ select ifstmt, "This 'if' statement is redundant."
 
 `select ifstmt, "This 'if' statement is redundant."` 是查询的结果部分，表示如果满足上述条件，则返回 `ifstmt` 和一条消息，如此就可以找到所有冗余的 if 语句。
 
-## 更深层次的查询
+## 又老又新的语法，落后的 AI
+
+我用 AI 生成的 QL 查询语句，基本没有能跑的，查了好久发现 DataFlow 进行过一次[改革](https://github.blog/changelog/2023-08-14-new-dataflow-api-for-writing-custom-codeql-queries/)
+旧语法在 2024 年 12 月开始就开始完全不支持了，但是互联网的资料基本都停留在 2020 年左右，导致基本没法抄
+
+以下是传统派的写法：
+
+```sql
+class SensitiveLoggerConfiguration extends TaintTracking::Configuration {
+  SensitiveLoggerConfiguration() { this = "SensitiveLoggerConfiguration" } // 6: characteristic predicate with dummy string value (see below)
+
+  override predicate isSource(DataFlow::Node source) { source.asExpr() instanceof CredentialExpr }
+
+  override predicate isSink(DataFlow::Node sink) { sinkNode(sink, "log-injection") }
+
+  override predicate isSanitizer(DataFlow::Node sanitizer) {
+    sanitizer.asExpr() instanceof LiveLiteral or
+    sanitizer.getType() instanceof PrimitiveType or
+    sanitizer.getType() instanceof BoxedType or
+    sanitizer.getType() instanceof NumberType or
+    sanitizer.getType() instanceof TypeType
+  }
+
+  override predicate isSanitizerIn(DataFlow::Node node) { this.isSource(node) }
+}
+
+import DataFlow::PathGraph
+
+from SensitiveLoggerConfiguration cfg, DataFlow::PathNode source, DataFlow::PathNode sink
+where cfg.hasFlowPath(source, sink)
+select sink.getNode(), source, sink, "This $@ is written to a log file.",
+ source.getNode(),
+  "potentially sensitive information"
+```
+
+维新派则如下：
+
+```sql
+module SensitiveLoggerConfig implements DataFlow::ConfigSig {  // 1: module always implements DataFlow::ConfigSig or DataFlow::StateConfigSig
+  predicate isSource(DataFlow::Node source) { source.asExpr() instanceof CredentialExpr } // 3: no need to specify 'override'
+  predicate isSink(DataFlow::Node sink) { sinkNode(sink, "log-injection") }
+
+  predicate isBarrier(DataFlow::Node sanitizer) {  // 4: 'isBarrier' replaces 'isSanitizer'
+    sanitizer.asExpr() instanceof LiveLiteral or
+    sanitizer.getType() instanceof PrimitiveType or
+    sanitizer.getType() instanceof BoxedType or
+    sanitizer.getType() instanceof NumberType or
+    sanitizer.getType() instanceof TypeType
+  }
+
+  predicate isBarrierIn(DataFlow::Node node) { isSource(node) } // 4: isBarrierIn instead of isSanitizerIn
+
+}
+
+module SensitiveLoggerFlow = TaintTracking::Global<SensitiveLoggerConfig>; // 2: TaintTracking selected 
+
+import SensitiveLoggerFlow::PathGraph  // 7: the PathGraph specific to the module you are using
+
+from SensitiveLoggerFlow::PathNode source, SensitiveLoggerFlow::PathNode sink  // 8 & 9: using the module directly
+where SensitiveLoggerFlow::flowPath(source, sink)  // 9: using the flowPath from the module 
+select sink.getNode(), source, sink, "This $@ is written to a log file.", source.getNode(),
+  "potentially sensitive information"
+```
+
+上面的变化有空再慢慢研究
+
+## 遇到的问题
+
+可能会遇到权限问题，因为 CodeQL 在 `sudo` 创建数据库时会把整个文件夹的权限改成 `root`，导致后续执行 query 的时候报错：
+
+```bash
+sudo chown -R $(whoami):$(whoami) <dir>
+```
+
+现在我找到了一个 SQL 注入漏洞，想用 CodeQL 把它查出来，但是我不知道怎么写查询语句。
+大概测了一下，发现 Source 和 Sink 都能找到，但是路径一条都没找出来。
+
+因为现在漏洞还没公开，先暂停更新
 
 // TODO
 
