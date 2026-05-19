@@ -106,7 +106,9 @@
     import "links.typ": template-links
     import "figures.typ": template-figures
     import "table.typ": template-table
+    import "text-color.typ": template-text-color
 
+    show: template-text-color
     show: template-raw
     show: template-math
     show: template-refs
