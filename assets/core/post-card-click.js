@@ -25,7 +25,12 @@ const installPostCardClick = () => {
         return;
       }
 
-      window.location.href = url;
+      const target = card.getAttribute('data-post-target');
+      if (target === '_blank') {
+        window.open(url, '_blank');
+      } else {
+        window.location.href = url;
+      }
     });
   });
 };
