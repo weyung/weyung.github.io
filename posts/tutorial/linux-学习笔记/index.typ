@@ -87,7 +87,7 @@ service sshd restart    #重启sshd服务
 == 编辑器（vim）
 
 虽然有 VSCode 的存在，但有时候由于 ssh 的用户权限不够等原因不可避免地要用到 vim （当然硬要避免也有在其他地方写好再 cp 过去等诡方法，但总是麻烦着点）
-vim 的三个模式：_命令_模式（ Command mode ），_输入_模式（ Insert mode ）和_底线命令_模式（ Last line mode ）
+vim 的三个模式：*命令*模式（ Command mode ），*输入*模式（ Insert mode ）和*底线命令*模式（ Last line mode ）
 一般就按 `i` 进入编辑模式， `Esc` 退出编辑模式并 `:wq` 保存退出。
 在查看模式下，可以 `h` 左移， `j` 下移， `k` 上移， `l` 右移，按 `/` 可以搜索。
 

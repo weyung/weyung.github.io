@@ -12,19 +12,19 @@
 
 == 第一章 信号与系统
 
-_习题_ 1.21
+*习题* 1.21
 先给一个 $x(t)$ 的信号图像，让你画出变换后的信号图像。
 基本和高中数学的函数图像变换差不多。
 (d) $x(4-frac(t, 2))$
 即 $x[-frac12(t-8)]$，先放大为 2 倍，再向右平移 8 个单位。
 (e) $[x(t)+x(-t)]u(t)$
-注意 _$u(t)$ 是单位阶跃函数_，即 $u(t)=1$ 当 $t>= 0$，$u(t)=0$ 当 $t<0$。
+注意 *$u(t)$ 是单位阶跃函数*，即 $u(t)=1$ 当 $t>= 0$，$u(t)=0$ 当 $t<0$。
 所以乘上 $u(t)$ 后，信号只保留 $t>= 0$ 的部分。
 (f) $x(t)lbrackdelta (t+frac32)-delta (t-frac32))rbrack$
-_$delta (t)$ 是单位冲激函数_，这里乘 $x(t)$ 可以理解为在 $t=plus.minus frac32$ 处分别取样，注意画图时有个箭头从 x 轴指向采样值。
+*$delta (t)$ 是单位冲激函数*，这里乘 $x(t)$ 可以理解为在 $t=plus.minus frac32$ 处分别取样，注意画图时有个箭头从 x 轴指向采样值。
 
-_习题_ 1.25
-判断下列连续时间信号的周期性；若是周期的，确定其_基波周期_，即最小正周期。
+*习题* 1.25
+判断下列连续时间信号的周期性；若是周期的，确定其*基波周期*，即最小正周期。
 (c) $x(t)=[cos (2t-fracpi 3)]^2$
 有点考验对高中三角函数的熟悉程度，$cos ^2theta =frac(1+cos 2theta , 2)$，所以 $x(t)=frac12+frac12cos (4t-frac2pi 3)$，所以是周期信号，$omega =4$，故基波周期 $T=frac(2pi , omega )=fracpi 2$。
 (f) $x(t) = sum _(n=-infinity )^(infinity ) e^(-(2t-n)) u(2t - n)$
@@ -33,7 +33,7 @@ $x(t+T) = sum _(n=-infinity )^(infinity ) e^(-[2(t+T)-n]) u[2(t+T)-n] = sum _(n=
 令 $-n'=k-n$，有 $x(t+k) = sum _(n'=-infinity )^(infinity ) e^(-(2t-n')) u(2t-n') = x(t)$
 令 $2T=k=1$，所以基波周期 $T=frac12$。（这里是因为 $k$ 要是整数，所以 $T$ 最小只能是 $frac12$）
 
-_习题_ 1.26 判断下列离散时间信号的周期性；若是周期的，确定其基波周期。
+*习题* 1.26 判断下列离散时间信号的周期性；若是周期的，确定其基波周期。
 注意到离散时间信号是用中括号表示的，如 $x[n]$，而连续时间信号是用小括号表示的，如 $x(t)$。
 (c) $x[n] = cos (frac(pi , 8) n^2)$
 $x[n+N] = cos (frac(pi , 8) (n+N)^2) = cos (frac(pi , 8) n^2 + frac(pi , 4) n N + frac(pi , 8) N^2)$
@@ -41,15 +41,15 @@ $x[n+N] = cos (frac(pi , 8) (n+N)^2) = cos (frac(pi , 8) n^2 + frac(pi , 4) n N 
 (e) $x[n] = 2 cos (frac(pi , 4) n) + sin (frac(pi , 8) n) - 2 cos (frac(pi , 2) n + frac(pi , 6))$
 注意到三个信号的基波周期分别为 8、16、4，$x[n]$ 的基波周期就是它们的最小公倍数，即 $N=16$。
 
-_习题_ 1.27
+*习题* 1.27
 对下列连续时间信号，确定下列哪些性质成立，哪些不成立，并陈述理由。
 （1）无记忆的；（2）时不变的；（3）线性的；（4）因果的；（5）稳定的。
 这里解释一下这些性质的定义：
 
-- 无记忆性：系统的输出只与_当前时刻的输入_有关，与过去和未来的输入无关。
-- 时不变性：系统_当输入信号有一个时移时，输出响应也产生同样的时移_。除此之外，输出响应无任何其它变化。
+- 无记忆性：系统的输出只与*当前时刻的输入*有关，与过去和未来的输入无关。
+- 时不变性：系统*当输入信号有一个时移时，输出响应也产生同样的时移*。除此之外，输出响应无任何其它变化。
 - 线性：系统的输出对于输入信号是线性的，即对 $x_3(t) = ax_1(t) + bx_2(t)$，有 $y_3(t) = ay_1(t) + by_2(t)$。
-- 因果性：系统在任何时刻的输出都只与_当时这个时刻的输入以及该时刻以前的输入_有关，而和该时刻以后的输入无关。
+- 因果性：系统在任何时刻的输出都只与*当时这个时刻的输入以及该时刻以前的输入*有关，而和该时刻以后的输入无关。
 - 稳定性：系统当输入有界时，产生的输出也是有界的。
 
 (b) $y(t)=[cos (3t)]x(t)$
@@ -70,7 +70,7 @@ $y_3(t) = integral _(-infinity )^(2t) x_3(tau ) thin dtau = integral _(-infinity
 （5）设 $|x(t)| < M$（$M$ 为有限大小的正数），对所有 $x(t)$ 是有界的，如 $x(t) = u(t) = begincases 1, & t > 0 \ 0, & t < 0 endcases$ 是有界的，但
 $y(t) = integral _(-infinity )^(2t) u(tau ) thin dtau = 2tu(t), \ y(infinity ) = infinity$ 不是有界的，故系统是不稳定的。
 
-_习题_ 1.31
+*习题* 1.31
 给了信号 $x_1(t)$ 及其输出 $y_1(t)$ 的图像，求 $x_2(t)$ 和 $x_3(t)$ 的图像。
 可以看出 $x_2(t)$ 和 $x_3(t)$ 是 $x_1(t)$ 的线性组合，利用 LTI 系统的线性特性和时不变特性即可求解。
 (a) $x_2(t) = x_1(t) - x_1(t-2)$，故 $y_2(t) = y_1(t) - y_1(t-2)$
@@ -78,7 +78,7 @@ _习题_ 1.31
 
 == 第二章 线性时不变系统
 
-_习题_ 2.1
+*习题* 2.1
 设 $x[n] = delta [n] + 2delta [n-1] - delta [n-3]$，$h[n] = 2delta [n+1] + 2delta [n-1]$，计算下列卷积：
 (a) $y_1[n]=x[n]ast h[n]$
 $ beginalign*
@@ -101,7 +101,7 @@ y_3[n] &= x[n] * h[n + 2] \\
  &= y_1[n + 2] = y_2[n]
 endalign* $
 
-_习题_ 2.10
+*习题* 2.10
 假设 $
 x(t) =
 \begin{cases}
@@ -113,10 +113,10 @@ $和$h(t) = x\left(\frac{t}{a}\right), \quad 0 \leq a \leq 1$。
 (a) 求出并画出 $y(t) = x(t) ast h(t)$;
 (b) 若 $frac(dy(t), "d"t)$ 仅含有三个不连续点，$a$ 值为多少？
 
-_习题_ 2.11
+*习题* 2.11
 令
 $ x(t)=u(t-3)-u(t-5)，h(t)=e^(-3t)u(t) $
-(a) 计算 $y(t)=x(t)*h(t)$
+(a) 计算 $y(t)=x(t)\*h(t)$
 $ y(t) = x(t) * h(t) = integral _(-infinity )^(infinity ) x(tau ) h(t - tau ) dtau $
 
 $ = integral _(-infinity )^(infinity ) u(tau - 3) e^(-3(t-tau )) u(t - tau ) dtau - integral _(-infinity )^(infinity ) u(tau - 5) e^(-3(t-tau )) u(t - tau ) dtau $
@@ -132,8 +132,8 @@ $ = begincases
 frac(1, 3) [1 - e^(-3(t-3))], & 3 < t leqslant 5 \
 frac(1, 3) (1 - e^(-6)) e^(-3(t-5)), & t > 5
 endcases $
-(b) 计算 $g(t)=["d"x(t)/"d"t]*h(t)$
-注意到 $u(t)$ 的导数是 $delta (t)$，所以 $g(t) = [delta (t-3) - delta (t-5)]*h(t)$。
+(b) 计算 $g(t)=["d"x(t)/"d"t]\*h(t)$
+注意到 $u(t)$ 的导数是 $delta (t)$，所以 $g(t) = [delta (t-3) - delta (t-5)]\*h(t)$。
 $ frac(dx(t), dt) = delta (t - 3) - delta (t - 5) $
 
 $ g(t) = frac(dx(t), dt) * h(t) = [delta (t - 3) - delta (t - 5)] * e^(-3t) u(t) $
@@ -149,14 +149,14 @@ $ = e^(-3(t - 3)) u(t - 3) - e^(-3(t - 5)) u(t - 5) $
 
 $ g(t) = frac(dy(t), dt) $
 
-_习题_ 2.20
+*习题* 2.20
 求下列积分：
 (a) $integral _(-infinity )^(infinity ) u_0(t) cos (t) thin "d"t$
 (b) $integral _(0)^(5) sin (2pi t)delta (t+3) thin "d"t$
 (c) $integral _(-5)^(5) u_1(1-t)cos (2pi tau ) thin "d"tau$
 
-_习题_ 2.21
-计算下列各对信号的卷积 $y[n]=x[n]*h[n]$
+*习题* 2.21
+计算下列各对信号的卷积 $y[n]=x[n]\*h[n]$
 (a)
 $ begincases
 x[n] = alpha ^n u[n] \\
@@ -180,8 +180,8 @@ $ = fracbeta ^(n+1) - alpha ^(n+1)beta - alpha u[n] quad (alpha != beta , n geqs
 一开始挺奇怪第三章怎么和第四五章内容重复，仔细一看才发现这章只是傅里叶级数，不是变换。
 ]
 
-_习题_ 3.21
-有一个连续时间周期信号 $x(t)$ 是实值信号，其基波周期 $T=8$，$x(t)$ 的非零傅里叶级数系统为 $a_1=a_(-1)^*="j", a_5=a_(-5)=2$，试将 $x(t)$ 表示为如下形式：
+*习题* 3.21
+有一个连续时间周期信号 $x(t)$ 是实值信号，其基波周期 $T=8$，$x(t)$ 的非零傅里叶级数系统为 $a_1=a_(-1)^\*="j", a_5=a_(-5)=2$，试将 $x(t)$ 表示为如下形式：
 $ x(t)=sum _(k=0)^(infinity )A_kcos (omega _kt+phi _k) $
 $ beginalign*
 x(t) &= sum _(k=-infinity )^(infinity ) a_k e^("j"komega _0 t) = sum _(k=-infinity )^(infinity ) a_k e^("j"k(2pi /8)t) \\
@@ -191,7 +191,7 @@ x(t) &= sum _(k=-infinity )^(infinity ) a_k e^("j"komega _0 t) = sum _(k=-infini
  &= 2 cos (frac(pi , 4) t + frac(pi , 2)) + 4 cos (frac(5pi , 4) t)
 endalign* $
 
-_习题_ 3.22
+*习题* 3.22
 求下列信号的傅里叶级数表示：
 (b) $x(t)$ 的周期为 $2$，且 $x(t)=e^(-t), -1<t<1$
 $ beginalign*
@@ -204,7 +204,7 @@ a_k &= frac(1, T) integral _(T) x(t) e^(-"j"komega _0 t) thin "d"t = frac(1, 2) 
 x(t) &= sum _(k=-infinity )^(infinity ) a_k e^("j"kpi t) = sum _(k=-infinity )^(infinity ) frac((-1)^k, 2(1 + "j"kpi )) (e - e^(-1)) e^("j"kpi t)
 endalign* $
 
-_习题_ 3.25
+*习题* 3.25
 下面三个连续时间周期信号的基波周期 $T=frac12$：
 $x(t)=cos (4pi t), y(t)=sin (4pi t), z(t)=x(t)y(t)$
 (a) 求 $x(t)$ 的傅里叶级数系数。
@@ -230,7 +230,7 @@ $ z(t) = cos (4pi t) sin (4pi t) = frac(1, 2) sin (8pi t) $
 即
 $ c_2 = frac(1, 4"j")，c_(-2) = -frac(1, 4"j")， "其余" thin c_k = 0。 $
 
-_习题_ 3.34
+*习题* 3.34
 
 考虑一个连续时间线性时不变系统，其单位冲激响应为
 $ h(t) = e^(-4|t|) $
@@ -241,7 +241,7 @@ $ h(t) = e^(-4|t|) $
 
 (c) $x(t)$ 为如图 P3.34 所示的周期性方波。
 
-_习题_ 3.38
+*习题* 3.38
 考虑一个离散时间线性时不变系统，其单位脉冲响应为
 $ h[n] =
 begincases
@@ -257,7 +257,7 @@ $ x[n] = sum _(k=-infinity )^(+infinity ) delta [n - 4k] $
 
 == 第四章 连续时间傅里叶变换
 
-_习题_ 4.1
+*习题* 4.1
 利用傅里叶变换分析式(4.9)，求下列信号的傅里叶变换：
 
 (a) $e^(-2(t-1)) u(t-1)$
@@ -265,7 +265,7 @@ _习题_ 4.1
 $ e^(-alpha t) u(t) stackrelcal(F)longleftrightarrow frac(1, alpha + "j"omega ) $
 可知
 $ e^(-2t) u(t) stackrelcal(F)longleftrightarrow frac(1, 2 + "j"omega ) $
-又由_时移性质_ $x(t - t_0) stackrelcal(F)longleftrightarrow e^(-"j"omega t_0) X("j"omega )$，可得
+又由*时移性质* $x(t - t_0) stackrelcal(F)longleftrightarrow e^(-"j"omega t_0) X("j"omega )$，可得
 $ X("j"omega ) = frace^(-"j"omega )2 + "j"omega $
 
 (b) $e^(-2|t-1|)$
@@ -277,7 +277,7 @@ $ e^(-2(t-1)) u(t-1) stackrelcal(F)longleftrightarrow frace^(-"j"omega )2 - "j"o
 
 概略画出每一个傅里叶变换的模特性并给以标注。
 
-_习题_ 4.2
+*习题* 4.2
 利用傅里叶变换分析式(4.9)，求下列信号的傅里叶变换：
 
 (a) $delta (t+1) + delta (t-1)$
@@ -297,10 +297,10 @@ $ X("j"omega ) = e^(-2"j"omega ) - e^(2"j"omega ) = -2"j" sin 2omega $
 
 概略画出每一个傅里叶变换的模特性并给以标注。
 
-_习题_ 4.26
+*习题* 4.26
 (a) 利用卷积性质和逆变换，用计算 $X("j"omega )$ 和 $H("j"omega )$ 求下列各对信号 $x(t)$ 和 $h(t)$ 的卷积：
 
-注意这里提到的性质就是 $y(t) = x(t) * h(t) stackrelcal(F)longleftrightarrow Y("j"omega ) = X("j"omega )H("j"omega )$。
+注意这里提到的性质就是 $y(t) = x(t) \* h(t) stackrelcal(F)longleftrightarrow Y("j"omega ) = X("j"omega )H("j"omega )$。
 
 (1) $x(t) = te^(-2t)u(t), quad h(t) = e^(-4t)u(t)$
 由常见傅里叶变换对
@@ -317,9 +317,9 @@ $ y(t) = frac(1, 4) e^(-4t) u(t) - frac(1, 4) e^(-2t) u(t) + frac(1, 2) te^(-2t)
 
 (3) $x(t) = e^(-t)u(t), quad h(t) = e^(t)u(-t)$
 
-(b) 假设 $x(t) = e^(-(t-2))u(t-2)$，如图 P4.26 所示，对这一对信号，通过证明 $y(t) = x(t) * h(t)$ 的傅里叶变换等于 $H("j"omega )X("j"omega )$ 来验证卷积性质。
+(b) 假设 $x(t) = e^(-(t-2))u(t-2)$，如图 P4.26 所示，对这一对信号，通过证明 $y(t) = x(t) \* h(t)$ 的傅里叶变换等于 $H("j"omega )X("j"omega )$ 来验证卷积性质。
 
-_习题_ 4.33
+*习题* 4.33
 一个因果线性时不变系统的输入和输出，由下列微分方程表征：
 
 $ frac(d^2 y(t), dt^2) + 6frac(dy(t), dt) + 8y(t) = 2x(t) $
@@ -348,7 +348,7 @@ $ (s^2 + sqrt(2)s + 1)Y(s) = 2(s^2 - 1)X(s) $
 $ ("j"omega + sqrt(2))^2 Y("j"omega ) = 2(-omega ^2 - 1)X("j"omega ) $
 进而可以求得系统函数 $H("j"omega )$，再求逆变换即可得到单位冲激响应，不再赘述。
 
-_习题_ 4.44
+*习题* 4.44
 一个因果线性时不变系统的输入 $x(t)$ 和输出 $y(t)$ 的关系由下列方程给出：
 
 $ frac(dy(t), dt) + 10y(t) = integral _(-infinity )^(+infinity ) x(tau )z(t-tau ) dtau - x(t) $
@@ -368,33 +368,33 @@ $ h(t) = frac19e^(-t)u(t) + frac(17, 9)e^(-10t)u(t) $
 
 == 第五章 离散时间傅里叶变换
 
-_习题_ 5.1
+*习题* 5.1
 利用傅里叶变换分析公式(5.9)，计算下列傅里叶变换：
 (a) $(frac(1, 2))^(n-1)u[n-1]$
 (b) $(frac(1, 2))^(|n-1|)$
 
 概略画出每个傅里叶变换在一个周期内的模，并给以标注。
 
-_习题_ 5.2
+*习题* 5.2
 利用傅里叶变换分析公式(5.9)，计算下列傅里叶变换：
 (a) $delta [n-1] + delta [n+1]$
 (b) $delta [n+2] - delta [n-2]$
 
 概略画出每个傅里叶变换在一个周期内的模，并给以标注。
 
-_习题_ 5.13
+*习题* 5.13
 一个单位脉冲响应为 $h_1[n]=(frac(1, 3))^n u[n]$ 的线性时不变系统与另一单位脉冲响应为 $h_2[n]$ 的因果线性时不变系统并联，并联后的频率响应为
 $ H(e^("j"omega )) = frac-12 + 5e^(-"j"omega )12 - 7e^(-"j"omega ) + e^(-"j"2omega ) $
 求$h_2[n]$。
 
-_习题_ 5.18
+*习题* 5.18
 已知
 $ a^n stackrelcal(F)longleftrightarrow frac(1-a^2, 1-2a cos omega + a^2), quad |a| < 1 $
 
 利用对偶性求下面周期 $T=1$ 的连续时间信号的傅里叶级数系数：
 $ x(t) = frac(1, 5 - 4 cos (2 pi t)) $
 
-_习题_ 5.21
+*习题* 5.21
 (a) $x[n] = u[n-2] - u[n-6]$
 
 (c) $x[n] = (frac(1, 3))^(|n|) u[-n-2]$
@@ -403,7 +403,7 @@ _习题_ 5.21
 
 == 第六章 信号与系统的时域特性和频域特性
 
-_习题_ 6.1
+*习题* 6.1
 考虑一个频率响应为 $H("j"omega ) = |H("j"omega )| e^("j"sphericalangle H("j"omega ))$ 且实值单位冲激响应为 $h(t)$ 的连续时间线性时不变系统。假设在该系统上施加一个输入 $x(t) = cos (omega _0 t + phi _0)$，所得到的输出可表示成如下形式：
 $ y(t) = A x(t - t_0) $
 
@@ -413,7 +413,7 @@ $ y(t) = A x(t - t_0) $
 
 (b) 用 $sphericalangle H("j"omega )$ 表示 $t_0$。
 
-_习题_ 6.5
+*习题* 6.5
 考虑一个连续时间理想带通滤波器，其频率响应为
 $ H("j"omega ) =
 begincases
@@ -425,7 +425,7 @@ $ h(t) = ( frac(sin omega _c t, pi t) ) g(t) $
 
 (b) 当 $omega _c$ 增加时，该滤波器的单位冲激响应是更加向原点集中呢，还是不是？
 
-_习题_ 6.7
+*习题* 6.7
 
 一个连续时间低通滤波器设计成通带频率为 1000 Hz，阻带频率为 1200 Hz，通带纹波为 0.1，阻带纹波为 0.05。该低通滤波器的单位冲激响应为 $h(t)$，现在希望把该滤波器转换成具有如下单位冲激响应的带通滤波器：
 
@@ -437,7 +437,7 @@ $ g(t) = 2h(t) cos (4000 pi t) $
 
 (b) 若对该带通滤波器的阻带波纹限制为 0.05，与带通滤波器有关的两个阻带频率是什么？
 
-_习题_ 6.23
+*习题* 6.23
 
 示于图 P6.23 的是一个低通滤波器的 $|H("j"omega )|$。对于具有下列每一相位特性的滤波器，求并画出其单位冲激响应。
 
@@ -454,16 +454,16 @@ endcases $
 
 == 第七章 采样
 
-_习题_ 7.22
-信号 $Y(t)$ 由两个均为带限的信号 $x_1(t)$ 和 $x_2(t)$ 卷积而成，即 $y(t)=x_1(t)*x_2(t)$，其中，$X_1("j"omega )=0, |omega | > 1000pi$，$X_2("j"omega )=0, |omega | > 2000pi$。现对 $Y(t)$ 进行激串采样，以得到 $y_p(t)=sum ^(+infinity )_(n=-infinity )y(nT)delta (t-nT)$，试给出 $y(t)$ 保证能从 $y_p(t)$ 恢复出来的采样周期 T 的范围。
-因 $y(t)=x_1(t)*x_2(t)$，所以 $Y("j"omega )=X_1("j"omega )dot X_2("j"omega )$，又当 $|omega | > 1000pi$ 时 $X_1("j"omega )=0$，当 $|omega | > 2000pi$ 时 $X_2("j"omega )=0$，所以当 $|omega | > 1000pi$ 时 $Y("j"omega )=0$。
+*习题* 7.22
+信号 $Y(t)$ 由两个均为带限的信号 $x_1(t)$ 和 $x_2(t)$ 卷积而成，即 $y(t)=x_1(t)\*x_2(t)$，其中，$X_1("j"omega )=0, |omega | > 1000pi$，$X_2("j"omega )=0, |omega | > 2000pi$。现对 $Y(t)$ 进行激串采样，以得到 $y_p(t)=sum ^(+infinity )_(n=-infinity )y(nT)delta (t-nT)$，试给出 $y(t)$ 保证能从 $y_p(t)$ 恢复出来的采样周期 T 的范围。
+因 $y(t)=x_1(t)\*x_2(t)$，所以 $Y("j"omega )=X_1("j"omega )dot X_2("j"omega )$，又当 $|omega | > 1000pi$ 时 $X_1("j"omega )=0$，当 $|omega | > 2000pi$ 时 $X_2("j"omega )=0$，所以当 $|omega | > 1000pi$ 时 $Y("j"omega )=0$。
 由采样定理知，若采样频率 $omega _s>2times 1000pi$，即 $T<frac(2pi , 2pi times 10^3)=10^(-3)$ 时，$y(t)$ 可以从 $y_p(t)$ 恢复出来。
 这里我也不是很清楚采样定理，后面有机会再补。
 
-_习题_ 7.26
+*习题* 7.26
 挺复杂的，不看了。
 
-_习题_ 8.22
+*习题* 8.22
 不知道为啥第七章作业会布置第八章的题目。
 
 == 第八章 通信系统
@@ -472,19 +472,19 @@ _习题_ 8.22
 
 == 第九章 拉普拉斯变换
 
-_习题_ 9.21
+*习题* 9.21
 确定下列时间函数的拉普拉斯变换、收敛域及零-极点图。
 零点就是分子为 0 的点，极点就是分母为 0 的点。
-画图时_零点处画圆圈_，_极点处画叉号_，x 轴为实轴，y 轴为虚轴。
+画图时*零点处画圆圈*，*极点处画叉号*，x 轴为实轴，y 轴为虚轴。
 本题多处利用变换对 $e^(-alpha t)u(t)rightarrowfrac(1, s+alpha ), "Re"lbrace srbrace > "Re"lbrace -alpha rbrace$，$alpha$ 可为复数。
-_(a)_ $x(t)=e^(-2t)u(t)+e^(-3t)u(t)$
+*(a)* $x(t)=e^(-2t)u(t)+e^(-3t)u(t)$
 直接由变换对得出 $X(s)=frac(1, s+2)+frac(1, s+3)= frac(2s+5, (s+2)(s+3)), "Re"lbrace srbrace > -2$，零点 $s=-frac52$，极点 $s=-2, -3$，收敛域就是 $x > -2$，要画虚线。
-_(c)_ $x(t)=e^(2t)u(-t)+e^(3t)u(-t)$
+*(c)* $x(t)=e^(2t)u(-t)+e^(3t)u(-t)$
 由变换对 $-e^(-alpha t)u(-t)rightarrowfrac(1, s+alpha ), "Re"lbrace srbrace < "Re"lbrace -alpha rbrace$，得 $X(s)=-frac(1, s-2)-frac(1, s-3)= frac(5-2s, (s-2)(s-3)), "Re"lbrace srbrace < 2$，零点 $s=frac52$，极点 $s=2, 3$，收敛域为 $x < 2$。
 
-_习题_ 9.22
+*习题* 9.22
 对下列每个拉普拉斯变换，确定时间函数 $x(t)$：
-概念：使拉氏变换积分收敛的那些复数 S 的集合，称为拉氏变换的_收敛域 ROC_ (Region of Convergence)。
+概念：使拉氏变换积分收敛的那些复数 S 的集合，称为拉氏变换的*收敛域 ROC* (Region of Convergence)。
 (a) $frac(1, s^2+9), "Re"lbrace srbrace > 0$
 $sin (omega _0t)u(t)rightarrowfrac(omega _0, s^2+omega _0^2), "Re"lbrace srbrace > 0$，又 $frac(1, s^2+9)= frac(1, 3)frac(3, s^2+3^2)$，所以 $x(t)=frac13sin (3t)u(t)$。
 (b) $frac(s, s^2+9), "Re"lbrace srbrace < 0$
@@ -496,7 +496,7 @@ $x(-t)rightarrow X(-s), "ROC" = -R$
 (e) $frac(s+1, s^2+5s+6), -3 < "Re"lbrace srbrace < -2$
 类似上题，拆成 $frac(-1, s+2)+frac(2, s+3)$，得出 $x(t)=e^(-2t)u(-t)+2e^(-3t)u(t)$。
 
-_习题_ 9.31
+*习题* 9.31
 有一个连续时间线性时不变系统，其输入 $x(t)$ 和输出 $y(t)$ 由下列微分方程所关联：
 $ frac("d"^2y(t), "d"t^2)-frac("d"y(t), "d"t)-2y(t)=x(t) $
 (a) 求 $H(s)$ 作为 $s$ 的两个多项式之比，画出 $H(s)$ 的零极点图。
@@ -506,15 +506,15 @@ $ H(s)=frac(Y(s), X(s))=frac(1, s^2-s-2)=frac(1, (s-2)(s+1))=frac(1, 3)(frac(1, 
 (b) 对下列每一种情况求 $h(t)$：
 求 $h(t)$ 就要对 $H(s)$ 进行逆变换，就需要 $H(s)$ 的 ROC。
 (i) 系统是稳定的。
-_如果 LTI 系统是稳定的，则系统函数的 ROC 必然包括 $"j"omega$ 轴。_
+*如果 LTI 系统是稳定的，则系统函数的 ROC 必然包括 $"j"omega$ 轴。*
 ROC 为 $-1 < "Re"lbrace srbrace < 2$，所以 $h(t)=-frac13e^(2t)u(-t)-frac13e^(-t)u(t)$
 (ii) 系统是因果的。
-_如果 LTI 系统是因果的，则系统函数的 ROC 是最右边极点的右边。_
+*如果 LTI 系统是因果的，则系统函数的 ROC 是最右边极点的右边。*
 ROC 为 $"Re"lbrace srbrace > 2$，所以 $h(t)=frac13(e^(2t)-e^(-t))u(t)$
 (iii) 系统既不是稳定的，也不是因果的。
 ROC 为 $"Re"lbrace srbrace < -1$，所以 $h(t)=-frac13(e^(2t)-e^(-t))u(-t)$
 
-_习题_ 9.35
+*习题* 9.35
 给了一个因果线性时不变系统的输入 $x(t)$ 和输出 $y(t)$ 的方框图
 (a) 求联系 $y(t)$ 和 $x(t)$ 的微分方程。
 对 $x(t)$ 遇到的第一个加法器进行分析，容易看出关系是：左 + 下 = 右
@@ -533,7 +533,7 @@ $ frac("d"^2y(t), "d"t^2) + 2frac("d"y(t), "d"t) + y(t) = frac("d"^2x(t), "d"t^2
 (b) 该系统是稳定的吗？
 系统函数 $H(s)=frac(Y(s), X(s))=frac(s^2-s-6, s^2+2s+1)=frac((s-3)(s+2), (s+1)^2)$，有二阶极点 $s=-1$，题目说系统是因果的，那么 ROC 是最右极点的右边，即 $"Re"lbrace srbrace > -1$，包含了 $"j"omega$ 轴，所以系统是稳定的。
 
-_习题_ 9.36
+*习题* 9.36
 输入为 $x(t)$，输出为 $y(t)$ 的系统的系统函数为 $H(s)=frac(Y(s), X(s))=frac(2s^2+4s+6, s^2+3s+2)$，输入为 $x(t)$，输出为 $y_1(t)$ 的系统的系统函数为 $H_1(s)=frac(Y_1(s), X(s))=frac(1, s^2+3s+2)$，还给了系统 $S_1$ 的方框图
 (a) 将 $y(t)$（系统 $S$ 的输出）表示成 $y_1(t)$，$frac("d"y_1(t), "d"t)$ 和 $frac("d"^2 y_1(t), "d"t^2)$ 的线性组合。
 由 $H(s)$ 和 $H_1(s)$ 的关系，有 $Y(s)=(2s^2+4s-6)Y_1(s)$，两边取拉普拉斯逆变换得到
@@ -553,7 +553,7 @@ $ H(s) = ( frac(2(s - 1), s + 2) ) ( frac(s + 3, s + 1) ) $
 (g) 注意到
 $ H(s) = 2 + frac(6, s + 2) - frac(8, s + 1) $
 画出将 $S$ 作为三个子系统并联的方框图表示。
-上面三题的解题核心就是加法器和乘法器的运用，_一个关键的点就是 $1/s$ 和一个常数 $n$ 乘法器再用加法器与输入相加组成的回路_（如下图），该系统的系统函数为 $H(s)=frac(1, s+n)$，加法器输出处系统函数是 $frac(s, s+n)$。
+上面三题的解题核心就是加法器和乘法器的运用，*一个关键的点就是 $1/s$ 和一个常数 $n$ 乘法器再用加法器与输入相加组成的回路*（如下图），该系统的系统函数为 $H(s)=frac(1, s+n)$，加法器输出处系统函数是 $frac(s, s+n)$。
 
 ```plain
 x(t)--- + --- 1/s -------y(t)

@@ -24,7 +24,7 @@
 === 模根与整根
 
 RSA 的许多攻击都可以化成解模根的问题，而所谓解模根就是方程在模数 $N$ 下的解。这时候直接解是不现实的，就需要用到 Coppersmith 方法。
-解模根的关键就是 _Howgrave-Graham_ 定理：
+解模根的关键就是 *Howgrave-Graham* 定理：
 令 $h(x_1,...,x_n) in Z[x_1,...,x_n]$ 为一个至多含 $omega$ 个单项式的整数多项式，若满足
 $ h(x_1^((0)),...,x_n^((0))) equiv 0 mod N^m space forspace somespace |x_1^((0))| < X_1,dots,|x_n^((0))| < X_n ,space and \\
 ||h(x_1X_1,dots,x_nX_n)|| < frac(N^m, sqrt(omega )) $

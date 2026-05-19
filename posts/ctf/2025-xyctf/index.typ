@@ -64,7 +64,7 @@ run(host='0.0.0.0', port=8080, debug=False)
 
 应该是先用文件读拿到 `secret.txt`，过滤很简单，既然不允许 `../../`，那直接 `./.././../` bypass 即可。
 
-构造 `?filename=./.././../secret.txt` 拿到 secret 为 `'Hell0_H@cker_Y0u_A3r_Sm@r7'`。
+构造 `?filename=./.././../secret.txt` 拿到 secret 为 `'Hell0_H\@cker_Y0u_A3r_Sm\@r7'`。
 
 观察了下 bottle 的源码，这个 secret 是用来签名的，只有验签通过他才会执行 `pickle.loads()`。
 
@@ -206,7 +206,7 @@ print(f"Final value: {value}")
 
 打开是一个拼图网页，刷新几次发现并不能随机到初始即正确的情况，按 `F12` 发现被拦截，在 bp 看到逻辑是在 `index.html` 里的 JS 加入了对 `contextmenu` 和 `keydown` 的监听，同时发现网页引用了 `/js/puzzle.js`。
 那么我们直接访问 `/js/puzzle.js`，即可绕过拦截打开控制台。
-然后一看，我嘞个一大坨 JS 啊，直接把代码丢给 DeepSeek，花了几毛钱直接判断出变量 `ogde564hc3f4` 控制是否完成，本地修改一下 `ogde564hc3f4` 的值为 `true`，然后在 2 秒内随便点一下就出 flag 了：`flag{Y0u__aRe_a_mAsteR_of_PUzZL!!@!!~!}`
+然后一看，我嘞个一大坨 JS 啊，直接把代码丢给 DeepSeek，花了几毛钱直接判断出变量 `ogde564hc3f4` 控制是否完成，本地修改一下 `ogde564hc3f4` 的值为 `true`，然后在 2 秒内随便点一下就出 flag 了：`flag{Y0u__aRe_a_mAsteR_of_PUzZL!!\@!!~!}`
 
 == Crypto
 
@@ -756,7 +756,7 @@ Step 8
 
 $k$ 应该比 $log _2mW$ 大很多，不然 step 6 的判定就很难起作用。
 
-按以上的方法搞一搞，最终 flag 为 `XYCTF{0h_3v3n_X0R_c@n't_s@v3_LCG!}`
+按以上的方法搞一搞，最终 flag 为 `XYCTF{0h_3v3n_X0R_c\@n't_s\@v3_LCG!}`
 
 代码一坨屎就先不放了，就注意一下 step 7 的意思是不用选全部的 output，比如第一轮用 $Y_0$ 到 $Y_(31)$，第二轮用 $Y_1$ 到 $Y_(32)$，第三轮用 $Y_2$ 到 $Y_(33)$，依次类推，而且实际上也不会只剩下一个，会剩下 4 至 16 个左右。
 

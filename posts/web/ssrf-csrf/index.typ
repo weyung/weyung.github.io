@@ -187,7 +187,7 @@ if(preg_match('/^http:\/\/ctf\..*show$/i',$url)){
 }
 ```
 
-这个除了搞一个 ctf 开头的域名以外我也想不出来方法了，看 wp 可以构造 `http://ctf.@127.0.0.1/flag.php?show` 这样的 payload，直接把 `ctf.` 作为 username 传入。
+这个除了搞一个 ctf 开头的域名以外我也想不出来方法了，看 wp 可以构造 `http://ctf.\@127.0.0.1/flag.php?show` 这样的 payload，直接把 `ctf.` 作为 username 传入。
 
 web359 开始就是正经题目了，访问得到一个登录页面
 
@@ -196,7 +196,7 @@ web359 开始就是正经题目了，访问得到一个登录页面
 == CSRF
 
 CSRF（Cross-Site Request Forgery）中文翻译过来就是跨站请求伪造攻击。
-我一度分不清 CSRF 和 XSS 的区别，大致区别就是 XSS 利用的是_用户对指定网站的信任_，CSRF 利用的是_网站对用户网页浏览器的信任_。
+我一度分不清 CSRF 和 XSS 的区别，大致区别就是 XSS 利用的是*用户对指定网站的信任*，CSRF 利用的是*网站对用户网页浏览器的信任*。
 
 == 参考
 

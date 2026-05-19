@@ -75,7 +75,7 @@ array(2) {
 
 === [SUCTF 2019]EasySQL
 
-抄的 wp：`*,1`，也不懂，有空补。
+抄的 wp：`\*,1`，也不懂，有空补。
 
 === [极客大挑战 2019]Secret File
 
@@ -287,9 +287,9 @@ PHP 5.3 有个关于 `strcmp` 的漏洞，就是数据类型不同的时候，`s
 
 === [BJDCTF2020]Easy MD5
 
-随便输个 `1`，一看响应头有个 hint：`Hint: select * from 'admin' where password=md5($pass,true)`，好，那就搞搞 MD5。
+随便输个 `1`，一看响应头有个 hint：`Hint: select \* from 'admin' where password=md5($pass,true)`，好，那就搞搞 MD5。
 首先 MD5 出来的是一个 128 位的散列值，然后 PHP 的 `md5` 函数后面的 `true` 是指返回二进制格式的散列值，但是这个二进制串会进行 ASCII 码转换成字符串，类似 python 里的 `str(long_to_bytes())`。
-wp 中选择了 `ffifdyop` 作为 payload，其 MD5 值为 `276f722736c95d99e921722cf9ed621c`，前面的 `27 6f 72 27 36` 对应的字符为 `'or'6`，这样就可以进行一个 SQL 注入，拼凑出 `select * from 'admin' where password=''or'6...'`，后面还会跟着一堆乱码，但是 `6...` 会被当成数字，所以就一定为真。
+wp 中选择了 `ffifdyop` 作为 payload，其 MD5 值为 `276f722736c95d99e921722cf9ed621c`，前面的 `27 6f 72 27 36` 对应的字符为 `'or'6`，这样就可以进行一个 SQL 注入，拼凑出 `select \* from 'admin' where password=''or'6...'`，后面还会跟着一堆乱码，但是 `6...` 会被当成数字，所以就一定为真。
 然后跳到了 `levels91.php`，F12 看到：
 
 ```php

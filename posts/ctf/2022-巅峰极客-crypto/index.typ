@@ -316,7 +316,7 @@ sigma _q=mu (m)^dmodq $
 然后签名 $sigma =sigma _pcdotalpha +sigma _qcdotbeta$ ，其中 $alpha =qdot (q^(-1)mod\ p)$ ， $beta =pdot (p^(-1)mod\ q)$ 。
 题目中给出 6 对签名，每对签名用 CRT 不难算出
 $ v=sigma _pcdotalpha +sigma _qcdotbeta mod Ndot N' $
-其中 $sigma _p$ 和 $sigma _q$ 和 $N/2$ 一个数量级， $alpha$ 和 $beta$ 又和 $N$ 一个数量级，故右式远小于 $Ndot N'$ ，那么_上式在整数域上是成立的_。
+其中 $sigma _p$ 和 $sigma _q$ 和 $N/2$ 一个数量级， $alpha$ 和 $beta$ 又和 $N$ 一个数量级，故右式远小于 $Ndot N'$ ，那么*上式在整数域上是成立的*。
 一对算不出，但是多对可以，组成向量，有：
 $ boldsymbolv=alpha boldsymbolx+beta boldsymboly $
 其中 $boldsymbolx$ 和 $boldsymboly$ 是分量 $n/2$ 位的未知向量， $alpha$ 和 $beta$ 是有关 $p$ 和 $q$ 的 CRT 系数。
@@ -326,9 +326,9 @@ $ alpha angle.l boldsymbolb_j,boldsymbolx angle.r + beta angle.l boldsymbolb_j,b
 #strike[（也不是很特别的感觉）]
 现在观察方程 $alpha dot u+beta dot v=0$ ，最小的非零解 $(u,v)in bb(Z)^2$ 是 $plus.minus (beta ,-alpha )/g$ ，其中 $g=gcd (alpha ,beta )$ 盲猜是非常小的（经测试基本在10以内），意味着 $|u|,|v|>= mathitOmega (N)$ 中 $mathitOmega$ 常量是非常小的。（啥玩意？）对 $j=1,2,dots ,ell-1$ ，有以下两种可能：
 
-_情形1_：$angle.l boldsymbolb_j,boldsymbolx angle.r = angle.l boldsymbolb_j,boldsymboly angle.r = 0$ 。此时 $boldsymbolb_j$ 属于 $bb(Z)^ell$ 中与 $boldsymbolx$ 和 $boldsymboly$ 正交的向量的格 $L=boldsymbol{x,boldsymboly}^bot$
+*情形1*：$angle.l boldsymbolb_j,boldsymbolx angle.r = angle.l boldsymbolb_j,boldsymboly angle.r = 0$ 。此时 $boldsymbolb_j$ 属于 $bb(Z)^ell$ 中与 $boldsymbolx$ 和 $boldsymboly$ 正交的向量的格 $L=boldsymbol{x,boldsymboly}^bot$
 
-_情形2_：$angle.l boldsymbolb_j,boldsymbolx angle.r$ 和 $angle.l boldsymbolb_j,boldsymboly angle.r$ 有绝对值 $>= mathitOmega (N)$ ，其中 $mathitOmega (N)$ 是一个小常数。因为 $boldsymbolx$ 和 $boldsymboly$ 的范数都不超过 $sqrt(ell N)$ ，由柯西-施瓦茨不等式，这意味着 $||boldsymbolb_j||>= mathitOmega (sqrt(ell N))$
+*情形2*：$angle.l boldsymbolb_j,boldsymbolx angle.r$ 和 $angle.l boldsymbolb_j,boldsymboly angle.r$ 有绝对值 $>= mathitOmega (N)$ ，其中 $mathitOmega (N)$ 是一个小常数。因为 $boldsymbolx$ 和 $boldsymboly$ 的范数都不超过 $sqrt(ell N)$ ，由柯西-施瓦茨不等式，这意味着 $||boldsymbolb_j||>= mathitOmega (sqrt(ell N))$
 
 因为格 $L=boldsymbol{x,boldsymboly}^bot$ 的秩是 $ell-2$ ，当全部 $ell-1$ 个向量 $boldsymbolb\_j$ 线性无关时情形1不成立，所以最长的 $boldsymbolb\_(ell-1)$ 应该在情形2中，因此 $||boldsymbolb\_(ell-1)||>= mathitOmega (sqrt(ell N))$ 。另一方面，其他向量形成一个秩为 $ell-2$ 的格，且体积
 $ V="vol"(bb(Z)boldsymbolb\_1oplusdots.c oplusbb(Z)boldsymbolb\_(ell-2))approx frac"vol"(boldsymbol{v^bot)}||boldsymbol{b\_(ell-1)||}=frac||boldsymbol{v||}||boldsymbol{b\_(ell-1)||}<= fracsqrt(ell)dot N^(3/2)mathit{Omega (sqrt(N/ell))}=O(ell N) $
@@ -352,7 +352,7 @@ boldsymbolv=boldsymbolymodq $
 #quote[
 笔者注记：
 ]
-这里首先将 $mathitLambda$ 张成一个_有理数空间_，不局限于_整系数_向量组合了，记为 $E_(mathitLambda )$ 的E我猜是_欧几里得_的意思？然后与 $mathbfZ^n$ 相交得到的是整数点集合 $overline(mathitLambda )$ ，如此 $mathitLambda$ 是 $overline(mathitLambda )$ 子格的事应该挺自然的。然后如果两者相等，想象一下，都那样张成了都找不到新的点，那这个格确实也挺完备。
+这里首先将 $mathitLambda$ 张成一个*有理数空间*，不局限于*整系数*向量组合了，记为 $E_(mathitLambda )$ 的E我猜是*欧几里得*的意思？然后与 $mathbfZ^n$ 相交得到的是整数点集合 $overline(mathitLambda )$ ，如此 $mathitLambda$ 是 $overline(mathitLambda )$ 子格的事应该挺自然的。然后如果两者相等，想象一下，都那样张成了都找不到新的点，那这个格确实也挺完备。
 PS:发现自己念了十年的欧几里得，难怪输入法打不出来（）
 
 令 $(mathbfx,mathbfy)arrowmathbfx.mathbfy$ 为一般意义上的欧里几德内积， $||.||$ 是它对应的范数 #strike[（奇怪的表示方法）]。令 $F=(E_(mathitLambda ))^-$ 是关于该内积的正交向量子空间。我们定义正交格 $mathitLambda ^-=Fsect mathbfZ^n$ 。因此， $mathitLambda ^-$ 是一个 $mathbfZ^n$ 上的完备格，其维度为 $n-d$ 。这意味着 $(mathitLambda ^-)^-$ 等于 $overline(mathitLambda )$ 。令 $cal(B)=(mathbfb_1,...,mathbfb_d)$ 为 $mathitLambda$ 的一组基。
@@ -360,9 +360,9 @@ PS:发现自己念了十年的欧几里得，难怪输入法打不出来（）
 #quote[
 笔者注记：
 ]
-看到这就有点迷糊了，捋一捋： $E_(mathitLambda )$ 是 $mathitLambda$ 张成出的有理空间，然后 $F$ 是其正交向量子空间，即_任意从 $mathitLambda$ 和 $F$ 分别抓两个向量出来，其内积都为 $0$_ 。
-再然后 $mathitLambda ^-$ 是 $F$ 的一个子格，_注意到 $mathitLambda ^-$ 把 $F$ 所有整数点都框进去了_，这就很有意思了，由上面的定义就不难得出正交格 $mathitLambda ^-$ 是一个 $mathbfZ^n$ 上的完备格。
-至于其维度为何是 $n-d$ ，有个概念叫_正交补_，就是正交空间的维数是刚刚好的，对于列空间维数为 $r$ 的矩阵 $A_(rtimes m)$ ，其左零空间的维数是 $m-r$ ，相加恰好为 $m$ 。举例来说，三维中与线正交的是二维空间，与面正交的是一维空间。
+看到这就有点迷糊了，捋一捋： $E_(mathitLambda )$ 是 $mathitLambda$ 张成出的有理空间，然后 $F$ 是其正交向量子空间，即*任意从 $mathitLambda$ 和 $F$ 分别抓两个向量出来，其内积都为 $0$* 。
+再然后 $mathitLambda ^-$ 是 $F$ 的一个子格，*注意到 $mathitLambda ^-$ 把 $F$ 所有整数点都框进去了*，这就很有意思了，由上面的定义就不难得出正交格 $mathitLambda ^-$ 是一个 $mathbfZ^n$ 上的完备格。
+至于其维度为何是 $n-d$ ，有个概念叫*正交补*，就是正交空间的维数是刚刚好的，对于列空间维数为 $r$ 的矩阵 $A_(rtimes m)$ ，其左零空间的维数是 $m-r$ ，相加恰好为 $m$ 。举例来说，三维中与线正交的是二维空间，与面正交的是一维空间。
 这篇 paper 习惯用 $E^-$ 表示正交向量子空间，但似乎 $E^bot$ 的写法较为广泛。
 
 在 $mathbfZ^n$ 的正则基上解析每个 $mathbfb_j$ 如下：
@@ -392,14 +392,14 @@ endpmatrix $
 不难看出这个可以等价表示为 $V^Ttimes V$ ，得出的矩阵也显然是对称的。
 这里 $mathitLambda$ 不是一个方阵，故不能直接求出其行列式，那么就应该通过其 Gram 矩阵来求行列式，这里我觉得应该是 $det (mathitLambda )=sqrt(det (Q))$ ，但我不确定。
 
-_定理1_ 令 $mathitLambda$ 为 $mathbfZ^n$ 上的完备格，那么 $det (mathitLambda ^-)=det (mathitLambda )$ 。
+*定理1* 令 $mathitLambda$ 为 $mathbfZ^n$ 上的完备格，那么 $det (mathitLambda ^-)=det (mathitLambda )$ 。
 证明：我们有 $mathitLambda =E_(mathitLambda )sect mathbfZ^n$ 和 $mathitLambda ^-=E_(mathitLambda )^-sect mathbfZ^n$ 。从另一篇论文（我也没读过）我们知道：
 $ det (mathbfZ^n)=fracdet (E_(mathit{Lambda )sect mathbfZ^n)}det ((E_(mathit{Lambda )^-)sect (mathbfZ^n)^*)} $
 其中 $(mathbfZ^n)^_$ 表示 $mathbfZ^n$ 上的极格。但 $det (mathbfZ^n)=1$ （？为什么要说但呢？）且 $(mathbfZ^n)^_=mathbfZ^n$ ，故 $det (mathitLambda ^-)=det (mathitLambda )$ 。
 
-_推论2_ 令 $mathitLambda$ 为 $mathbfZ^n$ 上的格，那么 $det ((mathitLambda ^-)^-)=det (mathitLambda ^-)=det (overline(mathitLambda ))$ 。
+*推论2* 令 $mathitLambda$ 为 $mathbfZ^n$ 上的格，那么 $det ((mathitLambda ^-)^-)=det (mathitLambda ^-)=det (overline(mathitLambda ))$ 。
 
-_定理3_ 令 $(mathbfb_1,...,mathbfb_d)$为格$mathitLambda$ 在 $mathbfZ^n$ 上的一组 LLL 约化基，那么：
+*定理3* 令 $(mathbfb_1,...,mathbfb_d)$为格$mathitLambda$ 在 $mathbfZ^n$ 上的一组 LLL 约化基，那么：
 
 + $det (mathitLambda )<= product ^d_(i=1)||mathbfb_i||<= 2^(d(d-1)/4)det (mathitLambda )$
 + 对任意线性无关的向量 $mathbfx_1,...,mathbfx_tin mathitLambda$ ，当 $1<= j <= t$ 时，有：
@@ -431,14 +431,14 @@ mathbfy.mathbfb\_d
 endpmatrix $
 因此，当且仅当 $p\_(uparrow)(mathbfx)=0$ 时有 $mathbfyin mathitLambda ^-$ 。此外，如果 $||mathbfx||<= c$ ，那么 $p_(uparrow)(mathbfx)=0$ 。
 
-_定理4_ 令 $(mathbfx_1,mathbfx_2,...,mathbfx_n)$ 为格 $mathitOmega$ 的一组 LLL 约化基。若
+*定理4* 令 $(mathbfx_1,mathbfx_2,...,mathbfx_n)$ 为格 $mathitOmega$ 的一组 LLL 约化基。若
 
 $ c>2^((n-1)/2+(n-d)(n-d-1)/4)det (overline(mathitLambda )) $
 则 $(p_(downarrow)(mathbfx\_1),p_(downarrow)(mathbfx\_2),...,p_(downarrow)(mathbfx_(n-d)))$ 为 $overline(mathitLambda )$ 的一组 LLL 约化基。
 
 使用阿达马不等式，我们得到以下算法：
 
-_算法5_ 给定一组 $mathbfZ^n$ 上格 $mathitLambda$ 的基 $(mathbfb_1,mathbfb_2,...,mathbfb_d)$ ，该算法计算一组 $overline(mathitLambda )$ 的LLL约化基。
+*算法5* 给定一组 $mathbfZ^n$ 上格 $mathitLambda$ 的基 $(mathbfb_1,mathbfb_2,...,mathbfb_d)$ ，该算法计算一组 $overline(mathitLambda )$ 的LLL约化基。
 
 + 选取 $c=ceil( 2^((n-1)/2+(n-d)(n-d-1)/4)product ^d_(j=1)||mathbfb_j||)$
 

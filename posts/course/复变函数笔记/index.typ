@@ -17,13 +17,13 @@ $ x="Re"(z),quad y="Im"(z) $
 显然
 $ "Re"(z)=fracz+overline(z)2,quad "Im"(z)=fracz-overline(z)2"i" $
 以正实轴为始边，以 $z(z!= 0)$ 所对应的向量为终边的角称为复数 $z$ 的辐角，记作 $"Arg"\ z$ ，把在 $(-pi ,pi ]$ 之间的辐角称为 $z$ 的主辐角（或主值或者叫辐角主值），记作 $"arg"\ z$ 。
-有个重要点就是辐角要_注意正负_。
+有个重要点就是辐角要*注意正负*。
 
-以及大名鼎鼎的_欧拉公式_：$$e^{\mathrm{i}\theta}=\cos\theta+\mathrm{i}\sin\theta$$
+以及大名鼎鼎的*欧拉公式*：$$e^{\mathrm{i}\theta}=\cos\theta+\mathrm{i}\sin\theta$$
 
-一个没什么名但是_很有用_的公式——棣莫弗公式：$$z^n = \cos n\theta + \mathrm{i}\sin n\theta$$
+一个没什么名但是*很有用*的公式——棣莫弗公式：$$z^n = \cos n\theta + \mathrm{i}\sin n\theta$$
 
-_复数的开方_
+*复数的开方*
 复数开方时，开几次方就有几个结果。
 求 $w=root(n, z)$ 时，令 $w=rho e^("i"phi.alt )$ ，从而 $rho ^n e^("i"nphi.alt ) = z = re^("i"theta )$ ，得到
 $ rho ^n = r,quad nphi.alt = theta + 2kpi ,quad k=0,plus.minus 1,plus.minus 2,dots.c 
@@ -44,29 +44,29 @@ $ w = root(n, r)e^("i"frac(theta + 2kpi , n)) $
 
 === 解析函数的概念与柯西-黎曼方程
 
-_奇点_：如果函数 $f(z)$ 在点 $z_0$ _不解析_，则称 $z_0$ 为 $f(z)$ 的奇点。
-求_有理分式_的奇点时，直接取_分母零点_即可。
+*奇点*：如果函数 $f(z)$ 在点 $z_0$ *不解析*，则称 $z_0$ 为 $f(z)$ 的奇点。
+求*有理分式*的奇点时，直接取*分母零点*即可。
 
 柯西-黎曼方程（C-R方程）：
 $ frac(diff u, diff x) = frac(diff v, diff y),quad frac(diff u, diff y) = -frac(diff v, diff x) $
 
 可导的充要条件： $u(x,y)$ 和 $v(x,y)$ 在点 $x,y$ 可微，且在该点满足C-R方程。
 
-_例_ 证明：柯西-黎曼方程的极坐标形式是
+*例* 证明：柯西-黎曼方程的极坐标形式是
 $ frac(diff u, diff r) = frac(1, r)frac(diff v, diff theta ),quad frac(diff v, diff r) = -frac(1, r)frac(diff r, diff theta ) $
 
 === 初等函数及其解析性
 
-_指数函数_ $z=x+"i"y$ 为任意复数，称 $w=e^z=e^x(cos y+"i"sin y)$ 为指数函数。
+*指数函数* $z=x+"i"y$ 为任意复数，称 $w=e^z=e^x(cos y+"i"sin y)$ 为指数函数。
 
-_对数函数_ 满足方程 $e^w = z$ 的函数 $w="Ln" \ z$ 称为对数函数，且
+*对数函数* 满足方程 $e^w = z$ 的函数 $w="Ln" \ z$ 称为对数函数，且
 $ "Ln"\ z = ln z + 2kpi "i" = ln |z| + "i""arg"\ z + 2kpi "i",quad k=0,plus.minus 1,plus.minus 2,dots.c $
 
-_幂函数_ $w=z^a=e^(a"Ln"\ z)$ 为幂函数。
+*幂函数* $w=z^a=e^(a"Ln"\ z)$ 为幂函数。
 
-_三角函数_ 称 $sin z = frace^("i"z)-e^(-"i"z)2"i"$ 为正弦函数， $cos z = frace^("i"z)+e^(-"i"z)2$ 为余弦函数。
+*三角函数* 称 $sin z = frace^("i"z)-e^(-"i"z)2"i"$ 为正弦函数， $cos z = frace^("i"z)+e^(-"i"z)2$ 为余弦函数。
 
-_双曲函数_ 称 $sinh z = frace^z-e^(-z)2$ 为双曲正弦函数， $cosh z = frace^z+e^(-z)2$ 为双曲余弦函数。
+*双曲函数* 称 $sinh z = frace^z-e^(-z)2$ 为双曲正弦函数， $cosh z = frace^z+e^(-z)2$ 为双曲余弦函数。
 
 === 解析函数与调和函数的关系
 
@@ -74,14 +74,14 @@ _双曲函数_ 称 $sinh z = frace^z-e^(-z)2$ 为双曲正弦函数， $cosh z =
 $ frac(diff ^2phi.alt , diff x^2) + frac(diff ^2phi.alt , diff y^2) = 0 $
 则称 $phi.alt (x,y)$ 为区域 $D$ 的调和函数。
 
-_例_ 验证 $u(x,y)=x^3-3xy^2$ 为调和函数，并求以 $u(x,y)$ 为实部的解析函数 $f(z)$ ，使得 $f("i") = -"i"$ 。
+*例* 验证 $u(x,y)=x^3-3xy^2$ 为调和函数，并求以 $u(x,y)$ 为实部的解析函数 $f(z)$ ，使得 $f("i") = -"i"$ 。
 
-_解_ $u_(xx)=6x$，$u_(yy)=-6y$，故 $u_(xx)+u_(yy)=0$， $u(x,y)$ 为调和函数。下面求虚部 $v(x,y)$ 。
-_法一_：偏积分法
+*解* $u_(xx)=6x$，$u_(yy)=-6y$，故 $u_(xx)+u_(yy)=0$， $u(x,y)$ 为调和函数。下面求虚部 $v(x,y)$ 。
+*法一*：偏积分法
 $ u_x = 3x^2-3y^2 = v_y => v = integral (3x^2-3y^2)"d"y = 3x^2y-y^3 + phi.alt (x) \\
 v_x = 6xy+phi.alt '(x) = -u_y = 6xy => phi.alt (x) = C => v(x,y) = 3x^2y - y^3 + C $
 
-_法二_：全微分法
+*法二*：全微分法
 $ v_y=u_x=3x^2-3y^2,v_x=-u_y=6xy\\
 => "d"v = v_x'"d"x +v_y'"d"y=6xy"d"x + (3x^2-3y^2)"d"y\\
 => v(x,y)=integral _((0,0))^((x,y))6xy"d"x+(3x^2-3y^2)"d"y + C \\
@@ -93,8 +93,8 @@ $ v_y=u_x=3x^2-3y^2,v_x=-u_y=6xy\\
 
 === 复变函数积分的概念
 
-_例_ 计算 $I=integral.cont _(mathitGamma )frac(1, (z-z_0)^n)"d"z$ ，其中 $mathitGamma$ 为包含 $z_0$ 的一条闭曲线。
-_解_ 以 $z_0$ 为圆心 $r$ 为半径作圆，则函数 $f(z)=frac(1, (z-z_0)^n)$ 在 $overline(D)=D+mathitGamma +C^-$上解析，因此
+*例* 计算 $I=integral.cont _(mathitGamma )frac(1, (z-z_0)^n)"d"z$ ，其中 $mathitGamma$ 为包含 $z_0$ 的一条闭曲线。
+*解* 以 $z_0$ 为圆心 $r$ 为半径作圆，则函数 $f(z)=frac(1, (z-z_0)^n)$ 在 $overline(D)=D+mathitGamma +C^-$上解析，因此
 $ I = integral.cont _Cfrac("d"z, (z-z_0)^n)"d"z
 = begincases
 2pi "i", & n = 0 \\
@@ -115,10 +115,10 @@ $ integral.cont _(C_0)f(z)"d"z = sum _(k=1)^nintegral.cont _(C_k)f(z)"d"z $
 
 === 柯西积分公式
 
-_柯西积分公式_ 若函数 $f(z)$ 在简单正向闭曲线 $C$ 所围成的区域 $D$ 内解析，在区域 $D$ 的边界 $C$ 上连续， $z_0$ 是区域 $D$ 内任意一点，则
+*柯西积分公式* 若函数 $f(z)$ 在简单正向闭曲线 $C$ 所围成的区域 $D$ 内解析，在区域 $D$ 的边界 $C$ 上连续， $z_0$ 是区域 $D$ 内任意一点，则
 $ f(z_0) = frac(1, 2pi "i")integral.cont _Cfrac(f(z), z-z_0)"d"z $
 
-_高阶求导公式_ 设 $f(z)$ 在 $D$ 内解析，在 $D$ 的边界 $C$ 上连续， $C$ 为正向简单闭曲线，则 $f^((n))(z)$ 在 $D$ 内解析，且有
+*高阶求导公式* 设 $f(z)$ 在 $D$ 内解析，在 $D$ 的边界 $C$ 上连续， $C$ 为正向简单闭曲线，则 $f^((n))(z)$ 在 $D$ 内解析，且有
 $ f^((n))(z_0)=frac(n!, 2pi "i")integral.cont _Cfrac(f(z), (z-z_0)^(n+1))"d"z, quad forall z_0in D, n=0,1,2,dots.c $
 
 == 解析函数的幂级数表示
@@ -127,11 +127,11 @@ $ f^((n))(z_0)=frac(n!, 2pi "i")integral.cont _Cfrac(f(z), (z-z_0)^(n+1))"d"z, q
 
 复数列收敛和一般的数列收敛定义类似，其充要条件为
 $ lim _(ntoinfinity )a_n=a,quad lim _(ntoinfinity )b_n=b $
-所以判断级数收不收敛就_拆成实部和虚部_然后进行判断。
+所以判断级数收不收敛就*拆成实部和虚部*然后进行判断。
 
 === 幂级数
 
-_收敛半径_ 求法与高数类似，但多个根值法：
+*收敛半径* 求法与高数类似，但多个根值法：
 （1）（比值法） $lim limits_(ntoinfinity )|fraca_(n+1)a_n|=L$
 （2）（根值法） $lim limits_(ntoinfinity )root(n, |a_n|)=L$
 则收敛半径 $R=frac(1, L)$
@@ -142,13 +142,13 @@ _收敛半径_ 求法与高数类似，但多个根值法：
 
 与高数类似，不再赘述。
 
-_四个重要的已知展开_
+*四个重要的已知展开*
 $ frac(1, 1-z) = sum _(n=0)^infinity z^n = 1+z+frac(z^2, 2)+frac(z^3, 3!)+dots.c ,space |z| < 1 \\
 e^z = sum _(n=0)^infinity frac(z^n, n!) = 1+z+frac(z^2, 2!)+frac(z^3, 3!)+dots.c ,space |z| < +infinity \\
 sin z = sum _(n=0)^infinity frac(-1)^nz^(2n+1)(2n+1)! = z-frac(z^3, 3!)+frac(z^5, 5!)-frac(z^7, 7!)+dots.c ,space |z| < +infinity \\
 cos z = sum _(n=0)^infinity frac(-1)^nz^(2n)(2n)! = 1-frac(z^2, 2!)+frac(z^4, 4!)-frac(z^6, 6!)+dots.c ,space |z| < +infinity $
 
-_展开后注意标出收敛圆！_
+*展开后注意标出收敛圆！*
 
 === 洛朗级数
 
@@ -201,22 +201,22 @@ $ "Res"[f(z), infinity ] = -"Res"[f(frac(1, z))cdotfrac(1, z^2), 0] $
 
 ==== 形如 $integral _0^(2pi )R(costheta ,sintheta )"d"theta$ 的积分
 
-_计算方法_：
+*计算方法*：
 
 + 令 $z=e^("i"theta )=costheta +"i"sintheta$ ，则 $"d"theta =frac("d"z, "i"z)$ ， $costheta =frac(z^2+1, 2z)$ ， $sintheta =frac(z^2-1, 2"i"z)$ 。
-+ $integral _0^(2pi )R(costheta ,sintheta )"d"theta =integral.cont _(|z|=1)R(frac(z^2+1, 2z),frac(z^2-1, 2"i"z))frac(1, "i"z)"d"z=integral.cont _(|z|=1)f(z)"d"z=2pi "i"sum limits_k "Res"[f(z),z_k]$ ，其中 $z_k$ 是 $f(z)$ _在 $|z|=1$ 内_的孤立奇点。
++ $integral _0^(2pi )R(costheta ,sintheta )"d"theta =integral.cont _(|z|=1)R(frac(z^2+1, 2z),frac(z^2-1, 2"i"z))frac(1, "i"z)"d"z=integral.cont _(|z|=1)f(z)"d"z=2pi "i"sum limits_k "Res"[f(z),z_k]$ ，其中 $z_k$ 是 $f(z)$ *在 $|z|=1$ 内*的孤立奇点。
 
 ==== 形如 $integral ^(+infinity )_(-infinity )R(x)"d"x$ 的积分
 
-_要求_：
+*要求*：
 
-+ $R(x)=frac(P(x), Q(x))$ ，其中 $P(x)$ 和 $Q(x)$ 为多项式，且 $Q(x)$ 无_实零点_。
++ $R(x)=frac(P(x), Q(x))$ ，其中 $P(x)$ 和 $Q(x)$ 为多项式，且 $Q(x)$ 无*实零点*。
 + 分母 $Q(x)$ 的次数比分子 $P(x)$ 的次数高 $2$ 或以上。
 
-_计算方法_： $integral ^(+infinity )_(-infinity )R(x)"d"x=2pi "i"sum limits_k"Res"[R(z),z_k]$ ， 其中 $z_k$ 为 $R(z)$在_上半平面_内的孤立奇点。
+*计算方法*： $integral ^(+infinity )_(-infinity )R(x)"d"x=2pi "i"sum limits_k"Res"[R(z),z_k]$ ， 其中 $z_k$ 为 $R(z)$在*上半平面*内的孤立奇点。
 
-_例_ 求积分 $I=integral _(-infinity )^(+infinity )frac(x^2-x+2, x^4+10x^2+9)"d"x$ .
-_解_ 首先显然分母零点均为虚数，且分母次数比分子高 $2$ ，故满足条件。
+*例* 求积分 $I=integral _(-infinity )^(+infinity )frac(x^2-x+2, x^4+10x^2+9)"d"x$ .
+*解* 首先显然分母零点均为虚数，且分母次数比分子高 $2$ ，故满足条件。
 
 + 令 $$R(z)=\frac{z^2-z+2}{z^4+10z^2+9}=\frac{z^2-z+2}{(z^2+1)(z^2+9)}$$
 则上半平面内有一阶极点 $z_1="i"$ 和 $z_2=3"i"$ 。
@@ -230,12 +230,12 @@ endaligned $
 
 ==== 形如 $integral ^(+infinity )_(-infinity )R(x)e^("i"ax)"d"x(a>0)$ 的积分
 
-_要求_：
+*要求*：
 
-+ $R(x)=frac(P(x), Q(x))$ ，其中 $P(x)$ 和 $Q(x)$ 为多项式，且 $Q(x)$ 无_实零点_。
++ $R(x)=frac(P(x), Q(x))$ ，其中 $P(x)$ 和 $Q(x)$ 为多项式，且 $Q(x)$ 无*实零点*。
 + 分母 $Q(x)$ 的次数比分子 $P(x)$ 的次数高 $1$ 或以上。
 
-_计算方法_： $integral ^(+infinity )_(-infinity )R(x)e^("i"ax)"d"x=2pi "i"sum limits_k"Res"[R(z)e^("i"az),z_k]$ ， 其中 $z_k$ 为 $R(z)$在_上半平面_内的孤立奇点。
+*计算方法*： $integral ^(+infinity )_(-infinity )R(x)e^("i"ax)"d"x=2pi "i"sum limits_k"Res"[R(z)e^("i"az),z_k]$ ， 其中 $z_k$ 为 $R(z)$在*上半平面*内的孤立奇点。
 
 == Fourier变换
 
@@ -249,11 +249,11 @@ $ f(t) = frac(1, 2pi )integral _(-infinity )^(+infinity )[integral _(-infinity )
 === Fourier 变换
 
 上式中令 $F(omega )=integral _(-infinity )^(+infinity )f(t)e^(-"i"omega t) "d"t$ ，则 $f(t)=frac(1, 2pi )integral _(-infinity )^(+infinity )F(omega )e^("i"omega t)"d"omega$ ，那么这个关于 $omega$ 的函数 $F(omega )$ 就是 $f(t)$ 的傅里叶变换。
-这样一来就可以粗略地理解为傅里叶变换就是把_关于时间的函数_转换为_关于频率的函数_，也就是所谓的时域转换为频域。
+这样一来就可以粗略地理解为傅里叶变换就是把*关于时间的函数*转换为*关于频率的函数*，也就是所谓的时域转换为频域。
 
-_例_ 求矩形脉冲函数 $f(t)=begincases1, & |t|<= a\\0, & |t|> aendcases$ 的傅里叶变换及傅里叶积分表达式。
+*例* 求矩形脉冲函数 $f(t)=begincases1, & |t|<= a\\0, & |t|> aendcases$ 的傅里叶变换及傅里叶积分表达式。
 
-_解_ 经典例题
+*解* 经典例题
 $ beginaligned
 F(omega )=mathscrF[f(t)]&=integral _(-infinity )^(+infinity )f(t)e^(-"i"omega t) "d"t\\
 &=integral _(-a)^(a)e^(-"i"omega t) "d"t\\
@@ -277,7 +277,7 @@ $ integral _(-infinity )^(+infinity )frac(sin ax, x) "d"x=pi ,quad (a>0) $
 
 + 当 $t != 0$ 时， $delta (t)=0$ ；
 + $integral _(-infinity )^(+infinity )delta (t)"d"t = 1$
-可以看出，这是一个直观上矛盾的函数。书本上也说明了它不是一个经典意义上的函数，而是一个_广义函数_，有兴趣可以另行搜索。
+可以看出，这是一个直观上矛盾的函数。书本上也说明了它不是一个经典意义上的函数，而是一个*广义函数*，有兴趣可以另行搜索。
 
 $delta$ 函数有一个性质，就是对任意的连续函数 $f(t)$ ，都有
 $ integral _(-infinity )^(+infinity )f(t)delta (t)"d"t = f(0)
@@ -291,7 +291,7 @@ $ ### Fourier 变换的性质
 ### Fourier 变换的卷积性质
 
 简单来说，就是 $
-f_1(t)*f_2(t) = \int_{-\infty}^{+\infty}f_1(\tau)f_2(t-\tau)\mathrm{d}\tau
+f_1(t)\*f_2(t) = \int_{-\infty}^{+\infty}f_1(\tau)f_2(t-\tau)\mathrm{d}\tau
 $ ## Laplace 变换
 
 ### Laplace 变换的概念

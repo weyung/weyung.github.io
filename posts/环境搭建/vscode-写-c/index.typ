@@ -23,13 +23,13 @@
 
 === 注意事项
 
-+ 安装 gcc 时_取消勾选_ `Check for updated files on the TDM-GCC server`。
-+ 安装 VSCode 时在附加任务中“其他”中的_四项全部勾选_，即将用 Code 打开加入文件和文件夹添加入右键菜单中，并注册为受支持的文件类型的编辑器。
-+ 不推荐更改_默认文件夹_（别抠这点空间了）。
++ 安装 gcc 时*取消勾选* `Check for updated files on the TDM-GCC server`。
++ 安装 VSCode 时在附加任务中“其他”中的*四项全部勾选*，即将用 Code 打开加入文件和文件夹添加入右键菜单中，并注册为受支持的文件类型的编辑器。
++ 不推荐更改*默认文件夹*（别抠这点空间了）。
 
 === 普通配置
 
-安装好 VSCode 和 gcc 后，_重启电脑_，运行 VSCodeCppHelper ，如果你对在哪创建文件夹没有好的选择，就把 VSCodeCppHelper 放 C 盘随便一个地方里运行，然后傻瓜式 `enter` 。
+安装好 VSCode 和 gcc 后，*重启电脑*，运行 VSCodeCppHelper ，如果你对在哪创建文件夹没有好的选择，就把 VSCodeCppHelper 放 C 盘随便一个地方里运行，然后傻瓜式 `enter` 。
 
 === 机房里配置
 
@@ -53,7 +53,7 @@ _更新：如今 VSCodeCppHelper 已经支持在没检测到环境变量的情�
     }
     ```
 
-+ 单击左侧菜单中的运行并点击运行和调试，选择 _C++(GDB/LLDB)_ 。
++ 单击左侧菜单中的运行并点击运行和调试，选择 *C++(GDB/LLDB)* 。
 + 此时 VSCode 会在你的根目录下新建 `.vscode` 文件夹，此文件夹中用于存放 VSCode 的相关配置文件，打开 `launch.json` 替换或修改为如下内容：
 
     ```json
@@ -212,7 +212,7 @@ _更新：如今 VSCodeCppHelper 已经支持在没检测到环境变量的情�
         {
           "name": "Win32",
           "includePath": [
-            "${workspaceFolder}/**"
+            "${workspaceFolder}/\*\*"
           ],
           "defines": [
             "_DEBUG",
@@ -226,8 +226,8 @@ _更新：如今 VSCodeCppHelper 已经支持在没检测到环境变量的情�
           "macFrameworkPath": [],
           "browse": {
             "path": [
-              "C:/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/10.3.0/include/*",
-              "C:/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/10.3.0/include/c++/*"
+              "C:/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/10.3.0/include/\*",
+              "C:/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/10.3.0/include/c++/\*"
             ]
           }
         }
@@ -248,10 +248,10 @@ VSCode 中默认终端常为 PowerShell ，Windows 10 中 PowerShell 默认编�
 虽说 VSCode 好，但有几点注意的，被坑过。。。
 ]
 
-+ 不要直接_在文件夹双击打开 .c 文件_启动 VSCode
-+ 不要给 .c 文件起_中文名_
-+ 不要在_其他文件夹_（除了你最初配置好的文件夹，比如桌面）中启动 VSCode
-+ 以上配置无法进行_多文件编译_
++ 不要直接*在文件夹双击打开 .c 文件*启动 VSCode
++ 不要给 .c 文件起*中文名*
++ 不要在*其他文件夹*（除了你最初配置好的文件夹，比如桌面）中启动 VSCode
++ 以上配置无法进行*多文件编译*
 + 以上说法仅针对初学者，均不严谨
 
 == 参考

@@ -25,13 +25,13 @@
 
 ==== 4. 偏导数与全微分
 
-_例_（2020-2021第二学期期末，1）确定实数 $alpha$ 的范围，使函数 $f(x,y)=\left\\{
+*例*（2020-2021第二学期期末，1）确定实数 $alpha$ 的范围，使函数 $f(x,y)=\left\\{
 \begin{aligned}
     (x^2+y^2)^\alpha\sin\frac{1}{x^2+y^2},x^2+y^2\neq0 \\\\
     0,x^2+y^2\neq0
 \end{aligned}
 \right.$在$(0,0)$ 处可微。
-_解_
+*解*
 $ lim _(xarrow0)frac(f(x,0)-f(0,0), x-0)=lim _(xarrow0)fracx^(2alpha )sinfrac(1, x^2)x=lim _(xarrow0)x^(2alpha -1)sinfrac(1, x^2) $
 当 $2alpha -1>0$ 时，极限为 $0$ ，即 $f_x'(0,0)=0$ ，此时类似地，有 $f_y'(0,0)=0$
 
@@ -47,8 +47,8 @@ $ lim _(xarrow0)frac(f(x,0)-f(0,0), x-0)=lim _(xarrow0)fracx^(2alpha )sinfrac(1,
 
 先用 $f_x'=f_y'=0$ 求出稳定点，再令 $A=f_(xx),B=f_(xy),C=f_(yy)$ ，仅 $B^2 < AC$ 时可以确定极值，此时 $A>0$ 就是极小值， $A < 0$ 就是极大值。与二元函数类似。
 
-_例_（2021-2022第二学期期末，4）求多元函数 $f(x,y)=xe^(-frac(x^2+y^2, 2))$ 的极值。
-_解_ $f_x'=e^(-frac(x^2+y^2, 2))(1-x^2),f_y'=e^(-frac(x^2+y^2, 2))(-xy)$ ，令 $f_x'=f_y'=0$ ，得到 $(-1,0)$ 和 $(1,0)$ 两个稳定点。令 $A=f_(xx)=e^(-frac(x^2+y^2, 2))(x^3-3x),B=f_(xy)=e^(-frac(x^2+y^2, 2))(-y+x^2y),C=f_(yy)=e^(-frac(x^2+y^2, 2))(-x+xy^2)$ ，代入 $(1,0)$ 得到 $A=-2e^(-frac(1, 2))<0$，$B=0$
+*例*（2021-2022第二学期期末，4）求多元函数 $f(x,y)=xe^(-frac(x^2+y^2, 2))$ 的极值。
+*解* $f_x'=e^(-frac(x^2+y^2, 2))(1-x^2),f_y'=e^(-frac(x^2+y^2, 2))(-xy)$ ，令 $f_x'=f_y'=0$ ，得到 $(-1,0)$ 和 $(1,0)$ 两个稳定点。令 $A=f_(xx)=e^(-frac(x^2+y^2, 2))(x^3-3x),B=f_(xy)=e^(-frac(x^2+y^2, 2))(-y+x^2y),C=f_(yy)=e^(-frac(x^2+y^2, 2))(-x+xy^2)$ ，代入 $(1,0)$ 得到 $A=-2e^(-frac(1, 2))<0$，$B=0$
 
 === 第七章 重积分
 
@@ -56,11 +56,11 @@ _解_ $f_x'=e^(-frac(x^2+y^2, 2))(1-x^2),f_y'=e^(-frac(x^2+y^2, 2))(-xy)$ ，令
 
 ==== 2. 二重积分的计算
 
-_例_（2021-2022第二学期期末，2）求 $I=integral _0^1"d"xintegral _0^(sqrt(1-x^2))(x^2+y^2)"d"y$
-_解_ 作极坐标变换 $x=rcostheta ,y=rsintheta$，则
+*例*（2021-2022第二学期期末，2）求 $I=integral _0^1"d"xintegral _0^(sqrt(1-x^2))(x^2+y^2)"d"y$
+*解* 作极坐标变换 $x=rcostheta ,y=rsintheta$，则
 $ I = integral _0^(frac(pi , 4))"d"theta integral _0^1 rdot r"d"r = frac(pi , 12) $
-_例_（2017-2018第二学期期末，1）计算二重积分 $integral.double _Dfrac(|y|, x^2+y^2)"d"x"d"y$，其中 $D$ 为圆环区域 $1<= x^2+y^2<= 4$。
-_解_ 作极坐标变换，有
+*例*（2017-2018第二学期期末，1）计算二重积分 $integral.double _Dfrac(|y|, x^2+y^2)"d"x"d"y$，其中 $D$ 为圆环区域 $1<= x^2+y^2<= 4$。
+*解* 作极坐标变换，有
 $ I = integral _0^(2pi )"d"theta integral _1^2 frac(|rsintheta |, r^2)dot "d"r = integral _0^(2pi )|sintheta |"d"theta integral _1^2"d"r = 4integral _0^(frac(pi , 2))sintheta "d"theta integral _1^2"d"r = 4 $
 
 ==== 3. 三重积分的概念与计算
@@ -99,15 +99,15 @@ or integral _Gamma Pdx+Qdy+Rdz=integral _L(Pcosalpha +Qcosbeta +Rcosgamma )ds $
 
 就一道式子：
 $ ∮_L Pdx+Qdy=∬limits_D( frac( diff Q , diff x )- frac( diff P , diff y ))dxdy\\ $
-条件是函数 $P$ 和 $Q$ 在平面区域 $D$ 上有连续的偏导数 #strike[，这个条件一般不管，] 主要是_边界曲线 $L$ 闭合_就行。
-格林公式可以将_第二类曲线积分_化为简单的二重积分，非常地不错。
+条件是函数 $P$ 和 $Q$ 在平面区域 $D$ 上有连续的偏导数 #strike[，这个条件一般不管，] 主要是*边界曲线 $L$ 闭合*就行。
+格林公式可以将*第二类曲线积分*化为简单的二重积分，非常地不错。
 #quote[
 PS:以下这些符号的 Latex 支持不是很好，直接用字符了。
 $ ∮ \ ∯ \ ∰ \ ∱ \ ∲ \ ∳ $
 ]
 
-_例_（2020-2021第二学期期末，2）计算曲线积分 $∮_L(xy^2-sin y)"d"y-(cos x+x^2y)"d"x$ ，其中 $L$ 为圆周 $x^2+y^2=4$ ，积分方向为沿 $L$ 逆时针方向。
-_解_ $L$ 为闭合曲线，且 $P,Q$ 在 $L$ 围成的 $D$ 上偏导也连续，所以可以用格林公式：
+*例*（2020-2021第二学期期末，2）计算曲线积分 $∮_L(xy^2-sin y)"d"y-(cos x+x^2y)"d"x$ ，其中 $L$ 为圆周 $x^2+y^2=4$ ，积分方向为沿 $L$ 逆时针方向。
+*解* $L$ 为闭合曲线，且 $P,Q$ 在 $L$ 围成的 $D$ 上偏导也连续，所以可以用格林公式：
 $ beginaligned
 I&=integral.double limits_D[y^2-(-x^2)]"d"x"d"y \\
 &=integral _0^(2pi )"d"theta integral _0^2r^2dot r"d"r \\
@@ -130,11 +130,11 @@ $ integral.double limits_Sigma P"d"y"d"z+Q"d"x"d"z+R"d"x"d"y=integral.double lim
 
 ==== 6. 高斯公式与斯托克斯公式
 
-_高斯公式_：
+*高斯公式*：
 $ ∯ limits_Sigma P"d"y"d"z+Q"d"x"d"z+R"d"x"d"y=integral.triple limits_Omega (frac(diff P, diff x)+frac(diff Q, diff y)+frac(diff R, diff z))"d"x"d"y"d"z \\
 or ∯ limits_Sigma (P"cos"alpha +Q"cos"beta +R"cos"gamma )"d"S=integral.triple limits_Omega (frac(diff P, diff x)+frac(diff Q, diff y)+frac(diff R, diff z))"d"x"d"y"d"z $
-_例_（2021-2022第二学期期末，3）计算曲面积分 $∯ limits_Sigma (x-z)"d"y"d"z+z"d"x"d"y$ ，其中 $Sigma$ 是由 $z=x^2+2y^2$ 与 $z=1$ 所围成立体表面的外侧。
-_解_ $Sigma$ 是封闭曲面，直接上高斯公式，有
+*例*（2021-2022第二学期期末，3）计算曲面积分 $∯ limits_Sigma (x-z)"d"y"d"z+z"d"x"d"y$ ，其中 $Sigma$ 是由 $z=x^2+2y^2$ 与 $z=1$ 所围成立体表面的外侧。
+*解* $Sigma$ 是封闭曲面，直接上高斯公式，有
 $ I=integral.triple limits_Omega (1+1)"d"x"d"y"d"z=2integral.triple limits_Omega "d"V $
 作柱面坐标变换 $x=rcostheta ,y=frac(rsintheta , sqrt2)$ ，得
 $ I=integral _0^(2pi )"d"theta integral _0^1"d"rintegral _0^1frac(r, sqrt(2))dz=frac(pi , sqrt2) $
@@ -159,7 +159,7 @@ endaligned
 . $
 此时 $"d"V=r^2sinphi.alt "d"r"d"theta "d"phi.alt$
 
-_斯托克斯公式_：
+*斯托克斯公式*：
 $ ∮_L P"d"x+Q"d"y+R"d"z=integral.double limits_Sigma 
 beginvmatrix
 "d"y"d"z & "d"x"d"z & "d"x"d"y \\
@@ -178,9 +178,9 @@ endvmatrix
 
 ==== 1. 基本概念
 
-所谓常微分方程，就是区别于偏微分方程，未知函数是_一元函数_，而不是多元。
+所谓常微分方程，就是区别于偏微分方程，未知函数是*一元函数*，而不是多元。
 常微分方程的阶数即肉眼可见的导数的最高阶，如 $y'''+2(y'')^3+y^2+x^5$ 就是三阶常微分方程。
-_通解_的概念：$n$ 阶常微分方程有解 $y=phi.alt (x;C_1,dots.c ,C_n)$ ，其中 $C_1,dots.c ,C_n$ 是 $n$ 个独立的任意常数，则称其为方程的一个通解；相对的，就有特解的概念，即方程的任何一个不包含任意常数的解。用数学语言表达独立性，有雅可比行列式不为零，即
+*通解*的概念：$n$ 阶常微分方程有解 $y=phi.alt (x;C_1,dots.c ,C_n)$ ，其中 $C_1,dots.c ,C_n$ 是 $n$ 个独立的任意常数，则称其为方程的一个通解；相对的，就有特解的概念，即方程的任何一个不包含任意常数的解。用数学语言表达独立性，有雅可比行列式不为零，即
 $ fracD(phi.alt ,phi.alt ',dots.c ,phi.alt ^(n-1))D(C_1,C_2,dots.c ,C_n)!= 0 $
 
 举个例子，经典方程 $y''+y=0$ 有解 $y=C_1"sin"x+C_2"cos"x$ ，则雅可比行列式为
@@ -204,17 +204,17 @@ endvmatrix
 形如
 $ frac("d"y, "d"x)+P(x)y=Q(x) $
 的一阶微分方程就叫一阶线性微分方程。
-一般套公式就行，若 $Q(x)equiv 0$ ，则为齐次方程，直接积分有通解 $y=C"e"^(-integral P(x)"d"x)$ ；若为非齐次方程则用_常数变易法_求得通解
+一般套公式就行，若 $Q(x)equiv 0$ ，则为齐次方程，直接积分有通解 $y=C"e"^(-integral P(x)"d"x)$ ；若为非齐次方程则用*常数变易法*求得通解
 $ y="e"^(-integral P(x)"d"x)[integral Q(x)"e"^(integral P(x)"d"x)dx+C] $
-然后还有_贝努里方程_（当然贝努利方程也是它，音译嘛）长这样：
+然后还有*贝努里方程*（当然贝努利方程也是它，音译嘛）长这样：
 $ frac("d"y, "d"x)+P(x)y=Q(x)y^n\ (n!= 0,1) $
 作变量代换 $z=y^(1-n)$ ，可化为一阶线性方程
 $ frac("d"z, "d"x)+(1-n)P(x)z=(1-n)Q(x) $
 
 ===== 2.4 全微分方程与积分因子
 
-_例_（2021-2022第二学期期末，4）求微分方程 $x"d"y+(y+x^2)"d"x=0$ 的通解。
-_解_ $frac(diff P, diff y)=1=frac(diff Q, diff x)$，且它们在全平面上连续，故方程为全微分方程。下求原函数 $u(x,y)$ ，由 $frac(diff u, diff x)=P(x,y)=y+x^2$ ，对 $x$ 积分得
+*例*（2021-2022第二学期期末，4）求微分方程 $x"d"y+(y+x^2)"d"x=0$ 的通解。
+*解* $frac(diff P, diff y)=1=frac(diff Q, diff x)$，且它们在全平面上连续，故方程为全微分方程。下求原函数 $u(x,y)$ ，由 $frac(diff u, diff x)=P(x,y)=y+x^2$ ，对 $x$ 积分得
 $ u(x,y)=xy+frac(x^3, 3)+phi.alt (y) $
 上式对 $y$ 求偏导得
 $ frac(diff u, diff y)=x+phi.alt '(y) $
@@ -229,8 +229,8 @@ $ xy+frac(x^3, 3)=C $
 
 ===== 2.5 可降阶的二阶微分方程
 
-_例_（2021-2022第二学期期末，5）求微分方程 $y''=y'dot y$ 的通解。
-_解_ 方程中不显含变量 $x$ ，令 $p=y'$ ，并将 $y$ 看作自变量，有 $y''=pfrac("d"p, "d"y)$ ，代入有
+*例*（2021-2022第二学期期末，5）求微分方程 $y''=y'dot y$ 的通解。
+*解* 方程中不显含变量 $x$ ，令 $p=y'$ ，并将 $y$ 看作自变量，有 $y''=pfrac("d"p, "d"y)$ ，代入有
 $ pfrac("d"p, "d"y)=pdot y $
 若 $p=y'=0$ ，则通解为 $y=C$ ，若 $p!= 0$ ，则有
 $ beginaligned
@@ -249,8 +249,8 @@ endaligned $
 这里面的常量 $C$ 变得我也很迷糊，但是结果代进去是对的，就先这样吧（）
 ]
 
-_例_（2020-2021第二学期期末，5）求微分方程 $frac("d"^2y, "d"x^2)=(frac("d"y, "d"x))^3+frac("d"y, "d"x)$ 的通解。
-_解_ 令 $p=y'$ ，有 $y''=pfrac("d"p, "d"y)$ ，代入有
+*例*（2020-2021第二学期期末，5）求微分方程 $frac("d"^2y, "d"x^2)=(frac("d"y, "d"x))^3+frac("d"y, "d"x)$ 的通解。
+*解* 令 $p=y'$ ，有 $y''=pfrac("d"p, "d"y)$ ，代入有
 $ pfrac("d"p, "d"y)=(p^3+p) \\
 frac(1, p^2+p)"d"p="d"y \\
 arctan p=y+C_1 $
@@ -281,8 +281,8 @@ $P_n(x)e^(alpha x)(acosbeta x+bsinbeta x)$ | $alpha plus.minus "i"beta$ 不是/�
 
 咋一看很多，其实挺有规律，比如多一个根就多乘一个 $x$ ，原来的系数变成待定的。
 
-_例_（2021-2022第二学期期末，6）求微分方程 $y''+y=e^(3x)(x+2)$ 的通解。
-_解_ 先求对应齐次微分方程 $y''+y=0$ 的通解，特征方程 $lambda ^2+1=0$ 的特征根 $lambda _(1,2)=plus.minus "i"$ ，故通解形式为
+*例*（2021-2022第二学期期末，6）求微分方程 $y''+y=e^(3x)(x+2)$ 的通解。
+*解* 先求对应齐次微分方程 $y''+y=0$ 的通解，特征方程 $lambda ^2+1=0$ 的特征根 $lambda _(1,2)=plus.minus "i"$ ，故通解形式为
 $ y(x)=e^(ax)(C_1cosbeta x+C_2sinbeta x)=C_1cos x+C_2cos x $
 其中 $C_1,C_2$ 为任意常数
 再用待定系数法求特解，“3“不是特征根，故设方程有特解 $y=(Ax+B)e^(3x)$ ，则
@@ -296,8 +296,8 @@ $ y''+y=(10Ax+6A+10B)e^(3x)=e^(3x)(x+2) $
 $ y(x)=C_1cos x+C_2cos x+(frac(1, 10)x+frac(7, 50))e^(3x) $
 其中 $C_1,C_2$ 为任意常数。
 
-_例_（2020-2021第二学期期末，6）求微分方程 $frac("d"^2y, "d"x^2)+y=e^x+cos x$ 的通解。
-_解_ 特征方程 $lambda ^2+1=0$ 的特征根 $lambda _(1,2)=plus.minus "i"$ ，故齐次方程通解形式为
+*例*（2020-2021第二学期期末，6）求微分方程 $frac("d"^2y, "d"x^2)+y=e^x+cos x$ 的通解。
+*解* 特征方程 $lambda ^2+1=0$ 的特征根 $lambda _(1,2)=plus.minus "i"$ ，故齐次方程通解形式为
 $ y(x)=e^(ax)(C_1cosbeta x+C_2sinbeta x)=C_1cos x+C_2cos x $
 这个方程的非齐次项由两项组成，就先分别求两项的特解，再相加，就是原方程的特解。
 对方程 $y''+y=e^x$ 不难求得特解 $y=frac(1, 2)e^x$ ，方程 $y''+y=cos x$ 的特解 $y=frac(1, 2)xcos x$ ，故原方程的特解为
@@ -323,22 +323,22 @@ $lim limits_(ntoinfinity )fracu_(n+1)u_n$ 小于 1 就收敛，大于 1 就发�
 与上面类似，$lim limits_(ntoinfinity )root(n, u_n)$ 小于 1 就收敛，大于 1 就发散，等于 1 时敛散性不定
 + 对数审敛法
 
-_例_（2021-2022第二学期期末，10-1）判断数项级数 $sum limits_(n=1)^(infinity )3^nsin (frac(pi , 4^n))$ 的敛散性。
-_解_ 放缩一下再比较判别法
+*例*（2021-2022第二学期期末，10-1）判断数项级数 $sum limits_(n=1)^(infinity )3^nsin (frac(pi , 4^n))$ 的敛散性。
+*解* 放缩一下再比较判别法
 $ sum _(n=1)^(infinity )3^nsin (frac(pi , 4^n))<sum _(n=1)^(infinity )3^n(frac(pi , 4^n))=pi sum _(n=1)^(infinity )(frac(3, 4))^n $
 由于 $sum _(n=1)^(infinity )(frac(3, 4))^n$ 收敛，故原级数收敛。
 
 ==== 3. 任意项级数
 
-_莱布尼茨判别法_ 若交错级数满足下列条件：
+*莱布尼茨判别法* 若交错级数满足下列条件：
 $ (1)u_ngeqslant u_(n+1); \\
 (2)lim _(narrowinfinity )=0, $
 则级数收敛。
-_狄利克雷判别法_ 考虑级数
+*狄利克雷判别法* 考虑级数
 $ sum _(k=1)^(infinity )a_kb_k $
 若序列 $a_k$ 单调且 $lim limits_(karrowinfinity )a_k=0$ ，又级数 $sum limits_(n=1)^(infinity )b_k$ 的部分和序列有界，则级数 $sum limits_(k=1)^(infinity )a_kb_k$ 收敛。
-_例_（2021-2022第二学期期末，10-2）判断数项级数 $sum limits_(n=2)^(infinity )frac(cos (2n), ln n)$ 的敛散性。
-_解_ 取 $a_k=frac(1, ln n)$ ，易证得 $a_k$ 单调且 $lim limits_(karrowinfinity )a_k=0$ ，下证级数 $sum limits_(n=2)^(infinity )cos (2n)$ 的部分和序列有界：
+*例*（2021-2022第二学期期末，10-2）判断数项级数 $sum limits_(n=2)^(infinity )frac(cos (2n), ln n)$ 的敛散性。
+*解* 取 $a_k=frac(1, ln n)$ ，易证得 $a_k$ 单调且 $lim limits_(karrowinfinity )a_k=0$ ，下证级数 $sum limits_(n=2)^(infinity )cos (2n)$ 的部分和序列有界：
 $ beginaligned
 |sum _(k=2)^(n)cos (2k)|&=|cos 4+cos 6+dots.c +cos 2n| \\
 &=frac(1, sin 1)|cos 4sin 1+cos 6sin 1+dots.c +cos 2nsin 1| \\
@@ -348,14 +348,14 @@ $ beginaligned
 endaligned $
 故级数 $sum limits_(n=2)^(infinity )frac(cos (2n), ln n)$ 收敛。
 #quote[
-_积化和差公式_
+*积化和差公式*
 $ sin alpha cos beta ={sin (alpha +beta )+sin (alpha -beta ) over 2} \\
  cos alpha sin beta ={sin (alpha +beta )-sin (alpha -beta ) over 2} \\
  cos alpha cos beta ={cos (alpha +beta )+cos (alpha -beta ) over 2} \\
  sin alpha sin beta ={cos (alpha +beta )-cos (alpha -beta ) over -2} $
 ]
 
-_阿贝尔判别法_
+*阿贝尔判别法*
 （1）无穷数列 $a_k$ 单调有界
 （2）级数 $sum limits_(k=1)^infinity b_k$ 收敛
 则级数 $sum limits_(k=1)^infinity a_kb_k$ 收敛。
@@ -366,44 +366,44 @@ _阿贝尔判别法_
 
 ===== 4.2 函数项级数一致收敛的必要条件与判别法
 
-_强级数判别法_ 若函数项级数 $sum limits_(n=1)^infinity u_n(x)$ 的一般项满足：
+*强级数判别法* 若函数项级数 $sum limits_(n=1)^infinity u_n(x)$ 的一般项满足：
 $ |u_n(x)|leqslant a_n,quad forall xin X,n=1,2,dots.c , $
 且正项级数 $sum limits_(n=1)^infinity a_n$ 收敛，则该函数项级数在 $X$ 上一致收敛。
 
-_狄利克雷判别法_ 与数项级数的狄利克雷判别法类似。
+*狄利克雷判别法* 与数项级数的狄利克雷判别法类似。
 （1）在 $X$ 中任意取定一个 $x$ ，数列 $a_n(x)$ 对 $n$ 单调，且函数序列 $a_n(x)$ 在 $X$ 上一致收敛于 $0$
 （2）函数项级数 $sum limits_(n=1)^infinity b_n(x)$ 的部分和序列 $B_n(x)$ 在 $X$ 上一致有界
 则 $sum limits_(n=1)^infinity a_n(x)b_n(x)$ 在 $X$ 上一致收敛。
 
-_阿贝尔判别法_ 与数项级数的阿贝尔判别法类似。
+*阿贝尔判别法* 与数项级数的阿贝尔判别法类似。
 （1）在 $X$ 中任意取定一个 $x$ ，数列 $a_n(x)$ 单调，又函数序列 $a_n(x)$ 在 $X$ 上一致有界
 （2）级数 $sum limits_(n=1)^infinity b_n(x)$ 在 $X$ 上一致收敛
 则级数 $sum limits_(n=1)^infinity a_n(x)b_n(x)$ 在 $X$ 上一致收敛。
 
 ===== 4.3 一致收敛级数的性质
 
-_和函数的连续性_ 设函数项级数 $sum limits_(n=1)^infinity u_n(x)$ 在 $[a,b]$ 上一致收敛，且其每一项 $u_n(x)$ 在 $[a,b]$ 上都连续，则其和函数 $S(x)=sum limits_(n=1)^infinity u_n(x)$ 在 $[a,b]$ 上也连续。
+*和函数的连续性* 设函数项级数 $sum limits_(n=1)^infinity u_n(x)$ 在 $[a,b]$ 上一致收敛，且其每一项 $u_n(x)$ 在 $[a,b]$ 上都连续，则其和函数 $S(x)=sum limits_(n=1)^infinity u_n(x)$ 在 $[a,b]$ 上也连续。
 
-_例_（2021-2022第二学期期末，11）考虑函数项级数 $sum limits_(n=2)^(infinity )frac(1, n^2sqrt x)$ ，证明：
+*例*（2021-2022第二学期期末，11）考虑函数项级数 $sum limits_(n=2)^(infinity )frac(1, n^2sqrt x)$ ，证明：
 （1）级数在 $(0,1)$ 上收敛
 （2）级数在 $(0,1)$ 上不一致收敛
 （3）级数的和函数 $S(x)$ 在 $(0,1)$ 上连续
-_解_ （1）就是数项级数，随便证。
+*解* （1）就是数项级数，随便证。
 （2）存在点列 $x_n=frac(1, n^4)in (0,1)(n=1,2,dots.c )$ 使 $u_n(x_n)=1$
 
 ==== 5. 幂级数
 
-幂级数是_函数项级数的一种_，长这样：
+幂级数是*函数项级数的一种*，长这样：
 $ a_0+a_1(x-x_0)+a_2(x-x_0)^2+dots.c +a_n(x-x_0)^n+dots.c $
 
 ===== 5.1 幂级数的收敛半径
 
 $ lim _(narrowinfinity )|fraca_(n+1)a_(n)|=l $
-那么级数 $sum limits^n_(n=0)a_nx^n$ 的_收敛半径_ $R=1/l$ ，当然直接反着除直接出也行。
-_收敛区间_就是 $(-R,R)$ ，_收敛域_就根据端点的收敛情况再修正下区间闭不闭合。
+那么级数 $sum limits^n_(n=0)a_nx^n$ 的*收敛半径* $R=1/l$ ，当然直接反着除直接出也行。
+*收敛区间*就是 $(-R,R)$ ，*收敛域*就根据端点的收敛情况再修正下区间闭不闭合。
 
-_例_（2021-2022第二学期期末，8）求幂级数 $sum limits^infinity _(n=0)frac(1, n+1)x^n$ 的收敛半径与和函数。
-_解_
+*例*（2021-2022第二学期期末，8）求幂级数 $sum limits^infinity _(n=0)frac(1, n+1)x^n$ 的收敛半径与和函数。
+*解*
 $ lim _(narrowinfinity )|frac(a_n, a_(n+1))|=lim _(narrowinfinity )|frac(n, n+1)|=1 $
 故收敛半径 $R=1$ ，收敛区间 $(-1,1)$ 。
 然后讨论两个端点，当 $x=1$ 时，原级数发散；当 $x=-1$ 时，原级数收敛，故收敛域为 $[-1,1)$
@@ -413,7 +413,7 @@ $ [xS(x)]'=sum limits^infinity _(n=0)x^n=frac(1, 1-x) $
 $ xS(x)=integral ^x_0frac(1, 1-x)"d"x=-ln (1-x),\ xin [-1,1) $
 故当 $x!= 0$ 时，$S(x)=-frac(1, x)ln (1-x)$ ；当 $x=0$ 时，肉眼可见 $S(x)=1$ 。
 #quote[
-这里有个小 trick ，就是_幂级数里认定 $0^0=1$_ ，至于为什么是这样，网上众说纷纭，读者可自行查阅。
+这里有个小 trick ，就是*幂级数里认定 $0^0=1$* ，至于为什么是这样，网上众说纷纭，读者可自行查阅。
 ]
 
 ===== 5.2 幂级数的性质
@@ -434,8 +434,8 @@ ln (1+x)=x-frac(x^2, 2)+frac(x^3, 3)-frac(x^4, 4)+dots.c +(-1)^(n-1)frac(x^n, n)
 (1+x)^alpha =1+alpha x+frac(alpha (alpha -1), 2!)x^2+frac(alpha (alpha -1)(alpha -2), 3!)x^3+dots.c +frac(alpha (alpha -1)(alpha -2)dots.c (alpha -n+1), n!)x^n+R_n(x) $
 关于最后这个 $R_n(x)$ ，一堆证明后得出，当 $xin (-1,1)$ 时有 $lim limits_(narrow infinity )=0$
 
-_例_（2021-2022第二学期期末，10）求函数 $y=frac(x, 4+x^2)$ 在 $x=0$ 处的泰勒级数，并指出其收敛域。
-_解_ $y=frac(x, 4)cdotfrac(1, 1+(fracx){2)^2}$，右边显然就是 $arctan x$ 导数的形式了，故我们由 $arctan x$ 的泰勒展开式逐项求导有
+*例*（2021-2022第二学期期末，10）求函数 $y=frac(x, 4+x^2)$ 在 $x=0$ 处的泰勒级数，并指出其收敛域。
+*解* $y=frac(x, 4)cdotfrac(1, 1+(fracx){2)^2}$，右边显然就是 $arctan x$ 导数的形式了，故我们由 $arctan x$ 的泰勒展开式逐项求导有
 $ frac(1, 1+x^2)=(arctan x)'=1-x^2+x^4-x^6+dots.c +(-1)^(n)x^(2n)+dots.c $
 变形得
 $ frac(1, 1+(fracx){2)^2}=1-frac(x^2, 4)+frac(x^4, 16)-frac(x^6, 64)+dots.c +(-1)^(n)fracx^(2n)2^(2n)+dots.c $

@@ -50,7 +50,7 @@ resultSet = ps.executeQuery();
 
 可以看到，`conn.PreparedStatement()` 函数直接把 SQL 语句编译好了，后面只是传参 + 执行。
 可能读者咋一眼看上去会觉得没什么区别，我拿大家都熟悉的场景来举个例子：
-相信大家都是接触过 C 语言的，没有预编译的 SQL 就相当于你可以操作 `*.c` 文件给编译器编译并执行，可以把 `int a=?;` 填成 `int a=1; system("rm -rf /");`，而预编译的 SQL 就相当于编译了一段 `int a=0;scanf("%d", &a);`，现在程序只负责接收参数并执行，根本无法编译恶意代码。
+相信大家都是接触过 C 语言的，没有预编译的 SQL 就相当于你可以操作 `\*.c` 文件给编译器编译并执行，可以把 `int a=?;` 填成 `int a=1; system("rm -rf /");`，而预编译的 SQL 就相当于编译了一段 `int a=0;scanf("%d", &a);`，现在程序只负责接收参数并执行，根本无法编译恶意代码。
 
 == CTFshow 刷题记录
 
@@ -76,7 +76,7 @@ $sql = "select username,password from user where username !='flag' and id = '".$
 ' union select database(),version(),user()--+
 ```
 
-结果分别为 `ctfshow_web`, `10.3.18-MariaDB`, `root@localhost`
+结果分别为 `ctfshow_web`, `10.3.18-MariaDB`, `root\@localhost`
 查表：
 
 ```sql

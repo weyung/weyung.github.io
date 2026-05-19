@@ -20,17 +20,17 @@
 
 论文中写到 $ed=1modfrac((p-1)(q-1), 2)$ （这个我没见过），然后 $gcd (p-1,frac(q-1, 2))=1$ ，再然后由CRT给出 $ed=1mod p-1$ 且 $ed=1modfrac(q-1, 2)$ 。
 为了加速 RSA 的解密，有人想用小解密指数 $d$ ，然而 Wiener 先生指出 $d< frac(1, 3)N^(frac(1, 4))$ 时可以在多项式时间内爆破出来。
-虽然不能使用小解密指数 $d$ ，但还有一个方法，就是计算 $d_p=dmod p-1$ 和 $d_q=dmod frac(q-1, 2)$ 是比较小的，这样一个 $d$ 称为_小CRT指数_。为了对消息 $m$ 进行签名，可以计算 $m^(d_p)mod p$ 和 $m^(d_q)mod q$ ，在之前，由于 $d$ 看起来是比较大的，所以也没法攻击（意思应该就是现在可以了）。
+虽然不能使用小解密指数 $d$ ，但还有一个方法，就是计算 $d_p=dmod p-1$ 和 $d_q=dmod frac(q-1, 2)$ 是比较小的，这样一个 $d$ 称为*小CRT指数*。为了对消息 $m$ 进行签名，可以计算 $m^(d_p)mod p$ 和 $m^(d_q)mod q$ ，在之前，由于 $d$ 看起来是比较大的，所以也没法攻击（意思应该就是现在可以了）。
 攻破这个系统的最优的算法的时间复杂度在 $O(min (sqrt(d_p),sqrt(d_q)))$ ，同时有趣的是， $p$ 和 $q$ 不平衡时往往会降低 RSA 的安全性。
 令 $q < N^beta$ 且 $d_p <= N^delta$ ，当满足 $3beta + 2delta <= 1 - log _N(4)$ 时可以在 $O(log ^2(N))$ 复杂度内分解 $N$ ，显然，这个方法只能在 $beta < frac(1, 3)$ 时有效。
-_关键部分来了_，这里说到，文章中给出了一种构造任意维度的格的方法来将条件提升到 $3beta - beta ^2 + 2delta <= 1 - epsilon$ ，这个 $epsilon$ 是一个小错误的意思（我也不知道干嘛的）。因此只要 $beta < frac3-sqrt(5)2=hat(phi )^2$ ，这个方法就是有效的，当 $hat(phi )$ 时是黄金比例的共轭（这一段我又不知道在干嘛了）。
+*关键部分来了*，这里说到，文章中给出了一种构造任意维度的格的方法来将条件提升到 $3beta - beta ^2 + 2delta <= 1 - epsilon$ ，这个 $epsilon$ 是一个小错误的意思（我也不知道干嘛的）。因此只要 $beta < frac3-sqrt(5)2=hat(phi )^2$ ，这个方法就是有效的，当 $hat(phi )$ 时是黄金比例的共轭（这一段我又不知道在干嘛了）。
 
 === 准备工作
 
-记模 $N$ 环为 $mathbb Z_N$ ，整数模 $N$ 乘法群为 $bb(Z)^*_N$
+记模 $N$ 环为 $mathbb Z_N$ ，整数模 $N$ 乘法群为 $bb(Z)^\*_N$
 
 #quote[
-_真相1_（原文就叫Fact 1，随便翻译意思一下）
+*真相1*（原文就叫Fact 1，随便翻译意思一下）
 $(Lenstra, Lenstra and Lov´asz)$
 令 $L$ 为一个由 $v_1,...,v_n$ 张成的格，那么 $L^3-reduction$ 算法可以在多项式时间内输出一个以 $v_1^' ,...,v_n^'$ 为基的格且这组基满足
 $ \|v_1^' \| <= 2^(frac(n-1, 4)) \ det(L)^frac(1, n) \ and \ \|v_2^' \| <= 2^(frac(n, 2)) \ det(L)^frac(1, n-1) $
@@ -52,7 +52,7 @@ $ f_p(x,y)=ex-y $
 $ lvert k+1rvert=lvert frac(ed_p-2, p-1)rvert < frac(ed_p, p-1) < frac(q-1, 2)d_p < N^(beta + delta ) $
 定义两个上界 $X=N^delta$ 和 $Y=N^(beta + delta )$ ，则模二元多项式方程 $f_p$ 有一个小根 $(x_0),y_0$ 满足 $lvert x_0 rvert <= X$ 且 $lvert y_0 rvert <= Y$ ，这个模方程可以用 Howgrave_Grahm 定理转变为一个整数上的方程。
 #quote[
-_真相2 $(Howgrave-Graham)$_
+*真相2 $(Howgrave-Graham)$*
 令 $f(x,y)$ 为一个至多 $omega$ 个单项式的和的多项式，假定 $f(x_0,y_0)=0mod \ p^m$ ( $m$ 为正整数)， $lvert x_0 rvert <= X$ 且 $lvert y_0 rvert <= Y$ 。若 $\|f(xX,yY)\| < frac(p^m, sqrt(omega ))$ ，则 $f(x_0,y_0)=0$ 在整数上成立。
 ]
 
@@ -65,45 +65,45 @@ beginbmatrix
  NX \\
  eX & -Y
 endbmatrix $
-然后找到一个向量 $v$ 使其欧里几得范数小于 $frac(p, sqrt(2))$ ，这个向量可以被转换成一个满足_真相2_的多项式 $f(x,y)$ 。
+然后找到一个向量 $v$ 使其欧里几得范数小于 $frac(p, sqrt(2))$ ，这个向量可以被转换成一个满足*真相2*的多项式 $f(x,y)$ 。
 #quote[
-_引理3_ 令 $X=N^delta$ 和 $Y=N^(beta + delta )$ 满足
+*引理3* 令 $X=N^delta$ 和 $Y=N^(beta + delta )$ 满足
 $ 3beta + 2delta <= 1 - log_N(4) $
 ]
 则 $L_p$ 有一个最小向量 $v$ 满足 $\|v\|<frac(p, sqrt(2))$
-_证明_ 由 Minkowski 定理，...呃先不说这个，能用就行（逃
+*证明* 由 Minkowski 定理，...呃先不说这个，能用就行（逃
 
-通过_引理3_，我们知道，对每个固定的 $epsilon > 0$ ，条件 $3beta + 2delta <= 1 - epsilon$ 有适当的模量 $N$ （这里我感觉不应该是这么翻译，后面再改）。
-假定我们通过格约化找到了一个 $L_p$ 中的向量 $v$ ，其范数小于 $frac(p, sqrt(2))$ ，令 $v$ 为多项式 $f(xX,yY)$ 的系数向量，应用_真相2_，我们知道 $f(x,y)$ 在整数上有一根 $(x_0,y_0)=(d_p,k+1)$ ，下一个定理将表明这个根可以很容易被找到。
+通过*引理3*，我们知道，对每个固定的 $epsilon > 0$ ，条件 $3beta + 2delta <= 1 - epsilon$ 有适当的模量 $N$ （这里我感觉不应该是这么翻译，后面再改）。
+假定我们通过格约化找到了一个 $L_p$ 中的向量 $v$ ，其范数小于 $frac(p, sqrt(2))$ ，令 $v$ 为多项式 $f(xX,yY)$ 的系数向量，应用*真相2*，我们知道 $f(x,y)$ 在整数上有一根 $(x_0,y_0)=(d_p,k+1)$ ，下一个定理将表明这个根可以很容易被找到。
 #quote[
-_引理4_ 令 $v=(c_0,c_1)dot B_p$ 为 $L_p$ 的最短向量且满足 $\|v\|<frac(p, sqrt(2))$ 则 $lvert c_0 rvert = k$ 且 $lvert c_1 rvert = qd_p$
+*引理4* 令 $v=(c_0,c_1)dot B_p$ 为 $L_p$ 的最短向量且满足 $\|v\|<frac(p, sqrt(2))$ 则 $lvert c_0 rvert = k$ 且 $lvert c_1 rvert = qd_p$
 ]
-_证明_ 略
+*证明* 略
 
 总结如下结论就有如下定理：
 
 #quote[
-_定理5_ 给定一个 RSA 公钥对 $(N,e)$ ，令 $q<N^beta ,d_p <= N^delta$ 且
+*定理5* 给定一个 RSA 公钥对 $(N,e)$ ，令 $q<N^beta ,d_p <= N^delta$ 且
 $ 3beta + 2delta <= 1 - log_N(4) $
 ]
 则 $N$ 可以在时间 $O(log^2(N))$ 内被分解。
-_证明_ 还是略（
+*证明* 还是略（
 
 在之前的分析中，我们假设 $q$ 不整除 $k$ ，特殊情况下若 $k=qr$ ( $r in bb(Z)$ )，我们得到了类似于以下更强结果之前的推理（百度翻译的）
 
 #quote[
-_定理6_ 给定一个RSA公钥对$(N,e)$，令$q<N^beta ,d_p <= N^delta$且
+*定理6* 给定一个RSA公钥对$(N,e)$，令$q<N^beta ,d_p <= N^delta$且
 $ k=qr \ and \ 3beta + 2delta <= 1 - log_N(4) $
 ]
 则 $N$ 可以在时间 $O(log^2(N))$ 内被分解。
-_证明_ 又双叒叕是略（
+*证明* 又双叒叕是略（
 
 有趣的是，在定理 6 中选择 $beta =frac(1, 2)$ 会有一个界 $delta <= frac(1, 4)-log_N(4)$ ，这与 Wiener 的界差不多。
 
 === 将界提升到 $beta < N^(0.382)$
 
 这里将界提升到 $beta < frac3-sqrt(5)2 approx N^(0.382)$ 。
-上面我们使用_真相2_的时候选择 $m=1$ ，现在一般化方法到任意 $m$ 。
+上面我们使用*真相2*的时候选择 $m=1$ ，现在一般化方法到任意 $m$ 。
 定义 $x$ 移位多项式（这个也是百度翻译）
 $ g_(m,i,j)(x,y)=N^(max(0,m-j))x^if^j_p(x,y) $
 注意到，每个多项式 $g_(m,i,j)$ 的线性组合都有零点 $(x_0,y_0)=(d_p,k+1)\ modulo \ p^m$ 。
@@ -117,31 +117,31 @@ beginbmatrix
  e^3X^3 & -3e^2X^2Y & 3eXY^2 & -Y^3
 endbmatrix $
 注意到，之前的 $L_p$ 和这里的 $L_p(2)$ 是一样的。
-为了满足_真相2_，我们一个满足范数小于 $frac(p^m, sqrt(n))$ 系数向量 $v$ ，如下引理给出了一个找这样一个向量的条件
+为了满足*真相2*，我们一个满足范数小于 $frac(p^m, sqrt(n))$ 系数向量 $v$ ，如下引理给出了一个找这样一个向量的条件
 #quote[
-_引理7_ 对每个确定的 $epsilon >0$ ，令 $X=frac(n+1, 2)N^delta$ ， $Y=frac(n+1, 2)N^(beta +delta )$ 满足
+*引理7* 对每个确定的 $epsilon >0$ ，令 $X=frac(n+1, 2)N^delta$ ， $Y=frac(n+1, 2)N^(beta +delta )$ 满足
 $ 3beta - beta ^2 + 2delta <= 1 - epsilon $
 ]
 然后用 LLL 算法可以在 $L_p(n)$ 中找到一个向量 $v$ 满足范数小于 $frac(p^m, sqrt(n))$ 。
-_证明_ 略（
+*证明* 略（
 
-现在我们可以用上面的_引理7_与_真相2_结合来构造一个次数为$n$的双变量多项式 $f(x,y)$ ，该多项式最多由 $n$ 个单项式组成，有一根 $(x_0,y_0)$ ，现在问题来到如何提取根 $(x_0,y_0)$ 。
-与_引理4_类似，等下写这
+现在我们可以用上面的*引理7*与*真相2*结合来构造一个次数为$n$的双变量多项式 $f(x,y)$ ，该多项式最多由 $n$ 个单项式组成，有一根 $(x_0,y_0)$ ，现在问题来到如何提取根 $(x_0,y_0)$ 。
+与*引理4*类似，等下写这
 
 #quote[
-_引理8_ 令 $X=frac(n+1, 2)N^delta$ ， $Y=frac(n+1, 2)N^(beta +delta )$ ，多项式 $f_p(x,y)=ex-y$ 有一根 $(x_0,y_0)\ modulo \ p$ 满足 $lvert x_0 rvert <= N^delta$ ， $lvert y_0 rvert <= N^(beta +delta )$ ，令 $v$ 为 $L_p(n)$ 中范数小于 $frac(p^m, sqrt(n))$ 的向量（ $v$ 为项式 $f(xX,yY)$ 的系数向量），然后多项式 $p(x,y)=y_0x-x_0y in bb(Z)$ 一定整除 $f(x,y)$ ，我们就可以通过在 $bb(Z)[x,y]$ 上分解 $f$ 找到 $p$ 。
+*引理8* 令 $X=frac(n+1, 2)N^delta$ ， $Y=frac(n+1, 2)N^(beta +delta )$ ，多项式 $f_p(x,y)=ex-y$ 有一根 $(x_0,y_0)\ modulo \ p$ 满足 $lvert x_0 rvert <= N^delta$ ， $lvert y_0 rvert <= N^(beta +delta )$ ，令 $v$ 为 $L_p(n)$ 中范数小于 $frac(p^m, sqrt(n))$ 的向量（ $v$ 为项式 $f(xX,yY)$ 的系数向量），然后多项式 $p(x,y)=y_0x-x_0y in bb(Z)$ 一定整除 $f(x,y)$ ，我们就可以通过在 $bb(Z)[x,y]$ 上分解 $f$ 找到 $p$ 。
 ]
-_证明_ 略（
+*证明* 略（
 
 总结这些结论，就有如下定理：
 
 #quote[
-_定理9_ 给定一个 RSA 公钥对 $(N,e)$ ，令 $q < N^beta ,d_p <= N^delta$
+*定理9* 给定一个 RSA 公钥对 $(N,e)$ ，令 $q < N^beta ,d_p <= N^delta$
 ]
 且
 $ 3beta - beta ^2 + 2delta <= 1 - epsilon $
 其中对于适当大的 $N$ （啥叫适当大）， $epsilon >0$ 任意小，则我们可以在 $log(N)$ 确定的时间多项式内分解 $N$ 。
-_证明_ 略（
+*证明* 略（
 
 === 一个模 $e$ 的方法
 

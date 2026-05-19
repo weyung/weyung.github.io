@@ -345,15 +345,26 @@ function convertInline(text) {
     return `#link("${url}")[${linkText}]`;
   });
 
-  // bold+italic: ***text*** → *_text_*
-  text = text.replace(/\*{3}(.+?)\*{3}/g, "*_$1_*");
+  // @ → \@ (Typst interprets @foo as label reference)
+  text = text.replace(/@/g, "\\@");
 
-  // bold: **text** → *text*
-  text = text.replace(/\*{2}(.+?)\*{2}/g, "*$1*");
+  // Escaped asterisks \* → literal * (protect from bold/italic regex)
+  text = text.replace(/\\\*/g, "\x05");
 
-  // italic: *text* → _text_ (but not inside math $...$)
-  // Only convert standalone single asterisks not adjacent to other asterisks
+  // Protect bold+italic and bold with placeholders before italic pass
+  text = text.replace(/\*{3}(.+?)\*{3}/g, "\x01$1\x02");
+  text = text.replace(/\*{2}(.+?)\*{2}/g, "\x03$1\x04");
+
+  // italic: *text* → _text_ (bold already replaced, won't double-convert)
   text = text.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, "_$1_");
+
+  // Escape remaining unpaired asterisks (e.g. *.example.com)
+  text = text.replace(/\*/g, "\\*");
+
+  // Restore bold+italic and bold with Typst syntax
+  text = text.replace(/\x01(.*?)\x02/g, "*_$1_*");
+  text = text.replace(/\x03(.*?)\x04/g, "*$1*");
+  text = text.replace(/\x05/g, "\\*");
 
   // strikethrough: ~~text~~ → #strike[text]
   text = text.replace(/~~(.+?)~~/g, "#strike[$1]");

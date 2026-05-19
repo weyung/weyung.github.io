@@ -92,8 +92,8 @@ mov word [0x1c],0xf000
 
 === cld和std
 
-_cld_:将 DF 标志清零，指示传送是正方向的
-_std_:与 `cld` 相反
+*cld*:将 DF 标志清零，指示传送是正方向的
+*std*:与 `cld` 相反
 
 === loop
 
@@ -106,8 +106,8 @@ CX 不为零则重复
 
 === inc和dec
 
-_inc_:加一指令，`inc bx` 和 `add bx,1` 功能一样，但前者机器码更短，速度更快
-_dec_:减一指令，与 `inc` 格式相同
+*inc*:加一指令，`inc bx` 和 `add bx,1` 功能一样，但前者机器码更短，速度更快
+*dec*:减一指令，与 `inc` 格式相同
 
 === neg
 
@@ -116,8 +116,8 @@ _dec_:减一指令，与 `inc` 格式相同
 === cbw和cwd
 
 两条指令后都没有操作数
-_cbw_（Convert Byte to Word）：将 AL 中的有符号数扩展到整个 AX
-_cwd_（Convert Word to Double-word）：将 AX 中的有符号数扩展到 DX：AX 中
+*cbw*（Convert Byte to Word）：将 AL 中的有符号数扩展到整个 AX
+*cwd*（Convert Word to Double-word）：将 AX 中的有符号数扩展到 DX：AX 中
 
 === idiv
 
@@ -148,8 +148,8 @@ or | and
 === push和pop
 
 操作数可以是寄存器或者内存单元，逻辑地址为 SS：SP ，不影响任何标志位
-_push_：执行时将 SP 内容减去操作数的字长，从高地址端向低地址端推进
-_pop_：执行时将 SP 内容加上操作数的字长
+*push*：执行时将 SP 内容减去操作数的字长，从高地址端向低地址端推进
+*pop*：执行时将 SP 内容加上操作数的字长
 
 === in和out
 
@@ -175,7 +175,7 @@ retf是远返回指令，分别从栈中弹出两个字到IP和CS中
 
 === shr、shl、ror、rol
 
-_shr_（Shift logical Right），即逻辑右移指令，将AX中的内容右移4位，执行时将操作数连续右移指定次数，每次溢出的比特被移到CF位，空出的位置用“0”填充，目的操作数可以是8位或16位通用寄存器/内存单元，源操作数可以是1或8位立即数或寄存器CL，当使用CL时，对于目的操作数是内存地址的情况，须使用关键字byte或word等来加限定，如：
+*shr*（Shift logical Right），即逻辑右移指令，将AX中的内容右移4位，执行时将操作数连续右移指定次数，每次溢出的比特被移到CF位，空出的位置用“0”填充，目的操作数可以是8位或16位通用寄存器/内存单元，源操作数可以是1或8位立即数或寄存器CL，当使用CL时，对于目的操作数是内存地址的情况，须使用关键字byte或word等来加限定，如：
     shr al,cl
     shr byte [bx],cl
 ror（Rotate Right），即循环右移指令，执行时每右移一次，移出的比特既送到CF位，也送进左边空出的位
@@ -200,8 +200,8 @@ ror（Rotate Right），即循环右移指令，执行时每右移一次，移�
     jump_far dw 0x33c0,0xf000
     jmp far [jump_far]
 
-_resb_（REServe Byte）、resw和resd指令
-_resb_:从当前位置开始，保留指定数量的字节，但不进行初始化
+*resb*（REServe Byte）、resw和resd指令
+*resb*:从当前位置开始，保留指定数量的字节，但不进行初始化
 
 === mul
 
