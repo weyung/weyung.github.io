@@ -1015,7 +1015,8 @@ article :is(.note-block, .success-block, .warning-block, .error-block) .copy-but
 
 article span[role="math"] > svg,
 article figure[role="math"] > svg,
-article .typst-frame {
+article .typst-frame,
+article .auto-frame svg {
   filter: var(--math-filter) !important;
 }
 
