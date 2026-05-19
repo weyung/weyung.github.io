@@ -23,7 +23,7 @@ NTRUEncrypt 是一个公钥加密系统，它的安全性基于这样一个问�
 == 公钥生成
 
 又双叒叕来到了密码学的老 CP —— Alice 和 Bob
-#link("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fauthorize.zhongbi.net%2Fd%2Ffile%2Ftu%2F2018%2F12%2F27%2F0wlyvynx1dv.jpg&refer=http%3A%2F%2Fauthorize.zhongbi.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652234696&t=c5802c1784650149a8a25e0440448985")[Alice&Bob]
+#image("src=http%3A%2F%2Fauthorize.zhongbi.net%2Fd%2Ffile%2Ftu%2F2018%2F12%2F27%2F0wlyvy")
 
 + Bob 根据选定的 $N,p,q$ 生成最高次为 $N-1$ 的 $f$ 和 $g$ *两个多项式*，并且系数在 $-1,0,1$ 中选取（可以认为这俩是在模 $X^(N)-1$ 的剩余类中）。 $f$ 还要满足*模 $q$ 和 $p$ 的逆元存在*，如果不满足，那就重新生成。
 + 分别计算 $f$ 模 $p$ 和模 $q$ 的逆元，即 $f_(p)$ 和 $f_(q)$ ，*保留 $f$ , $f_(p)$ 及 $g$ 作为私钥，公钥 $h=pf_(q) dot g\ mod q$ 。*

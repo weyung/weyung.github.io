@@ -2,6 +2,7 @@
 
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { basename, dirname, extname, join, relative } from "node:path";
+import { execFileSync } from "node:child_process";
 
 const SOURCE_DIR = "D:/Personal/blog/source/_posts";
 const TARGET_DIR = "posts";
@@ -335,10 +336,24 @@ function convertInline(text) {
     return `#link("${url}")`;
   });
 
-  // images: ![alt](url) → #image("url") for local, #link for remote
+  // images: ![alt](url) → #image("url"), collect remote URLs for download
   text = text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, url) => {
     if (/^https?:\/\//.test(url)) {
-      return `#link("${url}")[${alt || "image"}]`;
+      const existing = pendingDownloads.find((r) => r.url === url);
+      if (existing) return `#image("${existing.filename}")`;
+      let urlPath;
+      try { urlPath = new URL(url).pathname; } catch { urlPath = url; }
+      let filename = basename(urlPath) || "image.png";
+      if (!extname(filename)) filename += ".png";
+      filename = filename.slice(0, 80);
+      const taken = new Set(pendingDownloads.map((r) => r.filename));
+      let final = filename;
+      let n = 1;
+      while (taken.has(final)) {
+        final = filename.replace(/(\.\w+)$/, `-${n++}$1`);
+      }
+      pendingDownloads.push({ url, filename: final });
+      return `#image("${final}")`;
     }
     return `#image("${url}")`;
   });
@@ -414,6 +429,7 @@ const files = walkMd(SOURCE_DIR);
 let migrated = 0;
 let skipped = 0;
 const errors = [];
+let pendingDownloads = [];
 
 for (const mdPath of files) {
   const rel = relative(SOURCE_DIR, mdPath);
@@ -441,6 +457,7 @@ for (const mdPath of files) {
   }
 
   const { description, content } = extractDescription(meta.body);
+  pendingDownloads = [];
   const typstBody = convertBody(content);
 
   let output = "";
@@ -450,6 +467,19 @@ for (const mdPath of files) {
 
   mkdirSync(targetDir, { recursive: true });
   writeFileSync(join(targetDir, "index.typ"), output, "utf8");
+
+  for (const dl of pendingDownloads) {
+    const dest = join(targetDir, dl.filename);
+    if (!existsSync(dest)) {
+      try {
+        execFileSync("curl", ["--ssl-no-revoke", "-sL", "-o", dest, dl.url], { timeout: 15000 });
+        console.log(`  DL  ${dl.filename} ← ${dl.url}`);
+      } catch {
+        console.log(`  FAIL ${dl.filename} ← ${dl.url}`);
+      }
+    }
+  }
+
   migrated++;
   console.log(`OK    ${rel} → ${targetDir}`);
 }
