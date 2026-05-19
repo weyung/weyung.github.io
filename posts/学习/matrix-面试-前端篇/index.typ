@@ -70,7 +70,7 @@ csrf 全称 Cross-site request forgery ，意为*跨站请求伪造*，而 ssrf 
 == CSS 盒模型
 
 看吧，就是像个盒子（逃
-#image("https://www.runoob.com/images/box-model.gif")
+#link("https://www.runoob.com/images/box-model.gif")[盒子图]
 （图源菜鸟教程）
 Margin 指*外边距*，Border 指*边框*，Padding 指*内边距*，Content 指*内容*。
 然后没啥好解释了，实际上就是反复调整这几个部分的宽高，而且功夫不到家（像我这样）很容易被坑到，因为两个盒子之间可能会存在重叠。

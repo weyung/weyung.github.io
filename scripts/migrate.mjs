@@ -335,8 +335,11 @@ function convertInline(text) {
     return `#link("${url}")`;
   });
 
-  // images: ![alt](url) → #image("url")
+  // images: ![alt](url) → #image("url") for local, #link for remote
   text = text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, url) => {
+    if (/^https?:\/\//.test(url)) {
+      return `#link("${url}")[${alt || "image"}]`;
+    }
     return `#image("${url}")`;
   });
 
