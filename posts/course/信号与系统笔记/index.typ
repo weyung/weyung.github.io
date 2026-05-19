@@ -37,7 +37,7 @@ $x(t+T) = sum _(n=- infinity )^( infinity ) e^(-[2(t+T)-n]) u[2(t+T)-n] = sum _(
 注意到离散时间信号是用中括号表示的，如 $x[n]$，而连续时间信号是用小括号表示的，如 $x(t)$。
 (c) $x[n] = cos (frac( pi , 8) n^2)$
 $x[n+N] = cos (frac( pi , 8) (n+N)^2) = cos (frac( pi , 8) n^2 + frac( pi , 4) n N + frac( pi , 8) N^2)$
-若 $x[n]$ 为周期信号，则 $x[n+N]=x[n]$，即 $frac( pi , 4) n N + frac( pi , 8) N^2 = 2k pi$（$k$ 为整数）对任意 $n$ 都成立，即 $2nN+N^2=16k$ 对任意 $n$ 都成立，则 $2N$ 和 $N^2$ 都要能被 16 整除，所以满足条件的最小 $N=8$，即基波周期 $N=8$。
+若 $x[n]$ 为周期信号，则 $x[n+N]=x[n]$，即 $frac( pi , 4) n N + frac( pi , 8) N^2 = 2k pi$（$k$ 为整数）对任意 $n$ 都成立，即 $2 n N+N^2=16k$ 对任意 $n$ 都成立，则 $2N$ 和 $N^2$ 都要能被 16 整除，所以满足条件的最小 $N=8$，即基波周期 $N=8$。
 (e) $x[n] = 2 cos (frac( pi , 4) n) + sin (frac( pi , 8) n) - 2 cos (frac( pi , 2) n + frac( pi , 6))$
 注意到三个信号的基波周期分别为 8、16、4，$x[n]$ 的基波周期就是它们的最小公倍数，即 $N=16$。
 
@@ -48,7 +48,7 @@ $x[n+N] = cos (frac( pi , 8) (n+N)^2) = cos (frac( pi , 8) n^2 + frac( pi , 4) n
 
 - 无记忆性：系统的输出只与*当前时刻的输入*有关，与过去和未来的输入无关。
 - 时不变性：系统*当输入信号有一个时移时，输出响应也产生同样的时移*。除此之外，输出响应无任何其它变化。
-- 线性：系统的输出对于输入信号是线性的，即对 $x_3(t) = ax_1(t) + bx_2(t)$，有 $y_3(t) = ay_1(t) + by_2(t)$。
+- 线性：系统的输出对于输入信号是线性的，即对 $x_3(t) = a x_1(t) + b x_2(t)$，有 $y_3(t) = a y_1(t) + b y_2(t)$。
 - 因果性：系统在任何时刻的输出都只与*当时这个时刻的输入以及该时刻以前的输入*有关，而和该时刻以后的输入无关。
 - 稳定性：系统当输入有界时，产生的输出也是有界的。
 
@@ -56,19 +56,19 @@ $x[n+N] = cos (frac( pi , 8) (n+N)^2) = cos (frac( pi , 8) n^2 + frac( pi , 4) n
 （1）由于 $y(t)$ 只与当前时刻的 $x(t)$ 有关，所以是无记忆的。
 （2）令 $x_1(t) = x(t - t_0)$，则
 $y_1(t) = ( cos 3t)x_1(t) = ( cos 3t)x(t - t_0) != ( cos (3t - 3t_0))x(t - t_0) = y(t - t_0)$，故系统是时变的。
-（3）令 $x_3(t) = ax_1(t) + bx_2(t)$，则
-$y_3(t) = ( cos 3t)x_3(t) = ( cos 3t)"lbrack" ax_1(t) + bx_2(t)"rbrack" = a( cos 3t)x_1(t) + b( cos 3t)x_2(t) = ay_1(t) + by_2(t)$，故系统是线性的。
+（3）令 $x_3(t) = a x_1(t) + b x_2(t)$，则
+$y_3(t) = ( cos 3t)x_3(t) = ( cos 3t)[a x_1(t) + b x_2(t)] = a( cos 3t)x_1(t) + b( cos 3t)x_2(t) = a y_1(t) + b y_2(t)$，故系统是线性的。
 （4）因为当 $x(t) = 0, t < t_a$ 时，有 $y(t) = 0, t < t_c$，故系统是因果的。
 （5）设 $|x(t)| < M$ ($M$ 为有限大小的正数)，对所有 $y(t)$ 都有 $|y(t)| < M$，故系统是稳定的。
 (c) $y(t) = integral _(- infinity )^(2t) x( tau ) "d" tau$
 （1）由于 $y(t)$ 由 $- infinity$ 到 $2t$ 时刻的 $x(t)$ 决定，即 $y(t)$ 取决于 $x(t)$ 由过去到未来 $2t$ 时刻的值，故系统是有记忆的，也是非因果的。
 （2）令 $x_1(t) = x(t - t_0)$ 则
 $y_1(t) = integral _(- infinity )^(2t) x_1( tau ) thin d tau = integral _(- infinity )^(2t) x(t - t_0) thin d tau != integral _(- infinity )^(2(t - t_0)) x( tau ) thin d tau = y(t - t_0)$，故系统是时变的。
-（3）令 $x_3(t) = ax_1(t) + bx_2(t)$，则
-$y_3(t) = integral _(- infinity )^(2t) x_3( tau ) thin d tau = integral _(- infinity )^(2t) [ax_1( tau ) + bx_2( tau )] thin d tau = a integral _(- infinity )^(2t) x_1( tau ) thin d tau + b integral _(- infinity )^(2t) x_2( tau ) thin d tau = ay_1(t) + by_2(t)$，故系统是线性的。
+（3）令 $x_3(t) = a x_1(t) + b x_2(t)$，则
+$y_3(t) = integral _(- infinity )^(2t) x_3( tau ) thin d tau = integral _(- infinity )^(2t) [a x_1( tau ) + b x_2( tau )] thin d tau = a integral _(- infinity )^(2t) x_1( tau ) thin d tau + b integral _(- infinity )^(2t) x_2( tau ) thin d tau = a y_1(t) + b y_2(t)$，故系统是线性的。
 （4）上面说了，系统是非因果的。
-（5）设 $|x(t)| < M$（$M$ 为有限大小的正数），对所有 $x(t)$ 是有界的，如 $x(t) = u(t) = "begincases" 1, & t > 0 0, & t < 0 "endcases"$ 是有界的，但
-$y(t) = integral _(- infinity )^(2t) u( tau ) thin d tau = 2tu(t), y( infinity ) = infinity$ 不是有界的，故系统是不稳定的。
+（5）设 $|x(t)| < M$（$M$ 为有限大小的正数），对所有 $x(t)$ 是有界的，如 $x(t) = u(t) = cases(1 & t > 0, 0 & t < 0)$ 是有界的，但
+$y(t) = integral _(- infinity )^(2t) u( tau ) thin d tau = 2t u(t), y( infinity ) = infinity$ 不是有界的，故系统是不稳定的。
 
 *习题* 1.31
 给了信号 $x_1(t)$ 及其输出 $y_1(t)$ 的图像，求 $x_2(t)$ 和 $x_3(t)$ 的图像。
@@ -104,14 +104,14 @@ y_3[n] &= x[n] * h[n + 2] \\
 *习题* 2.10
 假设 $
 x(t) =
-\begin{cases}
-1, & 0 \leq t \leq 1 \\\\
-0, & \text{其他}
-\end{cases}
-$和$h(t) = x\left(\frac{t}{a}\right), \quad 0 \leq a \leq 1$。
+cases(
+1 & 0 lt.eq t lt.eq 1,
+0 & "其他"
+)
+$和$h(t) = x(frac(t, a)), quad 0 lt.eq a lt.eq 1$。
 
 (a) 求出并画出 $y(t) = x(t) "ast" h(t)$;
-(b) 若 $frac(dy(t), "d"t)$ 仅含有三个不连续点，$a$ 值为多少？
+(b) 若 $frac(d y(t), "d"t)$ 仅含有三个不连续点，$a$ 值为多少？
 
 *习题* 2.11
 令
@@ -127,27 +127,27 @@ $ = e^(-3t) [ frac(1, 3)(e^(3t)-e^9)u(t-3) -frac(1, 3)(e^(3t)-e^(15))u(t-5) ] $
 
 $ = frac(1, 3) [1 - e^(-3(t-3))] u(t - 3) - frac(1, 3) [1 - e^(-3(t-5))] u(t - 5) $
 
-$ = "begincases"
-0, & t "leqslant" 3 \
-frac(1, 3) [1 - e^(-3(t-3))], & 3 < t "leqslant" 5 \
-frac(1, 3) (1 - e^(-6)) e^(-3(t-5)), & t > 5
-"endcases" $
+$ = cases(
+0 & t lt.eq 3,
+frac(1, 3) [1 - e^(-3(t-3))] & 3 < t lt.eq 5,
+frac(1, 3) (1 - e^(-6)) e^(-3(t-5)) & t > 5
+) $
 (b) 计算 $g(t)=["d"x(t)/"d"t]\*h(t)$
 注意到 $u(t)$ 的导数是 $delta (t)$，所以 $g(t) = [ delta (t-3) - delta (t-5)]\*h(t)$。
-$ frac(dx(t), dt) = delta (t - 3) - delta (t - 5) $
+$ frac(d x(t), d t) = delta (t - 3) - delta (t - 5) $
 
-$ g(t) = frac(dx(t), dt) * h(t) = [ delta (t - 3) - delta (t - 5)] * e^(-3t) u(t) $
+$ g(t) = frac(d x(t), d t) * h(t) = [ delta (t - 3) - delta (t - 5)] * e^(-3t) u(t) $
 
 $ = e^(-3(t - 3)) u(t - 3) - e^(-3(t - 5)) u(t - 5) $
 
 (c) $g(t)$ 与 $y(t)$ 有什么关系？
-$ frac(dy(t), dt) = frac(1, 3) [1 - e^(-3(t - 3))] delta (t - 3) + e^(-3(t - 3)) u(t - 3) $
+$ frac(d y(t), d t) = frac(1, 3) [1 - e^(-3(t - 3))] delta (t - 3) + e^(-3(t - 3)) u(t - 3) $
 
 $ -frac(1, 3) [1 - e^(-3(t - 5))] delta (t - 5) - e^(-3(t - 5)) u(t - 5) $
 
 $ = e^(-3(t - 3)) u(t - 3) - e^(-3(t - 5)) u(t - 5) $
 
-$ g(t) = frac(dy(t), dt) $
+$ g(t) = frac(d y(t), d t) $
 
 *习题* 2.20
 求下列积分：
@@ -158,10 +158,10 @@ $ g(t) = frac(dy(t), dt) $
 *习题* 2.21
 计算下列各对信号的卷积 $y[n]=x[n]\*h[n]$
 (a)
-$ "begincases"
-x[n] = alpha ^n u[n] \\
+$ cases(
+x[n] = alpha ^n u[n],
 h[n] = beta ^n u[n]
-"endcases" $
+) $
 $alpha != beta$
 $ y[n] = x[n] * h[n] = sum _(k=- infinity )^( infinity ) x[k] h[n - k] $
 
@@ -182,7 +182,7 @@ $ = "frac" beta ^(n+1) - alpha ^(n+1) beta - alpha u[n] quad ( alpha != beta , n
 
 *习题* 3.21
 有一个连续时间周期信号 $x(t)$ 是实值信号，其基波周期 $T=8$，$x(t)$ 的非零傅里叶级数系统为 $a_1=a_(-1)^\*="j", a_5=a_(-5)=2$，试将 $x(t)$ 表示为如下形式：
-$ x(t)= sum _(k=0)^( infinity )A_k cos ( omega _kt+ phi _k) $
+$ x(t)= sum _(k=0)^( infinity ) A_k cos ( omega _k t+ phi _k) $
 $ "beginalign"*
 x(t) &= sum _(k=- infinity )^( infinity ) a_k e^("j"k omega _0 t) = sum _(k=- infinity )^( infinity ) a_k e^("j"k(2 pi /8)t) \\
  &= a_1 e^("j"(2 pi /8)t) + a_(-1) e^(-"j"(2 pi /8)t) + a_5 e^("j"5(2 pi /8)t) + a_(-5) e^(-"j"5(2 pi /8)t) \\
@@ -244,11 +244,11 @@ $ h(t) = e^(-4|t|) $
 *习题* 3.38
 考虑一个离散时间线性时不变系统，其单位脉冲响应为
 $ h[n] =
-"begincases"
-1, & 0 "leqslant" n "leqslant" 2 \
--1, & -2 "leqslant" n "leqslant" -1 \
-0, & "其他"
-"endcases" $
+cases(
+1 & 0 lt.eq n lt.eq 2,
+-1 & -2 lt.eq n lt.eq -1,
+0 & "其他"
+) $
 
 已知系统的输入是
 $ x[n] = sum _(k=- infinity )^(+ infinity ) delta [n - 4k] $
@@ -287,11 +287,11 @@ $ delta (t+1) "stackrelcal"(F)"longleftrightarrow" e^("j" omega ) quad delta (t-
 又由欧拉公式 $e^("j" theta ) = cos theta + "j" sin theta$，可得
 $ delta (t+1) + delta (t-1) "stackrelcal"(F)"longleftrightarrow" 2 cos omega $
 
-(b) $frac(d, dt) [ u(-2-t) + u(t-2) ]$
+(b) $frac(d, d t) [ u(-2-t) + u(t-2) ]$
 
 $u(t)$ 的导数就是 $delta (t)$，所以有
 
-$ frac(d, dt) u(-2-t) = - delta (t+2) quad frac(d, dt) u(t-2) = delta (t-2) $
+$ frac(d, d t) u(-2-t) = - delta (t+2) quad frac(d, d t) u(t-2) = delta (t-2) $
 不难类似上题得到
 $ X("j" omega ) = e^(-2"j" omega ) - e^(2"j" omega ) = -2"j" sin 2 omega $
 
@@ -302,7 +302,7 @@ $ X("j" omega ) = e^(-2"j" omega ) - e^(2"j" omega ) = -2"j" sin 2 omega $
 
 注意这里提到的性质就是 $y(t) = x(t) \* h(t) "stackrelcal"(F)"longleftrightarrow" Y("j" omega ) = X("j" omega )H("j" omega )$。
 
-(1) $x(t) = te^(-2t)u(t), quad h(t) = e^(-4t)u(t)$
+(1) $x(t) = t e^(-2t)u(t), quad h(t) = e^(-4t)u(t)$
 由常见傅里叶变换对
 $ t e^(- alpha t) u(t) "stackrelcal"(F)"longleftrightarrow" frac(1, ( alpha + "j" omega )^2) $
 可得
@@ -311,9 +311,9 @@ $ H("j" omega ) = frac(1, 4 + "j" omega ) $
 有
 $ Y("j" omega ) = frac(1, (2 + "j" omega )^2) dot.op frac(1, 4 + "j" omega ) = frac(1/4, 4 + "j" omega ) - frac(1/4, 2 + "j" omega ) + frac(1/2, (2 + "j" omega )^2) $
 逆变换得
-$ y(t) = frac(1, 4) e^(-4t) u(t) - frac(1, 4) e^(-2t) u(t) + frac(1, 2) te^(-2t) u(t) $
+$ y(t) = frac(1, 4) e^(-4t) u(t) - frac(1, 4) e^(-2t) u(t) + frac(1, 2) t e^(-2t) u(t) $
 
-(2) $x(t) = te^(-2t)u(t), quad h(t) = te^(-4t)u(t)$
+(2) $x(t) = t e^(-2t)u(t), quad h(t) = t e^(-4t)u(t)$
 
 (3) $x(t) = e^(-t)u(t), quad h(t) = e^(t)u(-t)$
 
@@ -322,7 +322,7 @@ $ y(t) = frac(1, 4) e^(-4t) u(t) - frac(1, 4) e^(-2t) u(t) + frac(1, 2) te^(-2t)
 *习题* 4.33
 一个因果线性时不变系统的输入和输出，由下列微分方程表征：
 
-$ frac(d^2 y(t), dt^2) + 6frac(dy(t), dt) + 8y(t) = 2x(t) $
+$ frac(d^2 y(t), d t^2) + 6 frac(d y(t), d t) + 8 y(t) = 2 x(t) $
 
 (a) 求该系统的单位冲激响应。
 
@@ -334,14 +334,14 @@ $ H("j" omega ) = frac(Y("j" omega ), X("j" omega )) = frac(1, "j" omega + 2) - 
 故单位冲激响应为
 $ h(t) = e^(-2t)u(t) - e^(-4t)u(t) $
 
-(b) 若 $x(t) = te^(-2t)u(t)$，该系统的响应是什么？
+(b) 若 $x(t) = t e^(-2t)u(t)$，该系统的响应是什么？
 $ Y("j" omega ) = H("j" omega )X("j" omega ) = ( frac(1, "j" omega + 2) - frac(1, "j" omega + 4) ) dot.op frac(1, (2 + "j" omega )^2) = frac(1/4, "j" omega + 2) - frac(1/4, "j" omega + 4) + frac(-1/2, ("j" omega + 2)^2) + frac(1, ("j" omega + 2)^3) $
 再取逆变换即可得到
-$ y(t) = frac(1, 4) e^(-2t) u(t) - frac(1, 4) e^(-4t) u(t) - frac(1, 2) te^(-2t) u(t) + frac(1, 2) e^(-2t) u(t) $
+$ y(t) = frac(1, 4) e^(-2t) u(t) - frac(1, 4) e^(-4t) u(t) - frac(1, 2) t e^(-2t) u(t) + frac(1, 2) e^(-2t) u(t) $
 
 (c) 对于由下列方程描述的因果线性时不变系统，重做 (a)：
 
-$ frac(d^2 y(t), dt^2) + sqrt(2)frac(dy(t), dt) + y(t) = 2frac(d^2 x(t), dt^2) - 2x(t) $
+$ frac(d^2 y(t), d t^2) + sqrt(2) frac(d y(t), d t) + y(t) = 2 frac(d^2 x(t), d t^2) - 2 x(t) $
 其拉式变换为
 $ (s^2 + sqrt(2)s + 1)Y(s) = 2(s^2 - 1)X(s) $
 傅里叶变换为
@@ -351,7 +351,7 @@ $ ("j" omega + sqrt(2))^2 Y("j" omega ) = 2(- omega ^2 - 1)X("j" omega ) $
 *习题* 4.44
 一个因果线性时不变系统的输入 $x(t)$ 和输出 $y(t)$ 的关系由下列方程给出：
 
-$ frac(dy(t), dt) + 10y(t) = integral _(- infinity )^(+ infinity ) x( tau )z(t- tau ) d tau - x(t) $
+$ frac(d y(t), d t) + 10 y(t) = integral _(- infinity )^(+ infinity ) x( tau ) z(t- tau ) d tau - x(t) $
 
 其中 $z(t) = e^(-t)u(t) + 3 delta (t)$。
 
@@ -416,10 +416,10 @@ $ y(t) = A x(t - t_0) $
 *习题* 6.5
 考虑一个连续时间理想带通滤波器，其频率响应为
 $ H("j" omega ) =
-"begincases"
-1, & omega _c "leqslant" | omega | "leqslant" 3 omega _c \\
-0, & "其他"
-"endcases" $
+cases(
+1 & omega _c lt.eq | omega | lt.eq 3 omega _c,
+0 & "其他"
+) $
 (a) 若 $h(t)$ 是该滤波器的单位冲激响应，确定一个函数 $g(t)$，使之有
 $ h(t) = ( frac( sin omega _c t, pi t) ) g(t) $
 
@@ -447,15 +447,15 @@ $ g(t) = 2h(t) cos (4000 pi t) $
 
 (c)
 $ "sphericalangle" H("j" omega ) =
-"begincases"
-frac( pi , 2), & omega > 0 \\
--frac( pi , 2), & omega < 0
-"endcases" $
+cases(
+frac(pi, 2) & omega > 0,
+-frac(pi, 2) & omega < 0
+) $
 
 == 第七章 采样
 
 *习题* 7.22
-信号 $Y(t)$ 由两个均为带限的信号 $x_1(t)$ 和 $x_2(t)$ 卷积而成，即 $y(t)=x_1(t)\*x_2(t)$，其中，$X_1("j" omega )=0, | omega | > 1000 pi$，$X_2("j" omega )=0, | omega | > 2000 pi$。现对 $Y(t)$ 进行激串采样，以得到 $y_p(t)= sum ^(+ infinity )_(n=- infinity )y(nT) delta (t-nT)$，试给出 $y(t)$ 保证能从 $y_p(t)$ 恢复出来的采样周期 T 的范围。
+信号 $Y(t)$ 由两个均为带限的信号 $x_1(t)$ 和 $x_2(t)$ 卷积而成，即 $y(t)=x_1(t)\*x_2(t)$，其中，$X_1("j" omega )=0, | omega | > 1000 pi$，$X_2("j" omega )=0, | omega | > 2000 pi$。现对 $Y(t)$ 进行激串采样，以得到 $y_p(t)= sum ^(+ infinity )_(n=- infinity )y(n T) delta (t-n T)$，试给出 $y(t)$ 保证能从 $y_p(t)$ 恢复出来的采样周期 T 的范围。
 因 $y(t)=x_1(t)\*x_2(t)$，所以 $Y("j" omega )=X_1("j" omega ) dot.op X_2("j" omega )$，又当 $| omega | > 1000 pi$ 时 $X_1("j" omega )=0$，当 $| omega | > 2000 pi$ 时 $X_2("j" omega )=0$，所以当 $| omega | > 1000 pi$ 时 $Y("j" omega )=0$。
 由采样定理知，若采样频率 $omega _s>2 times 1000 pi$，即 $T<frac(2 pi , 2 pi times 10^3)=10^(-3)$ 时，$y(t)$ 可以从 $y_p(t)$ 恢复出来。
 这里我也不是很清楚采样定理，后面有机会再补。
@@ -476,21 +476,21 @@ frac( pi , 2), & omega > 0 \\
 确定下列时间函数的拉普拉斯变换、收敛域及零-极点图。
 零点就是分子为 0 的点，极点就是分母为 0 的点。
 画图时*零点处画圆圈*，*极点处画叉号*，x 轴为实轴，y 轴为虚轴。
-本题多处利用变换对 $e^(- alpha t)u(t)rightarrowfrac(1, s+ alpha ), "Re""lbrace" s"rbrace" > "Re""lbrace" - alpha "rbrace"$，$alpha$ 可为复数。
+本题多处利用变换对 $e^(- alpha t)u(t) arrow.r frac(1, s+ alpha ), "Re""lbrace" s"rbrace" > "Re""lbrace" - alpha "rbrace"$，$alpha$ 可为复数。
 *(a)* $x(t)=e^(-2t)u(t)+e^(-3t)u(t)$
 直接由变换对得出 $X(s)=frac(1, s+2)+frac(1, s+3)= frac(2s+5, (s+2)(s+3)), "Re""lbrace" s"rbrace" > -2$，零点 $s=-frac(5, 2)$，极点 $s=-2, -3$，收敛域就是 $x > -2$，要画虚线。
 *(c)* $x(t)=e^(2t)u(-t)+e^(3t)u(-t)$
-由变换对 $-e^(- alpha t)u(-t)rightarrowfrac(1, s+ alpha ), "Re""lbrace" s"rbrace" < "Re""lbrace" - alpha "rbrace"$，得 $X(s)=-frac(1, s-2)-frac(1, s-3)= frac(5-2s, (s-2)(s-3)), "Re""lbrace" s"rbrace" < 2$，零点 $s=frac(5, 2)$，极点 $s=2, 3$，收敛域为 $x < 2$。
+由变换对 $-e^(- alpha t)u(-t) arrow.r frac(1, s+ alpha ), "Re""lbrace" s"rbrace" < "Re""lbrace" - alpha "rbrace"$，得 $X(s)=-frac(1, s-2)-frac(1, s-3)= frac(5-2s, (s-2)(s-3)), "Re""lbrace" s"rbrace" < 2$，零点 $s=frac(5, 2)$，极点 $s=2, 3$，收敛域为 $x < 2$。
 
 *习题* 9.22
 对下列每个拉普拉斯变换，确定时间函数 $x(t)$：
 概念：使拉氏变换积分收敛的那些复数 S 的集合，称为拉氏变换的*收敛域 ROC* (Region of Convergence)。
 (a) $frac(1, s^2+9), "Re""lbrace" s"rbrace" > 0$
-$sin ( omega _0t)u(t)rightarrowfrac( omega _0, s^2+ omega _0^2), "Re""lbrace" s"rbrace" > 0$，又 $frac(1, s^2+9)= frac(1, 3)frac(3, s^2+3^2)$，所以 $x(t)=frac(1, 3) sin (3t)u(t)$。
+$sin ( omega _0 t)u(t) arrow.r frac( omega _0, s^2+ omega _0^2), "Re""lbrace" s"rbrace" > 0$，又 $frac(1, s^2+9)= frac(1, 3)frac(3, s^2+3^2)$，所以 $x(t)=frac(1, 3) sin (3t)u(t)$。
 (b) $frac(s, s^2+9), "Re""lbrace" s"rbrace" < 0$
-$cos ( omega _0t)u(t)rightarrowfrac(s, s^2+ omega _0^2), "Re""lbrace" s"rbrace" > 0$，这里注意 ROC > 0，所以还要又由拉普拉斯变换的时域反褶性质：
-$x(-t)rightarrow X(-s), "ROC" = -R$
-有 $- cos (- omega _0t)u(-t)rightarrowfrac(s, s^2+ omega _0^2), "Re""lbrace" s"rbrace" < 0$，所以 $x(t) = - cos (3t)u(-t)$。
+$cos ( omega _0 t)u(t) arrow.r frac(s, s^2+ omega _0^2), "Re""lbrace" s"rbrace" > 0$，这里注意 ROC > 0，所以还要又由拉普拉斯变换的时域反褶性质：
+$x(-t) arrow.r X(-s), "ROC" = -R$
+有 $- cos (- omega _0 t)u(-t) arrow.r frac(s, s^2+ omega _0^2), "Re""lbrace" s"rbrace" < 0$，所以 $x(t) = - cos (3t)u(-t)$。
 (d) $frac(s+2, s^2+7s+12), -4 < "Re""lbrace" s"rbrace" < -3$
 拆成 $frac(-1, s+3)+frac(2, s+4)$，再由题 9.11 的变换对得出 $x(t)=e^(-3t)u(-t)+2e^(-4t)u(t)$。
 (e) $frac(s+1, s^2+5s+6), -3 < "Re""lbrace" s"rbrace" < -2$

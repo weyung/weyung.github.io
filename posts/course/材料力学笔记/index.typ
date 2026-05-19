@@ -74,9 +74,9 @@ $ sigma = frac(F_"N", A) "leqslant" [ sigma ] $
 
 === 轴向拉伸或压缩时的变形
 
-$ Delta l = frac(F_"N"l, EA) = frac(Fl, EA) $
+$ Delta l = frac(F_"N" l, E A) = frac(F l, E A) $
 
-可以看出，对长度相同、受力相等的杆件，$EA$ 越大变形 $Delta l$ 就越小，所以 $EA$ 越大的材料越强，称为杆件的抗拉（压）*刚度*。
+可以看出，对长度相同、受力相等的杆件，$E A$ 越大变形 $Delta l$ 就越小，所以 $E A$ 越大的材料越强，称为杆件的抗拉（压）*刚度*。
 
 试验表明，应力不超过比例极限时横向应变 $epsilon.alt '$ 与轴向应变 $epsilon.alt$ 之比是一个常数，即
 $ mu = -frac( epsilon.alt ', epsilon.alt ) $
@@ -84,7 +84,7 @@ $mu$ 称为横向变形因数或*泊松比*。之所以有个负号，是因为�
 
 === 轴向拉伸或压缩时的应变能
 
-杆件拉伸时，有 $W = frac(1, 2)F Delta l$，忽略动能、热能等变化，杆件就只存到了应变能 $V_ epsilon.alt = W = frac(1, 2)F Delta l = frac(F^2l, 2EA)$，比能 $v_ epsilon.alt = frac(1, 2) sigma epsilon.alt$。
+杆件拉伸时，有 $W = frac(1, 2)F Delta l$，忽略动能、热能等变化，杆件就只存到了应变能 $V_ epsilon.alt = W = frac(1, 2)F Delta l = frac(F^2 l, 2 E A)$，比能 $v_ epsilon.alt = frac(1, 2) sigma epsilon.alt$。
 
 *能量法*解题时需要计算应变能。
 
@@ -129,9 +129,9 @@ $ W_"t" = frac( pi , 16D)(D^4 - d^4) = frac( pi D^3, 16)(1 - alpha ^4) $
 === 圆轴扭转时的变形
 
 距离为 $l$ 的两个横截面之间的*相对转角*为
-$ phi.alt = frac(Tl, G I_"p") $
+$ phi.alt = frac(T l, G I_"p") $
 $phi.alt$ 的变化率 $phi.alt '$ 为*单位长度扭转角*，单位为 rad/m，即
-$ phi.alt '_"max" = frac(T, G I_"p") "leqslant" [ phi.alt '] $
+$ phi.alt '_"max" = frac(T, G I_"p") lt.eq [ phi.alt '] $
 式中 $I_"p"$ 为横截面对圆心 $O$ 点的极惯性矩，即
 $ I_"p" = integral _A rho ^2 "d"A $
 圆截面的 $I_"p" = frac( pi D^4, 32)$，空心圆截面的 $I_"p" = frac( pi D^4, 32)(1 - alpha ^4)$。
@@ -139,18 +139,18 @@ $ I_"p" = integral _A rho ^2 "d"A $
 === 圆柱形密圈螺旋弹簧的应力和变形
 
 弹簧最大切应力
-$ tau _"max" = (frac(4c-1, 4c-4)+frac(0.615, c))frac(8FD, pi d^3) = kfrac(8FD, pi d^3) $
+$ tau _"max" = (frac(4c-1, 4c-4)+frac(0.615, c))frac(8 F D, pi d^3) = k frac(8 F D, pi d^3) $
 式中 $c=frac(D, d)$ 为*弹簧指数*，$k$ 为曲度系数。
 
 ==== 刚度系数
 
-$ C = frac(Gd^4, 8D^3n) = frac(Gd^4, 64R^3n) $
+$ C = frac(G d^4, 8 D^3 n) = frac(G d^4, 64 R^3 n) $
 代表弹簧抵抗变形的能力。
 变形 $lambda = frac(F, C)$ 。
 
 === 非圆截面杆扭转的概念
 
-$ tau _"max" = frac(T, alpha hb^2) $
+$ tau _"max" = frac(T, alpha h b^2) $
 
 == 弯曲内力
 
@@ -201,7 +201,7 @@ $ sigma _"max" = frac(M_"max", W) $
 $W$ 称为*抗弯截面系数*，与截面的几何形状有关，单位为 $"m"^3$ 。
 
 若截面是高为 $h$、宽为 $b$ 的矩形，则
-$ W = frac(I_z, h/2) = frac(bh^3/12, h/2) = frac(bh^2, 6) $
+$ W = frac(I_z, h/2) = frac(b h^3/12, h/2) = frac(b h^2, 6) $
 若截面是直径为 $d$ 的圆形，则
 $ W = frac(I_z, d/2) = frac( pi d^4/64, d/2) = frac( pi d^3, 32) $
 类似地，空心圆形截面的抗弯截面系数为
@@ -218,7 +218,7 @@ $ S_z^* = integral _(A_1)y_1"d"A $
 $ tau _"max" = frac(F_"Smax"S^*_"zmax", I_z b) $
 
 *矩形*截面梁的最大切应力
-$ tau _"max" = frac(3, 2)frac(F_"S", bh) $
+$ tau _"max" = frac(3, 2)frac(F_"S", b h) $
 为平均切应力的 1.5 倍。
 
 *圆形*截面梁的最大切应力
@@ -229,7 +229,7 @@ $ tau _"max" = frac(4, 3)frac(F_"S", pi R^2) $
 
 对抗拉和抗压强度相同的材料（如碳钢）宜采用中性轴对称的截面，对抗拉和抗压强度不相等的材料（如铸铁）宜采用中性轴*偏向于受拉一侧*的截面形状。
 如能使 $y_1$ 和 $y_2$ 之比接近于下列关系：
-$ frac( sigma _"tmax", sigma _"cmax") = frac(M_"max"y_1, Iz)/frac(M_"max"y_2, Iz) = frac(y_1, y_2) = frac([ sigma _"t"], [ sigma _"c"]) $
+$ frac( sigma _"tmax", sigma _"cmax") = frac(M_"max" y_1, I_z)/frac(M_"max" y_2, I_z) = frac(y_1, y_2) = frac([ sigma _"t"], [ sigma _"c"]) $
 式中 $[ sigma _"t"]$ 和 $[ sigma _"c"]$ 分别表示拉伸（Tension）和压缩（Compression）的许用应力，则最大拉应力和最大压应力可同时接近许用应力。
 强度校核时超过百分之 $5$ 以内都可接受（跟开车超速一点点不扣分差不多）。
 
@@ -242,7 +242,7 @@ $ frac( sigma _"tmax", sigma _"cmax") = frac(M_"max"y_1, Iz)/frac(M_"max"y_2, Iz
 === 用积分法求弯曲变形
 
 边界条件：在固定端，挠度和转角都为零，在铰支座上，挠度为零。
-$ EIw'' = M(x) $
+$ E I w'' = M(x) $
 然后对 $x$ 积分两次，代入边界条件和连续条件确定积分常数，得到挠曲线方程。
 注意 $w'$ 即为 $theta$ 。
 
@@ -259,15 +259,15 @@ $ EIw'' = M(x) $
 === 二向和三向应力状态的实例
 
 圆筒的壁厚 $delta$ 远小于它的内径 $D$ 时，称为*薄壁圆筒*。若封闭的薄壁圆筒所受内压为 $p$ ，则其横截面上应力
-$ sigma ' = frac(F, A) = frac(p dot.op "frac" pi D^2, 4) pi D delta = frac(pD, 4 delta ) $
+$ sigma ' = frac(F, A) = frac(p dot.op frac(pi D^2, 4), pi D delta) = frac(p D, 4 delta ) $
 纵向截面上应力
-$ sigma '' = frac(pD, 2 delta ) $
+$ sigma '' = frac(p D, 2 delta ) $
 
 在研究一点的应力状态时，通常用 $sigma _1, sigma _2, sigma _3$ 代表该点的三个主应力，并以 $sigma _1$ 代表代数值最大的主应力，$sigma _3$ 代表代数值最小的主应力，即 $sigma _1 "geqslant" sigma _2 "geqslant" sigma _3$ 。
 
 === 二向应力状态分析————解析法
 
-$sigma _x$ 和 $tau _(xy)$ 是*法线与 $x$ 轴平行*的面上的正应力和切应力；$sigma _y$ 和 $tau _(yx)$ 是*法线与 $y$ 轴平行*的面上的正应力和切应力。
+$sigma _x$ 和 $tau _(x y)$ 是*法线与 $x$ 轴平行*的面上的正应力和切应力；$sigma _y$ 和 $tau _(y x)$ 是*法线与 $y$ 轴平行*的面上的正应力和切应力。
 符号规定：正应力拉正压负，切应力对单元体内任意点的矩为*顺时针*转向时为正，反之为负，这里与平常不同。
 取任意斜截面，其外法线 $n$ 与 $x$ 轴的夹角为 $alpha$ 。规定：由 $x$ 轴转到*外法线* $n$ 为*逆时针*转向时，则 $alpha$ 为正。
 
@@ -277,29 +277,29 @@ $ .
  sigma _"min"
 "endaligned"
 \}
-= frac( sigma _x+ sigma _y, 2) plus.minus sqrt((frac( sigma _x- sigma _y, 2))^2 + tau _(xy)^2) $
+= frac( sigma _x+ sigma _y, 2) plus.minus sqrt((frac( sigma _x- sigma _y, 2))^2 + tau _(x y)^2) $
 $ .
 "beginaligned"
  tau _"max" \\
  tau _"min"
 "endaligned"
 \}
-= plus.minus sqrt((frac( sigma _x- sigma _y, 2))^2 + tau _(xy)^2) $
-$ sigma _ alpha = frac( sigma _x+ sigma _y, 2) + frac( sigma _x- sigma _y, 2) cos 2 alpha - tau _(xy) sin 2 alpha \\
- tau _ alpha = frac( sigma _x- sigma _y, 2) sin 2 alpha + tau _(xy) cos 2 alpha $
+= plus.minus sqrt((frac( sigma _x- sigma _y, 2))^2 + tau _(x y)^2) $
+$ sigma _ alpha = frac( sigma _x+ sigma _y, 2) + frac( sigma _x- sigma _y, 2) cos 2 alpha - tau _(x y) sin 2 alpha \\
+ tau _ alpha = frac( sigma _x- sigma _y, 2) sin 2 alpha + tau _(x y) cos 2 alpha $
 
 === 二向应力状态分析————图解法
 
 上面两式两边平方然后相加可消去 $alpha$ ，得
-$ ( sigma _ alpha -frac( sigma _x+ sigma _y, 2))^2 + tau _ alpha ^2 = (frac( sigma _x- sigma _y, 2))^2 + tau _(xy)^2 $
-$sigma _x, sigma _y, tau _(xy)$ 均为已知量，可此式是一个以 $sigma _ alpha$ 和 $tau _ alpha$ 为变量的圆方程，以横坐标表示 $sigma$ ，纵坐标表示 $tau$ ，则圆心横坐标为 $frac(1, 2)( sigma _x+ sigma _y)$ ，纵坐标为零，半径为 $sqrt((frac( sigma _x- sigma _y, 2))^2 + tau _(xy)^2)$ 。这一圆周称为*应力圆*。
+$ ( sigma _ alpha -frac( sigma _x+ sigma _y, 2))^2 + tau _ alpha ^2 = (frac( sigma _x- sigma _y, 2))^2 + tau _(x y)^2 $
+$sigma _x, sigma _y, tau _(x y)$ 均为已知量，可此式是一个以 $sigma _ alpha$ 和 $tau _ alpha$ 为变量的圆方程，以横坐标表示 $sigma$ ，纵坐标表示 $tau$ ，则圆心横坐标为 $frac(1, 2)( sigma _x+ sigma _y)$ ，纵坐标为零，半径为 $sqrt((frac( sigma _x- sigma _y, 2))^2 + tau _(x y)^2)$ 。这一圆周称为*应力圆*。
 
 作法：
 
-+ 在坐标系取点 $A( sigma _x,0)$ ，$D( sigma _x, tau _(xy))$ ，$B( sigma _y,0)$ ，$D'( sigma _y,- tau _(xy))$ 。
-+ 连接 $D$ 和 $D'$ ，与横坐标交于 $C$ 点，以 $C$ 为圆心， $CD$ 为半径画圆，得到应力圆。
++ 在坐标系取点 $A( sigma _x,0)$ ，$D( sigma _x, tau _(x y))$ ，$B( sigma _y,0)$ ，$D'( sigma _y,- tau _(x y))$ 。
++ 连接 $D$ 和 $D'$ ，与横坐标交于 $C$ 点，以 $C$ 为圆心， $C D$ 为半径画圆，得到应力圆。
 
-在应力圆上，从 $D$ 点（它代表以 $x$ 轴为法线的面上的应力）也按逆时针方向沿圆周转到 $E$ 点，且使 $DE$ 弧所对圆心角为 $alpha$ 的 $2$ 倍，则 $E$ 点的坐标就代表以 $n$ 为法线的斜面上的应力。
+在应力圆上，从 $D$ 点（它代表以 $x$ 轴为法线的面上的应力）也按逆时针方向沿圆周转到 $E$ 点，且使 $D E$ 弧所对圆心角为 $alpha$ 的 $2$ 倍，则 $E$ 点的坐标就代表以 $n$ 为法线的斜面上的应力。
 
 === 三向应力状态
 
@@ -333,7 +333,7 @@ $ sigma _"rM" = sigma _1 - frac([ sigma _t], [ sigma _c]) sigma _3 $
 
 === 扭转与弯曲的组合
 
-$ M = sqrt(M_(y"max")^2+M_z"max")^2 $
+$ M = sqrt(M_(y"max")^2+M_(z"max")^2) $
 按第三强度理论，有
 $ sqrt( sigma ^2+4 tau ^2) "leqslant" [ sigma ] \\
 frac(1, W)sqrt(M^2+T^2) "leqslant" [ sigma ] $
@@ -352,7 +352,7 @@ frac(1, W)sqrt(M^2+0.75T^2) "leqslant" [ sigma ] $
 === 其他支座条件下细长压杆的临界压力
 
 欧拉公式的普遍形式为
-$ F_"cr" = frac( pi ^2EI, ( mu l)^2) $
+$ F_"cr" = frac( pi ^2 E I, ( mu l)^2) $
 式中 $mu l$ 表示把压杆折算成两端铰支杆的长度，称为相当长度，$mu$ 称为长度因数，不同情况下的长度因数 $mu$ 列表如下：
 
 | 压杆的约束条件 | 长度因数 |
@@ -364,11 +364,11 @@ $ F_"cr" = frac( pi ^2EI, ( mu l)^2) $
 
 === 欧拉公式的适用范围 经验公式
 
-$ sigma _"cr" = frac(F_"cr", A) = frac( pi ^2EI, ( mu l)^2A) $
+$ sigma _"cr" = frac(F_"cr", A) = frac( pi ^2 E I, ( mu l)^2A) $
 $sigma _"cr"$ 称为临界应力。把横截面的惯性矩 $I$ 写成
 $ I = i^2A $
 上式可以写成
-$ sigma _"cr" = frac( pi ^2E, ("frac" mu l){i)^2A} $
+$ sigma _"cr" = frac( pi ^2 E, (frac( mu l, i))^2 A) $
 引用记号
 $ lambda = frac( mu l, i) $
 $lambda$ 是一个量纲一的量，称为柔度或长细比，综合反映了压杆的长度、约束条件、截面尺寸和形状等因素对临界应力 $sigma _"cr"$ 的影响。计算临界应力的公式可以写成
@@ -399,7 +399,7 @@ $ S_z = A"cdotoverline"(y), quad S_y = A"cdotoverline"(z) $
 在坐标 $(y,z)$ 处，取微面积 $"d"A$ ，遍及整个图形面积 $A$ 的积分
 $ I_y = integral _A z^2"d"A, quad I_z = integral _A y^2"d"A $
 分别定义为图形对 $y$ 轴和 $z$ 轴的*惯性矩*，也称为图形对 $y$ 轴和 $z$ 轴的*二次矩*。惯性矩的量纲是长度的四次方。
-矩形的对形心轴的 $I_z$ 为 $frac(bh^3, 12)$ 。
+矩形的对形心轴的 $I_z$ 为 $frac(b h^3, 12)$ 。
 力学计算中，有时把惯性矩写成图形面积 $A$ 与某一长度的平方的乘积，即
 $ I_y = A dot.op i_y^2, quad I_z = A dot.op i_z^2 $
 或者改写为
@@ -414,11 +414,11 @@ $ I_"p" = integral _A (y^2+z^2)"d"A = integral _A y^2"d"A + integral _A z^2"d"A 
 === 惯性积
 
 在坐标 $(y,z)$ 处，取微面积 $"d"A$ ，遍及整个图形面积 $A$ 的积分
-$ I_(yz) = integral _A yz"d"A $
+$ I_(y z) = integral _A y z"d"A $
 定义为图形对 $y,z$ 轴的*惯性积*。惯性积的量纲是长度的四次方。
 坐标系的两根坐标轴中只要有一根为图形对称轴，则图形对这一坐标系的惯性积就等于零。
 
 === 平行移轴公式
 
-$ I_y = I_(yC) + a^2A \\
-I_z = I_(zC) + b^2A \\ $
+$ I_y = I_(y C) + a^2 A \\
+I_z = I_(z C) + b^2 A \\ $

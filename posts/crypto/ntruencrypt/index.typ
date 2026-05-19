@@ -26,7 +26,7 @@ NTRUEncrypt 是一个公钥加密系统，它的安全性基于这样一个问�
 #image("src=http%3A%2F%2Fauthorize.zhongbi.net%2Fd%2Ffile%2Ftu%2F2018%2F12%2F27%2F0wlyvy")
 
 + Bob 根据选定的 $N,p,q$ 生成最高次为 $N-1$ 的 $f$ 和 $g$ *两个多项式*，并且系数在 $-1,0,1$ 中选取（可以认为这俩是在模 $X^(N)-1$ 的剩余类中）。 $f$ 还要满足*模 $q$ 和 $p$ 的逆元存在*，如果不满足，那就重新生成。
-+ 分别计算 $f$ 模 $p$ 和模 $q$ 的逆元，即 $f_(p)$ 和 $f_(q)$ ，*保留 $f$ , $f_(p)$ 及 $g$ 作为私钥，公钥 $h=pf_(q) dot.op g mod q$ 。*
++ 分别计算 $f$ 模 $p$ 和模 $q$ 的逆元，即 $f_(p)$ 和 $f_(q)$ ，*保留 $f$ , $f_(p)$ 及 $g$ 作为私钥，公钥 $h=p f_(q) dot.op g mod q$ 。*
 
 sagemath 代码如下
 
@@ -94,14 +94,14 @@ def encrypt(message, public_key):
 
 == 解密
 
-由于其他人不知道 $r$ ，所以无法直接 $m=e-rh$ ，但 Bob 拿到 $e$ 后，可以计算出
+由于其他人不知道 $r$ ，所以无法直接 $m=e-r h$ ，但 Bob 拿到 $e$ 后，可以计算出
 $ "beginequation"*
 "beginsplit"
  a
  & = f dot.op e mod q\\
  & = f dot.op (r dot.op h+m) mod q\\
- & = f dot.op (r dot.op pf_(q) dot.op g+m) mod q\\
- & = pr dot.op g + f dot.op m mod q
+ & = f dot.op (r dot.op p f_(q) dot.op g+m) mod q\\
+ & = p r dot.op g + f dot.op m mod q
 "endsplit"
 "endequation"* $
 关键部分来了，以上都是在模 $q$ 下进行，而这时忽然就变成了模 $p$
@@ -129,7 +129,7 @@ def decrypt(encrypted_message, secret_key):
 === 卷积
 
 多项式卷积满足公式
-$ a(x)*b(x) = c(x) with c_k = sum _(i+j=k "pmod") a_i b_(k-i mod N) $
+$ a(x)*b(x) = c(x) "with" c_k = sum _(i+j=k "pmod") a_i b_(k-i mod N) $
 举个栗子：
 $ f(x)=-1+4x+x^2 \\
  g(x)=3-x+5x^2 $
@@ -285,17 +285,15 @@ if __name__ == '__main__':
 
 显然函数和上面的基本一样，只是名称相应地缩短了一下。
 攻击方法是构造如下的一个格，然后进行规约
-$ (
-"beginarraycccc"|cccc
- lambda & 0 & dots.c & 0 & h_0 & h_1 & dots.c & h_(N-1) \\
-0 & lambda & dots.c & 0 & h_(N-1) & h_0 & dots.c & 0 \\
- dots.v & dots.v & dots.down & dots.v & dots.v & dots.v & dots.down & 0 \\
-0 & 0 & dots.c & lambda & h_1 & h_2 & dots.c & h_0 \ "hline"
-0 & 0 & dots.c & 0 & q & 0 & dots.c & 0 \\
-0 & 0 & dots.c & 0 & 0 & q & dots.c & 0 \\
- dots.v & dots.v & dots.down & dots.v & dots.v & dots.v & dots.down & dots.v \\
-0 & 0 & dots.c & 0 & 0 & 0 & dots.c & q
-"endarray"
+$ mat(augment: #(vline: 4, hline: 4),
+  lambda, 0, dots.c, 0, h_0, h_1, dots.c, h_(N-1);
+  0, lambda, dots.c, 0, h_(N-1), h_0, dots.c, 0;
+  dots.v, dots.v, dots.down, dots.v, dots.v, dots.v, dots.down, 0;
+  0, 0, dots.c, lambda, h_1, h_2, dots.c, h_0;
+  0, 0, dots.c, 0, q, 0, dots.c, 0;
+  0, 0, dots.c, 0, 0, q, dots.c, 0;
+  dots.v, dots.v, dots.down, dots.v, dots.v, dots.v, dots.down, dots.v;
+  0, 0, dots.c, 0, 0, 0, dots.c, q;
 ) $
 具体可以参考这篇 Paper: #link("https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.578.5423&rep=rep1&type=pdf")
 取 $lambda =1$ ，规约后最短向量即为 $[f space g]$ ，然后就可以计算私钥解密了。

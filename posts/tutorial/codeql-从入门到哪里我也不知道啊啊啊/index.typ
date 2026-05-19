@@ -51,6 +51,7 @@ select ifstmt, "This 'if' statement is redundant."
 == 又老又新的语法，落后的 AI
 
 我用 AI 生成的 QL 查询语句，基本没有能跑的，查了好久发现 DataFlow 进行过一次#link("https://github.blog/changelog/2023-08-14-new-dataflow-api-for-writing-custom-codeql-queries/")[改革]
+
 旧语法在 2024 年 12 月开始就开始完全不支持了，但是互联网的资料基本都停留在 2020 年左右，导致基本没法抄
 
 以下是传统派的写法：
@@ -123,6 +124,7 @@ sudo chown -R $(whoami):$(whoami) <dir>
 ```
 
 现在我找到了一个 SQL 注入漏洞，想用 CodeQL 把它查出来，但是我不知道怎么写查询语句。
+
 大概测了一下，发现 Source 和 Sink 都能找到，但是路径一条都没找出来。
 
 因为现在漏洞还没公开，先暂停更新

@@ -17,7 +17,7 @@ misc 搞一搞变成 re，然后塞到 crypto 里面，啥卵出题人的嘛嘛�
 
 == 分析
 
-首先 IDA 打开看一下，哎您猜怎么着，依托答辩，除了一开始的 MT19937 能瞪出来，后面一堆迷惑操作根本不知道在搞什么飞机
+首先 IDA 打开看一下，哎您猜怎么着，依托答辩，除了一开始的 MT19937 能瞪出来，后面一堆迷惑操作根本不知道在搞什么飞机\
 这时需要选手稍微顿悟一下，猜出这是隐写算法 #link("http://dde.binghamton.edu/download/syndrome/")[Syndrome-Trellis Codes]
 
 // TODO

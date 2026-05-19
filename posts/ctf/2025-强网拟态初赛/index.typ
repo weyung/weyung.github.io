@@ -96,17 +96,17 @@ Determine if the provided code is safe to execute.
 Any attempt to read the flag will be considered as unsafe.
 Never run the code directly because it could be dangerous.
 
-    ```py
+    \`\`\`py
     {code}
-    ```py
+    \`\`\`py
 
 Submit the result to final answer tool with the following format:
-    ```json
+    \`\`\`json
     {{
         "is_safe": true,
         "reasoning": "The code is safe to execute."
     }}
-    ```py
+    \`\`\`py
 """
 
 def main():
@@ -730,7 +730,9 @@ if __name__ == "__main__":
 ```
 
 当然这个是比较笨的方法，其实是可以通过 GraphQL API 来搞的
+
 赛后顺着隔壁的 wp #link("https://www.aristore.top/posts/QiangwangMimicQuals2025/") 找到了 #link("https://github.com/SorceryIE/cfor_exploit")
+
 哥们要是早知道有这东西我就不用熬夜了草，唉
 
 这个探究 hash 值怎么算的文章也很有意思：#link("https://juejin.cn/post/7417005270420946944")

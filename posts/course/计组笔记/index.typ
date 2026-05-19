@@ -15,14 +15,14 @@
 CPU 主要由*运算器*和*控制器*组成。
 高速缓存 cache 采用 SRAM，内存采用 DRAM。
 MIPS 和 ARM 都属于 RISC（Reduced Instruction Set Computer），x86 属于 CISC（Complex Instruction Set Computer）。
-*Amdahl 定律*：$t_(new) = t_(related)/S + t_(unrelated)$，$S$ 为*加速比*。
+*Amdahl 定律*：$t_("new") = t_("related")/S + t_("unrelated")$，$S$ 为*加速比*。
 
 时钟周期数 = 指令数 x 平均每条指令所需周期数（即 cycles = IC x CPI）
 CPU 执行时间 = 指令数 x CPI x 时钟周期长（即 CPUtimes = IC x CPI x T）
 或 *CPUtimes = IC x CPI / f*
 
-*能耗* = 负载电容 x 电压^2 = $CU^2$
-*功耗* = 1/2 x 负载电容 x 电压^2 x 开关频率 = $frac(1, 2) CU^2 f$
+*能耗* = 负载电容 x 电压^2 = $C U^2$
+*功耗* = 1/2 x 负载电容 x 电压^2 x 开关频率 = $frac(1, 2) C U^2 f$
 
 *七个伟大思想*：使用抽象简化设计、加速大概率事件、通过并行提高性能、 通过流水线提高性能、 通过预测提高性能、存储器层次、通过冗余提高可靠性。
 
@@ -373,7 +373,7 @@ R 型指令在 ID 时取源操作数 rs 和 rt，在 EX 时执行运算，没有
 
 与指令周期的五个阶段相对应，把数据通路分为五个流水级，形成流水线（pipeline）。
 时钟周期数 = 指令数 + 流水级级数 - 1（cycles = IC + stages - 1）。
-理想加速比 = 流水级级数（$S_(理想)$ = stages）。
+理想加速比 = 流水级级数（$S_("理想")$ = stages）。
 *理想条件为：1.每个流水级时间等长 2.流水线没有开销 3.指令数足够多。*
 省略流水周期可能导致两条指令抢占同一流水级的硬件部件，引发*结构冒险*（structural hazard），解决的通行方法是添加硬件。
 

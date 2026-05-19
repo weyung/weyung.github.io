@@ -45,7 +45,7 @@ $ f'(c) = frac(f(b)-f(a), b-a) $
 
 ==== 泰勒公式
 
-常用 $(xarrow0)$：
+常用 $(x -> 0)$：
 
 + $e^x=1+x+frac(1, 2!)x^2+ dots.c +frac(1, n!)x^n+o(x^n)$
 + $sin x = x - frac(1, 3!)x^3 + dots.c + (-1)^(n-1)"fracx"^(2n-1)(2n-1)! + o(x^(2n))$

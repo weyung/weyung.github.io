@@ -49,7 +49,9 @@ resultSet = ps.executeQuery();
 ```
 
 可以看到，`conn.PreparedStatement()` 函数直接把 SQL 语句编译好了，后面只是传参 + 执行。
+
 可能读者咋一眼看上去会觉得没什么区别，我拿大家都熟悉的场景来举个例子：
+
 相信大家都是接触过 C 语言的，没有预编译的 SQL 就相当于你可以操作 `\*.c` 文件给编译器编译并执行，可以把 `int a=?;` 填成 `int a=1; system("rm -rf /");`，而预编译的 SQL 就相当于编译了一段 `int a=0;scanf("%d", &a);`，现在程序只负责接收参数并执行，根本无法编译恶意代码。
 
 == CTFshow 刷题记录
@@ -57,6 +59,7 @@ resultSet = ps.executeQuery();
 === web171 - web175
 
 给 Xenny 充点钱，在 #link("https://www.nssctf.cn/problem/sheet/10708")[NSS] 上吸收了一下知识，读者如果像我一样也是个小白也可以去支持一下，十来块钱不算贵。
+
 以 CTFshow 的 web171 为例，查询语句题目直接给出（不会有人不知道 PHP 能用 `.` 拼接字符串吧）
 
 ```php
@@ -70,6 +73,7 @@ $sql = "select username,password from user where username !='flag' and id = '".$
 ```
 
 换成 4 就报错，说明列数为 3
+
 那么采用联注，语句如下：
 
 ```sql
@@ -77,6 +81,7 @@ $sql = "select username,password from user where username !='flag' and id = '".$
 ```
 
 结果分别为 `ctfshow_web`, `10.3.18-MariaDB`, `root\@localhost`
+
 查表：
 
 ```sql
@@ -84,6 +89,7 @@ $sql = "select username,password from user where username !='flag' and id = '".$
 ```
 
 结果为 `ctfshow_user`
+
 再查列：
 
 ```sql
@@ -91,6 +97,7 @@ $sql = "select username,password from user where username !='flag' and id = '".$
 ```
 
 结果为分别为 `id`, `username`, `password`
+
 最后直接套出整个表，当然根据题意加个 `where username = 'flag'` 也行：
 
 ```sql
@@ -188,6 +195,7 @@ print(f"Final value: {value}")
 ```
 
 注意到 python 用 https 时需要加上 `verify=False`，否则会报错，还要加上 `urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)` 来禁止警告。
+
 Python 的 `requests` 还有个坑就是会把 params 猛猛地 urlencode 一遍，导致最终的 url 面目全非，从而导致 payload 不生效。
 
 web175 拦截更离谱了，直接啥都拦了

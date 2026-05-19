@@ -205,7 +205,9 @@ print(f"Final value: {value}")
 === puzzle
 
 打开是一个拼图网页，刷新几次发现并不能随机到初始即正确的情况，按 `F12` 发现被拦截，在 bp 看到逻辑是在 `index.html` 里的 JS 加入了对 `contextmenu` 和 `keydown` 的监听，同时发现网页引用了 `/js/puzzle.js`。
+
 那么我们直接访问 `/js/puzzle.js`，即可绕过拦截打开控制台。
+
 然后一看，我嘞个一大坨 JS 啊，直接把代码丢给 DeepSeek，花了几毛钱直接判断出变量 `ogde564hc3f4` 控制是否完成，本地修改一下 `ogde564hc3f4` 的值为 `true`，然后在 2 秒内随便点一下就出 flag 了：`flag{Y0u__aRe_a_mAsteR_of_PUzZL!!\@!!~!}`
 
 == Crypto
@@ -708,53 +710,62 @@ print(flag.decode())
 
 我大概翻译一下，问题形式如下：
 
-$ X_(i+1) = (AX_i + C) mod 2^(n) \\
-Y_i = (X_i/2^(n/2)) plus.circle (X_imod 2^(n/2)) $
+$ X_(i+1) = (A X_i + C) mod 2^(n) \
+Y_i = (X_i/2^(n/2)) xor (X_i mod 2^(n/2)) $
 
 解法：
+
 Step 1
+
 先找到 $|w_i|<W$ 使得
 
-$ sum _(i=1)^(m) w_i A^i equiv 0 mod 2^(n/2+k) $
+$ sum _(i=1)^(m) w_i A^i equiv 0 (mod 2^(n/2+k)) $
 
 这里可以用一个如下形式的格做 LLL 求解：
 
-$ "beginpmatrix"
-1 & 0 & 0 & dots.c & 0 & KA \\
-0 & 1 & 0 & dots.c & 0 & KA^2 \\
- dots.v & dots.v & dots.v & dots.down & dots.v & dots.v \\
-0 & 0 & 0 & dots.c & 1 & KA^m \\
-0 & 0 & 0 & dots.c & 0 & K dot.op 2^(n/2+k) \\
-"endpmatrix" $
+$ mat(delim: "(",
+1, 0, 0, dots.c, 0, K A;
+0, 1, 0, dots.c, 0, K A^2;
+dots.v, dots.v, dots.v, dots.down, dots.v, dots.v;
+0, 0, 0, dots.c, 1, K A^m;
+0, 0, 0, dots.c, 0, K dot.op 2^(n/2+k);
+) $
 
 其中 $K$ 取适合大的值。
 
 Step 2
+
 然后猜 $X_0$ 的低 $k$ 位，若 C 未知，同步猜测 $C$ 的低 $k$ 位，依据这俩把整个 $X_i$ 推出来。
 
 Step 3
-此时可以理解成 $X_0$ 和 $C$ 的低 $k$ 位已知，用 $Y_i$ 把 $X_i$ 左半部分的低 $k$ 位也还原出来（这里没看懂的的去看#link("https://tangcuxiaojikuai.xyz/post/cb7cb618.html")[鸡块哥的文章]），把这些位记为 $X_i^_$，即有 $X_i^_ = 2^(n/2) times "guess"$
+
+此时可以理解成 $X_0$ 和 $C$ 的低 $k$ 位已知，用 $Y_i$ 把 $X_i$ 左半部分的低 $k$ 位也还原出来（这里没看懂的的去看#link("https://tangcuxiaojikuai.xyz/post/cb7cb618.html")[鸡块哥的文章]），把这些位记为 $X_i^ast$，即有 $X_i^ast = 2^(n\/2) times "guess"$
 
 Step 4
+
 推出下面的式子：
 
 $ sum _(i=1)^(m) w_i [X_(i+1) - X_i] equiv 0 mod 2^(n/2+k) $
 
 Step 5
+
 计算
-$ Z = sum _(i=1)^(m) w_i [X_(i+1)^* - X_i^*] mod 2^(n/2+k) $
+$ Z = sum _(i=1)^(m) w_i [X_(i+1)^ast - X_i^ast] mod 2^(n\/2+k) $
 记 $Delta$ 为 $Z$ 与 0 或 $2^(n/2+k)$ 的差值（选最小的一个）
 
 Step 6
-若 $Delta >= 2mW dot.op 2^(n/2)$，那对于 $X_i$ 的低 $k$ 位的猜测肯定是错的，否则就有 $1-2mW dot.op 2^(-k)$ 的概率是对的。
+
+若 $Delta >= 2 m W dot.op 2^(n/2)$，那对于 $X_i$ 的低 $k$ 位的猜测肯定是错的，否则就有 $1-2 m W dot.op 2^(-k)$ 的概率是对的。
 
 Step 7
+
 对不同的 $Y_i$ 尝试所有 $2^k$ 的猜测，直接只剩下最后一个猜测，就是 $X_0$ 的低 $k$ 位。
 
 Step 8
+
 重复以上步骤，直到 $X_0$ 的所有位都被还原。
 
-$k$ 应该比 $log _2mW$ 大很多，不然 step 6 的判定就很难起作用。
+$k$ 应该比 $log _2 m W$ 大很多，不然 step 6 的判定就很难起作用。
 
 按以上的方法搞一搞，最终 flag 为 `XYCTF{0h_3v3n_X0R_c\@n't_s\@v3_LCG!}`
 
@@ -979,6 +990,7 @@ print(flag)
 
 问问 DeepSeek，直接就逆出了 `hints`，但是 flag 还是还原不出来，一看原来 $e$ 跟 $phi.alt (n)$ 不互素，呃呃了，感觉国内出题都喜欢这样
 再看看能不能偷鸡，一看 $e$ 和每个素因子的 `phi` GCD 都是 3，好吧，老老实实开个根
+
 先还原出 $m^9$，再开两次三次方根即可，多拷打两下 DeepSeek 就把代码给出来了
 
 ```python

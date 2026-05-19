@@ -44,8 +44,8 @@ x2 = 199187699060694381663885242512273906292724577502523294449145203935425534938
 
 这题完全是现学现卖，之前只听说过椭圆曲线，然后就跑去学抽代忘记回来了。。。
 首先查到椭圆曲线的加法（两点相同的情形）：
-$ x_2=m^2-2x_1mod p with m=frac(3x_1^2+a, 2y_1) $
-又在 Sagemath 文档查到曲线定义 $y_1^2=x_1^3+ax_1+b$ ，就能联立出一个一元二次方程，exp 如下：
+$ x_2=m^2-2x_1 mod p "with" m=frac(3x_1^2+a, 2y_1) $
+又在 Sagemath 文档查到曲线定义 $y_1^2=x_1^3+a x_1+b$ ，就能联立出一个一元二次方程，exp 如下：
 
 ```python
 p = 3660057339895840489386133099442699911046732928957592389841707990239494988668972633881890332850396642253648817739844121432749159024098337289268574006090698602263783482687565322890623
@@ -311,8 +311,8 @@ for x, y in combinations(result, 2):
 === 原理
 
 RSA-CRT 签名中计算了：
-$ sigma _p= mu (m)^d modp \\
- sigma _q= mu (m)^dmodq $
+$ sigma _p= mu (m)^d mod p \
+ sigma _q= mu (m)^d mod q $
 然后签名 $sigma = sigma _p dot.op alpha + sigma _q dot.op beta$ ，其中 $alpha =q dot.op (q^(-1)mod p)$ ， $beta =p dot.op (p^(-1)mod q)$ 。
 题目中给出 6 对签名，每对签名用 CRT 不难算出
 $ v= sigma _p dot.op alpha + sigma _q dot.op beta mod N dot.op N' $
@@ -320,23 +320,23 @@ $ v= sigma _p dot.op alpha + sigma _q dot.op beta mod N dot.op N' $
 一对算不出，但是多对可以，组成向量，有：
 $ "boldsymbolv"= alpha "boldsymbolx"+ beta "boldsymboly" $
 其中 $"boldsymbolx"$ 和 $"boldsymboly"$ 是分量 $n/2$ 位的未知向量， $alpha$ 和 $beta$ 是有关 $p$ 和 $q$ 的 CRT 系数。
-不难计算出一组与 $bb(Z)^"ell"$ 中正交于 $"boldsymbolv"$ 的向量的格 $"boldsymbolv"^"bot" in bb(Z)^"ell"$ 的约化基 $"boldsymbol"{b_1,...,"boldsymbolb"\_("ell"-1)}$ 。（可能此时你会疑惑为什么是 $"ell"-1$ 个向量，下面的拓展里有解释）
+不难计算出一组与 $bb(Z)^"ell"$ 中正交于 $"boldsymbolv"$ 的向量的格 $"boldsymbolv"^"bot" in bb(Z)^"ell"$ 的约化基 $"boldsymbol"(b_1,...,"boldsymbolb"\_("ell"-1))$ 。（可能此时你会疑惑为什么是 $"ell"-1$ 个向量，下面的拓展里有解释）
 特别地，我们有：
-$ alpha angle.l "boldsymbolb"_j,"boldsymbolx" angle.r + beta angle.l "boldsymbolb"_j,"boldsymboly" angle.r = 0 quad "for" j=1,2, dots ,"ell"-1 $
+$ alpha ⟨ "boldsymbolb"_j,"boldsymbolx" ⟩ + beta ⟨ "boldsymbolb"_j,"boldsymboly" ⟩ = 0 quad "for" j=1,2, dots ,"ell"-1 $
 #strike[（也不是很特别的感觉）]
 现在观察方程 $alpha dot.op u+ beta dot.op v=0$ ，最小的非零解 $(u,v) in bb(Z)^2$ 是 $plus.minus ( beta ,- alpha )/g$ ，其中 $g= gcd ( alpha , beta )$ 盲猜是非常小的（经测试基本在10以内），意味着 $|u|,|v| >= "mathit" Omega (N)$ 中 $"mathit" Omega$ 常量是非常小的。（啥玩意？）对 $j=1,2, dots ,"ell"-1$ ，有以下两种可能：
 
-*情形1*：$angle.l "boldsymbolb"_j,"boldsymbolx" angle.r = angle.l "boldsymbolb"_j,"boldsymboly" angle.r = 0$ 。此时 $"boldsymbolb"_j$ 属于 $bb(Z)^"ell"$ 中与 $"boldsymbolx"$ 和 $"boldsymboly"$ 正交的向量的格 $L="boldsymbol"{x,"boldsymboly"}^"bot"$
+*情形1*：$⟨ "boldsymbolb"_j,"boldsymbolx" ⟩ = ⟨ "boldsymbolb"_j,"boldsymboly" ⟩ = 0$ 。此时 $"boldsymbolb"_j$ 属于 $bb(Z)^"ell"$ 中与 $"boldsymbolx"$ 和 $"boldsymboly"$ 正交的向量的格 $L="boldsymbol"(x,"boldsymboly")^"bot"$
 
-*情形2*：$angle.l "boldsymbolb"_j,"boldsymbolx" angle.r$ 和 $angle.l "boldsymbolb"_j,"boldsymboly" angle.r$ 有绝对值 $>= "mathit" Omega (N)$ ，其中 $"mathit" Omega (N)$ 是一个小常数。因为 $"boldsymbolx"$ 和 $"boldsymboly"$ 的范数都不超过 $sqrt("ell" N)$ ，由柯西-施瓦茨不等式，这意味着 $||"boldsymbolb"_j|| >= "mathit" Omega (sqrt("ell" N))$
+*情形2*：$⟨ "boldsymbolb"_j,"boldsymbolx" ⟩$ 和 $⟨ "boldsymbolb"_j,"boldsymboly" ⟩$ 有绝对值 $>= "mathit" Omega (N)$ ，其中 $"mathit" Omega (N)$ 是一个小常数。因为 $"boldsymbolx"$ 和 $"boldsymboly"$ 的范数都不超过 $sqrt("ell" N)$ ，由柯西-施瓦茨不等式，这意味着 $||"boldsymbolb"_j|| >= "mathit" Omega (sqrt("ell" N))$
 
-因为格 $L="boldsymbol"{x,"boldsymboly"}^"bot"$ 的秩是 $"ell"-2$ ，当全部 $"ell"-1$ 个向量 $"boldsymbolb"\_j$ 线性无关时情形1不成立，所以最长的 $"boldsymbolb"\_("ell"-1)$ 应该在情形2中，因此 $||"boldsymbolb"\_("ell"-1)|| >= "mathit" Omega (sqrt("ell" N))$ 。另一方面，其他向量形成一个秩为 $"ell"-2$ 的格，且体积
-$ V="vol"(bb(Z)"boldsymbolb"\_1 plus.circle dots.c "oplusbb"(Z)"boldsymbolb"\_("ell"-2)) approx "frac""vol"("boldsymbol"{v^"bot")}||"boldsymbol"{b\_("ell"-1)||}="frac"||"boldsymbol"{v||}||"boldsymbol"{b\_("ell"-1)||} <= "fracsqrt"("ell") dot.op N^(3/2)"mathit"{ Omega (sqrt(N/"ell"))}=O("ell" N) $
+因为格 $L="boldsymbol"(x,"boldsymboly")^"bot"$ 的秩是 $"ell"-2$ ，当全部 $"ell"-1$ 个向量 $"boldsymbolb"\_j$ 线性无关时情形1不成立，所以最长的 $"boldsymbolb"\_("ell"-1)$ 应该在情形2中，因此 $||"boldsymbolb"\_("ell"-1)|| >= "mathit" Omega (sqrt("ell" N))$ 。另一方面，其他向量形成一个秩为 $"ell"-2$ 的格，且体积
+$ V="vol"(bb(Z)"boldsymbolb"\_1 ⊕ dots.c ⊕ bb(Z)"boldsymbolb"\_("ell"-2)) approx frac("vol"("boldsymbolv"^"bot"), ||"boldsymbolb"\_("ell"-1)||)=frac(||"boldsymbolv"||, ||"boldsymbolb"\_("ell"-1)||) <= frac(sqrt("ell") dot.op N^(3\/2), "mathit" Omega (sqrt(N\/"ell")))=O("ell" N) $
 盲猜是一个随机的格。特别地，我们有：
 $ ||"boldsymbolb"\_j||=O(sqrt("ell"-2) dot.op V^(1/("ell"-2)))=O("ell"^(1/2+1/("ell"-2)) dot.op N^(1/("ell"-2))) quad "for" j=1,2, dots ,"ell"-2 $
 
-一旦 $"ell" >= 5$ ，这个长度就远小于 $sqrt(N/"ell")$ 。假设是这种情况，那么对于 $j=1,2,...,"ell"-2$ ， $"boldsymbolb"\_j$ 应该是情形1中。这意味着这些向量生成 $L="boldsymbol"{x,"boldsymboly"}^"bot"$ 中一个满秩的子格 $L'=bb(Z)"boldsymbolb"\_1 plus.circle dots.c "oplusbb"(Z)"boldsymbolb"_("ell"-2)$ 。
-取正交格，我们得到 $(L')^"bot" supset L^"bot"=bb(Z)"boldsymbolx""oplusbb"(Z)"boldsymboly"$。因此， $"boldsymbolx"$ 和 $"boldsymboly"$ 属于 $L'$ 的正交格 $(L')^"bot"$ 。令 $"boldsymbol"{x',"boldsymboly"'}$ 为一组该格的约化基，我们可以枚举 $(L')^"bot"$ 中的长度不超过 $sqrt("ell" N)$ 且为 $"boldsymbolx"'$ 和 $"boldsymboly"'$ 线性组合的所有格向量。高斯启发式表明这大约为：
+一旦 $"ell" >= 5$ ，这个长度就远小于 $sqrt(N/"ell")$ 。假设是这种情况，那么对于 $j=1,2,...,"ell"-2$ ， $"boldsymbolb"\_j$ 应该是情形1中。这意味着这些向量生成 $L="boldsymbol"(x,"boldsymboly")^"bot"$ 中一个满秩的子格 $L'=bb(Z)"boldsymbolb"\_1 ⊕ dots.c ⊕ bb(Z)"boldsymbolb"_("ell"-2)$ 。
+取正交格，我们得到 $(L')^"bot" supset L^"bot"=bb(Z)"boldsymbolx"⊕ bb(Z)"boldsymboly"$。因此， $"boldsymbolx"$ 和 $"boldsymboly"$ 属于 $L'$ 的正交格 $(L')^"bot"$ 。令 $"boldsymbol"(x',"boldsymboly"')$ 为一组该格的约化基，我们可以枚举 $(L')^"bot"$ 中的长度不超过 $sqrt("ell" N)$ 且为 $"boldsymbolx"'$ 和 $"boldsymboly"'$ 线性组合的所有格向量。高斯启发式表明这大约为：
 $ "frac" pi (sqrt("ell" N))^2"vol"((L')^"bot")=frac( pi "ell" N, V)=O(1) $
 这样的向量，所以这肯定是可行的。对这些向量 $"boldsymbolz"$ ，我们计算 $gcd ("boldsymbolv"-"boldsymbolz",N)$ 。我们将因此很快在其中找到 $gcd ("boldsymbolv"-"boldsymbolx",N)$ ，因为 $"boldsymbolx"$ 是一个 $(L')^"bot"$ 中长度 $"leqsqrt"("ell" N)$ 的向量。但根据 $"boldsymbolv"$ 的定义，我们有：
 $ "boldsymbolv"="boldsymbolxmodp" \\
@@ -347,7 +347,7 @@ $ "boldsymbolv"="boldsymbolxmodp" \\
 
 令 $bold(b)_1,...,bold(b)_d$ 为 $"mathit" Lambda$ （这玩意念Lambda）中的向量。如果这 $d$ 个向量在 $bold(Z)$ 上线性无关且 $"mathit" Lambda$ 中的任意元素可以由 $bold(b)_i$ 整系数线性表出，则这 $d$ 个向量形成 $"mathit" Lambda$ 中的一组基。 $"mathit" Lambda$ 中至少存在一组基。 $"mathit" Lambda$ 的基都有相同的基数，称为 $"mathit" Lambda$ 的维度。
 
-如果 $"mathit" Omega$ 包含 $"mathit" Lambda$ ，且两者有相同的维度，则称 $"mathit" Lambda$ 为 $"mathit" Omega$ 在 $bold(Z)^n$ 上的一个子格。（子格的定义？） $"mathit" Lambda$ 的所有基张成相同的 $bold(Q)^n$ 的 $Q$ 向量子空间（啥玩意？），记为 $E_("mathit" Lambda )$ 。 $bold(Q)^n$ 上 $E_("mathit" Lambda )$ 的维度与 $"mathit" Lambda$ 的维度相同。令格 $overline("mathit" Lambda )=E_("mathit" Lambda )"capbold"(Z)^n$ 。 $"mathit" Lambda$ 是 $overline("mathit" Lambda )$ 的一个子格。如果 $"mathit" Lambda =overline("mathit" Lambda )$ ，那么我们称 $"mathit" Lambda$ 是一个完备格，特别的， $overline("mathit" Lambda )$ 是一个完备格。
+如果 $"mathit" Omega$ 包含 $"mathit" Lambda$ ，且两者有相同的维度，则称 $"mathit" Lambda$ 为 $"mathit" Omega$ 在 $bold(Z)^n$ 上的一个子格。（子格的定义？） $"mathit" Lambda$ 的所有基张成相同的 $bold(Q)^n$ 的 $Q$ 向量子空间（啥玩意？），记为 $E_("mathit" Lambda )$ 。 $bold(Q)^n$ 上 $E_("mathit" Lambda )$ 的维度与 $"mathit" Lambda$ 的维度相同。令格 $overline("mathit" Lambda )=E_("mathit" Lambda )inter bold(Z)^n$ 。 $"mathit" Lambda$ 是 $overline("mathit" Lambda )$ 的一个子格。如果 $"mathit" Lambda =overline("mathit" Lambda )$ ，那么我们称 $"mathit" Lambda$ 是一个完备格，特别的， $overline("mathit" Lambda )$ 是一个完备格。
 
 #quote[
 笔者注记：
@@ -355,7 +355,7 @@ $ "boldsymbolv"="boldsymbolxmodp" \\
 这里首先将 $"mathit" Lambda$ 张成一个*有理数空间*，不局限于*整系数*向量组合了，记为 $E_("mathit" Lambda )$ 的E我猜是*欧几里得*的意思？然后与 $bold(Z)^n$ 相交得到的是整数点集合 $overline("mathit" Lambda )$ ，如此 $"mathit" Lambda$ 是 $overline("mathit" Lambda )$ 子格的事应该挺自然的。然后如果两者相等，想象一下，都那样张成了都找不到新的点，那这个格确实也挺完备。
 PS:发现自己念了十年的欧几里得，难怪输入法打不出来（）
 
-令 $(bold(x),bold(y))arrowbold(x).bold(y)$ 为一般意义上的欧里几德内积， $||.||$ 是它对应的范数 #strike[（奇怪的表示方法）]。令 $F=(E_("mathit" Lambda ))^-$ 是关于该内积的正交向量子空间。我们定义正交格 $"mathit" Lambda ^-=F"capbold"(Z)^n$ 。因此， $"mathit" Lambda ^-$ 是一个 $bold(Z)^n$ 上的完备格，其维度为 $n-d$ 。这意味着 $("mathit" Lambda ^-)^-$ 等于 $overline("mathit" Lambda )$ 。令 $cal(B)=(bold(b)_1,...,bold(b)_d)$ 为 $"mathit" Lambda$ 的一组基。
+令 $(bold(x),bold(y)) arrow.r bold(x) dot.op bold(y)$ 为一般意义上的欧里几德内积， $||dot.op||$ 是它对应的范数 #strike[（奇怪的表示方法）]。令 $F=(E_("mathit" Lambda ))^-$ 是关于该内积的正交向量子空间。我们定义正交格 $"mathit" Lambda ^-=F inter bold(Z)^n$ 。因此， $"mathit" Lambda ^-$ 是一个 $bold(Z)^n$ 上的完备格，其维度为 $n-d$ 。这意味着 $("mathit" Lambda ^-)^-$ 等于 $overline("mathit" Lambda )$ 。令 $cal(B)=(bold(b)_1,...,bold(b)_d)$ 为 $"mathit" Lambda$ 的一组基。
 
 #quote[
 笔者注记：
@@ -368,34 +368,34 @@ PS:发现自己念了十年的欧几里得，难怪输入法打不出来（）
 在 $bold(Z)^n$ 的正则基上解析每个 $bold(b)_j$ 如下：
 
 $ bold(b)\_j =
-"beginpmatrix"
-b_(1,j) \\
-b_(2,j) \\
- dots.v \\
-b_(n,j)
-"endpmatrix" $
+mat(delim: "(",
+  b_(1,j);
+  b_(2,j);
+  dots.v;
+  b_(n,j);
+) $
 （这里吐槽一下，由于下划线和 Markdown 语法有冲突，如果不加反斜杠， $b_j$ 写成 $bold(b)_j$ Latex 就会炸，下文一开始也炸了几回，弄了几次才发现是这问题）
 
-定义整数 $n times d$ 的整数矩阵 $B=(b_(i,j))_(1 <= i <= n,1 <= j <= d)$ ，格 $"mathit" Lambda$ 由 $B$ 的列向量张成，我们称 $"mathit" Lambda$ 由 $B$ 张成。令 $Q=^tBB$ 为 $d times d$ 的对称 Gram 矩阵。 $Q$ 的行列式是与 $cal(B)$ 无关的正整数。 $"mathit" Lambda$ 的行列式被定义为 $det ("mathit" Lambda )=sqrt( det (B))$ 。
+定义整数 $n times d$ 的整数矩阵 $B=(b_(i,j))_(1 <= i <= n,1 <= j <= d)$ ，格 $"mathit" Lambda$ 由 $B$ 的列向量张成，我们称 $"mathit" Lambda$ 由 $B$ 张成。令 $Q=B^T B$ 为 $d times d$ 的对称 Gram 矩阵。 $Q$ 的行列式是与 $cal(B)$ 无关的正整数。 $"mathit" Lambda$ 的行列式被定义为 $det ("mathit" Lambda )=sqrt( det (B))$ 。
 
 #quote[
 笔者注记：
 ]
-这是的 $^tB$ 应该是 $B^T$ 的意思，又是奇怪的写法（）
+这是的 $B^T$ 应该是 $B^T$ 的意思，又是奇怪的写法（）
 至于 Gram 矩阵，中文音译为格拉姆矩阵，对 $n$ 维欧氏空间上的 $k$ 个向量，其 Gram 矩阵为
 $ "triangle"(bold(v)_1,"dots",bold(v)_k) =
-"beginpmatrix"
-"langlebold"(v)_1,bold(v)_1 angle.r & dots.c & "langlebold"(v)_1,bold(v)_k angle.r \\
- dots.v & dots.down & dots.v \\
-"langlebold"(v)_k,bold(v)_1 angle.r & dots.c & "langlebold"(v)_k,bold(v)_k angle.r 
-"endpmatrix" $
+mat(delim: "(",
+  ⟨ bold(v)_1, bold(v)_1 ⟩, dots.c, ⟨ bold(v)_1, bold(v)_k ⟩;
+  dots.v, dots.down, dots.v;
+  ⟨ bold(v)_k, bold(v)_1 ⟩, dots.c, ⟨ bold(v)_k, bold(v)_k ⟩;
+) $
 不难看出这个可以等价表示为 $V^T times V$ ，得出的矩阵也显然是对称的。
 这里 $"mathit" Lambda$ 不是一个方阵，故不能直接求出其行列式，那么就应该通过其 Gram 矩阵来求行列式，这里我觉得应该是 $det ("mathit" Lambda )=sqrt( det (Q))$ ，但我不确定。
 
 *定理1* 令 $"mathit" Lambda$ 为 $bold(Z)^n$ 上的完备格，那么 $det ("mathit" Lambda ^-)= det ("mathit" Lambda )$ 。
-证明：我们有 $"mathit" Lambda =E_("mathit" Lambda )"capbold"(Z)^n$ 和 $"mathit" Lambda ^-=E_("mathit" Lambda )^-"capbold"(Z)^n$ 。从另一篇论文（我也没读过）我们知道：
-$ det (bold(Z)^n)="frac" det (E_("mathit"{ Lambda )"capbold"(Z)^n)} det ((E_("mathit"{ Lambda )^-) sect (bold(Z)^n)^*)} $
-其中 $(bold(Z)^n)^_$ 表示 $bold(Z)^n$ 上的极格。但 $det (bold(Z)^n)=1$ （？为什么要说但呢？）且 $(bold(Z)^n)^_=bold(Z)^n$ ，故 $det ("mathit" Lambda ^-)= det ("mathit" Lambda )$ 。
+证明：我们有 $"mathit" Lambda =E_("mathit" Lambda )inter bold(Z)^n$ 和 $"mathit" Lambda ^-=E_("mathit" Lambda )^-inter bold(Z)^n$ 。从另一篇论文（我也没读过）我们知道：
+$ det (bold(Z)^n)=frac(det (E_("mathit" Lambda ) inter bold(Z)^n), det ((E_("mathit" Lambda )^-) inter (bold(Z)^n)^ast)) $
+其中 $(bold(Z)^n)^ast$ 表示 $bold(Z)^n$ 上的极格。但 $det (bold(Z)^n)=1$ （？为什么要说但呢？）且 $(bold(Z)^n)^ast=bold(Z)^n$ ，故 $det ("mathit" Lambda ^-)= det ("mathit" Lambda )$ 。
 
 *推论2* 令 $"mathit" Lambda$ 为 $bold(Z)^n$ 上的格，那么 $det (("mathit" Lambda ^-)^-)= det ("mathit" Lambda ^-)= det (overline("mathit" Lambda ))$ 。
 
@@ -409,26 +409,26 @@ $ ||bold(b)_j|| <= 2^((d-1)/2) max (||bold(x)_1||,...,||bold(x)_t||) $
 我们现在描述计算正交格的一组 LLL 约化基的基本方法。令 $cal(B)=(bold(b)_1,...,bold(b)\_d)$ 为 $"mathit" Lambda$ 的一组基， $B=(b\_(i,j))$ 为其对应的 $n times d$ 的矩阵。令 $c$ 为一个正整数常量。定义 $"mathit" Omega$为$bold(Z)^(n+d)$ 上由以下 $(n+d) times n$ 矩阵张成的格。
 
 $ B^-=
-"beginpmatrix"
-c times b_(1,1) & c times b_(2,1) & dots.c & c times b_(n,1) \\
-c times b_(1,2) & c times b_(2,2) & dots.c & c times b_(n,2) \\
- dots.v & dots.v & dots.down & dots.v \\
-c times b_(1,d) & c times b_(2,d) & dots.c & c times b_(n,d) \\
-1 & 0 & dots.c & 0 \\
-0 & 1 & dots.c & 0 \\
- dots.v & dots.v & dots.down & dots.v \\
-0 & 0 & dots.c & 1
-"endpmatrix" $
-矩阵 $B^-$ 被分成两块：上面 $d times n$ 部分是 $c ^tB$ ，下面 $n times n$ 部分是单位阵。
+mat(delim: "(",
+  c times b_(1,1), c times b_(2,1), dots.c, c times b_(n,1);
+  c times b_(1,2), c times b_(2,2), dots.c, c times b_(n,2);
+  dots.v, dots.v, dots.down, dots.v;
+  c times b_(1,d), c times b_(2,d), dots.c, c times b_(n,d);
+  1, 0, dots.c, 0;
+  0, 1, dots.c, 0;
+  dots.v, dots.v, dots.down, dots.v;
+  0, 0, dots.c, 1;
+) $
+矩阵 $B^-$ 被分成两块：上面 $d times n$ 部分是 $c B^T$ ，下面 $n times n$ 部分是单位阵。
 设 $p_( arrow.t )$ 和 $p_( arrow.b )$ 是两个投影，将 $bold(Z)^(n+d)$ 的任何向量分别映射到由其前 $d$ 个坐标构成的 $bold(Z)^d$ 向量和由其最后 $n$ 个坐标构成的 $bold(Z)^n$ 向量，所有投影都与正则基有关。#strike[（这段翻译累死我了）]
 令 $bold(x)$ 为 $"mathit" Omega$ 的一个向量并记 $bold(y)=p_( arrow.b )(bold(x))$ ，那么
 
 $ p_( arrow.t )(bold(y))=
-"beginpmatrix"
-bold(y).bold(b)\_1 \\
- dots.v \\
-bold(y).bold(b)\_d
-"endpmatrix" $
+mat(delim: "(",
+  bold(y) dot.op bold(b)\_1;
+  dots.v;
+  bold(y) dot.op bold(b)\_d;
+) $
 因此，当且仅当 $p\_( arrow.t )(bold(x))=0$ 时有 $bold(y) in "mathit" Lambda ^-$ 。此外，如果 $||bold(x)|| <= c$ ，那么 $p_( arrow.t )(bold(x))=0$ 。
 
 *定理4* 令 $(bold(x)_1,bold(x)_2,...,bold(x)_n)$ 为格 $"mathit" Omega$ 的一组 LLL 约化基。若
@@ -453,7 +453,7 @@ $ c>2^((n-1)/2+(n-d)(n-d-1)/4) det (overline("mathit" Lambda )) $
 #quote[
 笔者注记：
 ]
-$ceil($ 和 $)$ 表示向上取整，例如 $ceil( 1.2 ) = 2$。
+$ceil(dot.c)$ 和 $floor(dot.c)$ 表示向上取整，例如 $ceil( 1.2 ) = 2$。
 
 ==== 实现
 
