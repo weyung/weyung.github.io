@@ -127,6 +127,8 @@ const setTopNavButtonsFocusable = (isFocusable) => {
   });
 };
 
+let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+
 const updatePostNavCollapsedState = () => {
   const header = document.querySelector('header');
   const postHeader = document.querySelector('.post-header');
@@ -148,11 +150,26 @@ const updatePostNavCollapsedState = () => {
 
   const headerHeight = header.getBoundingClientRect().height;
   const postHeaderBottom = postHeader.getBoundingClientRect().bottom;
-  const shouldCollapse = postHeaderBottom <= headerHeight;
+  const isPastPostHeader = postHeaderBottom <= headerHeight;
+
+  const currentScrollY = window.scrollY;
+  const isScrollingUp = currentScrollY < lastScrollY;
+  const isScrollingDown = currentScrollY > lastScrollY;
+  lastScrollY = currentScrollY;
+
+  let shouldCollapse = header.classList.contains('nav-collapsed');
+
+  if (!isPastPostHeader) {
+    shouldCollapse = false;
+  } else if (isScrollingDown) {
+    shouldCollapse = true;
+  } else if (isScrollingUp) {
+    shouldCollapse = false;
+  }
 
   header.classList.toggle('nav-collapsed', shouldCollapse);
   setTopNavButtonsFocusable(!shouldCollapse);
-  setBackToTopButtonVisible(shouldCollapse);
+  setBackToTopButtonVisible(isPastPostHeader);
 };
 
 const installPostNavSwitch = () => {
