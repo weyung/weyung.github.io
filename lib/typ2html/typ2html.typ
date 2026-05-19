@@ -3,7 +3,7 @@
 #import "breadcrumb.typ": render-page-breadcrumb
 #import "pagination.typ": render-pagination-nav
 #import "sys-input.typ": query-input, query-posts, query-slugs, query-route-tag, query-route-category, query-route-page, query-route-page-size, query-tag-slug-of, query-category-slug-of, query-page-bounds
-#import "layout.typ": make-nav, make-header, make-post-header, make-post-footer, make-page-footer
+#import "layout.typ": make-nav, make-header, make-post-header, make-post-footer, make-page-footer, render-post-license
 #import "divider.typ": divider
 #import "html-guard.typ": html-guard
 #import "math.typ": auto-frame
@@ -261,6 +261,10 @@
             content
             render-footnotes()
             render-meta(tags, category, date-string-localized, tag-options: tag-options)
+            render-post-license(
+              author: author,
+              url: if website-url != none { website-url + "/posts/" + page-path + "/" } else { none },
+            )
           })
         })
       }),

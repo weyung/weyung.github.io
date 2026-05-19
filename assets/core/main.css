@@ -1870,6 +1870,38 @@ header.nav-menu-open .nav-sidebar {
   margin-top: 4rem;
 }
 
+.post-license {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: var(--layer1);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.post-license-item {
+  display: flex;
+  flex-direction: row;
+  line-height: 1.5rem;
+}
+
+.post-license-label {
+  flex-shrink: 0;
+  user-select: none;
+  padding-right: 1.5rem;
+}
+
+.post-license a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+.post-license a:hover {
+  color: var(--link-hover);
+}
+
 .post-time, .post-category {
   display: flex;
   flex-direction: row;

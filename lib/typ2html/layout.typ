@@ -99,6 +99,34 @@
   })
 }
 
+#let render-post-license(author: none, url: none) = context {
+  html-guard(() => {
+    html.div(class: "post-license", {
+      if author != none {
+        html.div(class: "post-license-item", {
+          html.span(class: "post-license-label", "文章作者")
+          html.span(author)
+        })
+      }
+      if url != none {
+        html.div(class: "post-license-item", {
+          html.span(class: "post-license-label", "文章链接")
+          html.a(href: url, url)
+        })
+      }
+      html.div(class: "post-license-item", {
+        html.span(class: "post-license-label", "许可协议")
+        html.a(
+          href: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+          target: "_blank",
+          rel: ("noopener", "noreferrer"),
+          "CC BY-NC-SA 4.0",
+        )
+      })
+    })
+  })
+}
+
 #let make-page-footer(footer-content: none) = context {
   html-guard(() => {
     html.elem("footer", attrs: (class: "page-footer"))[
