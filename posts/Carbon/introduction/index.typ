@@ -6,7 +6,7 @@
   description: "本文主要介绍 Carbon Typst Blog 的基本功能和配置方式。",
   tags: ("博客搭建",),
   category: "博客的构建和调整",
-  date: datetime(year: 2026, month: 3, day: 17)
+  date: datetime(year: 2000, month: 3, day: 17)
 )
 
 = 简要介绍

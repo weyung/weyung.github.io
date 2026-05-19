@@ -9,7 +9,7 @@
   description: "本文主要展示了一些常用的 Typst 语法，并给出一些增强功能。",
   tags: ("Typst", "写作指南"),
   category: "如何编写博客文章",
-  date: datetime(year: 2026, month: 3, day: 18)
+  date: datetime(year: 2000, month: 3, day: 18)
 )
 
 = 基础功能

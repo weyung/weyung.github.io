@@ -5,7 +5,7 @@
   description: "本文主要介绍在 Carbon Typst Blog 中添加和编写博客文章的步骤和注意事项。",
   tags: ("Typst", "写作指南"),
   category: "如何编写博客文章",
-  date: datetime(year: 2026, month: 3, day: 18)
+  date: datetime(year: 2000, month: 3, day: 18)
 )
 
 = 创建新文章

@@ -5,7 +5,7 @@
   description: "本文主要介绍在 Carbon Typst Blog 中调整除了博客文章之外的页面（例如分类页、标签页、归档页等）的步骤和注意事项。",
   tags: ("Typst", "配置指南",),
   category: "博客的构建和调整",
-  date: datetime(year: 2026, month: 3, day: 18)
+  date: datetime(year: 2000, month: 3, day: 18)
 )
 
 在 Carbon Typst Blog 中，除了博客文章页面之外，还有一些其他类型的页面，例如分类页、标签页、归档页等。这些页面的模板和样式与博客文章页面是分开的，因此你可以通过调整这些页面的模板来定制它们的外观和功能。这些页面对应的 `index.typ` 文件可以参考 #link("/posts/introduction/")[介绍]。

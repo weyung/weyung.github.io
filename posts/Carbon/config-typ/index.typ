@@ -5,7 +5,7 @@
   description: "本文主要介绍在 Carbon Typst Blog 中配置文件的作用和使用方法，以及如何通过配置文件来定制博客的外观和功能。",
   tags: ("配置指南",),
   category: "博客的构建和调整",
-  date: datetime(year: 2026, month: 3, day: 18)
+  date: datetime(year: 2000, month: 3, day: 18)
 )
 
 本文主要介绍 `config.typ` 和 `site.config.json` 这两个配置文件的作用和使用方法，以及如何通过它们来定制 Carbon Typst Blog 的外观和功能。
