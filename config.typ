@@ -15,12 +15,13 @@
 #let render-tag-card = render-tag-card.with(tag-options: tag-options)
 
 #let templates = make-templates(
-  site-title: "Carbon Typst Blog",
+  site-title: "weyung's Blog",
   header-links: (
     "/": "首页",
     "/categories/": "分类",
     "/tags/": "标签",
     "/archive/": "归档",
+    "/links/": "友链",
     "/about/": "关于",
   ),
   title: "Typst Blog",
@@ -29,14 +30,16 @@
   tag-options: tag-options,
   custom-css: (
     "/assets/custom.css",
+    "/assets/custom-toc.css",
   ),
   custom-script: (
-    
+    "/assets/custom-toc.js",
   )
 )
 
 #let template-page = templates.page
 #let template-post(..args) = {
+  set par(justify: true)
   set page(height: auto, width: 30cm)
   set text(16pt, font: ("IBM Plex Sans SC"), lang: "zh")
   show raw: text.with(font: ("Zed Plex Mono", "IBM Plex Sans SC"))
