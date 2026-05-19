@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "build": "node lib/node/build-html.mjs",
-    "build:fast": "npm run build -- --jobs 4",
-    "build:preview": "npm run build -- --out _site-preview",
-    "build:preview_fast": "npm run build -- --jobs 4 --out _site-preview"
+    "build:fast": "pnpm run build -- --jobs 4",
+    "build:preview": "pnpm run build -- --out _site-preview",
+    "build:preview_fast": "pnpm run build -- --jobs 4 --out _site-preview"
   }
 }

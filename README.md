@@ -6,10 +6,10 @@ Carbon Typst Blog 是一个基于 Typst 的静态博客生成器，旨在提供�
 
 1. 克隆仓库到本地：
 
-  ```bash
-  git clone https://github.com/tiger2005/carbon-typst-blog
-  cd carbon-typst-blog
-  ```
+    ```bash
+    git clone https://github.com/tiger2005/carbon-typst-blog
+    cd carbon-typst-blog
+    ```
 
 2. 确认已安装 Node.js 和 Typst 环境，本模板目前无需用 `npm install` 安装依赖。
 
@@ -26,12 +26,13 @@ Carbon Typst Blog 是一个基于 Typst 的静态博客生成器，旨在提供�
 - 在 `posts/` 目录下创建新的文章文件夹，例如 `posts/my-new-post/`，并在其中添加 `index.typ` 文件。
 - 在 `index.typ` 中编写文章内容，使用 Typst 语法进行格式化。**你可以在本地通过 Typst 预览插件查看大致的渲染效果。**
 - 完成编辑后，使用构建命令生成站点：
+
   ```bash
-  npm run build:preview
+  pnpm run build:preview
   ```
 
   生成的结果将输出到 `_site-preview/` 目录，方便你预览效果。
-- 当你对预览结果满意后，可以使用常规构建命令 `npm run build` 来生成最终的站点。
+- 当你对预览结果满意后，可以使用常规构建命令 `pnpm run build` 来生成最终的站点。
 
 ## 其他问题
 
