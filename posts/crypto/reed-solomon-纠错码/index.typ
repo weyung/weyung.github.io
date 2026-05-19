@@ -32,9 +32,9 @@ def encode_block(message):
     return c + (8 - len(c)) * [0]
 ```
 
-分析一下，代码中取一个生成多项式 $g(x)=(x-alpha ^0)(x-alpha ^1)(x-alpha ^2)(x-alpha ^3)$ ，然后将消息多项式 $M(x)$ 模 $g(x)$ ，得到余数多项式 $P(x)$ ，最后得到编码后的消息 $S(x)=M(x)-P(x)$ 。这时有 $S(x)equiv 0mod g(x)$ 。
+分析一下，代码中取一个生成多项式 $g(x)=(x- alpha ^0)(x- alpha ^1)(x- alpha ^2)(x- alpha ^3)$ ，然后将消息多项式 $M(x)$ 模 $g(x)$ ，得到余数多项式 $P(x)$ ，最后得到编码后的消息 $S(x)=M(x)-P(x)$ 。这时有 $S(x) equiv 0mod g(x)$ 。
 这里解释一下各个参数，当时我也是看了好久 sagemath 的文档也没搞懂。
-生成多项式 $g(x)=product limits_(j=1)^(n-k)(x-alpha ^j)$
+生成多项式 $g(x)= product "limits"_(j=1)^(n-k)(x- alpha ^j)$
 // TODO
 
 == 解码

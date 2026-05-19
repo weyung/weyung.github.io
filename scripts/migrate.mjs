@@ -86,12 +86,17 @@ function convertLatexMath(math) {
   let s = math;
 
   // \text{...} / \mathrm{...} / \textbf{...} → "..."
-  s = s.replace(/\\(?:text|mathrm|textbf|textrm|operatorname)\{([^}]*)\}/g, '"$1"');
+  // Allow optional space before brace: \mathbb {Z}
+  s = s.replace(/\\(?:text|mathrm|textbf|textrm|operatorname)\s*\{([^}]*)\}/g, '"$1"');
   // \mathrm X (no braces, single char) → "X"
   s = s.replace(/\\(?:text|mathrm|textrm)\s([a-zA-Z])/g, '"$1"');
 
-  // \frac{a}{b} → frac(a, b)
-  s = s.replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g, "frac($1, $2)");
+  // \frac{a}{b} → frac(a, b)  (with braces)
+  s = s.replace(/\\frac\s*\{([^}]*)\}\s*\{([^}]*)\}/g, "frac($1, $2)");
+  // \frac shorthand: \frac ab, \frac1x, \frac{a}b, \frac a{b}
+  s = s.replace(/\\frac\s*\{([^}]*)\}\s*([a-zA-Z0-9])/g, "frac($1, $2)");
+  s = s.replace(/\\frac\s*([a-zA-Z0-9])\s*\{([^}]*)\}/g, "frac($1, $2)");
+  s = s.replace(/\\frac\s*([a-zA-Z0-9])\s*([a-zA-Z0-9])/g, "frac($1, $2)");
 
   // \sqrt[n]{x} → root(n, x)
   s = s.replace(/\\sqrt\[([^\]]*)\]\{([^}]*)\}/g, "root($1, $2)");
@@ -106,12 +111,15 @@ function convertLatexMath(math) {
   s = s.replace(/\\tilde\{([^}]*)\}/g, "tilde($1)");
   s = s.replace(/\\dot\{([^}]*)\}/g, "dot($1)");
   s = s.replace(/\\ddot\{([^}]*)\}/g, "dot.double($1)");
-  s = s.replace(/\\mathbb\{([^}]*)\}/g, "bb($1)");
-  s = s.replace(/\\mathcal\{([^}]*)\}/g, "cal($1)");
+  // Allow optional space before brace
+  s = s.replace(/\\mathbb\s*\{([^}]*)\}/g, "bb($1)");
+  s = s.replace(/\\mathcal\s*\{([^}]*)\}/g, "cal($1)");
+  s = s.replace(/\\mathbf\s*\{([^}]*)\}/g, "bold($1)");
   s = s.replace(/\\binom\{([^}]*)\}\{([^}]*)\}/g, "binom($1, $2)");
 
-  // \pmod{n} → mod n, \bmod → mod
+  // \pmod{n} → mod n, \pmod X → mod X (no braces)
   s = s.replace(/\\pmod\{([^}]*)\}/g, "mod $1");
+  s = s.replace(/\\pmod\s*([a-zA-Z0-9])/g, "mod $1");
   s = s.replace(/\\bmod/g, "mod");
   s = s.replace(/\\mod/g, "mod");
 
@@ -132,7 +140,6 @@ function convertLatexMath(math) {
   s = s.replace(/\\\}/g, "}");
 
   // Remaining {...} groups that aren't function args → just strip braces
-  // (e.g., {x+y} → x+y)
   s = s.replace(/\{([^}]*)\}/g, "$1");
 
   // Greek letters
@@ -148,7 +155,7 @@ function convertLatexMath(math) {
     Xi: "Xi", Pi: "Pi", Sigma: "Sigma", Phi: "Phi", Psi: "Psi", Omega: "Omega",
   };
   for (const [latex, typst] of Object.entries(greekMap)) {
-    s = s.replace(new RegExp(`\\\\${latex}(?![a-zA-Z])`, "g"), typst + " ");
+    s = s.replace(new RegExp(`\\\\${latex}(?![a-zA-Z])`, "g"), " " + typst + " ");
   }
 
   // Common operators and symbols
@@ -171,20 +178,21 @@ function convertLatexMath(math) {
     "\\geq": ">=", "\\ge": ">=",
     "\\ll": "<<", "\\gg": ">>",
     "\\approx": "approx", "\\equiv": "equiv", "\\sim": "tilde.op",
+    "\\simeq": "tilde.eq",
     "\\propto": "prop",
     "\\in": "in", "\\notin": "in.not",
     "\\subset": "subset", "\\subseteq": "subset.eq",
     "\\supset": "supset", "\\supseteq": "supset.eq",
     "\\cup": "union", "\\cap": "sect",
     "\\emptyset": "emptyset", "\\varnothing": "nothing",
-    "\\cdot": "dot", "\\cdots": "dots.c", "\\ldots": "dots",
+    "\\cdot": "dot.op", "\\cdots": "dots.c", "\\ldots": "dots",
     "\\vdots": "dots.v", "\\ddots": "dots.down",
     "\\times": "times", "\\div": "div",
     "\\pm": "plus.minus", "\\mp": "minus.plus",
     "\\oplus": "plus.circle", "\\otimes": "times.circle",
     "\\rightarrow": "->", "\\to": "->",
-    "\\leftarrow": "<-",
-    "\\Rightarrow": "=>", "\\Leftarrow": "<=",
+    "\\leftarrow": "<-", "\\uparrow": "arrow.t", "\\downarrow": "arrow.b",
+    "\\Rightarrow": "=>", "\\Leftarrow": "arrow.l.double",
     "\\leftrightarrow": "<->", "\\Leftrightarrow": "<=>",
     "\\mapsto": "|->",
     "\\neg": "not", "\\land": "and", "\\lor": "or",
@@ -203,21 +211,43 @@ function convertLatexMath(math) {
   };
   for (const [latex, typst] of Object.entries(symbolMap)) {
     const escaped = latex.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    s = s.replace(new RegExp(escaped + "(?![a-zA-Z])", "g"), typst + " ");
+    s = s.replace(new RegExp(escaped + "(?![a-zA-Z])", "g"), " " + typst + " ");
   }
 
-  // \begin{aligned}...\end{aligned} etc. — not perfectly convertible
-  s = s.replace(/\\begin\{(aligned|align|cases|pmatrix|bmatrix|vmatrix|matrix|array)\}/g, "");
-  s = s.replace(/\\end\{(aligned|align|cases|pmatrix|bmatrix|vmatrix|matrix|array)\}/g, "");
+  // \begin{pmatrix}...\end{pmatrix} → mat(delim: "(", ...; ...)
+  // \begin{bmatrix}...\end{bmatrix} → mat(delim: "[", ...; ...)
+  // \begin{vmatrix}...\end{vmatrix} → mat(delim: "|", ...; ...)
+  const matrixDelims = { pmatrix: '"("', bmatrix: '"["', vmatrix: '"|"', matrix: '""' };
+  for (const [env, delim] of Object.entries(matrixDelims)) {
+    const re = new RegExp(`\\\\begin\\{${env}\\}([\\s\\S]*?)\\\\end\\{${env}\\}`, "g");
+    s = s.replace(re, (_, body) => {
+      const rows = body.split(/\\\\\s*/).map((row) => row.trim()).filter(Boolean);
+      const cells = rows.map((row) => row.split("&").map((c) => c.trim()).join(", "));
+      return `mat(delim: ${delim}, ${cells.join("; ")})`;
+    });
+  }
+
+  // \begin{cases}...\end{cases} → cases(...)
+  s = s.replace(/\\begin\{cases\}([\s\S]*?)\\end\{cases\}/g, (_, body) => {
+    const rows = body.split(/\\\\\s*/).map((row) => row.trim()).filter(Boolean);
+    const items = rows.map((row) => row.replace(/&/g, "").trim());
+    return `cases(${items.join(", ")})`;
+  });
+
+  // \begin{aligned}...\end{aligned} etc.
+  s = s.replace(/\\begin\{(aligned|align|array)\}/g, "");
+  s = s.replace(/\\end\{(aligned|align|array)\}/g, "");
 
   // \\ (line break in math) → \
   s = s.replace(/\\\\/g, "\\");
 
   // & (alignment) → keep as-is (Typst also uses &)
 
-  // Clean up: remove remaining single backslashes before unknown commands
-  // but be careful not to break valid Typst
-  s = s.replace(/\\([a-zA-Z]+)/g, "$1");
+  // \  (backslash-space) → space
+  s = s.replace(/\\ /g, " ");
+
+  // Clean up: remaining \command → wrap as text to avoid unknown variable errors
+  s = s.replace(/\\([a-zA-Z]+)/g, '"$1"');
 
   // Clean up multiple spaces
   s = s.replace(/  +/g, " ");

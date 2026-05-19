@@ -719,13 +719,13 @@ $ sum _(i=1)^(m) w_i A^i equiv 0 mod 2^(n/2+k) $
 
 这里可以用一个如下形式的格做 LLL 求解：
 
-$ beginpmatrix
+$ "beginpmatrix"
 1 & 0 & 0 & dots.c & 0 & KA \\
 0 & 1 & 0 & dots.c & 0 & KA^2 \\
-dots.v & dots.v & dots.v & dots.down & dots.v & dots.v \\
+ dots.v & dots.v & dots.v & dots.down & dots.v & dots.v \\
 0 & 0 & 0 & dots.c & 1 & KA^m \\
-0 & 0 & 0 & dots.c & 0 & Kdot 2^(n/2+k) \\
-endpmatrix $
+0 & 0 & 0 & dots.c & 0 & K dot.op 2^(n/2+k) \\
+"endpmatrix" $
 
 其中 $K$ 取适合大的值。
 
@@ -746,7 +746,7 @@ $ Z = sum _(i=1)^(m) w_i [X_(i+1)^* - X_i^*] mod 2^(n/2+k) $
 记 $Delta$ 为 $Z$ 与 0 或 $2^(n/2+k)$ 的差值（选最小的一个）
 
 Step 6
-若 $Delta >= 2mWdot 2^(n/2)$，那对于 $X_i$ 的低 $k$ 位的猜测肯定是错的，否则就有 $1-2mWdot 2^(-k)$ 的概率是对的。
+若 $Delta >= 2mW dot.op 2^(n/2)$，那对于 $X_i$ 的低 $k$ 位的猜测肯定是错的，否则就有 $1-2mW dot.op 2^(-k)$ 的概率是对的。
 
 Step 7
 对不同的 $Y_i$ 尝试所有 $2^k$ 的猜测，直接只剩下最后一个猜测，就是 $X_0$ 的低 $k$ 位。

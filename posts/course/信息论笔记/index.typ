@@ -33,7 +33,7 @@ $H(X) = 2 times [ (1/16) log _2 16 + 4 times (1/32) log _2 32 + 10 times (1/64) 
 
 （2）求事件“两队打满 7 场”所提供的信息量。
 “两队打满7场”事件数为 40，所求概率为 $40 times (1/128) = 5/16$ ，事件“两队打满7场”所提供的信息量为
-$ I_1 = -log _2 (5/16) = 1.6781 " bit" $
+$ I_1 = - log _2 (5/16) = 1.6781 " bit" $
 （3）列出 A 队前 3 场都失利的所有情形，求“A 队前 3 场都失利”所提供的信息量。
 如表所示：
 
@@ -61,11 +61,11 @@ $P_Y(b_1) = 2/3$, $P_Y(b_2) = P_Y(b_3) = 1/6$。试求能使 $H(XY)$ 取最大�
 
 因为 $H(XY) <= H(X) + H(Y)$，*当且仅当 $X, Y$ 独立时，等号成立*。所以当 $X, Y$ 独立时，$H(XY)$ 取最大值。因此 $XY$ 的联合概率分布为
 
-$ beginaligned
+$ "beginaligned"
 p(a_1 b_1) &= frac(1, 3), & p(a_1 b_2) &= frac(1, 12), & p(a_1 b_3) &= frac(1, 12), \\
 p(a_2 b_1) &= frac(1, 6), & p(a_2 b_2) &= frac(1, 24), & p(a_2 b_3) &= frac(1, 24), \\
 p(a_3 b_1) &= frac(1, 6), & p(a_3 b_2) &= frac(1, 24), & p(a_3 b_3) &= frac(1, 24).
-endaligned $
+"endaligned" $
 
 *习题* 2.16
 两随机变量 $X, Y$ ，联合概率 $p(x,y)$ 如下：
@@ -75,12 +75,12 @@ endaligned $
 | *x=0* | 1/8 | 3/8 |
 | *x=1* | 3/8 | 1/8 |
 
-$Z = X dot Y$（一般乘积），试计算：
+$Z = X dot.op Y$（一般乘积），试计算：
 
 (1) $H(X), H(Y), H(Z), H(XZ), H(YZ), H(XYZ)$;
 (2) $H(X|Y), H(Y|X), H(X|Z), H(Z|X), H(Y|Z), H(Z|Y), H(Z|YZ), H(Y|XZ), H(Z|XY)$;
 (3) $I(X;Y), I(X;Z), I(Y;Z), I(X;Y|Z), I(Y;Z|X), I(X;Z|Y)$。
-$ p(xz) = sum _y p(xyz); quad p(yz) = sum _x p(xyz); quad p(xyz) = p(xy) dot p(z | xy) $
+$ p(xz) = sum _y p(xyz); quad p(yz) = sum _x p(xyz); quad p(xyz) = p(xy) dot.op p(z | xy) $
 其概率取值容易计算如下：
 
 $P_X(0) = 1/2$，即 $P(X=0) = 1/2$，下同
@@ -95,21 +95,21 @@ $P_Z(1) = 1/8$
 
 (1)
 主要利用自信息的平均值为熵，即
-$ H(X) = E_(p(x))[-log p(x)] $
+$ H(X) = E_(p(x))[- log p(x)] $
 注意 $log$ 默认是以 2 为底的
 比如 $H(XZ)$，先列出所有可能，知 $P(X=0, Z=0) = 1/2$，$P(X=1, Z=0) = 3/8$，$P(X=1, Z=1) = 1/8$，所以 $H(XZ) = -(1/2) log (1/2) - (3/8) log (3/8) - (1/8) log (1/8) = 1.406$ 比特/符号
-$ beginaligned
+$ "beginaligned"
 H(X) = H(1/2) = 1 " 比特/符号"\\
 H(Y) = H(1/2) = 1 " 比特/符号"\\
 H(Z) = H(1/8) = 0.544 " 比特/符号"\\
 H(XZ) = H(1/2, 3/8, 1/8) = 1.406 " 比特/符号"\\
 H(YZ) = H(XZ) = 1.406 " 比特/符号"\\
 H(XYZ) = H(1/8, 3/8, 3/8, 1/8) = 1.811 " 比特/符号"
-endaligned $
+"endaligned" $
 
 (2)
 主要利用熵的可加性，即 $H(XY) = H(X) + H(Y|X)$
-$ beginaligned
+$ "beginaligned"
 H(X | Y) = H(XY) - H(Y) = 1.811 - 1 = 0.811 " 比特/符号"\\
 H(Y | X) = H(XY) - H(X) = 1.811 - 1 = 0.811 " 比特/符号"\\
 H(X | Z) = H(XZ) - H(Z) = 1.406 - 0.544 = 0.862 " 比特/符号"\\
@@ -119,19 +119,19 @@ H(Z | Y) = H(YZ) - H(Y) = 1.406 - 1 = 0.406 " 比特/符号"\\
 H(X | YZ) = H(XYZ) - H(YZ) = 1.811 - 1.406 = 0.405 " 比特/符号"\\
 H(Y | XZ) = H(XYZ) - H(XZ) = 1.811 - 1.406 = 0.405 " 比特/符号"\\
 H(Z | XY) = H(XYZ) - H(XY) = 1.811 - H(1/8, 3/8, 3/8, 1/8) = 0
-endaligned $
+"endaligned" $
 
 (3)
 主要利用平均互信息与熵的关系，即
 $ I(X;Y) = H(X) - H(X | Y) = H(Y) - H(Y | X) = H(X) + H(Y) - H(XY) $
-$ beginaligned
+$ "beginaligned"
 I(X;Y) = H(X) - H(X | Y) = 1 - 0.811 = 0.189 " 比特/符号"\\
 I(X;Z) = H(X) - H(X | Z) = 1 - 0.862 = 0.138 " 比特/符号"\\
 I(Y;Z) = H(Y) - H(Y | Z) = 1 - 0.862 = 0.138 " 比特/符号"\\
 I(X; Y | Z) = H(X | Z) - H(X | YZ) = 0.862 - 0.405 = 0.457 " 比特/符号"\\
 I(Y; Z | X) = H(Y | X) - H(Y | XZ) = 0.811 - 0.405 = 0.406 " 比特/符号"\\
 I(X; Z | Y) = H(X | Y) - H(X | YZ) = 0.811 - 0.405 = 0.406 " 比特/符号"
-endaligned $
+"endaligned" $
 
 == 第三章 离散信源
 
@@ -142,69 +142,69 @@ endaligned $
 (1) $H(X_n | X_0) = H(X_(-n) | X_0)$;
 正确，由于平稳性有
 $ H(X_(-n) | X_0) = H(X_0 X_n) = H(X_0 X_n) - H(X_n) = H(X_n X_0) - H(X_0) = H(X_n | X_0) $
-(2) $H(X_n | X_0) geqslant H(X_(n-1) | X_0)$;
+(2) $H(X_n | X_0) "geqslant" H(X_(n-1) | X_0)$;
 错误，若 $x_0, dots.c , x_(n-1), x_n$ 构成马氏链，则
-$ beginaligned
-I(X_0 ; X_(n-1)) geqslant I(X_0 ; X_n) implies H(X_(n-1)) - H(X_(n-1) | X_0) geqslant H(X_n) - H(X_n | X_0) \\
-implies -H(X_(n-1) | X_0) geqslant -H(X_n | X_0) \ ("利用平稳性") implies H(X_n | X_0) geqslant H(X_(n-1) | X_0)
-endaligned $
+$ "beginaligned"
+I(X_0 ; X_(n-1)) "geqslant" I(X_0 ; X_n) "implies" H(X_(n-1)) - H(X_(n-1) | X_0) "geqslant" H(X_n) - H(X_n | X_0) \\
+"implies" -H(X_(n-1) | X_0) "geqslant" -H(X_n | X_0) ("利用平稳性") "implies" H(X_n | X_0) "geqslant" H(X_(n-1) | X_0)
+"endaligned" $
 但如果序列具有周期性，且周期为 $n$，其中，$x_0, x_1, dots.c , x_n$ 是独立同分布的二元等概率序列，则
-$ beginaligned
-x_k = x_(k-n) \ (k geqslant n) implies x_0 = x_n implies H(X_n | X_0) = 0, \ H(X_(n-1) | X_0) = H(X_(n-1)) = log 2 \\
-implies H(X_n | X_0) < H(X_(n-1) | X_0)
-endaligned $
-(3) $H(X_n | X_1X_2dots.c X_(n-1))$ 是 $n$ 的增函数;
+$ "beginaligned"
+x_k = x_(k-n) (k "geqslant" n) "implies" x_0 = x_n "implies" H(X_n | X_0) = 0, H(X_(n-1) | X_0) = H(X_(n-1)) = log 2 \\
+"implies" H(X_n | X_0) < H(X_(n-1) | X_0)
+"endaligned" $
+(3) $H(X_n | X_1X_2 dots.c X_(n-1))$ 是 $n$ 的增函数;
 错误
 *定理 3.3* 对任意离散平稳信源，若 $H_1(X) < infinity$ ，有：
 
-① $H(X_N | X_1dots.c X_(N-1))$ 不随 $N$ 而增加；
-② $H_N(X) geqslant H(X_N | X_1 dots.c X_(N-1))$；
+① $H(X_N | X_1 dots.c X_(N-1))$ 不随 $N$ 而增加；
+② $H_N(X) "geqslant" H(X_N | X_1 dots.c X_(N-1))$；
 ③ $H_N(X)$ 不随 $N$ 而增加；
-④ $H_infinity (X)$ 存在，且 $H_infinity (X) = lim _(N -> infinity ) H(X_N | X_1 dots.c X_(N-1))$
+④ $H_ infinity (X)$ 存在，且 $H_ infinity (X) = lim _(N -> infinity ) H(X_N | X_1 dots.c X_(N-1))$
 
 (4) $H(X_n | X_1, dots.c , X_(n-1), X_(n+1), dots.c , X_(2n))$ 是 $n$ 的非增函数。
 正确
-$ beginaligned
+$ "beginaligned"
 H(X_(n+1) | X_1, dots.c , X_n, X_(n+2), dots.c , X_(2n+2)) = H(X_n | X_0, dots.c , X_(n-1), X_(n+1), dots.c , X_(2n+1)) \\
-leqslant H(X_n | X_1, dots.c , X_(n-1), X_(n+1), dots.c , X_(2n))
-endaligned $
+"leqslant" H(X_n | X_1, dots.c , X_(n-1), X_(n+1), dots.c , X_(2n))
+"endaligned" $
 
 *习题* 3.10
 一个 2 状态马氏链的转移概率矩阵为
-$ P = beginpmatrix 3/4 & 1/4 \\ 1/4 & 3/4 endpmatrix $
-并假定初始状态概率矢量为 $p^((0)) = (1 \ 0)$；求
+$ P = "beginpmatrix" 3/4 & 1/4 \ 1/4 & 3/4 "endpmatrix" $
+并假定初始状态概率矢量为 $p^((0)) = (1 0)$；求
 (1) $P^n$ 和 $p^((n))$, $n = 1, 2, 3$；
-$ P^1 = P = beginpmatrix 3/4 & 1/4 \\ 1/4 & 3/4 endpmatrix, quad 
-P^2 = P times P = beginpmatrix 3/4 & 1/4 \\ 1/4 & 3/4 endpmatrix beginpmatrix 3/4 & 1/4 \\ 1/4 & 3/4 endpmatrix = beginpmatrix 5/8 & 3/8 \\ 3/8 & 5/8 endpmatrix $
-$ P^3 = P^2 times P = beginpmatrix 5/8 & 3/8 \\ 3/8 & 5/8 endpmatrix beginpmatrix 3/4 & 1/4 \\ 1/4 & 3/4 endpmatrix = beginpmatrix 9/16 & 7/16 \\ 7/16 & 9/16 endpmatrix $
+$ P^1 = P = "beginpmatrix" 3/4 & 1/4 \ 1/4 & 3/4 "endpmatrix", quad 
+P^2 = P times P = "beginpmatrix" 3/4 & 1/4 \ 1/4 & 3/4 "endpmatrix" "beginpmatrix" 3/4 & 1/4 \ 1/4 & 3/4 "endpmatrix" = "beginpmatrix" 5/8 & 3/8 \ 3/8 & 5/8 "endpmatrix" $
+$ P^3 = P^2 times P = "beginpmatrix" 5/8 & 3/8 \ 3/8 & 5/8 "endpmatrix" "beginpmatrix" 3/4 & 1/4 \ 1/4 & 3/4 "endpmatrix" = "beginpmatrix" 9/16 & 7/16 \ 7/16 & 9/16 "endpmatrix" $
 所以，有
-$ p^((1)) = p^((0)) P = beginpmatrix 3/4 & 1/4 endpmatrix ; quad p^((2)) = p^((0)) P^2 = beginpmatrix 5/8 & 3/8 endpmatrix ; quad p^((3)) = p^((0)) P^3 = beginpmatrix 9/16 & 7/16 endpmatrix $
+$ p^((1)) = p^((0)) P = "beginpmatrix" 3/4 & 1/4 "endpmatrix" ; quad p^((2)) = p^((0)) P^2 = "beginpmatrix" 5/8 & 3/8 "endpmatrix" ; quad p^((3)) = p^((0)) P^3 = "beginpmatrix" 9/16 & 7/16 "endpmatrix" $
 
 (2) $P^n$ 和 $p^((n))$ 的一般形式。
 由上面已经求得的结果可以类推得
-$ P^n = beginpmatrix frac(2^n + 1, 2^(n+1)) & frac(2^n - 1, 2^(n+1)) \\ frac(2^n - 1, 2^(n+1)) & frac(2^n + 1, 2^(n+1)) endpmatrix, quad p^((n)) = p^((0)) P^n = beginpmatrix 1 & 0 endpmatrix beginpmatrix frac(2^n + 1, 2^(n+1)) & frac(2^n - 1, 2^(n+1)) \\ frac(2^n - 1, 2^(n+1)) & frac(2^n + 1, 2^(n+1)) endpmatrix = beginpmatrix frac(2^n + 1, 2^(n+1)) & frac(2^n - 1, 2^(n+1)) endpmatrix $
+$ P^n = "beginpmatrix" frac(2^n + 1, 2^(n+1)) & frac(2^n - 1, 2^(n+1)) \ frac(2^n - 1, 2^(n+1)) & frac(2^n + 1, 2^(n+1)) "endpmatrix", quad p^((n)) = p^((0)) P^n = "beginpmatrix" 1 & 0 "endpmatrix" "beginpmatrix" frac(2^n + 1, 2^(n+1)) & frac(2^n - 1, 2^(n+1)) \ frac(2^n - 1, 2^(n+1)) & frac(2^n + 1, 2^(n+1)) "endpmatrix" = "beginpmatrix" frac(2^n + 1, 2^(n+1)) & frac(2^n - 1, 2^(n+1)) "endpmatrix" $
 
 *习题* 3.15
 3.15 黑白气象传真图的消息只有黑色和白色两种，即信源 $X="黑", "白"$ ；设黑色出现的概率为 $p("黑") = 0.3$ ，白色的出现概率 $p("白") = 0.7$ ：
 
 (1) 假设图上黑白消息出现前后没有关联，求熵 $H(X)$ ；
 假设黑白消息出现的前后没有关联，则等效于一个离散无记忆信源，概率空间为
-$ beginpmatrix
-X \\ P(x)endpmatrix=
-beginpmatrix
+$ "beginpmatrix"
+X \ P(x)"endpmatrix"=
+"beginpmatrix"
 "黑" & "白" \\
 0.3 & 0.7
-endpmatrix, quad sum _(i=1)^(2) P(x_i) = 1 $
+"endpmatrix", quad sum _(i=1)^(2) P(x_i) = 1 $
 信源的熵为
-$ H(X) = -sum _(i=1)^(2) P(x_i) log P(x_i) = -0.7 log _2 0.7 - 0.3 log _2 0.3 = 0.881 "比特/符号" $
+$ H(X) = - sum _(i=1)^(2) P(x_i) log P(x_i) = -0.7 log _2 0.7 - 0.3 log _2 0.3 = 0.881 "比特/符号" $
 (2) 假设消息前后有关联，其依赖关系为 $P("白"|"白") = 0.9$, $P("黑"|"白") = 0.1$, $P("白"|"黑") = 0.2$, $P("黑"|"黑") = 0.8$，求此一阶马氏链的熵率 $H_2$；
 假设黑白气象传真图的消息前后有关联，其状态集 $E = A = "黑", "白"$ ，可以得到其状态转移矩阵为
-$ P = beginpmatrix
+$ P = "beginpmatrix"
 0.9 & 0.1 \\
 0.2 & 0.8
-endpmatrix $
+"endpmatrix" $
 
-此马尔可夫链状态转移矩阵有，则状态平稳分布存在。设状态的平稳分布为 $pi ^T = (pi _1, pi _2)$ ，有
+此马尔可夫链状态转移矩阵有，则状态平稳分布存在。设状态的平稳分布为 $pi ^T = ( pi _1, pi _2)$ ，有
 $ pi ^T = pi ^T P, quad pi _1 + pi _2 = 1, quad 得到 pi _1 = 2/3, pi _2 = 1/3. $
 
 此一阶马氏源的熵为
@@ -223,152 +223,152 @@ $ H(X) > H_2, quad gamma _1 < gamma _2 $
 *习题* 3.21
 给了一个一阶马氏链的状态转移图如图，符号集为 $0, 1, 2$ 。
 
-(1) 求状态平稳分布 $(pi _0, pi _1, pi _2)$ 和马氏链熵率。
+(1) 求状态平稳分布 $( pi _0, pi _1, pi _2)$ 和马氏链熵率。
 由状态图可得状态转移矩阵
-$ P = beginpmatrix
+$ P = "beginpmatrix"
 1 - p & p/2 & p/2 \\
 p/2 & 1 - p & p/2 \\
 p/2 & p/2 & 1 - p
-endpmatrix $
-由 $pi ^T P = pi ^T$，即 $pi = (pi _0, pi _1, pi _2)$ 满足
-$ (pi _0, pi _1, pi _2) beginpmatrix
+"endpmatrix" $
+由 $pi ^T P = pi ^T$，即 $pi = ( pi _0, pi _1, pi _2)$ 满足
+$ ( pi _0, pi _1, pi _2) "beginpmatrix"
 1 - p & p/2 & p/2 \\
 p/2 & 1 - p & p/2 \\
 p/2 & p/2 & 1 - p
-endpmatrix = (pi _0, pi _1, pi _2) $
+"endpmatrix" = ( pi _0, pi _1, pi _2) $
 以及 $pi _0 + pi _1 + pi _2 = 1$。
 解得
-$ (pi _0, pi _1, pi _2) = (1/3, 1/3, 1/3) $
+$ ( pi _0, pi _1, pi _2) = (1/3, 1/3, 1/3) $
 信源的符号熵为
-$ beginaligned
-H_infinity = H_2 = pi _0 H ( 1-p, frac(p, 2), frac(p, 2) ) + pi _1 H ( frac(p, 2), 1-p, frac(p, 2) ) + pi _2 H ( frac(p, 2), frac(p, 2), 1-p )\\
+$ "beginaligned"
+H_ infinity = H_2 = pi _0 H ( 1-p, frac(p, 2), frac(p, 2) ) + pi _1 H ( frac(p, 2), 1-p, frac(p, 2) ) + pi _2 H ( frac(p, 2), frac(p, 2), 1-p )\\
 = - (1-p) log _2 (1-p) - p log _2 p + p " 比特/符号"
-endaligned $
+"endaligned" $
 
 (2) 当 $p$ 为何值时，信源熵率达到最大值？当 $p = 0$ 或 $1$ 时，结果如何？
-因为 $H_infinity = -(1-p) log (1-p) - p log p + p$，对 $p$ 求一阶导数：
-$ H_infinity ' (p) = log (1-p) + frac(1, ln 2) - log p - frac(1, ln 2) + 1 = log frac(2(1-p), p) $
+因为 $H_ infinity = -(1-p) log (1-p) - p log p + p$，对 $p$ 求一阶导数：
+$ H_ infinity ' (p) = log (1-p) + frac(1, ln 2) - log p - frac(1, ln 2) + 1 = log frac(2(1-p), p) $
 
-令 $H_infinity ' (p) = 0$，得 $log frac(2(1-p), p) = 0$，所以 $frac(2(1-p), p) = 1$。
+令 $H_ infinity ' (p) = 0$，得 $log frac(2(1-p), p) = 0$，所以 $frac(2(1-p), p) = 1$。
 
-所以 $p = 2/3$ 时，$H_infinity$ 达到最大值：$H_infinity$ 的最大值等于 $log _2 3 approx 1.585$ 比特/符号；
-当 $p = 0$ 时，$H_infinity = 0$；当 $p = 1$ 时，$H_infinity = -(1-p) log _2 (1-p) - p log _2 p + p = 1$ 比特/符号。
+所以 $p = 2/3$ 时，$H_ infinity$ 达到最大值：$H_ infinity$ 的最大值等于 $log _2 3 approx 1.585$ 比特/符号；
+当 $p = 0$ 时，$H_ infinity = 0$；当 $p = 1$ 时，$H_ infinity = -(1-p) log _2 (1-p) - p log _2 p + p = 1$ 比特/符号。
 
 (3) 如果将信源看成无记忆的且以平稳分布为概率分布，求信源的熵率。
-$ beginpmatrix
-X \\ P(a_i)
-endpmatrix=
-beginpmatrix
+$ "beginpmatrix"
+X \ P(a_i)
+"endpmatrix"=
+"beginpmatrix"
 0 & 1 & 2 \\
 1/3 & 1/3 & 1/3
-endpmatrix $
+"endpmatrix" $
 
 得
-$ H(X) = -sum _(i=1)^(3) P(a_i) log P(a_i) = log _2 3 approx 1.585 "比特/符号" $
+$ H(X) = - sum _(i=1)^(3) P(a_i) log P(a_i) = log _2 3 approx 1.585 "比特/符号" $
 
-由此计算结果可知 $H(X) = H_infinity$。
+由此计算结果可知 $H(X) = H_ infinity$。
 
 == 第四章 连续信息与连续信源
 
 *习题* 4.1
-(1) 指数概率密度 $p(x) = lambda e^(-lambda x), x geqslant 0$;
-$ beginaligned
-h(X) = -integral _(0)^(infinity ) p(x) log p(x) "d"x = -integral _(0)^(infinity ) lambda e^(-lambda x) log (lambda e^(-lambda x)) "d"x \\
-= -integral _(0)^(infinity ) lambda e^(-lambda x) log lambda "d"x - integral _(0)^(infinity ) lambda e^(-lambda x) log e^(-lambda x) "d"x = log frac(e, lambda )
-endaligned $
-(2) 拉普拉斯概率密度 $p(x) = (1/2) lambda e^(-lambda |x|)$。
-$ beginaligned
-h(X) = -integral _(-infinity )^(infinity ) p(x) log p(x) "d"x = -integral _(-infinity )^(infinity ) frac(1, 2) lambda e^(-lambda |x|) log ( frac(1, 2) lambda e^(-lambda |x|) ) "d"x \\
-= -log frac(1, 2) lambda integral _(-infinity )^(infinity ) frac(1, 2) lambda e^(-lambda |x|) "d"x + integral _(-infinity )^(infinity ) frac(1, 2) lambda e^(-lambda |x|) log (e^(-lambda |x|)) "d"x \\
+(1) 指数概率密度 $p(x) = lambda e^(- lambda x), x "geqslant" 0$;
+$ "beginaligned"
+h(X) = - integral _(0)^( infinity ) p(x) log p(x) "d"x = - integral _(0)^( infinity ) lambda e^(- lambda x) log ( lambda e^(- lambda x)) "d"x \\
+= - integral _(0)^( infinity ) lambda e^(- lambda x) log lambda "d"x - integral _(0)^( infinity ) lambda e^(- lambda x) log e^(- lambda x) "d"x = log frac(e, lambda )
+"endaligned" $
+(2) 拉普拉斯概率密度 $p(x) = (1/2) lambda e^(- lambda |x|)$。
+$ "beginaligned"
+h(X) = - integral _(- infinity )^( infinity ) p(x) log p(x) "d"x = - integral _(- infinity )^( infinity ) frac(1, 2) lambda e^(- lambda |x|) log ( frac(1, 2) lambda e^(- lambda |x|) ) "d"x \\
+= - log frac(1, 2) lambda integral _(- infinity )^( infinity ) frac(1, 2) lambda e^(- lambda |x|) "d"x + integral _(- infinity )^( infinity ) frac(1, 2) lambda e^(- lambda |x|) log (e^(- lambda |x|)) "d"x \\
 = log frac(2e, lambda )
-endaligned $
+"endaligned" $
 
 *习题* 4.13
-给定两连续随机变量 $X$ 和 $Y$ ，其中 $X$ 的概率密度是 $p(x) = e^(-x) (0 leqslant x < infinity )$ ，条件概率密度是 $p(y/x) = xe^(-xy) (0 leqslant y < infinity )$ 。求 $h(X), h(Y), h(XY), I(X;Y)$ 。
-$ beginaligned
-h(X) = -integral _(0)^(infinity ) p(x) log p(x) dx = -integral _(0)^(infinity ) e^(-x) log e^(-x) dx = - (log e) integral _(0)^(infinity ) x de^(-x) = log e \\
-p(y) = integral _(0)^(infinity ) p(x) p(y | x) dx = integral _(0)^(infinity ) x e^(-x(1+y)) dx = - integral _(0)^(infinity ) frac(x, 1+y)d e^(-x(1+y)) dx = frac(1, (1+y)^2) \\
-h(Y) = -integral _(0)^(infinity ) frac(1, (1+y)^2) log frac(1, (1+y)^2) dy = -2 integral _(0)^(infinity ) frac(1, 1+y) log (1+y) dfrac(1, 1+y) = 2 log e \\
-h(XY) = -integral _(0)^(infinity ) integral _(0)^(infinity ) x e^(-x(1+y)) log [x e^(-x(1+y))] dx dy \\
-= - integral _(0)^(infinity ) x log x ( integral _(0)^(infinity ) e^(-x(1+y)) dy ) dx + (log e) integral _(0)^(infinity ) x^2( integral _(0)^(infinity )(1+y) e^(-x(1+y)) dy ) dx \\
-= - integral _(0)^(infinity ) x log x ( frace^(-x)x ) dx + (log e)integral _(0)^(infinity ) x ( e^(-x) + integral _(0)^(infinity )e^(-x(1+y)) dy ) dx \\
-= -integral _(0)^(infinity ) e^(-x) log x dx + (log e) integral x( frace^(-x) + e^(-x)x ) dx = gamma log e + 2 log e = (gamma + 2) log e \\
+给定两连续随机变量 $X$ 和 $Y$ ，其中 $X$ 的概率密度是 $p(x) = e^(-x) (0 "leqslant" x < infinity )$ ，条件概率密度是 $p(y/x) = xe^(-xy) (0 "leqslant" y < infinity )$ 。求 $h(X), h(Y), h(XY), I(X;Y)$ 。
+$ "beginaligned"
+h(X) = - integral _(0)^( infinity ) p(x) log p(x) dx = - integral _(0)^( infinity ) e^(-x) log e^(-x) dx = - ( log e) integral _(0)^( infinity ) x de^(-x) = log e \\
+p(y) = integral _(0)^( infinity ) p(x) p(y | x) dx = integral _(0)^( infinity ) x e^(-x(1+y)) dx = - integral _(0)^( infinity ) frac(x, 1+y)d e^(-x(1+y)) dx = frac(1, (1+y)^2) \\
+h(Y) = - integral _(0)^( infinity ) frac(1, (1+y)^2) log frac(1, (1+y)^2) dy = -2 integral _(0)^( infinity ) frac(1, 1+y) log (1+y) dfrac(1, 1+y) = 2 log e \\
+h(XY) = - integral _(0)^( infinity ) integral _(0)^( infinity ) x e^(-x(1+y)) log [x e^(-x(1+y))] dx dy \\
+= - integral _(0)^( infinity ) x log x ( integral _(0)^( infinity ) e^(-x(1+y)) dy ) dx + ( log e) integral _(0)^( infinity ) x^2( integral _(0)^( infinity )(1+y) e^(-x(1+y)) dy ) dx \\
+= - integral _(0)^( infinity ) x log x ( "frace"^(-x)x ) dx + ( log e) integral _(0)^( infinity ) x ( e^(-x) + integral _(0)^( infinity )e^(-x(1+y)) dy ) dx \\
+= - integral _(0)^( infinity ) e^(-x) log x dx + ( log e) integral x( "frace"^(-x) + e^(-x)x ) dx = gamma log e + 2 log e = ( gamma + 2) log e \\
 I(X;Y) = h(X) + h(Y) - h(XY) = (1 - gamma ) log e
-endaligned $
+"endaligned" $
 
-其中，$gamma = -integral _(0)^(infinity ) e^(-x) ln x dx$ 为欧拉常数，定义为调和级数与自然对数的差值，约等于 0.577 2。
+其中，$gamma = - integral _(0)^( infinity ) e^(-x) ln x dx$ 为欧拉常数，定义为调和级数与自然对数的差值，约等于 0.577 2。
 
 *习题* 4.14
 给定两连续随机变量 $X$ 和 $Y$ ，它们的联合概率密度是
-$ p(xy) = frac(1, 2 pi sigma _x sigma _y) exp lbrace{- frac((x - m_x)^2, 2 sigma _x^2) - frac((y - m_y)^2, 2 sigma _y^2)rbrace, quad -infinity < x, y < infinity } $
+$ p(xy) = frac(1, 2 pi sigma _x sigma _y) exp "lbrace"{- frac((x - m_x)^2, 2 sigma _x^2) - frac((y - m_y)^2, 2 sigma _y^2)"rbrace", quad - infinity < x, y < infinity } $
 
 (1) 求随机变量 $U = X + Y$ 和 $V = X - Y$ 的概率密度函数 $p(u)$ 和 $p(v)$ 。
-$ beginaligned
-p(x) = integral _(-infinity )^(infinity ) p(xy) dy = frac(1, sqrt(2pi ) sigma _x) exp [ - frac((x - m_x)^2, 2sigma _x^2) ] \\
-p(y) = integral _(-infinity )^(infinity ) p(xy) dx = frac(1, sqrt(2pi ) sigma _y) exp [ - frac((y - m_y)^2, 2sigma _y^2) ] \\
-p(x) p(y) = p(xy) implies X 和 Y 是相互独立的高斯随机变量 implies U 的均值和方差分别为 m_x + m_y 和 sigma _x^2 + sigma _y^2 \\
-implies p(u) = frac(1, sqrt(2pi (sigma _x^2 + sigma _y^2))) exp [ - frac((z - m_x - m_y)^2, 2(sigma _x^2 + sigma _y^2)) ] \\
+$ "beginaligned"
+p(x) = integral _(- infinity )^( infinity ) p(xy) dy = frac(1, sqrt(2 pi ) sigma _x) exp [ - frac((x - m_x)^2, 2 sigma _x^2) ] \\
+p(y) = integral _(- infinity )^( infinity ) p(xy) dx = frac(1, sqrt(2 pi ) sigma _y) exp [ - frac((y - m_y)^2, 2 sigma _y^2) ] \\
+p(x) p(y) = p(xy) "implies" X 和 Y 是相互独立的高斯随机变量 "implies" U 的均值和方差分别为 m_x + m_y 和 sigma _x^2 + sigma _y^2 \\
+"implies" p(u) = frac(1, sqrt(2 pi ( sigma _x^2 + sigma _y^2))) exp [ - frac((z - m_x - m_y)^2, 2( sigma _x^2 + sigma _y^2)) ] \\
 V 的均值和方差分别为 m_x - m_y 和 sigma _x^2 + sigma _y^2 \\
-implies p(v) = frac(1, sqrt(2pi (sigma _x^2 + sigma _y^2))) exp [ - frac((z - m_x + m_y)^2, 2(sigma _x^2 + sigma _y^2)) ]
-endaligned $
+"implies" p(v) = frac(1, sqrt(2 pi ( sigma _x^2 + sigma _y^2))) exp [ - frac((z - m_x + m_y)^2, 2( sigma _x^2 + sigma _y^2)) ]
+"endaligned" $
 
 (2) 计算 $h(U), h(V)$ 和 $I(U;V)$ 。
 
-$ beginaligned
-h(U) = h(V) = frac(1, 2) log [2 pi e (sigma _x^2 + sigma _y^2)] quad h(XY) = log (2 pi e sigma _x sigma _y) \\
-beginpmatrix
-u \\ v
-endpmatrix =
-beginpmatrix
+$ "beginaligned"
+h(U) = h(V) = frac(1, 2) log [2 pi e ( sigma _x^2 + sigma _y^2)] quad h(XY) = log (2 pi e sigma _x sigma _y) \\
+"beginpmatrix"
+u \ v
+"endpmatrix" =
+"beginpmatrix"
 1 & 1 \\
 1 & -1
-endpmatrix
-beginpmatrix
-x \\ y
-endpmatrix \\
-|det 
-beginpmatrix
+"endpmatrix"
+"beginpmatrix"
+x \ y
+"endpmatrix" \\
+| det 
+"beginpmatrix"
 1 & 1 \\
 1 & -1
-endpmatrix
+"endpmatrix"
 |
-= 2 implies h(UV) = h(XY) + log 2 = log (4 pi e sigma _x sigma _y) \\
-implies I(U;V) = h(U) + h(V) - h(UV) \\
-= log (2 pi e (sigma _x^2 + sigma _y^2)) - log (4 pi e sigma _x sigma _y) \\
-= log frac(sigma _x^2 + sigma _y^2, 2 sigma _x sigma _y)
-endaligned $
+= 2 "implies" h(UV) = h(XY) + log 2 = log (4 pi e sigma _x sigma _y) \\
+"implies" I(U;V) = h(U) + h(V) - h(UV) \\
+= log (2 pi e ( sigma _x^2 + sigma _y^2)) - log (4 pi e sigma _x sigma _y) \\
+= log frac( sigma _x^2 + sigma _y^2, 2 sigma _x sigma _y)
+"endaligned" $
 
 *习题* 4.20
 设 $X^N, Y^N$ 为定义在 $bb(R)^N$ 空间中的两个 $N$ 维矢量，$U^N, V^N$ 分别为 $X^N, Y^N$ 的可逆线性变换，即 $u = Ax + alpha$, $v = By + beta$ ，证明
 $ I(U^N; V^N) = I(X^N; Y^N) $
 
-$ beginpmatrix
+$ "beginpmatrix"
 U^N \\
 V^N
-endpmatrix =
-beginpmatrix
+"endpmatrix" =
+"beginpmatrix"
 A & 0 \\
 0 & B
-endpmatrix
-beginpmatrix
+"endpmatrix"
+"beginpmatrix"
 x \\
 y
-endpmatrix +
-beginpmatrix
-alpha \\
-beta 
-endpmatrix $
+"endpmatrix" +
+"beginpmatrix"
+ alpha \\
+ beta 
+"endpmatrix" $
 
-令 $C = beginpmatrix A & 0 \\ 0 & B endpmatrix, z = beginpmatrix x \\ y endpmatrix, gamma = beginpmatrix alpha \\ beta endpmatrix, beginpmatrix U^N \\ V^N endpmatrix = Cz + gamma$
+令 $C = "beginpmatrix" A & 0 \ 0 & B "endpmatrix", z = "beginpmatrix" x \ y "endpmatrix", gamma = "beginpmatrix" alpha \ beta "endpmatrix", "beginpmatrix" U^N \ V^N "endpmatrix" = Cz + gamma$
 
-$ beginaligned
+$ "beginaligned"
 I(U^N; V^N) = h(U^N) + h(V^N) - h(U^N V^N) = h(Ax + alpha ) + h(By + beta ) - h(Cz + gamma ) \\
-= h(X^N) + log |det (A)| + h(Y^N) + log |det (B)| - h(X^N Y^N) - log |det (C)| \\
+= h(X^N) + log | det (A)| + h(Y^N) + log | det (B)| - h(X^N Y^N) - log | det (C)| \\
 = h(X^N) + h(Y^N) - h(X^N Y^N) = I(X^N; Y^N)
-endaligned $
+"endaligned" $
 
 上面用到了行列式的性质：
-$ det (C) = beginvmatrix A & 0 \\ 0 & B endvmatrix = det (A) det (B) $
+$ det (C) = "beginvmatrix" A & 0 \ 0 & B "endvmatrix" = det (A) det (B) $
 
 == 第五章 无失真信源编码
 
@@ -421,14 +421,14 @@ $ P(a_i) = [0.01, 0.09, 0.09, 0.81] $
 | --- | --- | --- | --- | --- |
 | 码长 | 1 | 2 | 3 | 3 |
 
-平均码长 $fracoverline(L)\_NN = frac(1, N) sum _(i=1)^(4) P(a\_i) l\_i = 0.645 " 码符号/信源符号"$。
+平均码长 $"fracoverline"(L)\_NN = frac(1, N) sum _(i=1)^(4) P(a\_i) l\_i = 0.645 " 码符号/信源符号"$。
 
-同理，当 $N = 3$ 时，平均码长 $fracoverline(L)_33 = 0.533 " 码符号/信源符号"$；
+同理，当 $N = 3$ 时，平均码长 $"fracoverline"(L)_33 = 0.533 " 码符号/信源符号"$；
 
-当 $N = 4$ 时，平均码长 $fracoverline(L)_44 = 0.493 " 码符号/信源符号"$；
+当 $N = 4$ 时，平均码长 $"fracoverline"(L)_44 = 0.493 " 码符号/信源符号"$；
 
 当 $N = infinity$ 时，紧致码的平均码长为：
-$ lim _(N -> infinity ) fracoverline(L)_NN = frac(H(S), log r) approx 0.469 " 码符号/信源符号" $
+$ lim _(N -> infinity ) "fracoverline"(L)_NN = frac(H(S), log r) approx 0.469 " 码符号/信源符号" $
 (4) 计算当 $N = 1, 2, 3, 4$ 时的编码效率和码剩余度。
 编码效率 $eta = frac(H_r(S), overline(L)) = frac(H(S), overline(L))$ （$r = 2$），码剩余度 $1 - eta = 1 - frac(H_r(S), overline(L)) = 1 - frac(H(S), overline(L))$。
 
@@ -468,16 +468,16 @@ $ eta = frac(H(X), R) = frac(2.622, 2.7) approx 97.11\% $
 
 *习题* 6.6
 设二元对称信道的概率转移矩阵为
-$ beginpmatrix 3/4 & 1/4 \\ 1/4 & 3/4 endpmatrix $
+$ "beginpmatrix" 3/4 & 1/4 \ 1/4 & 3/4 "endpmatrix" $
 
 (1) 若 $p(0) = 1/3$ ，求 $I(x=0;y=1), I(x=1;Y), I(X;Y)$ 。
 设输出概率为 $q_0, q_1$，有
-$ (q_0, q_1) = (p_0, p_1)P = (1/3 quad 2/3) beginpmatrix 3/4 & 1/4 \\ 1/4 & 3/4 endpmatrix = (5/12 quad 7/12) $
-$ beginalignedI(x=0; y=1) = log frac(p(y=1|x=0), p(y=1)) = log _2 frac(1/4, 7/12) = -1.22 " bit" \\
-I(x=1; Y) = sum _j p_(ij) log fracp_(ij)q_j = frac(1, 4) log _2 frac(1/4, 5/12) + frac(3, 4) log _2 frac(3/4, 7/12) = 0.088 " 比特/符号" \\
-I(x=0; Y) = sum _j p_(ij) log fracp_(ij)q_j = frac(3, 4) log _2 frac(3/4, 5/12) + frac(1, 4) log _2 frac(1/4, 7/12) = 0.33 " 比特/符号" \\
+$ (q_0, q_1) = (p_0, p_1)P = (1/3 quad 2/3) "beginpmatrix" 3/4 & 1/4 \ 1/4 & 3/4 "endpmatrix" = (5/12 quad 7/12) $
+$ "beginalignedI"(x=0; y=1) = log frac(p(y=1|x=0), p(y=1)) = log _2 frac(1/4, 7/12) = -1.22 " bit" \\
+I(x=1; Y) = sum _j p_(ij) log "fracp"_(ij)q_j = frac(1, 4) log _2 frac(1/4, 5/12) + frac(3, 4) log _2 frac(3/4, 7/12) = 0.088 " 比特/符号" \\
+I(x=0; Y) = sum _j p_(ij) log "fracp"_(ij)q_j = frac(3, 4) log _2 frac(3/4, 5/12) + frac(1, 4) log _2 frac(1/4, 7/12) = 0.33 " 比特/符号" \\
 I(X; Y) = sum _i p(x) I(x; Y) = frac(1, 3) I(x=0; Y) + frac(2, 3) I(x=1; Y) = 0.169 " 比特/符号"
-endaligned $
+"endaligned" $
 
 (2) 求该信道的容量及其达到容量时的输入概率分布。
 该信道为二元对称信道，达到容量时输入等概，即 $p_0 = p_1 = 1/2$，输出也等概。
@@ -488,30 +488,30 @@ $ C = 1 - H(frac(1, 4)) = 1 - 0.811 = 0.189 " 比特/符号" $
 
 (1) 写出该信道的转移概率矩阵；
 信道的转移概率矩阵为
-$ P = beginpmatrix
+$ P = "beginpmatrix"
 1/2 & 1/4 & 1/4 \\
 0 & 1 & 0 \\
 1/4 & 1/4 & 1/2
-endpmatrix $
+"endpmatrix" $
 (2) 该信道是否为对称信道？
 该信道不是对称信道。
 (3) 求该信道的信道容量；
 由 $P beta = -h$，可得
-$ beginpmatrix
+$ "beginpmatrix"
 1/2 & 1/4 & 1/4 \\
 0 & 1 & 0 \\
 1/4 & 1/4 & 1/2
-endpmatrix
-beginpmatrix
-beta _0 \\
-beta _1 \\
-beta _2
-endpmatrix =
-beginpmatrix
-frac12log frac12 + frac14log frac14 + frac14log frac14 \\
+"endpmatrix"
+"beginpmatrix"
+ beta _0 \\
+ beta _1 \\
+ beta _2
+"endpmatrix" =
+"beginpmatrix"
+frac(1, 2) log frac(1, 2) + frac(1, 4) log frac(1, 4) + frac(1, 4) log frac(1, 4) \\
 0 \\
-frac12log frac12 + frac14log frac14 + frac14log frac14
-endpmatrix $
+frac(1, 2) log frac(1, 2) + frac(1, 4) log frac(1, 4) + frac(1, 4) log frac(1, 4)
+"endpmatrix" $
 
 解得 $beta _0 = -2, beta _1 = 0, beta _2 = -2$。
 
@@ -526,25 +526,25 @@ $ p_0 = p_2 = frac(2, 9), quad p_1 = frac(5, 9) $
 (1) 求信道容量；
 ？考试考这个我似了算了
 信道转移矩阵为
-$ P = beginpmatrix
+$ P = "beginpmatrix"
 1 & 0 \\
-epsilon & 1-epsilon 
-endpmatrix, quad P^(-1) = beginpmatrix
+ epsilon & 1- epsilon 
+"endpmatrix", quad P^(-1) = "beginpmatrix"
 1 & 0 \\
-frac(-epsilon , 1-epsilon ) & frac(1, 1-epsilon )
-endpmatrix $
-$ h = beginpmatrix
+frac(- epsilon , 1- epsilon ) & frac(1, 1- epsilon )
+"endpmatrix" $
+$ h = "beginpmatrix"
 0 \\
-H(epsilon )
-endpmatrix, quad beta = -P^(-1) h = beginpmatrix
+H( epsilon )
+"endpmatrix", quad beta = -P^(-1) h = "beginpmatrix"
 0 \\
--frac(H(epsilon ), 1-epsilon )
-endpmatrix, quad q_0 = frac(1, 1+2^(-fracH(epsilon )){1-epsilon )}, quad q_1 = frac(2^(-fracH(epsilon ), 1-epsilon ))1+2^(-frac(H(epsilon ), 1-epsilon )) $
+-frac(H( epsilon ), 1- epsilon )
+"endpmatrix", quad q_0 = frac(1, 1+2^(-"fracH"( epsilon )){1- epsilon )}, quad q_1 = frac(2^(-"fracH"( epsilon ), 1- epsilon ))1+2^(-frac(H( epsilon ), 1- epsilon )) $
 
-$ (p_0quad p_1) = (q_0quad q_1) P^(-1) = ( 1-frac(epsilon ^(fracepsilon , 1-epsilon ))1+(1-epsilon )epsilon ^frac(epsilon , 1-epsilon ) quad frac(epsilon ^(fracepsilon , 1-epsilon ))1+(1-epsilon )epsilon ^frac(epsilon , 1-epsilon ) ) $
+$ (p_0 quad p_1) = (q_0 quad q_1) P^(-1) = ( 1-frac( epsilon ^("frac" epsilon , 1- epsilon ))1+(1- epsilon ) epsilon ^frac( epsilon , 1- epsilon ) quad frac( epsilon ^("frac" epsilon , 1- epsilon ))1+(1- epsilon ) epsilon ^frac( epsilon , 1- epsilon ) ) $
 
 输入概率均大于零，所以信道容量为
-$ C = log ( 1 + 2^(-frac(H(epsilon ), 1-epsilon )) ) $
+$ C = log ( 1 + 2^(-frac(H( epsilon ), 1- epsilon )) ) $
 (2) 若将两个同样的 Z 信道串接，求串接后信道的转移概率矩阵；
 (3) 求 (2) 中串接信道的容量和达到容量时的输入的概率分布；
 (4) 将 n 个同样的 Z 信道串接，求串接后信道的转移概率矩阵和信道容量。
@@ -554,43 +554,43 @@ $ C = log ( 1 + 2^(-frac(H(epsilon ), 1-epsilon )) ) $
 感觉这题答案有点问题
 (1) $X$ 与 $Y$ 之间的信道容量 $C_1$；
 由于 $X$ 与 $Y$ 之间的信道转移概率矩阵为
-$ P_1 = beginpmatrix
+$ P_1 = "beginpmatrix"
 1 - epsilon & epsilon \\
-epsilon & 1 - epsilon 
-endpmatrix $
+ epsilon & 1 - epsilon 
+"endpmatrix" $
 
 所以信道为弱对称信道，当输入等概时达到容量。
 
-$ C_1 = log 2 - H(epsilon ) = log 2 + epsilon log epsilon + (1 - epsilon ) log (1 - epsilon ) $
+$ C_1 = log 2 - H( epsilon ) = log 2 + epsilon log epsilon + (1 - epsilon ) log (1 - epsilon ) $
 (2) $Y$ 与 $Z$ 之间的信道容量 $C_2$；
 $Y$ 和 $Z$ 之间的信道转移矩阵为
-$ P_2 = beginpmatrix
+$ P_2 = "beginpmatrix"
 3/4 & 0 & 1/4 \\
 0 & 3/4 & 1/4
-endpmatrix $
+"endpmatrix" $
 
 由于信道为弱对称信道，当 $p_1 = p_2 = 1/2$ 时达到信道容量 $C_2$，此时输出概率分布为 $(3/8, 3/8, 1/4)$，所以信道容量
 $ C_2 = H(3/8, 3/8, 1/4) - H(1/4, 3/4) = 3/4 " 比特/符号" $
 (3) $X$ 与 $Z$ 之间的信道容量 $C_3$ 及达到容量时的输入概率分布。
 $X$ 和 $Z$ 之间的转移概率矩阵 $P_3 = P_1 times P_2$，所以
-$ P_3 = beginpmatrix
+$ P_3 = "beginpmatrix"
 1 - epsilon & epsilon \\
-epsilon & 1 - epsilon 
-endpmatrix
-beginpmatrix
+ epsilon & 1 - epsilon 
+"endpmatrix"
+"beginpmatrix"
 3/4 & 1/4 & 0 \\
 0 & 1/4 & 3/4
-endpmatrix=
-beginpmatrix
-3(1-epsilon )/4 & 1/4 & (3epsilon )/4 \\
-(3epsilon )/4 & 1/4 & 3(1-epsilon )/4
-endpmatrix $
+"endpmatrix"=
+"beginpmatrix"
+3(1- epsilon )/4 & 1/4 & (3 epsilon )/4 \\
+(3 epsilon )/4 & 1/4 & 3(1- epsilon )/4
+"endpmatrix" $
 
 该信道是弱对称信道，当输入等概率分布时达到信道容量 $C_3$，此时
-$ q_0 = q_1 = 3/8,quad q_2 = 1/4 $
+$ q_0 = q_1 = 3/8, quad q_2 = 1/4 $
 
 所以
-$ C_3 = H ( frac(3, 8), frac(3, 8), frac(1, 4) ) - H ( frac(3(1-epsilon ), 4), frac(1, 4), frac(3epsilon , 4) ) = frac(3, 4) [log 2 - H(epsilon )] $
+$ C_3 = H ( frac(3, 8), frac(3, 8), frac(1, 4) ) - H ( frac(3(1- epsilon ), 4), frac(1, 4), frac(3 epsilon , 4) ) = frac(3, 4) [ log 2 - H( epsilon )] $
 
 输入等概时达到容量。
 
@@ -598,20 +598,20 @@ $ C_3 = H ( frac(3, 8), frac(3, 8), frac(1, 4) ) - H ( frac(3(1-epsilon ), 4), f
 
 *习题* 7.3
 一信道输入符号集 $A = 0,1/2,1$ ，输出符号集 $B = 0, 1$ ，信道的转移概率矩阵为
-$ P = beginpmatrix 1 & 0 \\ 1/2 & 1/2 \\ 0 & 1 endpmatrix $
+$ P = "beginpmatrix" 1 & 0 \ 1/2 & 1/2 \ 0 & 1 "endpmatrix" $
 
-现有 4 个等概率消息通过此信道输出，若选择这样的信道编码：$C_b: a_1, a_2, 1/2, 1/2$, $a_i = 0$ 或 $1 \ (i = 1, 2)$ ，码长为 4，并选择如下译码规则：
+现有 4 个等概率消息通过此信道输出，若选择这样的信道编码：$C_b: a_1, a_2, 1/2, 1/2$, $a_i = 0$ 或 $1 (i = 1, 2)$ ，码长为 4，并选择如下译码规则：
 $ f: (y_1, y_2, y_3, y_4) = (y_1, y_2, 1/2, 1/2) $
 
 (1) 编码后信息传输速率等于多少？
 编码后信息传输速率：
-$ R = frac(log _2 4, 4) = 0.5 " 比特/符号" $
+$ R = frac( log _2 4, 4) = 0.5 " 比特/符号" $
 (2) 证明在此译码规则下，对于码字的译码错误率 $P_E^((i)) = 0, i = 1, 2, 3, 4$ 。
 设 4 个消息的编码分别为：(0, 0, 1/2, 1/2)，(0, 1, 1/2, 1/2)，(1, 0, 1/2, 1/2)，(1, 1, 1/2, 1/2)，通过信道传输后，每个码字的前两位无差错，所以不同的码字的传输得到不同的译码结果，无译码错误。
 
 *习题* 7.4
 一个二元对称信道的转移概率矩阵为
-$ P = beginpmatrix 1-p & p \\ p & 1-p endpmatrix \ (p < 1/2) $
+$ P = "beginpmatrix" 1-p & p \ p & 1-p "endpmatrix" (p < 1/2) $
 
 信道输入符号 0,1 的概率分别为 $omega , 1 - omega$ 。
 
@@ -619,49 +619,49 @@ $ P = beginpmatrix 1-p & p \\ p & 1-p endpmatrix \ (p < 1/2) $
 MAP 准则
 
 联合概率矩阵：
-$ beginpmatrix
+$ "beginpmatrix"
 (1-p) omega & p omega \\
-p(1-omega ) & (1-p)(1-omega )
-endpmatrix $
+p(1- omega ) & (1-p)(1- omega )
+"endpmatrix" $
 
 当接收到 “0” 时：
-若 $(1-p) omega geqslant p (1-omega )$，则判断为 “0”；反之，则判断为 “1”。
+若 $(1-p) omega "geqslant" p (1- omega )$，则判断为 “0”；反之，则判断为 “1”。
 
 所以
-$ G(y=0) = begincases
-0 & (omega geqslant p) \\
-1 & (omega < p)
-endcases $
+$ G(y=0) = "begincases"
+0 & ( omega "geqslant" p) \\
+1 & ( omega < p)
+"endcases" $
 
 同理，得
-$ G(y=1) = begincases
-0 & (omega geqslant 1-p) \\
-1 & (omega < 1-p)
-endcases $
+$ G(y=1) = "begincases"
+0 & ( omega "geqslant" 1-p) \\
+1 & ( omega < 1-p)
+"endcases" $
 
 因为 $p < frac(1, 2)$，所以 $1-p > p$。可总结如下：
 
 - MAP 判决函数：
-$ G(y) = begincases
- 0 & (omega geqslant 1-p) \\
- 1 & (omega < p)
- endcases $
-$ G(y=0) = 0, quad G(y=1) = 1 quad (p leqslant omega < 1-p) $
+$ G(y) = "begincases"
+ 0 & ( omega "geqslant" 1-p) \\
+ 1 & ( omega < p)
+ "endcases" $
+$ G(y=0) = 0, quad G(y=1) = 1 quad (p "leqslant" omega < 1-p) $
 
 - 平均错误率：
-$ p_E = begincases
- 1-omega & (omega geqslant 1-p) \\
- omega & (omega < p) \\
- p & (p leqslant omega < 1-p)
- endcases $
+$ p_E = "begincases"
+ 1- omega & ( omega "geqslant" 1-p) \\
+ omega & ( omega < p) \\
+ p & (p "leqslant" omega < 1-p)
+ "endcases" $
 
   或
-$ p_E = min (1-omega , omega , p) $
+$ p_E = min (1- omega , omega , p) $
 
 (2) 求利用 ML 准则的判决函数和平均错误率。
 利用 ML 准则
 
-当接收到 “0” 时，若 $(1-p) geqslant p$，则判断为“0”；反之，则判断为 “1”，而根据题意有 $1-p > p$。
+当接收到 “0” 时，若 $(1-p) "geqslant" p$，则判断为“0”；反之，则判断为 “1”，而根据题意有 $1-p > p$。
 
 所以
 $ G(y=0) = 0 $
@@ -678,7 +678,7 @@ $ G(y=0) = 0, quad G(y=1) = 1 $
 $ p_E = p $
 
 (3) 什么时候上述两准则的判决结果相同？
-当 $p < omega leqslant 1-p$ 时，上述两准则的判决结果相同。
+当 $p < omega "leqslant" 1-p$ 时，上述两准则的判决结果相同。
 
 == 第八章 波形信道
 
@@ -694,7 +694,7 @@ $ p_E = p $
 
 （1）$I(X;Y)$ 的表达式： $I(X;Y) = h(Y) - h(Z)$。
 
-（2）因为 $-2 leqslant X leqslant 2$， $-1 leqslant Z leqslant 1$，$y = x + z$，所以 $y$ 的范围是：$-3<y<3$，噪声熵 $h(Z) = log (1 + 1) = log 2$，所以当 $Y$ 有最大熵时，信道达到容量，此时 $Y$ 应在 $(-3,3)$ 范围均匀分布，$Y$ 的分布密度为
+（2）因为 $-2 "leqslant" X "leqslant" 2$， $-1 "leqslant" Z "leqslant" 1$，$y = x + z$，所以 $y$ 的范围是：$-3<y<3$，噪声熵 $h(Z) = log (1 + 1) = log 2$，所以当 $Y$ 有最大熵时，信道达到容量，此时 $Y$ 应在 $(-3,3)$ 范围均匀分布，$Y$ 的分布密度为
    $$ p_Y(y) = \begin{cases}
    1/6 & -3 < y < 3 \\\\
    0 & \text{其他}
@@ -702,17 +702,17 @@ $ p_E = p $
 
 信道容量 $max I(X;Y) = log _2 (3 + 3) - log _2 2 = log _2 3 = 1.585$ 比特/自由度。
 
-（3）因为 $y = x + z$，且 $x$ 与 $z$ 相互独立，则 $y$ 的概率密度可以由 $x$ 与 $z$ 的概率密度卷积得到，设 $p_X(x) rightarrow X(omega )$, $p_Z(z) rightarrow Z(omega )$, $p_Y(y) rightarrow Y(omega )$，其中 $rightarrow$ 表示傅里叶变换关系，有 $X(omega ) Z(omega ) = Y(omega )$。
+（3）因为 $y = x + z$，且 $x$ 与 $z$ 相互独立，则 $y$ 的概率密度可以由 $x$ 与 $z$ 的概率密度卷积得到，设 $p_X(x) rightarrow X( omega )$, $p_Z(z) rightarrow Z( omega )$, $p_Y(y) rightarrow Y( omega )$，其中 $rightarrow$ 表示傅里叶变换关系，有 $X( omega ) Z( omega ) = Y( omega )$。
 
-$ Y(omega ) = integral _(-3)^(3) (frac(1, 6)) e^(-jomega y) dy = frac(sin (3omega ), 3omega ) $
+$ Y( omega ) = integral _(-3)^(3) (frac(1, 6)) e^(-j omega y) dy = frac( sin (3 omega ), 3 omega ) $
 
-$ Z(omega ) = integral _(-1)^(1) (frac(1, 2)) e^(-jomega z) dz = frac(sin omega , omega ) $
+$ Z( omega ) = integral _(-1)^(1) (frac(1, 2)) e^(-j omega z) dz = frac( sin omega , omega ) $
 
-$ X(omega ) = frac(Y(omega ), Z(omega )) = frac(1, 3) (2 cos 2omega + 1) $
+$ X( omega ) = frac(Y( omega ), Z( omega )) = frac(1, 3) (2 cos 2 omega + 1) $
 
 做反变换，得
 
-$ X(omega ) = frac(Y(omega ), Z(omega )) = frac(1, 3) (2 cos 2omega + 1) arrow frac(1, 3) [ delta (x-2) + delta (x+2) + delta (x) ] $
+$ X( omega ) = frac(Y( omega ), Z( omega )) = frac(1, 3) (2 cos 2 omega + 1) arrow frac(1, 3) [ delta (x-2) + delta (x+2) + delta (x) ] $
 
 所以达到容量时，$X$ 的概率分布是
 
@@ -722,22 +722,22 @@ $ p(x=0) = p(x=-2) = p(x=2) = frac(1, 3) $
 
 设离散时间连续信道的输入与输出分别为 $X^N = (X_1, dots.c , X_N)$ 和 $Y^N = (Y_1, dots.c , Y_N)$，试证明：
 
-（1）信源无记忆时，有 $I(X^N; Y^N) geqslant sum _(i=1)^N I(X_i; Y_i)$，当且仅当信道无记忆时等式成立。
-$ beginaligned
-sum _(i=1)^N I(X_i; Y_i) - I(X^N; Y^N) &= sum _(i=1)^N [H(X_i) - H(X_i | Y_i)] - sum _(i=1)^N H(X_i) + H(X^N | Y^N) \\
+（1）信源无记忆时，有 $I(X^N; Y^N) "geqslant" sum _(i=1)^N I(X_i; Y_i)$，当且仅当信道无记忆时等式成立。
+$ "beginaligned"
+ sum _(i=1)^N I(X_i; Y_i) - I(X^N; Y^N) &= sum _(i=1)^N [H(X_i) - H(X_i | Y_i)] - sum _(i=1)^N H(X_i) + H(X^N | Y^N) \\
 &= H(X^N | Y^N) - sum _(i=1)^N H(X_i | Y_i) \\
-&= sum _(i=1)^N H(X_i | Y^NX_1X_2dots.c X_(i-1)) - sum _(i=1)^N H(X_i | Y_i) leqslant 0
-endaligned $
+&= sum _(i=1)^N H(X_i | Y^NX_1X_2 dots.c X_(i-1)) - sum _(i=1)^N H(X_i | Y_i) "leqslant" 0
+"endaligned" $
 故：
-$ I(X^N; Y^N) geqslant sum _(i=1)^N I(X_i; Y_i) $
+$ I(X^N; Y^N) "geqslant" sum _(i=1)^N I(X_i; Y_i) $
 
-（2）信道无记忆时，有 $I(X^N; Y^N) leqslant sum _(i=1)^N I(X_i; Y_i)$，当且仅当信源无记忆时等式成立。
-$ beginaligned
+（2）信道无记忆时，有 $I(X^N; Y^N) "leqslant" sum _(i=1)^N I(X_i; Y_i)$，当且仅当信源无记忆时等式成立。
+$ "beginaligned"
 I(X^N; Y^N) - sum _(i=1)^N I(X_i; Y_i) &= H(Y^N) - H(Y^N | X^N) - sum _(i=1)^N [H(Y_i) - H(Y_i | X_i)] \\
-&= H(Y^N) - sum _(i=1)^N H(Y_i) leqslant 0
-endaligned $
+&= H(Y^N) - sum _(i=1)^N H(Y_i) "leqslant" 0
+"endaligned" $
 故：
-$ I(X^N; Y^N) leqslant sum _(i=1)^N I(X_i; Y_i) $
+$ I(X^N; Y^N) "leqslant" sum _(i=1)^N I(X_i; Y_i) $
 
 综上所述，当信源和信道无记忆时，这两个等式分别成立。
 

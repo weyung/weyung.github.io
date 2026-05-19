@@ -48,8 +48,8 @@ notation 符号
 第一篇正经详细读的论文，作者 Alexander May 挺 nb 的，多元 coppersmith 也是他和另一个人写的，有机会也读一下。
 这篇 paper 主要讲 $p$ 和 $q$ 不平衡时的 RSA 攻击，还要满足 $d_p$ 足够小。具体如下：
 $ beta = q_(bits)/n_(bits) \\
-delta = d_(p_bits)/n_(bits) \\
-s.t. space 3beta < 1+beta ^2+2delta $
+ delta = d_(p_bits)/n_(bits) \\
+s.t. space 3 beta < 1+ beta ^2+2 delta $
 
 === 2. Modulus Fault Attacks Against RSA-CRT Signatures
 

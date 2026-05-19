@@ -44,7 +44,7 @@ x2 = 199187699060694381663885242512273906292724577502523294449145203935425534938
 
 这题完全是现学现卖，之前只听说过椭圆曲线，然后就跑去学抽代忘记回来了。。。
 首先查到椭圆曲线的加法（两点相同的情形）：
-$ x_2=m^2-2x_1pmod p \ with \ m=frac(3x_1^2+a, 2y_1) $
+$ x_2=m^2-2x_1mod p with m=frac(3x_1^2+a, 2y_1) $
 又在 Sagemath 文档查到曲线定义 $y_1^2=x_1^3+ax_1+b$ ，就能联立出一个一元二次方程，exp 如下：
 
 ```python
@@ -311,144 +311,144 @@ for x, y in combinations(result, 2):
 === 原理
 
 RSA-CRT 签名中计算了：
-$ sigma _p=mu (m)^d modp \\
-sigma _q=mu (m)^dmodq $
-然后签名 $sigma =sigma _pcdotalpha +sigma _qcdotbeta$ ，其中 $alpha =qdot (q^(-1)mod\ p)$ ， $beta =pdot (p^(-1)mod\ q)$ 。
+$ sigma _p= mu (m)^d modp \\
+ sigma _q= mu (m)^dmodq $
+然后签名 $sigma = sigma _p dot.op alpha + sigma _q dot.op beta$ ，其中 $alpha =q dot.op (q^(-1)mod p)$ ， $beta =p dot.op (p^(-1)mod q)$ 。
 题目中给出 6 对签名，每对签名用 CRT 不难算出
-$ v=sigma _pcdotalpha +sigma _qcdotbeta mod Ndot N' $
-其中 $sigma _p$ 和 $sigma _q$ 和 $N/2$ 一个数量级， $alpha$ 和 $beta$ 又和 $N$ 一个数量级，故右式远小于 $Ndot N'$ ，那么*上式在整数域上是成立的*。
+$ v= sigma _p dot.op alpha + sigma _q dot.op beta mod N dot.op N' $
+其中 $sigma _p$ 和 $sigma _q$ 和 $N/2$ 一个数量级， $alpha$ 和 $beta$ 又和 $N$ 一个数量级，故右式远小于 $N dot.op N'$ ，那么*上式在整数域上是成立的*。
 一对算不出，但是多对可以，组成向量，有：
-$ boldsymbolv=alpha boldsymbolx+beta boldsymboly $
-其中 $boldsymbolx$ 和 $boldsymboly$ 是分量 $n/2$ 位的未知向量， $alpha$ 和 $beta$ 是有关 $p$ 和 $q$ 的 CRT 系数。
-不难计算出一组与 $bb(Z)^ell$ 中正交于 $boldsymbolv$ 的向量的格 $boldsymbolv^bot in bb(Z)^ell$ 的约化基 $boldsymbol{b_1,...,boldsymbolb\_(ell-1)}$ 。（可能此时你会疑惑为什么是 $ell-1$ 个向量，下面的拓展里有解释）
+$ "boldsymbolv"= alpha "boldsymbolx"+ beta "boldsymboly" $
+其中 $"boldsymbolx"$ 和 $"boldsymboly"$ 是分量 $n/2$ 位的未知向量， $alpha$ 和 $beta$ 是有关 $p$ 和 $q$ 的 CRT 系数。
+不难计算出一组与 $bb(Z)^"ell"$ 中正交于 $"boldsymbolv"$ 的向量的格 $"boldsymbolv"^"bot" in bb(Z)^"ell"$ 的约化基 $"boldsymbol"{b_1,...,"boldsymbolb"\_("ell"-1)}$ 。（可能此时你会疑惑为什么是 $"ell"-1$ 个向量，下面的拓展里有解释）
 特别地，我们有：
-$ alpha angle.l boldsymbolb_j,boldsymbolx angle.r + beta angle.l boldsymbolb_j,boldsymboly angle.r = 0 quad "for" \ j=1,2,dots ,ell-1 $
+$ alpha angle.l "boldsymbolb"_j,"boldsymbolx" angle.r + beta angle.l "boldsymbolb"_j,"boldsymboly" angle.r = 0 quad "for" j=1,2, dots ,"ell"-1 $
 #strike[（也不是很特别的感觉）]
-现在观察方程 $alpha dot u+beta dot v=0$ ，最小的非零解 $(u,v)in bb(Z)^2$ 是 $plus.minus (beta ,-alpha )/g$ ，其中 $g=gcd (alpha ,beta )$ 盲猜是非常小的（经测试基本在10以内），意味着 $|u|,|v|>= mathitOmega (N)$ 中 $mathitOmega$ 常量是非常小的。（啥玩意？）对 $j=1,2,dots ,ell-1$ ，有以下两种可能：
+现在观察方程 $alpha dot.op u+ beta dot.op v=0$ ，最小的非零解 $(u,v) in bb(Z)^2$ 是 $plus.minus ( beta ,- alpha )/g$ ，其中 $g= gcd ( alpha , beta )$ 盲猜是非常小的（经测试基本在10以内），意味着 $|u|,|v| >= "mathit" Omega (N)$ 中 $"mathit" Omega$ 常量是非常小的。（啥玩意？）对 $j=1,2, dots ,"ell"-1$ ，有以下两种可能：
 
-*情形1*：$angle.l boldsymbolb_j,boldsymbolx angle.r = angle.l boldsymbolb_j,boldsymboly angle.r = 0$ 。此时 $boldsymbolb_j$ 属于 $bb(Z)^ell$ 中与 $boldsymbolx$ 和 $boldsymboly$ 正交的向量的格 $L=boldsymbol{x,boldsymboly}^bot$
+*情形1*：$angle.l "boldsymbolb"_j,"boldsymbolx" angle.r = angle.l "boldsymbolb"_j,"boldsymboly" angle.r = 0$ 。此时 $"boldsymbolb"_j$ 属于 $bb(Z)^"ell"$ 中与 $"boldsymbolx"$ 和 $"boldsymboly"$ 正交的向量的格 $L="boldsymbol"{x,"boldsymboly"}^"bot"$
 
-*情形2*：$angle.l boldsymbolb_j,boldsymbolx angle.r$ 和 $angle.l boldsymbolb_j,boldsymboly angle.r$ 有绝对值 $>= mathitOmega (N)$ ，其中 $mathitOmega (N)$ 是一个小常数。因为 $boldsymbolx$ 和 $boldsymboly$ 的范数都不超过 $sqrt(ell N)$ ，由柯西-施瓦茨不等式，这意味着 $||boldsymbolb_j||>= mathitOmega (sqrt(ell N))$
+*情形2*：$angle.l "boldsymbolb"_j,"boldsymbolx" angle.r$ 和 $angle.l "boldsymbolb"_j,"boldsymboly" angle.r$ 有绝对值 $>= "mathit" Omega (N)$ ，其中 $"mathit" Omega (N)$ 是一个小常数。因为 $"boldsymbolx"$ 和 $"boldsymboly"$ 的范数都不超过 $sqrt("ell" N)$ ，由柯西-施瓦茨不等式，这意味着 $||"boldsymbolb"_j|| >= "mathit" Omega (sqrt("ell" N))$
 
-因为格 $L=boldsymbol{x,boldsymboly}^bot$ 的秩是 $ell-2$ ，当全部 $ell-1$ 个向量 $boldsymbolb\_j$ 线性无关时情形1不成立，所以最长的 $boldsymbolb\_(ell-1)$ 应该在情形2中，因此 $||boldsymbolb\_(ell-1)||>= mathitOmega (sqrt(ell N))$ 。另一方面，其他向量形成一个秩为 $ell-2$ 的格，且体积
-$ V="vol"(bb(Z)boldsymbolb\_1oplusdots.c oplusbb(Z)boldsymbolb\_(ell-2))approx frac"vol"(boldsymbol{v^bot)}||boldsymbol{b\_(ell-1)||}=frac||boldsymbol{v||}||boldsymbol{b\_(ell-1)||}<= fracsqrt(ell)dot N^(3/2)mathit{Omega (sqrt(N/ell))}=O(ell N) $
+因为格 $L="boldsymbol"{x,"boldsymboly"}^"bot"$ 的秩是 $"ell"-2$ ，当全部 $"ell"-1$ 个向量 $"boldsymbolb"\_j$ 线性无关时情形1不成立，所以最长的 $"boldsymbolb"\_("ell"-1)$ 应该在情形2中，因此 $||"boldsymbolb"\_("ell"-1)|| >= "mathit" Omega (sqrt("ell" N))$ 。另一方面，其他向量形成一个秩为 $"ell"-2$ 的格，且体积
+$ V="vol"(bb(Z)"boldsymbolb"\_1 plus.circle dots.c "oplusbb"(Z)"boldsymbolb"\_("ell"-2)) approx "frac""vol"("boldsymbol"{v^"bot")}||"boldsymbol"{b\_("ell"-1)||}="frac"||"boldsymbol"{v||}||"boldsymbol"{b\_("ell"-1)||} <= "fracsqrt"("ell") dot.op N^(3/2)"mathit"{ Omega (sqrt(N/"ell"))}=O("ell" N) $
 盲猜是一个随机的格。特别地，我们有：
-$ ||boldsymbolb\_j||=O(sqrt(ell-2)dot V^(1/(ell-2)))=O(ell^(1/2+1/(ell-2))dot N^(1/(ell-2)))quad "for" \ j=1,2,dots ,ell-2 $
+$ ||"boldsymbolb"\_j||=O(sqrt("ell"-2) dot.op V^(1/("ell"-2)))=O("ell"^(1/2+1/("ell"-2)) dot.op N^(1/("ell"-2))) quad "for" j=1,2, dots ,"ell"-2 $
 
-一旦 $ell >= 5$ ，这个长度就远小于 $sqrt(N/ell)$ 。假设是这种情况，那么对于 $j=1,2,...,ell-2$ ， $boldsymbolb\_j$ 应该是情形1中。这意味着这些向量生成 $L=boldsymbol{x,boldsymboly}^bot$ 中一个满秩的子格 $L'=bb(Z)boldsymbolb\_1oplusdots.c oplusbb(Z)boldsymbolb_(ell-2)$ 。
-取正交格，我们得到 $(L')^bot supset L^bot=bb(Z)boldsymbolxoplusbb(Z)boldsymboly$。因此， $boldsymbolx$ 和 $boldsymboly$ 属于 $L'$ 的正交格 $(L')^bot$ 。令 $boldsymbol{x',boldsymboly'}$ 为一组该格的约化基，我们可以枚举 $(L')^bot$ 中的长度不超过 $sqrt(ell N)$ 且为 $boldsymbolx'$ 和 $boldsymboly'$ 线性组合的所有格向量。高斯启发式表明这大约为：
-$ fracpi (sqrt(ell N))^2"vol"((L')^bot)=frac(pi ell N, V)=O(1) $
-这样的向量，所以这肯定是可行的。对这些向量 $boldsymbolz$ ，我们计算 $gcd (boldsymbolv-boldsymbolz,N)$ 。我们将因此很快在其中找到 $gcd (boldsymbolv-boldsymbolx,N)$ ，因为 $boldsymbolx$ 是一个 $(L')^bot$ 中长度 $leqsqrt(ell N)$ 的向量。但根据 $boldsymbolv$ 的定义，我们有：
-$ boldsymbolv=boldsymbolxmodp \\
-boldsymbolv=boldsymbolymodq $
-故 $gcd (boldsymbolv-boldsymbolx,N)=p$ ，从而分解 $N$ 。
+一旦 $"ell" >= 5$ ，这个长度就远小于 $sqrt(N/"ell")$ 。假设是这种情况，那么对于 $j=1,2,...,"ell"-2$ ， $"boldsymbolb"\_j$ 应该是情形1中。这意味着这些向量生成 $L="boldsymbol"{x,"boldsymboly"}^"bot"$ 中一个满秩的子格 $L'=bb(Z)"boldsymbolb"\_1 plus.circle dots.c "oplusbb"(Z)"boldsymbolb"_("ell"-2)$ 。
+取正交格，我们得到 $(L')^"bot" supset L^"bot"=bb(Z)"boldsymbolx""oplusbb"(Z)"boldsymboly"$。因此， $"boldsymbolx"$ 和 $"boldsymboly"$ 属于 $L'$ 的正交格 $(L')^"bot"$ 。令 $"boldsymbol"{x',"boldsymboly"'}$ 为一组该格的约化基，我们可以枚举 $(L')^"bot"$ 中的长度不超过 $sqrt("ell" N)$ 且为 $"boldsymbolx"'$ 和 $"boldsymboly"'$ 线性组合的所有格向量。高斯启发式表明这大约为：
+$ "frac" pi (sqrt("ell" N))^2"vol"((L')^"bot")=frac( pi "ell" N, V)=O(1) $
+这样的向量，所以这肯定是可行的。对这些向量 $"boldsymbolz"$ ，我们计算 $gcd ("boldsymbolv"-"boldsymbolz",N)$ 。我们将因此很快在其中找到 $gcd ("boldsymbolv"-"boldsymbolx",N)$ ，因为 $"boldsymbolx"$ 是一个 $(L')^"bot"$ 中长度 $"leqsqrt"("ell" N)$ 的向量。但根据 $"boldsymbolv"$ 的定义，我们有：
+$ "boldsymbolv"="boldsymbolxmodp" \\
+"boldsymbolv"="boldsymbolymodq" $
+故 $gcd ("boldsymbolv"-"boldsymbolx",N)=p$ ，从而分解 $N$ 。
 
 === 拓展阅读-正交格
 
-令 $mathbfb_1,...,mathbfb_d$ 为 $mathitLambda$ （这玩意念Lambda）中的向量。如果这 $d$ 个向量在 $mathbfZ$ 上线性无关且 $mathitLambda$ 中的任意元素可以由 $mathbfb_i$ 整系数线性表出，则这 $d$ 个向量形成 $mathitLambda$ 中的一组基。 $mathitLambda$ 中至少存在一组基。 $mathitLambda$ 的基都有相同的基数，称为 $mathitLambda$ 的维度。
+令 $bold(b)_1,...,bold(b)_d$ 为 $"mathit" Lambda$ （这玩意念Lambda）中的向量。如果这 $d$ 个向量在 $bold(Z)$ 上线性无关且 $"mathit" Lambda$ 中的任意元素可以由 $bold(b)_i$ 整系数线性表出，则这 $d$ 个向量形成 $"mathit" Lambda$ 中的一组基。 $"mathit" Lambda$ 中至少存在一组基。 $"mathit" Lambda$ 的基都有相同的基数，称为 $"mathit" Lambda$ 的维度。
 
-如果 $mathitOmega$ 包含 $mathitLambda$ ，且两者有相同的维度，则称 $mathitLambda$ 为 $mathitOmega$ 在 $mathbfZ^n$ 上的一个子格。（子格的定义？） $mathitLambda$ 的所有基张成相同的 $mathbfQ^n$ 的 $Q$ 向量子空间（啥玩意？），记为 $E_(mathitLambda )$ 。 $mathbfQ^n$ 上 $E_(mathitLambda )$ 的维度与 $mathitLambda$ 的维度相同。令格 $overline(mathitLambda )=E_(mathitLambda )sect mathbfZ^n$ 。 $mathitLambda$ 是 $overline(mathitLambda )$ 的一个子格。如果 $mathitLambda =overline(mathitLambda )$ ，那么我们称 $mathitLambda$ 是一个完备格，特别的， $overline(mathitLambda )$ 是一个完备格。
+如果 $"mathit" Omega$ 包含 $"mathit" Lambda$ ，且两者有相同的维度，则称 $"mathit" Lambda$ 为 $"mathit" Omega$ 在 $bold(Z)^n$ 上的一个子格。（子格的定义？） $"mathit" Lambda$ 的所有基张成相同的 $bold(Q)^n$ 的 $Q$ 向量子空间（啥玩意？），记为 $E_("mathit" Lambda )$ 。 $bold(Q)^n$ 上 $E_("mathit" Lambda )$ 的维度与 $"mathit" Lambda$ 的维度相同。令格 $overline("mathit" Lambda )=E_("mathit" Lambda )"capbold"(Z)^n$ 。 $"mathit" Lambda$ 是 $overline("mathit" Lambda )$ 的一个子格。如果 $"mathit" Lambda =overline("mathit" Lambda )$ ，那么我们称 $"mathit" Lambda$ 是一个完备格，特别的， $overline("mathit" Lambda )$ 是一个完备格。
 
 #quote[
 笔者注记：
 ]
-这里首先将 $mathitLambda$ 张成一个*有理数空间*，不局限于*整系数*向量组合了，记为 $E_(mathitLambda )$ 的E我猜是*欧几里得*的意思？然后与 $mathbfZ^n$ 相交得到的是整数点集合 $overline(mathitLambda )$ ，如此 $mathitLambda$ 是 $overline(mathitLambda )$ 子格的事应该挺自然的。然后如果两者相等，想象一下，都那样张成了都找不到新的点，那这个格确实也挺完备。
+这里首先将 $"mathit" Lambda$ 张成一个*有理数空间*，不局限于*整系数*向量组合了，记为 $E_("mathit" Lambda )$ 的E我猜是*欧几里得*的意思？然后与 $bold(Z)^n$ 相交得到的是整数点集合 $overline("mathit" Lambda )$ ，如此 $"mathit" Lambda$ 是 $overline("mathit" Lambda )$ 子格的事应该挺自然的。然后如果两者相等，想象一下，都那样张成了都找不到新的点，那这个格确实也挺完备。
 PS:发现自己念了十年的欧几里得，难怪输入法打不出来（）
 
-令 $(mathbfx,mathbfy)arrowmathbfx.mathbfy$ 为一般意义上的欧里几德内积， $||.||$ 是它对应的范数 #strike[（奇怪的表示方法）]。令 $F=(E_(mathitLambda ))^-$ 是关于该内积的正交向量子空间。我们定义正交格 $mathitLambda ^-=Fsect mathbfZ^n$ 。因此， $mathitLambda ^-$ 是一个 $mathbfZ^n$ 上的完备格，其维度为 $n-d$ 。这意味着 $(mathitLambda ^-)^-$ 等于 $overline(mathitLambda )$ 。令 $cal(B)=(mathbfb_1,...,mathbfb_d)$ 为 $mathitLambda$ 的一组基。
+令 $(bold(x),bold(y))arrowbold(x).bold(y)$ 为一般意义上的欧里几德内积， $||.||$ 是它对应的范数 #strike[（奇怪的表示方法）]。令 $F=(E_("mathit" Lambda ))^-$ 是关于该内积的正交向量子空间。我们定义正交格 $"mathit" Lambda ^-=F"capbold"(Z)^n$ 。因此， $"mathit" Lambda ^-$ 是一个 $bold(Z)^n$ 上的完备格，其维度为 $n-d$ 。这意味着 $("mathit" Lambda ^-)^-$ 等于 $overline("mathit" Lambda )$ 。令 $cal(B)=(bold(b)_1,...,bold(b)_d)$ 为 $"mathit" Lambda$ 的一组基。
 
 #quote[
 笔者注记：
 ]
-看到这就有点迷糊了，捋一捋： $E_(mathitLambda )$ 是 $mathitLambda$ 张成出的有理空间，然后 $F$ 是其正交向量子空间，即*任意从 $mathitLambda$ 和 $F$ 分别抓两个向量出来，其内积都为 $0$* 。
-再然后 $mathitLambda ^-$ 是 $F$ 的一个子格，*注意到 $mathitLambda ^-$ 把 $F$ 所有整数点都框进去了*，这就很有意思了，由上面的定义就不难得出正交格 $mathitLambda ^-$ 是一个 $mathbfZ^n$ 上的完备格。
-至于其维度为何是 $n-d$ ，有个概念叫*正交补*，就是正交空间的维数是刚刚好的，对于列空间维数为 $r$ 的矩阵 $A_(rtimes m)$ ，其左零空间的维数是 $m-r$ ，相加恰好为 $m$ 。举例来说，三维中与线正交的是二维空间，与面正交的是一维空间。
-这篇 paper 习惯用 $E^-$ 表示正交向量子空间，但似乎 $E^bot$ 的写法较为广泛。
+看到这就有点迷糊了，捋一捋： $E_("mathit" Lambda )$ 是 $"mathit" Lambda$ 张成出的有理空间，然后 $F$ 是其正交向量子空间，即*任意从 $"mathit" Lambda$ 和 $F$ 分别抓两个向量出来，其内积都为 $0$* 。
+再然后 $"mathit" Lambda ^-$ 是 $F$ 的一个子格，*注意到 $"mathit" Lambda ^-$ 把 $F$ 所有整数点都框进去了*，这就很有意思了，由上面的定义就不难得出正交格 $"mathit" Lambda ^-$ 是一个 $bold(Z)^n$ 上的完备格。
+至于其维度为何是 $n-d$ ，有个概念叫*正交补*，就是正交空间的维数是刚刚好的，对于列空间维数为 $r$ 的矩阵 $A_(r times m)$ ，其左零空间的维数是 $m-r$ ，相加恰好为 $m$ 。举例来说，三维中与线正交的是二维空间，与面正交的是一维空间。
+这篇 paper 习惯用 $E^-$ 表示正交向量子空间，但似乎 $E^"bot"$ 的写法较为广泛。
 
-在 $mathbfZ^n$ 的正则基上解析每个 $mathbfb_j$ 如下：
+在 $bold(Z)^n$ 的正则基上解析每个 $bold(b)_j$ 如下：
 
-$ mathbfb\_j =
-beginpmatrix
+$ bold(b)\_j =
+"beginpmatrix"
 b_(1,j) \\
 b_(2,j) \\
-dots.v \\
+ dots.v \\
 b_(n,j)
-endpmatrix $
-（这里吐槽一下，由于下划线和 Markdown 语法有冲突，如果不加反斜杠， $b_j$ 写成 $mathbfb_j$ Latex 就会炸，下文一开始也炸了几回，弄了几次才发现是这问题）
+"endpmatrix" $
+（这里吐槽一下，由于下划线和 Markdown 语法有冲突，如果不加反斜杠， $b_j$ 写成 $bold(b)_j$ Latex 就会炸，下文一开始也炸了几回，弄了几次才发现是这问题）
 
-定义整数 $ntimes d$ 的整数矩阵 $B=(b_(i,j))_(1<= i<= n,1<= j<= d)$ ，格 $mathitLambda$ 由 $B$ 的列向量张成，我们称 $mathitLambda$ 由 $B$ 张成。令 $Q=^tBB$ 为 $dtimes d$ 的对称 Gram 矩阵。 $Q$ 的行列式是与 $cal(B)$ 无关的正整数。 $mathitLambda$ 的行列式被定义为 $det (mathitLambda )=sqrt(det (B))$ 。
+定义整数 $n times d$ 的整数矩阵 $B=(b_(i,j))_(1 <= i <= n,1 <= j <= d)$ ，格 $"mathit" Lambda$ 由 $B$ 的列向量张成，我们称 $"mathit" Lambda$ 由 $B$ 张成。令 $Q=^tBB$ 为 $d times d$ 的对称 Gram 矩阵。 $Q$ 的行列式是与 $cal(B)$ 无关的正整数。 $"mathit" Lambda$ 的行列式被定义为 $det ("mathit" Lambda )=sqrt( det (B))$ 。
 
 #quote[
 笔者注记：
 ]
 这是的 $^tB$ 应该是 $B^T$ 的意思，又是奇怪的写法（）
 至于 Gram 矩阵，中文音译为格拉姆矩阵，对 $n$ 维欧氏空间上的 $k$ 个向量，其 Gram 矩阵为
-$ triangle(mathbfv_1,dots,mathbfv_k) =
-beginpmatrix
-angle.l mathbfv_1,mathbfv_1angle.r & dots.c & angle.l mathbfv_1,mathbfv_kangle.r \\
-dots.v & dots.down & dots.v \\
-angle.l mathbfv_k,mathbfv_1angle.r & dots.c & angle.l mathbfv_k,mathbfv_kangle.r 
-endpmatrix $
-不难看出这个可以等价表示为 $V^Ttimes V$ ，得出的矩阵也显然是对称的。
-这里 $mathitLambda$ 不是一个方阵，故不能直接求出其行列式，那么就应该通过其 Gram 矩阵来求行列式，这里我觉得应该是 $det (mathitLambda )=sqrt(det (Q))$ ，但我不确定。
+$ "triangle"(bold(v)_1,"dots",bold(v)_k) =
+"beginpmatrix"
+"langlebold"(v)_1,bold(v)_1 angle.r & dots.c & "langlebold"(v)_1,bold(v)_k angle.r \\
+ dots.v & dots.down & dots.v \\
+"langlebold"(v)_k,bold(v)_1 angle.r & dots.c & "langlebold"(v)_k,bold(v)_k angle.r 
+"endpmatrix" $
+不难看出这个可以等价表示为 $V^T times V$ ，得出的矩阵也显然是对称的。
+这里 $"mathit" Lambda$ 不是一个方阵，故不能直接求出其行列式，那么就应该通过其 Gram 矩阵来求行列式，这里我觉得应该是 $det ("mathit" Lambda )=sqrt( det (Q))$ ，但我不确定。
 
-*定理1* 令 $mathitLambda$ 为 $mathbfZ^n$ 上的完备格，那么 $det (mathitLambda ^-)=det (mathitLambda )$ 。
-证明：我们有 $mathitLambda =E_(mathitLambda )sect mathbfZ^n$ 和 $mathitLambda ^-=E_(mathitLambda )^-sect mathbfZ^n$ 。从另一篇论文（我也没读过）我们知道：
-$ det (mathbfZ^n)=fracdet (E_(mathit{Lambda )sect mathbfZ^n)}det ((E_(mathit{Lambda )^-)sect (mathbfZ^n)^*)} $
-其中 $(mathbfZ^n)^_$ 表示 $mathbfZ^n$ 上的极格。但 $det (mathbfZ^n)=1$ （？为什么要说但呢？）且 $(mathbfZ^n)^_=mathbfZ^n$ ，故 $det (mathitLambda ^-)=det (mathitLambda )$ 。
+*定理1* 令 $"mathit" Lambda$ 为 $bold(Z)^n$ 上的完备格，那么 $det ("mathit" Lambda ^-)= det ("mathit" Lambda )$ 。
+证明：我们有 $"mathit" Lambda =E_("mathit" Lambda )"capbold"(Z)^n$ 和 $"mathit" Lambda ^-=E_("mathit" Lambda )^-"capbold"(Z)^n$ 。从另一篇论文（我也没读过）我们知道：
+$ det (bold(Z)^n)="frac" det (E_("mathit"{ Lambda )"capbold"(Z)^n)} det ((E_("mathit"{ Lambda )^-) sect (bold(Z)^n)^*)} $
+其中 $(bold(Z)^n)^_$ 表示 $bold(Z)^n$ 上的极格。但 $det (bold(Z)^n)=1$ （？为什么要说但呢？）且 $(bold(Z)^n)^_=bold(Z)^n$ ，故 $det ("mathit" Lambda ^-)= det ("mathit" Lambda )$ 。
 
-*推论2* 令 $mathitLambda$ 为 $mathbfZ^n$ 上的格，那么 $det ((mathitLambda ^-)^-)=det (mathitLambda ^-)=det (overline(mathitLambda ))$ 。
+*推论2* 令 $"mathit" Lambda$ 为 $bold(Z)^n$ 上的格，那么 $det (("mathit" Lambda ^-)^-)= det ("mathit" Lambda ^-)= det (overline("mathit" Lambda ))$ 。
 
-*定理3* 令 $(mathbfb_1,...,mathbfb_d)$为格$mathitLambda$ 在 $mathbfZ^n$ 上的一组 LLL 约化基，那么：
+*定理3* 令 $(bold(b)_1,...,bold(b)_d)$为格$"mathit" Lambda$ 在 $bold(Z)^n$ 上的一组 LLL 约化基，那么：
 
-+ $det (mathitLambda )<= product ^d_(i=1)||mathbfb_i||<= 2^(d(d-1)/4)det (mathitLambda )$
-+ 对任意线性无关的向量 $mathbfx_1,...,mathbfx_tin mathitLambda$ ，当 $1<= j <= t$ 时，有：
++ $det ("mathit" Lambda ) <= product ^d_(i=1)||bold(b)_i|| <= 2^(d(d-1)/4) det ("mathit" Lambda )$
++ 对任意线性无关的向量 $bold(x)_1,...,bold(x)_t in "mathit" Lambda$ ，当 $1 <= j <= t$ 时，有：
 
-$ ||mathbfb_j||<= 2^((d-1)/2)max (||mathbfx_1||,...,||mathbfx_t||) $
+$ ||bold(b)_j|| <= 2^((d-1)/2) max (||bold(x)_1||,...,||bold(x)_t||) $
 
-我们现在描述计算正交格的一组 LLL 约化基的基本方法。令 $cal(B)=(mathbfb_1,...,mathbfb\_d)$ 为 $mathitLambda$ 的一组基， $B=(b\_(i,j))$ 为其对应的 $ntimes d$ 的矩阵。令 $c$ 为一个正整数常量。定义 $mathitOmega$为$mathbfZ^(n+d)$ 上由以下 $(n+d)times n$ 矩阵张成的格。
+我们现在描述计算正交格的一组 LLL 约化基的基本方法。令 $cal(B)=(bold(b)_1,...,bold(b)\_d)$ 为 $"mathit" Lambda$ 的一组基， $B=(b\_(i,j))$ 为其对应的 $n times d$ 的矩阵。令 $c$ 为一个正整数常量。定义 $"mathit" Omega$为$bold(Z)^(n+d)$ 上由以下 $(n+d) times n$ 矩阵张成的格。
 
 $ B^-=
-beginpmatrix
-ctimes b_(1,1) & ctimes b_(2,1) & dots.c & ctimes b_(n,1) \\
-ctimes b_(1,2) & ctimes b_(2,2) & dots.c & ctimes b_(n,2) \\
-dots.v & dots.v & dots.down & dots.v \\
-ctimes b_(1,d) & ctimes b_(2,d) & dots.c & ctimes b_(n,d) \\
+"beginpmatrix"
+c times b_(1,1) & c times b_(2,1) & dots.c & c times b_(n,1) \\
+c times b_(1,2) & c times b_(2,2) & dots.c & c times b_(n,2) \\
+ dots.v & dots.v & dots.down & dots.v \\
+c times b_(1,d) & c times b_(2,d) & dots.c & c times b_(n,d) \\
 1 & 0 & dots.c & 0 \\
 0 & 1 & dots.c & 0 \\
-dots.v & dots.v & dots.down & dots.v \\
+ dots.v & dots.v & dots.down & dots.v \\
 0 & 0 & dots.c & 1
-endpmatrix $
-矩阵 $B^-$ 被分成两块：上面 $dtimes n$ 部分是 $c\ ^tB$ ，下面 $ntimes n$ 部分是单位阵。
-设 $p_(uparrow)$ 和 $p_(downarrow)$ 是两个投影，将 $mathbfZ^(n+d)$ 的任何向量分别映射到由其前 $d$ 个坐标构成的 $mathbfZ^d$ 向量和由其最后 $n$ 个坐标构成的 $mathbfZ^n$ 向量，所有投影都与正则基有关。#strike[（这段翻译累死我了）]
-令 $mathbfx$ 为 $mathitOmega$ 的一个向量并记 $mathbfy=p_(downarrow)(mathbfx)$ ，那么
+"endpmatrix" $
+矩阵 $B^-$ 被分成两块：上面 $d times n$ 部分是 $c ^tB$ ，下面 $n times n$ 部分是单位阵。
+设 $p_( arrow.t )$ 和 $p_( arrow.b )$ 是两个投影，将 $bold(Z)^(n+d)$ 的任何向量分别映射到由其前 $d$ 个坐标构成的 $bold(Z)^d$ 向量和由其最后 $n$ 个坐标构成的 $bold(Z)^n$ 向量，所有投影都与正则基有关。#strike[（这段翻译累死我了）]
+令 $bold(x)$ 为 $"mathit" Omega$ 的一个向量并记 $bold(y)=p_( arrow.b )(bold(x))$ ，那么
 
-$ p_(uparrow)(mathbfy)=
-beginpmatrix
-mathbfy.mathbfb\_1 \\
-dots.v \\
-mathbfy.mathbfb\_d
-endpmatrix $
-因此，当且仅当 $p\_(uparrow)(mathbfx)=0$ 时有 $mathbfyin mathitLambda ^-$ 。此外，如果 $||mathbfx||<= c$ ，那么 $p_(uparrow)(mathbfx)=0$ 。
+$ p_( arrow.t )(bold(y))=
+"beginpmatrix"
+bold(y).bold(b)\_1 \\
+ dots.v \\
+bold(y).bold(b)\_d
+"endpmatrix" $
+因此，当且仅当 $p\_( arrow.t )(bold(x))=0$ 时有 $bold(y) in "mathit" Lambda ^-$ 。此外，如果 $||bold(x)|| <= c$ ，那么 $p_( arrow.t )(bold(x))=0$ 。
 
-*定理4* 令 $(mathbfx_1,mathbfx_2,...,mathbfx_n)$ 为格 $mathitOmega$ 的一组 LLL 约化基。若
+*定理4* 令 $(bold(x)_1,bold(x)_2,...,bold(x)_n)$ 为格 $"mathit" Omega$ 的一组 LLL 约化基。若
 
-$ c>2^((n-1)/2+(n-d)(n-d-1)/4)det (overline(mathitLambda )) $
-则 $(p_(downarrow)(mathbfx\_1),p_(downarrow)(mathbfx\_2),...,p_(downarrow)(mathbfx_(n-d)))$ 为 $overline(mathitLambda )$ 的一组 LLL 约化基。
+$ c>2^((n-1)/2+(n-d)(n-d-1)/4) det (overline("mathit" Lambda )) $
+则 $(p_( arrow.b )(bold(x)\_1),p_( arrow.b )(bold(x)\_2),...,p_( arrow.b )(bold(x)_(n-d)))$ 为 $overline("mathit" Lambda )$ 的一组 LLL 约化基。
 
 使用阿达马不等式，我们得到以下算法：
 
-*算法5* 给定一组 $mathbfZ^n$ 上格 $mathitLambda$ 的基 $(mathbfb_1,mathbfb_2,...,mathbfb_d)$ ，该算法计算一组 $overline(mathitLambda )$ 的LLL约化基。
+*算法5* 给定一组 $bold(Z)^n$ 上格 $"mathit" Lambda$ 的基 $(bold(b)_1,bold(b)_2,...,bold(b)_d)$ ，该算法计算一组 $overline("mathit" Lambda )$ 的LLL约化基。
 
-+ 选取 $c=ceil( 2^((n-1)/2+(n-d)(n-d-1)/4)product ^d_(j=1)||mathbfb_j||)$
++ 选取 $c= ceil( 2^((n-1)/2+(n-d)(n-d-1)/4) product ^d_(j=1)||bold(b)_j|| )$
 
-+ 计算 $(n+d)times n$ 的整数矩阵 $B^-$ 和 $mathbfb_1,...,mathbfb\_d$ 对应的 $ntimes d$ 矩阵 $B=(b\_(i,j))$
++ 计算 $(n+d) times n$ 的整数矩阵 $B^-$ 和 $bold(b)_1,...,bold(b)\_d$ 对应的 $n times d$ 矩阵 $B=(b\_(i,j))$
 
-+ 计算由 $B^-$ 张成的格的一组 LLL 约化基 $(mathbfx_1,mathbfx_2,...,mathbfx_n)$
++ 计算由 $B^-$ 张成的格的一组 LLL 约化基 $(bold(x)_1,bold(x)_2,...,bold(x)_n)$
 
-+ 输出 $(p_(downarrow)(mathbfx\_1),p_(downarrow)(mathbfx\_2),...,p_(downarrow)(mathbfx_(n-d)))$
++ 输出 $(p_( arrow.b )(bold(x)\_1),p_( arrow.b )(bold(x)\_2),...,p_( arrow.b )(bold(x)_(n-d)))$
 
-可以证明，这是一个关于空间维数 $n$ 、格维数 $d$ 和 $||mathbfb_j||$ 比特长度的任何上界的确定性多项式时间算法。在实践中，不需要选择这样大的常数 $c$ ，因为 LLL 算法的理论界非常悲观。（翻译了这么久都看不懂，我也很悲观.jpg）
+可以证明，这是一个关于空间维数 $n$ 、格维数 $d$ 和 $||bold(b)_j||$ 比特长度的任何上界的确定性多项式时间算法。在实践中，不需要选择这样大的常数 $c$ ，因为 LLL 算法的理论界非常悲观。（翻译了这么久都看不懂，我也很悲观.jpg）
 
 #quote[
 笔者注记：
@@ -466,7 +466,7 @@ def orthogonal_lattice(B):
 ```
 
 但笔者发现这样似乎只能在低维下求解，高维情况下时间会爆炸（至少试过一夜都没跑出来）
-于是照着 paper 搓了一个 implemention ，快了很多，三分钟左右就能求解 $255times 512$ 矩阵的正交格，代码如下
+于是照着 paper 搓了一个 implemention ，快了很多，三分钟左右就能求解 $255 times 512$ 矩阵的正交格，代码如下
 
 ```python
 def orthogonal_lattice(B):

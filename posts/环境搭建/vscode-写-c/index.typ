@@ -126,7 +126,7 @@ _更新：如今 VSCodeCppHelper 已经支持在没检测到环境变量的情�
             "-g",
             "${file}", //指定编译源代码文件
             "-o",
-            "$workspaceRootDebug\${fileBasenameNoExtension}.exe", // 指定输出文件名，不加该参数则默认输出a.exe
+            "$workspaceRoot"Debug"\${fileBasenameNoExtension}.exe", // 指定输出文件名，不加该参数则默认输出a.exe
             "-ggdb3", // 生成和调试有关的信息
             "-Wall", // 开启额外警告
             "-static-libgcc", // 静态链接
@@ -167,7 +167,7 @@ _更新：如今 VSCodeCppHelper 已经支持在没检测到环境变量的情�
             "-g",
             "${file}", //指定编译源代码文件
             "-o",
-            "$workspaceRootDebug\${fileBasenameNoExtension}.exe", // 指定输出文件名，不加该参数则默认输出a.exe
+            "$workspaceRoot"Debug"\${fileBasenameNoExtension}.exe", // 指定输出文件名，不加该参数则默认输出a.exe
             "-ggdb3", // 生成和调试有关的信息
             "-Wall", // 开启额外警告
             "-static-libgcc", // 静态链接

@@ -53,24 +53,24 @@
 
 === Schnorr 协议
 
-这是一个基于离散对数的交互式 ZKP，情景是 $P$ 需要向 $V$ 证明自己知道私钥 $x$，使得公钥 $y=g^xpmod p$，其中 $g$ 是有限域循环群的生成元，阶为 $q$。
+这是一个基于离散对数的交互式 ZKP，情景是 $P$ 需要向 $V$ 证明自己知道私钥 $x$，使得公钥 $y=g^xmod p$，其中 $g$ 是有限域循环群的生成元，阶为 $q$。
 
-+ $P$ 随机选一个数 $r in bb(Z)_q$，计算 $t=g^rpmod p$，然后把 $t$ 发给 $V$
++ $P$ 随机选一个数 $r in bb(Z)_q$，计算 $t=g^rmod p$，然后把 $t$ 发给 $V$
 + $V$ 随机选一个数字 $c in bb(Z)_q$，发给 $P$
-+ $P$ 计算 $s=r+cxpmod q$，然后把 $s$ 发给 $V$
-+ $V$ 验证 $g^s equiv tdot y^cpmod p$ 是否成立，成立就选择相信，反之则反之
++ $P$ 计算 $s=r+cxmod q$，然后把 $s$ 发给 $V$
++ $V$ 验证 $g^s equiv t dot.op y^cmod p$ 是否成立，成立就选择相信，反之则反之
 
 先来看*完备性*，即知道了一定能证明：
 
-$ g^s equiv g^(r+cx+nq) equiv g^r (g^x)^c(g^q)^n equiv tdot y^c pmod p $
+$ g^s equiv g^(r+cx+nq) equiv g^r (g^x)^c(g^q)^n equiv t dot.op y^c mod p $
 
 再看*合理性*，即不知道基本不可能证明：
 
 逆推也十分自然，即需要找一个数 $s$，满足
 
-$ g^s equiv tdot y^c equiv g^rg^(cx) equiv g^(r+cx) pmod p $
+$ g^s equiv t dot.op y^c equiv g^rg^(cx) equiv g^(r+cx) mod p $
 
-那可不就是要找一个 $x$ 使得 $s=r+cxpmod q$，容易看出，一个 $x$ 就对应一个 $s$，蒙对的概率就是 $1/q$，实际应用中 $q$ 往往是极大的，就算只选取 $2^(128)$ 次方的量级也基本没可能猜中。
+那可不就是要找一个 $x$ 使得 $s=r+cxmod q$，容易看出，一个 $x$ 就对应一个 $s$，蒙对的概率就是 $1/q$，实际应用中 $q$ 往往是极大的，就算只选取 $2^(128)$ 次方的量级也基本没可能猜中。
 
 最后看最重点的*零知识性*：
 
@@ -79,8 +79,8 @@ $ g^s equiv tdot y^c equiv g^rg^(cx) equiv g^(r+cx) pmod p $
 假设在一个 RSA 协议中，公钥是 $(N, e)$，$P$ 需要向 $V$ 证明自己知道私钥 $d$
 
 + $V$ 随机生成一个密文 $c$ 给 $P$
-+ $P$ 计算 $mequiv c^dpmod N$，然后发给 $V$
-+ $V$ 验证 $m^e equiv cpmod N$ 是否成立
++ $P$ 计算 $m equiv c^dmod N$，然后发给 $V$
++ $V$ 验证 $m^e equiv cmod N$ 是否成立
 
 合理性和完备性不再赘述，但是关于零知识性，我们可以很明显地发现，$V$ 可以利用这个协议来解密任何密文——只要他想，这是一个非常直观的感觉，下面我们可以进一步在定义上探讨他为什么不符合*零知识性*：
 
@@ -96,8 +96,8 @@ $ g^s equiv tdot y^c equiv g^rg^(cx) equiv g^(r+cx) pmod p $
 
 + $P'$ 随便选一个 $t$ 发给 $V'$
 + $V'$ 随机选一个数字 $c in bb(Z)_q$，发给 $P$
-+ $P'$ 发动技能，*把时间调回到第一步*，此时因为已经把 $c$ 骗到手了，所以他只需随便选一个 $s$，再计算 $t'equiv g^sy^(-c)pmod p$，在第一步把 $t'$ 发过去，然后在原本的这轮交互里把 $s$ 发过去
-+ 基于上一步的计算，$V'$ 验证 $g^s equiv t'dot y^cpmod p$ 自然成立，选择相信 $P'$
++ $P'$ 发动技能，*把时间调回到第一步*，此时因为已经把 $c$ 骗到手了，所以他只需随便选一个 $s$，再计算 $t' equiv g^sy^(-c)mod p$，在第一步把 $t'$ 发过去，然后在原本的这轮交互里把 $s$ 发过去
++ 基于上一步的计算，$V'$ 验证 $g^s equiv t' dot.op y^cmod p$ 自然成立，选择相信 $P'$
 
 而对于上述的 RSA 证明来说，即便再怎么进行时光回溯，$P'$ 也无法在没有私钥的情况下把 $V'$ 给的密文解出来，所以不具有*零知识性*
 

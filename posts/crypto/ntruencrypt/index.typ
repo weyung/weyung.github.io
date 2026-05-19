@@ -14,8 +14,8 @@
 
 NTRUEncrypt 是一个公钥加密系统，它的安全性基于这样一个问题的困难性：在一个截断多项式环（这个翻译怪怪的）中*将一个给定的多项式分解成两个系数非常小的多项式的商*。
 由于加密与解密都只涉及简单的多项式乘法，故相比于其他的加密系统， NTRUEncrypt 的*效率会更高*。
-具体来说， NTRU 的操作基于截断多项式环中的对象 $\ R=mathbb {Z [X]/(X^(N)-1)}$ 中的*卷积乘法*，并且环上的所有多项式的系数和次数都为不大于 $N-1$ 的整数。
-实际上， NTRU 是一个参数化系统，每个系统由三个整数指定 $(N,p,q)$ ，其中 $N$ 代表截断环上的所有多项式的最高次为 $N-1$ ， $p$ 和 $q$ 分别代表一个小模数和一个大模数。其中 $N$ 为素数， $q$ 大于 $p$ ，且 $p$ 与 $q$ 互质。由这三个参数生成四个多项式 $mathcal L_f,mathcal L_g,mathcal L_m thinspace$ 和 $mathcal L_r$ ，分别为私钥、公钥、消息和干扰数。
+具体来说， NTRU 的操作基于截断多项式环中的对象 $R=bb(Z) [X]/(X^(N)-1)$ 中的*卷积乘法*，并且环上的所有多项式的系数和次数都为不大于 $N-1$ 的整数。
+实际上， NTRU 是一个参数化系统，每个系统由三个整数指定 $(N,p,q)$ ，其中 $N$ 代表截断环上的所有多项式的最高次为 $N-1$ ， $p$ 和 $q$ 分别代表一个小模数和一个大模数。其中 $N$ 为素数， $q$ 大于 $p$ ，且 $p$ 与 $q$ 互质。由这三个参数生成四个多项式 $cal(L)_f,cal(L)_g,cal(L)_m "thinspace"$ 和 $cal(L)_r$ ，分别为私钥、公钥、消息和干扰数。
 #line(length: 100%)
 看到这里，我相信懂的人都懂的，不懂的人还不懂（bushi）
 下面从宏观和微观两方面详细解释
@@ -26,7 +26,7 @@ NTRUEncrypt 是一个公钥加密系统，它的安全性基于这样一个问�
 #image("src=http%3A%2F%2Fauthorize.zhongbi.net%2Fd%2Ffile%2Ftu%2F2018%2F12%2F27%2F0wlyvy")
 
 + Bob 根据选定的 $N,p,q$ 生成最高次为 $N-1$ 的 $f$ 和 $g$ *两个多项式*，并且系数在 $-1,0,1$ 中选取（可以认为这俩是在模 $X^(N)-1$ 的剩余类中）。 $f$ 还要满足*模 $q$ 和 $p$ 的逆元存在*，如果不满足，那就重新生成。
-+ 分别计算 $f$ 模 $p$ 和模 $q$ 的逆元，即 $f_(p)$ 和 $f_(q)$ ，*保留 $f$ , $f_(p)$ 及 $g$ 作为私钥，公钥 $h=pf_(q) dot g\ mod q$ 。*
++ 分别计算 $f$ 模 $p$ 和模 $q$ 的逆元，即 $f_(p)$ 和 $f_(q)$ ，*保留 $f$ , $f_(p)$ 及 $g$ 作为私钥，公钥 $h=pf_(q) dot.op g mod q$ 。*
 
 sagemath 代码如下
 
@@ -69,7 +69,7 @@ def generate_keys():
 == 加密
 
 Alice 将消息 $m$ 转化成一个系数在 $-1,0,1$ 之间的多项式（比如转成二进制或三进制，二进制在这里会有些浪费），再随机生成一个系数较小（但不限于 $-1,0,1$ 中）的多项式 $r$ 作为干扰以掩盖消息。那么加密计算如下：
-$ e=r dot h+m mod q $
+$ e=r dot.op h+m mod q $
 举个栗子：
 当取 $N=5,p=3,q=32$ 时（呃这里待更新）
 $ f=-1+X+X^2 $
@@ -95,18 +95,18 @@ def encrypt(message, public_key):
 == 解密
 
 由于其他人不知道 $r$ ，所以无法直接 $m=e-rh$ ，但 Bob 拿到 $e$ 后，可以计算出
-$ beginequation*
-beginsplit
+$ "beginequation"*
+"beginsplit"
  a
- & = f dot e mod q\\
- & = f dot (r dot h+m) mod q\\
- & = f dot (r dot pf_(q) dot g+m) mod q\\
- & = pr dot g + f dot m mod q
-endsplit
-endequation* $
+ & = f dot.op e mod q\\
+ & = f dot.op (r dot.op h+m) mod q\\
+ & = f dot.op (r dot.op pf_(q) dot.op g+m) mod q\\
+ & = pr dot.op g + f dot.op m mod q
+"endsplit"
+"endequation"* $
 关键部分来了，以上都是在模 $q$ 下进行，而这时忽然就变成了模 $p$
-$ b=a=f dot m mod p \\
-c=f_(p) dot b =f_(p) dot f dot m =m mod p $
+$ b=a=f dot.op m mod p \\
+c=f_(p) dot.op b =f_(p) dot.op f dot.op m =m mod p $
 
 ```python
 def decrypt(encrypted_message, secret_key):
@@ -129,7 +129,7 @@ def decrypt(encrypted_message, secret_key):
 === 卷积
 
 多项式卷积满足公式
-$ a(x)*b(x) = c(x) \ with \ c_k = sum _(i+j=k pmod) a_i b_(k-i mod N) $
+$ a(x)*b(x) = c(x) with c_k = sum _(i+j=k "pmod") a_i b_(k-i mod N) $
 举个栗子：
 $ f(x)=-1+4x+x^2 \\
  g(x)=3-x+5x^2 $
@@ -286,19 +286,19 @@ if __name__ == '__main__':
 显然函数和上面的基本一样，只是名称相应地缩短了一下。
 攻击方法是构造如下的一个格，然后进行规约
 $ (
-beginarraycccc|cccc
-lambda & 0 & dots.c & 0 & h_0 & h_1 & dots.c & h_(N-1) \\
+"beginarraycccc"|cccc
+ lambda & 0 & dots.c & 0 & h_0 & h_1 & dots.c & h_(N-1) \\
 0 & lambda & dots.c & 0 & h_(N-1) & h_0 & dots.c & 0 \\
-dots.v & dots.v & dots.down & dots.v & dots.v & dots.v & dots.down & 0 \\
-0 & 0 & dots.c & lambda & h_1 & h_2 & dots.c & h_0 \\ hline
+ dots.v & dots.v & dots.down & dots.v & dots.v & dots.v & dots.down & 0 \\
+0 & 0 & dots.c & lambda & h_1 & h_2 & dots.c & h_0 \ "hline"
 0 & 0 & dots.c & 0 & q & 0 & dots.c & 0 \\
 0 & 0 & dots.c & 0 & 0 & q & dots.c & 0 \\
-dots.v & dots.v & dots.down & dots.v & dots.v & dots.v & dots.down & dots.v \\
+ dots.v & dots.v & dots.down & dots.v & dots.v & dots.v & dots.down & dots.v \\
 0 & 0 & dots.c & 0 & 0 & 0 & dots.c & q
-endarray
+"endarray"
 ) $
 具体可以参考这篇 Paper: #link("https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.578.5423&rep=rep1&type=pdf")
-取 $lambda =1$ ，规约后最短向量即为 $[fspace g]$ ，然后就可以计算私钥解密了。
+取 $lambda =1$ ，规约后最短向量即为 $[f space g]$ ，然后就可以计算私钥解密了。
 exp 如下：
 
 ```python

@@ -192,25 +192,25 @@
 
     上面已经定义函数 `def id(x, y): return x \* 12 + y` ，即 `id` 函数把给定的*坐标*转为方阵*一维展开后的位置*，则此处把每个操作点对整个方阵 144 个位置影响(增量)后面补一个 0 （下面会解释为什么加一个 0 ）放入 `t[]` 中，此时t可以看作一个*向量*。
     每个 `t[]` 补入 `m[]` 后，此时 $m$ 是一个 (144-16)x(144+1) 即 *128x145* 的矩阵，且第 145 列全为 0 ( 16 为 X 即*不可操作点的数量*)，如下：
-$ m=beginpmatrix
+$ m="beginpmatrix"
  3 & 2 & 1 & 0 & 0 & dots.c & 0 \\
  2 & 3 & 2 & 1 & 0 & dots.c & 0 \\
  1 & 2 & 3 & 2 & 1 & dots.c & 0 \\
  0 & 1 & 2 & 3 & 2 & dots.c & 0 \\
  dots.v & dots.v & dots.v & dots.v & dots.v & dots.down & dots.v \\
  0 & 0 & 0 & 0 & 0 & dots.c & 0
- endpmatrix $
+ "endpmatrix" $
 
     *注意：上面打省略号的地方不全为0！*
     比如第一行是由如下一个 12x12 的矩阵展开为一维形式：
-$ beginpmatrix
+$ "beginpmatrix"
  3 & 2 & 1 & 0 & 0 & dots.c & 0 \\
  2 & 0 & 0 & 0 & 0 & dots.c & 0 \\
  1 & 0 & 0 & 0 & 0 & dots.c & 0 \\
  0 & 0 & 0 & 0 & 0 & dots.c & 0 \\
  dots.v & dots.v & dots.v & dots.v & dots.v & dots.down & dots.v \\
  0 & 0 & 0 & 0 & 0 & dots.c & 0
- endpmatrix $
+ "endpmatrix" $
 
     ```Python
     for i in range(144):
@@ -225,7 +225,7 @@ $ beginpmatrix
     ```
 
     不难看出，此时的 $m$ 为如下形式：
-$ m=beginpmatrix
+$ m="beginpmatrix"
  3 & 2 & 1 & 0 & 0 & dots.c & 0 & 0\\
  2 & 3 & 2 & 1 & 0 & dots.c & 0 & 0\\
  1 & 2 & 3 & 2 & 1 & dots.c & 0 & 0\\
@@ -240,7 +240,7 @@ $ m=beginpmatrix
  dots.v & dots.v & dots.v & dots.v & dots.v & dots.down & dots.v & dots.v \\
  0 & 0 & 0 & 0 & 0 & dots.c & 256 & 0 \\
  -189 & -189 & -189 & -189 & -189 & dots.c & -189 & 256\\
- endpmatrix $
+ "endpmatrix" $
 
     此时矩阵 $m$ 的前 272 个行向量(即除开最后一个行向量)的*整系数线性组合*即为操作后可以得到的方阵化为一维后的向量， Level0 时只需令该向量与解向量相等，而 Level1 和 Level2 则需要算出离解向量*最近*的可由*这 272 个向量整数系线性表出的向量*作为*新的解向量*，因为我们*不保证在一些点不可操作的前提下仍能整数系线性表出解向量*(*重点，敲黑板*) 。
     同时由于题目在模意义下进行，所以若解出的系数为负整数也可以模 256 化为正整数。
@@ -290,14 +290,14 @@ $ m=beginpmatrix
 
     上面知道 `free[]` 是可以操作的点的坐标列表，故 `len(free[])` 即为 144-16=128 。
     这里取 $m$ 的前 (144-16)=128 个行向量的前 144 维进行*转置*作为系数矩阵与 $m$ 的最后一行向量的前 144 维变为列向量，合成增广矩阵，即为一个标准的非齐次线性方程组，即 $s$ 为一个如下的 144x145 的矩阵：
-$ s=beginpmatrix
+$ s="beginpmatrix"
  3 & 2 & 1 & 0 & 0 & dots.c & 0 & 189\\
  2 & 3 & 2 & 1 & 0 & dots.c & 0 & 190\\
  1 & 2 & 3 & 2 & 1 & dots.c & 0 & 191\\
  0 & 1 & 2 & 3 & 2 & dots.c & 0 & 189\\
  dots.v & dots.v & dots.v & dots.v & dots.v & dots.down & dots.v & dots.v \\
  0 & 0 & 0 & 0 & 0 & dots.c & 3 & 189
- endpmatrix $
+ "endpmatrix" $
 
     ```Python
     for i in range(len(free)):
@@ -311,7 +311,7 @@ $ s=beginpmatrix
     ```
 
     经以上消元后 $s$ 的第 129 行到最后一行均为 0 ，且系数矩阵与增广矩阵等秩，方程组有唯一解， $s$ 为如下的上三角矩阵：
-$ s=beginpmatrix
+$ s="beginpmatrix"
  1 & 0 & 0 & 0 & 0 & dots.c & 0 & 188\\
  0 & 1 & 0 & 0 & 0 & dots.c & 0 & 188\\
  0 & 0 & 1 & 0 & 0 & dots.c & 0 & 189\\
@@ -319,7 +319,7 @@ $ s=beginpmatrix
  0 & 0 & 0 & 0 & 1 & dots.c & 0 & 190\\
  dots.v & dots.v & dots.v & dots.v & dots.v & dots.down & dots.v & dots.v \\
  0 & 0 & 0 & 0 & 0 & dots.c & 1 & 127
- endpmatrix $
+ "endpmatrix" $
 
     ```Python
     ans = [0] \* len(free)
