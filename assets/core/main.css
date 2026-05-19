@@ -774,11 +774,11 @@ article *::-webkit-scrollbar {
   height: 6px;
 }
 
-article *::-webkit-scrollbar-thumb {
+:is(article, main) *::-webkit-scrollbar-thumb {
   background-color: var(--border-subtle0);
 }
 
-article pre > code::-webkit-scrollbar-thumb {
+:is(article, main) pre > code::-webkit-scrollbar-thumb {
   background-color: var(--border-subtle1);
 }
 
@@ -839,7 +839,7 @@ article a:visited {
 
 /* CODE */
 
-article code {
+:is(article, main) code {
   background: var(--layer1);
   padding: 0 0.5rem;
   border-radius: 2px;
@@ -847,11 +847,11 @@ article code {
   font-family: var(--font-mono-stack);
 }
 
-article td > code {
+:is(article, main) td > code {
   background: var(--layer2);
 }
 
-article pre {
+:is(article, main) pre {
   margin: 1rem 0 0 0;
   padding: 1rem 3rem 1rem 1rem;
   position: relative;
@@ -861,7 +861,7 @@ article pre {
   overflow: hidden;
 }
 
-article pre > code {
+:is(article, main) pre > code {
   display: block;
   width: 100%;
   height: 100%;
@@ -879,16 +879,16 @@ article pre > code {
   );
 }
 
-article pre.has-line-numbers {
+:is(article, main) pre.has-line-numbers {
   display: flex;
   flex-direction: row;
 }
 
-article pre.has-line-numbers > code {
+:is(article, main) pre.has-line-numbers > code {
   flex: 1;
 }
 
-article pre.has-line-numbers > .line-numbers-rows {
+:is(article, main) pre.has-line-numbers > .line-numbers-rows {
   font-size: 0.875rem;
   color: var(--text-secondary);
   display: flex;
@@ -906,30 +906,30 @@ article pre.has-line-numbers > .line-numbers-rows {
   font-family: var(--font-mono-stack);
 }
 
-html[data-theme="gray-90"] article :is(.shiki, .shiki span, .shiki-inline span),
-html[data-theme="gray-100"] article :is(.shiki, .shiki span, .shiki-inline span) {
+html[data-theme="gray-90"] :is(article, main) :is(.shiki, .shiki span, .shiki-inline span),
+html[data-theme="gray-100"] :is(article, main) :is(.shiki, .shiki span, .shiki-inline span) {
   color: var(--shiki-dark) !important;
 }
 
 @media (prefers-color-scheme: dark) {
-  html:not([data-theme]) article :is(.shiki, .shiki span, .shiki-inline span) {
+  html:not([data-theme]) :is(article, main) :is(.shiki, .shiki span, .shiki-inline span) {
     color: var(--shiki-dark) !important;
   }
 }
 
-article pre.single-line {
+:is(article, main) pre.single-line {
   padding: 0 3rem 0 1rem;
   height: 2.5rem;
 }
 
-article pre.single-line > code {
+:is(article, main) pre.single-line > code {
   display: flex;
   align-items: center;
 }
 
 /* COPY BUTTON */
 
-article pre > .copy-button {
+:is(article, main) pre > .copy-button {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
@@ -946,12 +946,12 @@ article pre > .copy-button {
   cursor: pointer;
 }
 
-article pre > .copy-button.copied,
-article pre > .copy-button.error {
+:is(article, main) pre > .copy-button.copied,
+:is(article, main) pre > .copy-button.error {
   cursor: default;
 }
 
-article pre > .copy-button::before {
+:is(article, main) pre > .copy-button::before {
   content: "";
   width: 1rem;
   height: 1rem;
@@ -962,7 +962,7 @@ article pre > .copy-button::before {
   mask-position: center;
 }
 
-article pre > .copy-button.copied::before {
+:is(article, main) pre > .copy-button.copied::before {
   content: "";
   width: 1rem;
   height: 1rem;
@@ -973,7 +973,7 @@ article pre > .copy-button.copied::before {
   mask-position: center;
 }
 
-article pre > .copy-button.error::before {
+:is(article, main) pre > .copy-button.error::before {
   content: "";
   width: 1rem;
   height: 1rem;
@@ -984,30 +984,30 @@ article pre > .copy-button.error::before {
   mask-position: center;
 }
 
-article pre.single-line > .copy-button {
+:is(article, main) pre.single-line > .copy-button {
   top: 0;
   right: 0;
   width: 2.5rem;
   height: 2.5rem;
 }
 
-article pre > .copy-button:hover {
+:is(article, main) pre > .copy-button:hover {
   background-color: var(--layer1-hover);
 }
 
-article pre > .copy-button:active {
+:is(article, main) pre > .copy-button:active {
   background-color: var(--layer1-accent-active);
 }
 
-article :is(.note-block, .success-block, .warning-block, .error-block) :is(pre, code, .copy-button) {
+:is(article, main) :is(.note-block, .success-block, .warning-block, .error-block) :is(pre, code, .copy-button) {
   background-color: var(--nested-code) !important;
 }
 
-article :is(.note-block, .success-block, .warning-block, .error-block) .copy-button:hover {
+:is(article, main) :is(.note-block, .success-block, .warning-block, .error-block) .copy-button:hover {
   background-color: var(--nested-code-hover) !important;
 }
 
-article :is(.note-block, .success-block, .warning-block, .error-block) .copy-button:active {
+:is(article, main) :is(.note-block, .success-block, .warning-block, .error-block) .copy-button:active {
   background-color: var(--nested-code-active) !important;
 }
 
@@ -1097,7 +1097,7 @@ article ol li p {
 
 /* FIGURE */
 
-article figure {
+:is(article, main) figure {
   margin: 1rem 0 0 0;
   max-width: 100%;
 
@@ -1106,18 +1106,18 @@ article figure {
   place-items: center;
 }
 
-article figure > *:first-child {
+:is(article, main) figure > *:first-child {
   margin-top: 0 !important;
 }
 
-article figure figcaption {
+:is(article, main) figure figcaption {
   margin-top: 1rem;
   font-size: 0.875em;
   color: var(--text-primary);
   text-align: center;
 }
 
-article figure img {
+:is(article, main) figure img {
   margin: 1rem 0 0 0;
   max-width: 100%;
   height: auto;
@@ -1276,38 +1276,38 @@ article .quote-block > *:last-child {
   margin-bottom: 0 !important;
 }
 
-article .note-block,
-article .success-block,
-article .warning-block,
-article .error-block {
+:is(article, main) .note-block,
+:is(article, main) .success-block,
+:is(article, main) .warning-block,
+:is(article, main) .error-block {
   margin: 1rem 0 0 0;
   padding: 1rem;
 }
 
-article .note-block {
+:is(article, main) .note-block {
   background-color: var(--notification-background-info);
   border-left: 3px solid var(--info);
 }
 
-article .success-block {
+:is(article, main) .success-block {
   background-color: var(--notification-background-success);
   border-left: 3px solid var(--success);
 }
 
-article .warning-block {
+:is(article, main) .warning-block {
   background-color: var(--notification-background-warning);
   border-left: 3px solid var(--warning);
 }
 
-article .error-block {
+:is(article, main) .error-block {
   background-color: var(--notification-background-error);
   border-left: 3px solid var(--error);
 }
 
-article .note-block > .block-title,
-article .success-block > .block-title,
-article .warning-block > .block-title,
-article .error-block > .block-title {
+:is(article, main) .note-block > .block-title,
+:is(article, main) .success-block > .block-title,
+:is(article, main) .warning-block > .block-title,
+:is(article, main) .error-block > .block-title {
   position: relative;
   font-weight: 600;
   padding-left: 2em;
@@ -1315,10 +1315,10 @@ article .error-block > .block-title {
   line-height: 1.25;
 }
 
-article .note-block > .block-title::before,
-article .success-block > .block-title::before,
-article .warning-block > .block-title::before,
-article .error-block > .block-title::before {
+:is(article, main) .note-block > .block-title::before,
+:is(article, main) .success-block > .block-title::before,
+:is(article, main) .warning-block > .block-title::before,
+:is(article, main) .error-block > .block-title::before {
   content: "";
   position: absolute;
   left: 0.125em;
@@ -1330,23 +1330,23 @@ article .error-block > .block-title::before {
   display: inline-block;
 }
 
-article .note-block > .block-title::before {
+:is(article, main) .note-block > .block-title::before {
   background-color: var(--info);
   mask-image: url("../icons/information--filled.svg");
 }
 
-article .success-block > .block-title::before {
+:is(article, main) .success-block > .block-title::before {
   background-color: var(--success);
   mask-image: url("../icons/checkmark--filled.svg");
 }
 
-article .warning-block > .block-title::before {
+:is(article, main) .warning-block > .block-title::before {
   background-color: var(--warning);
   mask-image: url("../icons/warning--filled.svg");
   z-index: 1;
 }
 
-article .warning-block > .block-title::after {
+:is(article, main) .warning-block > .block-title::after {
   content: "";
   z-index: 0;
   position: absolute;
@@ -1358,22 +1358,22 @@ article .warning-block > .block-title::after {
   border-radius: 50%;
 }
 
-article .error-block > .block-title::before {
+:is(article, main) .error-block > .block-title::before {
   background-color: var(--error);
   mask-image: url("../icons/error--filled.svg");
 }
 
-article .note-block > *:last-child,
-article .success-block > *:last-child,
-article .warning-block > *:last-child,
-article .error-block > *:last-child {
+:is(article, main) .note-block > *:last-child,
+:is(article, main) .success-block > *:last-child,
+:is(article, main) .warning-block > *:last-child,
+:is(article, main) .error-block > *:last-child {
   margin-bottom: 0 !important;
 }
 
-article .note-block .quote-block,
-article .success-block .quote-block,
-article .warning-block .quote-block,
-article .error-block .quote-block {
+:is(article, main) .note-block .quote-block,
+:is(article, main) .success-block .quote-block,
+:is(article, main) .warning-block .quote-block,
+:is(article, main) .error-block .quote-block {
   border-left: 3px solid var(--nested-quote);
 }
 

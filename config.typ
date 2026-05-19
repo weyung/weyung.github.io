@@ -28,6 +28,12 @@
   lang: "zh",
   footer-content: footer-content,
   tag-options: tag-options,
+  page-scripts: (
+    "/assets/core/render-code.js",
+    "/assets/core/theme.js",
+    "/assets/core/post-nav-switch.js",
+    "/assets/core/post-card-click.js",
+  ),
   custom-css: (
     "/assets/custom.css",
     "/assets/custom-toc.css",
