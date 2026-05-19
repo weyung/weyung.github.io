@@ -1,0 +1,112 @@
+#import "../../../config.typ": *
+
+#show: template-post.with(
+  title: "密码学论文记",
+  description: "记录一下读的 Papers",
+  tags: ("数学", "抽象代数", "Crypto", "论文",),
+  category: "Crypto",
+  date: datetime(year: 2022, month: 8, day: 18)
+)
+
+== 常见词汇
+
+devise 发明
+permutation 置换
+reciprocal 倒数
+cardinality 基数
+corollary 推论
+canonica 规范的
+symmetric 对称的
+determinant 行列式
+regarding 关于
+map 映射
+projection 投影
+coordinate 坐标
+denote 标示
+rational 有理的
+thus 因此
+alternatively 或者
+optimize 优化
+anew 重新
+tedious 乏味的
+non-trivial 不平凡的
+derive 得到
+hence 因此
+composite number 合数
+or else 否则
+scenario 方案
+implicit 隐式的
+analogous 相似的
+asymptotical 渐进的
+sake 目的
+notation 符号
+
+== 文章汇总
+
+=== 1. Cryptanalysis of Unbalanced RSA with Small CRT-Exponent
+
+第一篇正经详细读的论文，作者 Alexander May 挺 nb 的，多元 coppersmith 也是他和另一个人写的，有机会也读一下。
+这篇 paper 主要讲 $p$ 和 $q$ 不平衡时的 RSA 攻击，还要满足 $d_p$ 足够小。具体如下：
+$ beta = q_(bits)/n_(bits) \\
+delta = d_(p_bits)/n_(bits) \\
+s.t. space 3beta < 1+beta ^2+2delta $
+
+=== 2. Modulus Fault Attacks Against RSA-CRT Signatures
+
+=== 3. Merkle-Hellman Revisited: A Cryptanalysis of the Qu-Vanstone Cryptosystem Based on Group Factorizations
+
+=== 4. A Strategy for Finding Roots of Multivariate Polynomials with New Applications in Attacking RSA Variants
+
+== 攻击汇总
+
+之前在 GitHub 上看到的一个很全的攻击汇总，记录下。
+
+=== Approximate Common Divisor
+
+=== CBC
+
+=== CBC + CBC-MAC
+
+=== CTR
+
+=== ECB
+
+=== Elliptic Curve Cryptography
+
+=== ElGamal Encryption
+
+=== ElgGamal Signature
+
+=== Factorization
+
+已知部分 p 和 q
+已知部分 p, q 和 d
+已知部分 p, q, d, dp 和 dq
+已知部分 p
+已知 phi
+孪生素数（这个稍微有点逊）
+$p > q^3$ 且已知部分 p
+
+=== GCM
+
+=== Hidden Number Problem
+
+=== IGE
+
+=== Knapsack Cryptosystems
+
+=== Linear Congruential Generators
+
+=== Learning With Errors
+
+=== Mersenne Twister
+
+=== One-time Pad
+
+=== Pseudoprimes
+
+=== RC4
+
+=== RSA
+
+=== Shamir's Secret Sharing

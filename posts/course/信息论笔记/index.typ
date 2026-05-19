@@ -1,0 +1,746 @@
+#import "../../../config.typ": *
+
+#show: template-post.with(
+  title: "信息论笔记",
+  description: "还是复习。",
+  tags: ("信息论",),
+  category: "Course",
+  date: datetime(year: 2024, month: 6, day: 21)
+)
+
+== 第一章 绪论
+
+不提
+
+== 第二章 离散信息的度量
+
+_习题_ 2.6
+在某地篮球联赛的每个赛季中，最终只有 A、B 两队进入决赛争夺冠军。决赛采用 7 场 4 胜制，首先赢得 4 场胜利的球队获得冠军，并结束比赛。把产生冠军的事件 x 用 A、B 两队各场次比赛结果表示，作为信源 X 产生的随机事件，例如：AAAA 表示事件“A 队前 4 场获得冠军”；ABBAAA 表示事件“ A 队在第 1、4、5、6 场取胜获得冠军（而 B 队在第 2、3 场取胜）”……假设两队在每场比赛中的取胜机会均等，每场比赛只有“A 胜”或“B 胜”两种结果，并且各场比赛的结果是彼此独立的。
+
+（1）求信源的熵 H(X)。
+
+| 事件 | 数目 | 单事件的概率 | 概率的和 |
+| :--- | :--- | :----------- | :------- |
+| 赛 4 场获冠军（AAAA） | 1 | 1/16 | 1/16 |
+| 赛 5 场获冠军（前 4 场 B 胜 1 场） | 4 | 1/32 | 1/8 |
+| 赛 6 场获冠军（前 5 场 B 胜 2 场） | 10 | 1/64 | 5/32 |
+| 赛 7 场获冠军（前 6 场 B 胜 3 场） | 20 | 1/128 | 5/32 |
+| _总概率_ |   |   | 1/2 |
+
+$H(X) = 2 times [ (1/16) log _2 16 + 4 times (1/32) log _2 32 + 10 times (1/64) log _2 64 + 20 times (1/128) log _2 128 ] = 186/32 = 5.8125$ 比特/符号
+
+注意到上面乘 2 是因为 A 队和 B 队的概率是相等的。
+
+（2）求事件“两队打满 7 场”所提供的信息量。
+“两队打满7场”事件数为 40，所求概率为 $40 times (1/128) = 5/16$ ，事件“两队打满7场”所提供的信息量为
+$ I_1 = -log _2 (5/16) = 1.6781 " bit" $
+（3）列出 A 队前 3 场都失利的所有情形，求“A 队前 3 场都失利”所提供的信息量。
+如表所示：
+
+| 事件 | 概率 | 结果 |
+| :--- | :--- | :--- |
+| BBBB | 1/16 | B 夺冠 |
+| BBBAB | 1/32 | B 夺冠 |
+| BBBAAB | 1/64 | B 夺冠 |
+| BBBAAAB | 1/128 | B 夺冠 |
+| BBBAAAA | 1/128 | A 夺冠 |
+
+概率和就是 1/8，所以有
+
+$ I_2 = log _2 8 = 3 " bit" $
+（4）求事件“A 队在前 3 场获胜的条件下又取得冠军”所提供的信息量。
+A队在前 3 场失利的条件下又取得冠军的条件概率为
+$ frac(1/128, 1/16 + 1/32 + 1/64 + 2 times (1/128)) = frac(1, 16) $
+“A队在前 3 场失利的条件下又取得冠军”的信息量为
+$ I_3 = log _2 16 = 4 " bit" $
+
+_习题_ 2.7
+已知随机变量 $X, Y$ 的联合概率分布为 $P_(XY)(a_k, b_j)$ ，满足：
+$P_X(a_1) = 1/2$, $P_X(a_2) = P_X(a_3) = 1/4$,
+$P_Y(b_1) = 2/3$, $P_Y(b_2) = P_Y(b_3) = 1/6$。试求能使 $H(XY)$ 取最大值的 $XY$ 的联合概率分布。
+
+因为 $H(XY) <= H(X) + H(Y)$，_当且仅当 $X, Y$ 独立时，等号成立_。所以当 $X, Y$ 独立时，$H(XY)$ 取最大值。因此 $XY$ 的联合概率分布为
+
+$ beginaligned
+p(a_1 b_1) &= frac(1, 3), & p(a_1 b_2) &= frac(1, 12), & p(a_1 b_3) &= frac(1, 12), \\
+p(a_2 b_1) &= frac(1, 6), & p(a_2 b_2) &= frac(1, 24), & p(a_2 b_3) &= frac(1, 24), \\
+p(a_3 b_1) &= frac(1, 6), & p(a_3 b_2) &= frac(1, 24), & p(a_3 b_3) &= frac(1, 24).
+endaligned $
+
+_习题_ 2.16
+两随机变量 $X, Y$ ，联合概率 $p(x,y)$ 如下：
+
+|   | y=0 | y=1 |
+|---|-----|-----|
+| _x=0_ | 1/8 | 3/8 |
+| _x=1_ | 3/8 | 1/8 |
+
+$Z = X dot Y$（一般乘积），试计算：
+
+(1) $H(X), H(Y), H(Z), H(XZ), H(YZ), H(XYZ)$;
+(2) $H(X|Y), H(Y|X), H(X|Z), H(Z|X), H(Y|Z), H(Z|Y), H(Z|YZ), H(Y|XZ), H(Z|XY)$;
+(3) $I(X;Y), I(X;Z), I(Y;Z), I(X;Y|Z), I(Y;Z|X), I(X;Z|Y)$。
+$ p(xz) = sum _y p(xyz); quad p(yz) = sum _x p(xyz); quad p(xyz) = p(xy) dot p(z | xy) $
+其概率取值容易计算如下：
+
+$P_X(0) = 1/2$，即 $P(X=0) = 1/2$，下同
+$P_X(1) = 1/2$
+
+$P_Y(0) = 1/2$
+$P_Y(1) = 1/2$
+
+由表知，$x=0$ 和 $y=0$ 都能让 Z 为 0，故
+$P_Z(0) = 1/8+3/8+3/8 = 7/8$
+$P_Z(1) = 1/8$
+
+(1)
+主要利用自信息的平均值为熵，即
+$ H(X) = E_(p(x))[-log p(x)] $
+注意 $log$ 默认是以 2 为底的
+比如 $H(XZ)$，先列出所有可能，知 $P(X=0, Z=0) = 1/2$，$P(X=1, Z=0) = 3/8$，$P(X=1, Z=1) = 1/8$，所以 $H(XZ) = -(1/2) log (1/2) - (3/8) log (3/8) - (1/8) log (1/8) = 1.406$ 比特/符号
+$ beginaligned
+H(X) = H(1/2) = 1 " 比特/符号"\\
+H(Y) = H(1/2) = 1 " 比特/符号"\\
+H(Z) = H(1/8) = 0.544 " 比特/符号"\\
+H(XZ) = H(1/2, 3/8, 1/8) = 1.406 " 比特/符号"\\
+H(YZ) = H(XZ) = 1.406 " 比特/符号"\\
+H(XYZ) = H(1/8, 3/8, 3/8, 1/8) = 1.811 " 比特/符号"
+endaligned $
+
+(2)
+主要利用熵的可加性，即 $H(XY) = H(X) + H(Y|X)$
+$ beginaligned
+H(X | Y) = H(XY) - H(Y) = 1.811 - 1 = 0.811 " 比特/符号"\\
+H(Y | X) = H(XY) - H(X) = 1.811 - 1 = 0.811 " 比特/符号"\\
+H(X | Z) = H(XZ) - H(Z) = 1.406 - 0.544 = 0.862 " 比特/符号"\\
+H(Z | X) = H(XZ) - H(X) = 1.406 - 1 = 0.406 " 比特/符号"\\
+H(Y | Z) = H(YZ) - H(Z) = 1.406 - 0.544 = 0.862 " 比特/符号"\\
+H(Z | Y) = H(YZ) - H(Y) = 1.406 - 1 = 0.406 " 比特/符号"\\
+H(X | YZ) = H(XYZ) - H(YZ) = 1.811 - 1.406 = 0.405 " 比特/符号"\\
+H(Y | XZ) = H(XYZ) - H(XZ) = 1.811 - 1.406 = 0.405 " 比特/符号"\\
+H(Z | XY) = H(XYZ) - H(XY) = 1.811 - H(1/8, 3/8, 3/8, 1/8) = 0
+endaligned $
+
+(3)
+主要利用平均互信息与熵的关系，即
+$ I(X;Y) = H(X) - H(X | Y) = H(Y) - H(Y | X) = H(X) + H(Y) - H(XY) $
+$ beginaligned
+I(X;Y) = H(X) - H(X | Y) = 1 - 0.811 = 0.189 " 比特/符号"\\
+I(X;Z) = H(X) - H(X | Z) = 1 - 0.862 = 0.138 " 比特/符号"\\
+I(Y;Z) = H(Y) - H(Y | Z) = 1 - 0.862 = 0.138 " 比特/符号"\\
+I(X; Y | Z) = H(X | Z) - H(X | YZ) = 0.862 - 0.405 = 0.457 " 比特/符号"\\
+I(Y; Z | X) = H(Y | X) - H(Y | XZ) = 0.811 - 0.405 = 0.406 " 比特/符号"\\
+I(X; Z | Y) = H(X | Y) - H(X | YZ) = 0.811 - 0.405 = 0.406 " 比特/符号"
+endaligned $
+
+== 第三章 离散信源
+
+重点公式：$pi ^T = pi ^T P$
+
+_习题_ 3.9
+设 $x_1, x_2, dots.c , x_(n-1), x_n, dots.c$ 为平稳序列（未必是马氏链），那么下面的论断哪些是正确的？对正确的进行证明，对错误的举出反例。（提示：下面论断至少有一个是错的）
+(1) $H(X_n | X_0) = H(X_(-n) | X_0)$;
+正确，由于平稳性有
+$ H(X_(-n) | X_0) = H(X_0 X_n) = H(X_0 X_n) - H(X_n) = H(X_n X_0) - H(X_0) = H(X_n | X_0) $
+(2) $H(X_n | X_0) geqslant H(X_(n-1) | X_0)$;
+错误，若 $x_0, dots.c , x_(n-1), x_n$ 构成马氏链，则
+$ beginaligned
+I(X_0 ; X_(n-1)) geqslant I(X_0 ; X_n) implies H(X_(n-1)) - H(X_(n-1) | X_0) geqslant H(X_n) - H(X_n | X_0) \\
+implies -H(X_(n-1) | X_0) geqslant -H(X_n | X_0) \ ("利用平稳性") implies H(X_n | X_0) geqslant H(X_(n-1) | X_0)
+endaligned $
+但如果序列具有周期性，且周期为 $n$，其中，$x_0, x_1, dots.c , x_n$ 是独立同分布的二元等概率序列，则
+$ beginaligned
+x_k = x_(k-n) \ (k geqslant n) implies x_0 = x_n implies H(X_n | X_0) = 0, \ H(X_(n-1) | X_0) = H(X_(n-1)) = log 2 \\
+implies H(X_n | X_0) < H(X_(n-1) | X_0)
+endaligned $
+(3) $H(X_n | X_1X_2dots.c X_(n-1))$ 是 $n$ 的增函数;
+错误
+_定理 3.3_ 对任意离散平稳信源，若 $H_1(X) < infinity$ ，有：
+
+① $H(X_N | X_1dots.c X_(N-1))$ 不随 $N$ 而增加；
+② $H_N(X) geqslant H(X_N | X_1 dots.c X_(N-1))$；
+③ $H_N(X)$ 不随 $N$ 而增加；
+④ $H_infinity (X)$ 存在，且 $H_infinity (X) = lim _(N -> infinity ) H(X_N | X_1 dots.c X_(N-1))$
+
+(4) $H(X_n | X_1, dots.c , X_(n-1), X_(n+1), dots.c , X_(2n))$ 是 $n$ 的非增函数。
+正确
+$ beginaligned
+H(X_(n+1) | X_1, dots.c , X_n, X_(n+2), dots.c , X_(2n+2)) = H(X_n | X_0, dots.c , X_(n-1), X_(n+1), dots.c , X_(2n+1)) \\
+leqslant H(X_n | X_1, dots.c , X_(n-1), X_(n+1), dots.c , X_(2n))
+endaligned $
+
+_习题_ 3.10
+一个 2 状态马氏链的转移概率矩阵为
+$ P = beginpmatrix 3/4 & 1/4 \\ 1/4 & 3/4 endpmatrix $
+并假定初始状态概率矢量为 $p^((0)) = (1 \ 0)$；求
+(1) $P^n$ 和 $p^((n))$, $n = 1, 2, 3$；
+$ P^1 = P = beginpmatrix 3/4 & 1/4 \\ 1/4 & 3/4 endpmatrix, quad 
+P^2 = P times P = beginpmatrix 3/4 & 1/4 \\ 1/4 & 3/4 endpmatrix beginpmatrix 3/4 & 1/4 \\ 1/4 & 3/4 endpmatrix = beginpmatrix 5/8 & 3/8 \\ 3/8 & 5/8 endpmatrix $
+$ P^3 = P^2 times P = beginpmatrix 5/8 & 3/8 \\ 3/8 & 5/8 endpmatrix beginpmatrix 3/4 & 1/4 \\ 1/4 & 3/4 endpmatrix = beginpmatrix 9/16 & 7/16 \\ 7/16 & 9/16 endpmatrix $
+所以，有
+$ p^((1)) = p^((0)) P = beginpmatrix 3/4 & 1/4 endpmatrix ; quad p^((2)) = p^((0)) P^2 = beginpmatrix 5/8 & 3/8 endpmatrix ; quad p^((3)) = p^((0)) P^3 = beginpmatrix 9/16 & 7/16 endpmatrix $
+
+(2) $P^n$ 和 $p^((n))$ 的一般形式。
+由上面已经求得的结果可以类推得
+$ P^n = beginpmatrix frac(2^n + 1, 2^(n+1)) & frac(2^n - 1, 2^(n+1)) \\ frac(2^n - 1, 2^(n+1)) & frac(2^n + 1, 2^(n+1)) endpmatrix, quad p^((n)) = p^((0)) P^n = beginpmatrix 1 & 0 endpmatrix beginpmatrix frac(2^n + 1, 2^(n+1)) & frac(2^n - 1, 2^(n+1)) \\ frac(2^n - 1, 2^(n+1)) & frac(2^n + 1, 2^(n+1)) endpmatrix = beginpmatrix frac(2^n + 1, 2^(n+1)) & frac(2^n - 1, 2^(n+1)) endpmatrix $
+
+_习题_ 3.15
+3.15 黑白气象传真图的消息只有黑色和白色两种，即信源 $X="黑", "白"$ ；设黑色出现的概率为 $p("黑") = 0.3$ ，白色的出现概率 $p("白") = 0.7$ ：
+
+(1) 假设图上黑白消息出现前后没有关联，求熵 $H(X)$ ；
+假设黑白消息出现的前后没有关联，则等效于一个离散无记忆信源，概率空间为
+$ beginpmatrix
+X \\ P(x)endpmatrix=
+beginpmatrix
+"黑" & "白" \\
+0.3 & 0.7
+endpmatrix, quad sum _(i=1)^(2) P(x_i) = 1 $
+信源的熵为
+$ H(X) = -sum _(i=1)^(2) P(x_i) log P(x_i) = -0.7 log _2 0.7 - 0.3 log _2 0.3 = 0.881 "比特/符号" $
+(2) 假设消息前后有关联，其依赖关系为 $P("白"|"白") = 0.9$, $P("黑"|"白") = 0.1$, $P("白"|"黑") = 0.2$, $P("黑"|"黑") = 0.8$，求此一阶马氏链的熵率 $H_2$；
+假设黑白气象传真图的消息前后有关联，其状态集 $E = A = "黑", "白"$ ，可以得到其状态转移矩阵为
+$ P = beginpmatrix
+0.9 & 0.1 \\
+0.2 & 0.8
+endpmatrix $
+
+此马尔可夫链状态转移矩阵有，则状态平稳分布存在。设状态的平稳分布为 $pi ^T = (pi _1, pi _2)$ ，有
+$ pi ^T = pi ^T P, quad pi _1 + pi _2 = 1, quad 得到 pi _1 = 2/3, pi _2 = 1/3. $
+
+此一阶马氏源的熵为
+$ H_2 = frac(2, 3) H(0.1, 0.9) + frac(1, 3) H(0.2, 0.8) approx 0.553 "比特/符号" $
+(3) 分别求上述两种信源的剩余度，并比较 $H(X)$ 和 $H_2$ 的大小，并说明其物理意义。
+前后没有关联情况下信源的剩余度：
+$ gamma _1 = 1 - frac(0.881, H(1/2)) = 1 - frac(0.881, 1) = 0.119 $
+
+一阶马尔可夫信源的剩余度：
+$ gamma _2 = 1 - frac(0.553, H(1/2)) = 1 - frac(0.553, 1) = 0.447 $
+
+$ H(X) > H_2, quad gamma _1 < gamma _2 $
+
+物理意义：一阶马尔可夫信源考虑了消息前后的关联，使得符号熵减少，信源的冗余增加，同时编码的熵增加。
+
+_习题_ 3.21
+给了一个一阶马氏链的状态转移图如图，符号集为 $0, 1, 2$ 。
+
+(1) 求状态平稳分布 $(pi _0, pi _1, pi _2)$ 和马氏链熵率。
+由状态图可得状态转移矩阵
+$ P = beginpmatrix
+1 - p & p/2 & p/2 \\
+p/2 & 1 - p & p/2 \\
+p/2 & p/2 & 1 - p
+endpmatrix $
+由 $pi ^T P = pi ^T$，即 $pi = (pi _0, pi _1, pi _2)$ 满足
+$ (pi _0, pi _1, pi _2) beginpmatrix
+1 - p & p/2 & p/2 \\
+p/2 & 1 - p & p/2 \\
+p/2 & p/2 & 1 - p
+endpmatrix = (pi _0, pi _1, pi _2) $
+以及 $pi _0 + pi _1 + pi _2 = 1$。
+解得
+$ (pi _0, pi _1, pi _2) = (1/3, 1/3, 1/3) $
+信源的符号熵为
+$ beginaligned
+H_infinity = H_2 = pi _0 H ( 1-p, frac(p, 2), frac(p, 2) ) + pi _1 H ( frac(p, 2), 1-p, frac(p, 2) ) + pi _2 H ( frac(p, 2), frac(p, 2), 1-p )\\
+= - (1-p) log _2 (1-p) - p log _2 p + p " 比特/符号"
+endaligned $
+
+(2) 当 $p$ 为何值时，信源熵率达到最大值？当 $p = 0$ 或 $1$ 时，结果如何？
+因为 $H_infinity = -(1-p) log (1-p) - p log p + p$，对 $p$ 求一阶导数：
+$ H_infinity ' (p) = log (1-p) + frac(1, ln 2) - log p - frac(1, ln 2) + 1 = log frac(2(1-p), p) $
+
+令 $H_infinity ' (p) = 0$，得 $log frac(2(1-p), p) = 0$，所以 $frac(2(1-p), p) = 1$。
+
+所以 $p = 2/3$ 时，$H_infinity$ 达到最大值：$H_infinity$ 的最大值等于 $log _2 3 approx 1.585$ 比特/符号；
+当 $p = 0$ 时，$H_infinity = 0$；当 $p = 1$ 时，$H_infinity = -(1-p) log _2 (1-p) - p log _2 p + p = 1$ 比特/符号。
+
+(3) 如果将信源看成无记忆的且以平稳分布为概率分布，求信源的熵率。
+$ beginpmatrix
+X \\ P(a_i)
+endpmatrix=
+beginpmatrix
+0 & 1 & 2 \\
+1/3 & 1/3 & 1/3
+endpmatrix $
+
+得
+$ H(X) = -sum _(i=1)^(3) P(a_i) log P(a_i) = log _2 3 approx 1.585 "比特/符号" $
+
+由此计算结果可知 $H(X) = H_infinity$。
+
+== 第四章 连续信息与连续信源
+
+_习题_ 4.1
+(1) 指数概率密度 $p(x) = lambda e^(-lambda x), x geqslant 0$;
+$ beginaligned
+h(X) = -integral _(0)^(infinity ) p(x) log p(x) "d"x = -integral _(0)^(infinity ) lambda e^(-lambda x) log (lambda e^(-lambda x)) "d"x \\
+= -integral _(0)^(infinity ) lambda e^(-lambda x) log lambda "d"x - integral _(0)^(infinity ) lambda e^(-lambda x) log e^(-lambda x) "d"x = log frac(e, lambda )
+endaligned $
+(2) 拉普拉斯概率密度 $p(x) = (1/2) lambda e^(-lambda |x|)$。
+$ beginaligned
+h(X) = -integral _(-infinity )^(infinity ) p(x) log p(x) "d"x = -integral _(-infinity )^(infinity ) frac(1, 2) lambda e^(-lambda |x|) log ( frac(1, 2) lambda e^(-lambda |x|) ) "d"x \\
+= -log frac(1, 2) lambda integral _(-infinity )^(infinity ) frac(1, 2) lambda e^(-lambda |x|) "d"x + integral _(-infinity )^(infinity ) frac(1, 2) lambda e^(-lambda |x|) log (e^(-lambda |x|)) "d"x \\
+= log frac(2e, lambda )
+endaligned $
+
+_习题_ 4.13
+给定两连续随机变量 $X$ 和 $Y$ ，其中 $X$ 的概率密度是 $p(x) = e^(-x) (0 leqslant x < infinity )$ ，条件概率密度是 $p(y/x) = xe^(-xy) (0 leqslant y < infinity )$ 。求 $h(X), h(Y), h(XY), I(X;Y)$ 。
+$ beginaligned
+h(X) = -integral _(0)^(infinity ) p(x) log p(x) dx = -integral _(0)^(infinity ) e^(-x) log e^(-x) dx = - (log e) integral _(0)^(infinity ) x de^(-x) = log e \\
+p(y) = integral _(0)^(infinity ) p(x) p(y | x) dx = integral _(0)^(infinity ) x e^(-x(1+y)) dx = - integral _(0)^(infinity ) frac(x, 1+y)d e^(-x(1+y)) dx = frac(1, (1+y)^2) \\
+h(Y) = -integral _(0)^(infinity ) frac(1, (1+y)^2) log frac(1, (1+y)^2) dy = -2 integral _(0)^(infinity ) frac(1, 1+y) log (1+y) dfrac(1, 1+y) = 2 log e \\
+h(XY) = -integral _(0)^(infinity ) integral _(0)^(infinity ) x e^(-x(1+y)) log [x e^(-x(1+y))] dx dy \\
+= - integral _(0)^(infinity ) x log x ( integral _(0)^(infinity ) e^(-x(1+y)) dy ) dx + (log e) integral _(0)^(infinity ) x^2( integral _(0)^(infinity )(1+y) e^(-x(1+y)) dy ) dx \\
+= - integral _(0)^(infinity ) x log x ( frace^(-x)x ) dx + (log e)integral _(0)^(infinity ) x ( e^(-x) + integral _(0)^(infinity )e^(-x(1+y)) dy ) dx \\
+= -integral _(0)^(infinity ) e^(-x) log x dx + (log e) integral x( frace^(-x) + e^(-x)x ) dx = gamma log e + 2 log e = (gamma + 2) log e \\
+I(X;Y) = h(X) + h(Y) - h(XY) = (1 - gamma ) log e
+endaligned $
+
+其中，$gamma = -integral _(0)^(infinity ) e^(-x) ln x dx$ 为欧拉常数，定义为调和级数与自然对数的差值，约等于 0.577 2。
+
+_习题_ 4.14
+给定两连续随机变量 $X$ 和 $Y$ ，它们的联合概率密度是
+$ p(xy) = frac(1, 2 pi sigma _x sigma _y) exp lbrace{- frac((x - m_x)^2, 2 sigma _x^2) - frac((y - m_y)^2, 2 sigma _y^2)rbrace, quad -infinity < x, y < infinity } $
+
+(1) 求随机变量 $U = X + Y$ 和 $V = X - Y$ 的概率密度函数 $p(u)$ 和 $p(v)$ 。
+$ beginaligned
+p(x) = integral _(-infinity )^(infinity ) p(xy) dy = frac(1, sqrt(2pi ) sigma _x) exp [ - frac((x - m_x)^2, 2sigma _x^2) ] \\
+p(y) = integral _(-infinity )^(infinity ) p(xy) dx = frac(1, sqrt(2pi ) sigma _y) exp [ - frac((y - m_y)^2, 2sigma _y^2) ] \\
+p(x) p(y) = p(xy) implies X 和 Y 是相互独立的高斯随机变量 implies U 的均值和方差分别为 m_x + m_y 和 sigma _x^2 + sigma _y^2 \\
+implies p(u) = frac(1, sqrt(2pi (sigma _x^2 + sigma _y^2))) exp [ - frac((z - m_x - m_y)^2, 2(sigma _x^2 + sigma _y^2)) ] \\
+V 的均值和方差分别为 m_x - m_y 和 sigma _x^2 + sigma _y^2 \\
+implies p(v) = frac(1, sqrt(2pi (sigma _x^2 + sigma _y^2))) exp [ - frac((z - m_x + m_y)^2, 2(sigma _x^2 + sigma _y^2)) ]
+endaligned $
+
+(2) 计算 $h(U), h(V)$ 和 $I(U;V)$ 。
+
+$ beginaligned
+h(U) = h(V) = frac(1, 2) log [2 pi e (sigma _x^2 + sigma _y^2)] quad h(XY) = log (2 pi e sigma _x sigma _y) \\
+beginpmatrix
+u \\ v
+endpmatrix =
+beginpmatrix
+1 & 1 \\
+1 & -1
+endpmatrix
+beginpmatrix
+x \\ y
+endpmatrix \\
+|det 
+beginpmatrix
+1 & 1 \\
+1 & -1
+endpmatrix
+|
+= 2 implies h(UV) = h(XY) + log 2 = log (4 pi e sigma _x sigma _y) \\
+implies I(U;V) = h(U) + h(V) - h(UV) \\
+= log (2 pi e (sigma _x^2 + sigma _y^2)) - log (4 pi e sigma _x sigma _y) \\
+= log frac(sigma _x^2 + sigma _y^2, 2 sigma _x sigma _y)
+endaligned $
+
+_习题_ 4.20
+设 $X^N, Y^N$ 为定义在 $bb(R)^N$ 空间中的两个 $N$ 维矢量，$U^N, V^N$ 分别为 $X^N, Y^N$ 的可逆线性变换，即 $u = Ax + alpha$, $v = By + beta$ ，证明
+$ I(U^N; V^N) = I(X^N; Y^N) $
+
+$ beginpmatrix
+U^N \\
+V^N
+endpmatrix =
+beginpmatrix
+A & 0 \\
+0 & B
+endpmatrix
+beginpmatrix
+x \\
+y
+endpmatrix +
+beginpmatrix
+alpha \\
+beta 
+endpmatrix $
+
+令 $C = beginpmatrix A & 0 \\ 0 & B endpmatrix, z = beginpmatrix x \\ y endpmatrix, gamma = beginpmatrix alpha \\ beta endpmatrix, beginpmatrix U^N \\ V^N endpmatrix = Cz + gamma$
+
+$ beginaligned
+I(U^N; V^N) = h(U^N) + h(V^N) - h(U^N V^N) = h(Ax + alpha ) + h(By + beta ) - h(Cz + gamma ) \\
+= h(X^N) + log |det (A)| + h(Y^N) + log |det (B)| - h(X^N Y^N) - log |det (C)| \\
+= h(X^N) + h(Y^N) - h(X^N Y^N) = I(X^N; Y^N)
+endaligned $
+
+上面用到了行列式的性质：
+$ det (C) = beginvmatrix A & 0 \\ 0 & B endvmatrix = det (A) det (B) $
+
+== 第五章 无失真信源编码
+
+_习题_ 5.1
+有一信源，它有 6 个可能的输出，其概率分布见下表，表中给出了对应的码 A，B，C，D，E 和 F。问：
+
+(1) 这些码中哪些是即时码；
+(2) 哪些是唯一可译码，并对所有唯一可译码，求出其平均码长 $overline(L)$ 。
+
+| 消息  | $P(a_i)$ | A    | B       | C    | D       | E      | F      |
+|-------|----------|------|---------|------|---------|--------|--------|
+| $a_1$ | 1/2      | 000  | 0       | 0    | 0       | 0      | 0      |
+| $a_2$ | 1/4      | 001  | 01      | 10   | 10      | 10     | 100    |
+| $a_3$ | 1/16     | 010  | 011     | 110  | 110     | 1100   | 101    |
+| $a_4$ | 1/16     | 011  | 0111    | 1110 | 1110    | 1101   | 110    |
+| $a_5$ | 1/16     | 100  | 01111   | 11110| 1011    | 1110   | 111    |
+| $a_6$ | 1/16     | 101  | 011111  | 111110| 1101   | 1111   | 011    |
+
+(1) _即时码就是没有一个码字是另一个码字的前缀_。比如 B 里 0 是 01 的前缀，D 里 110 是 1101 的前缀，F 里 0 是 011 的前缀，所以只有 A, C, E 是即时码。
+
+(2) 观察表中这些码组，A 是等长码，其中没有相同的码字，所以 A 是唯一可译码。其他码组都是变长码，可采用唯一可译变长码来判断：码组 B、C、E 是唯一可译码，码组 D、F 不是唯一可译码。唯一可译码的平均码长为
+$ overline(L) = sum _(i=1)^(q) P(s_i) l_i $
+
+因此，$overline(L)_A = 3$ 码符号/信源符号，$overline(L)_B = 2.125$ 码符号/信源符号，$overline(L)_C = 2.125$ 码符号/信源符号，$overline(L)_D = 2$ 码符号/信源符号。
+
+_习题_ 5.5
+是否存在码长分别为 1, 2, 2, 2, 2, 2, 3, 3, 3, 3 的唯一可译三元变长码？是否可以构造一个码长为 1, 2, 2, 2, 2, 2, 3, 3, 3 的即时码？存在多少这样的码？
+(1) 因为 $sum _i 2^(-l_i) = 2^(-1) + 5 times 2^(-2) + 4 times 2^(-3) = frac(9, 4) > 1$，所以不存在码长分别为 1, 2, 2, 2, 2, 2, 3, 3, 3, 3 的唯一可译三元变长码。
+
+(2) 可以构造码长为 1, 2, 2, 2, 2, 2, 3, 3, 3 的即时码，例如：0, 10, 11, 12, 20, 21, 220, 221, 222。
+
+(3) 因为一个即时码码字集合与一棵码树的叶有一一对应的关系，不同的码树对应不同的码字集合。现分析这种码树生成过程：一个根节点延伸出 3 个 1 阶节点，其中有 2 个 1 阶节点要各自延伸出 3 个 2 阶节点，方法数是 3；6 个 2 阶节点中有 1 个延伸出 3 个 3 阶节点，方法数是 6，所以不同码树数目为 3 × 6 = 18，其中的一棵码树如图 5.5 所示。一个码字集合可以根据不同的对应关系分配给信源符号，如果信源符号和码字都是 9 个，则有 9! 种分配方式。所以，存在的编码方式数为 18 × 9!。
+
+_习题_ 5.7
+设信源 $S$ ，符号集为 $s_1, s_2$ ，其中，$P(s_1) = 0.1$。
+
+(1) 求信源的熵和信源剩余度。
+$ H(S) = - sum _(i=1)^2 p(s_i) log p(s_i) approx 0.469 " 比特/符号" $
+剩余度 $gamma = 1 - frac(H(S), log _2 2) = 0.531 = 53.1\%$。
+(2) 设码符号为 $A = 0, 1$ ，编出 $S$ 的最优码，并求其平均码长。
+码符号 $X = 0, 1$，对信源 $S$ 编紧致码为：$s_0 arrow 0, s_1 arrow 1$。其平均码长为 $1$ 码符号/信源符号。
+(3) 把信源的 $N$ 次扩展源 $S^N$ 编成最优码，求 $N = 2, 3, 4, infinity$ 时的平均码长 $overline(L)_N / N$。
+当 $N = 2$ 时，
+$ S^2 = a_1 = s_1 s_1, a_2 = s_1 s_2, a_3 = s_2 s_1, a_4 = s_2 s_2 $
+$ P(a_i) = [0.01, 0.09, 0.09, 0.81] $
+
+紧致码（即哈夫曼码）为：
+
+| 码字 | 0 | 10 | 110 | 111 |
+| --- | --- | --- | --- | --- |
+| 码长 | 1 | 2 | 3 | 3 |
+
+平均码长 $fracoverline(L)\_NN = frac(1, N) sum _(i=1)^(4) P(a\_i) l\_i = 0.645 " 码符号/信源符号"$。
+
+同理，当 $N = 3$ 时，平均码长 $fracoverline(L)_33 = 0.533 " 码符号/信源符号"$；
+
+当 $N = 4$ 时，平均码长 $fracoverline(L)_44 = 0.493 " 码符号/信源符号"$；
+
+当 $N = infinity$ 时，紧致码的平均码长为：
+$ lim _(N -> infinity ) fracoverline(L)_NN = frac(H(S), log r) approx 0.469 " 码符号/信源符号" $
+(4) 计算当 $N = 1, 2, 3, 4$ 时的编码效率和码剩余度。
+编码效率 $eta = frac(H_r(S), overline(L)) = frac(H(S), overline(L))$ （$r = 2$），码剩余度 $1 - eta = 1 - frac(H_r(S), overline(L)) = 1 - frac(H(S), overline(L))$。
+
+所以 $N = 1$ 时，编码效率为 $0.469$，码剩余度为 $0.531$；
+$N = 2$ 时，编码效率为 $0.727$，码剩余度为 $0.273$；
+$N = 3$ 时，编码效率为 $0.880$，码剩余度为 $0.12$；
+$N = 4$ 时，编码效率为 $0.951$，码剩余度为 $0.049$。
+
+_习题_ 5.8
+某离散无记忆信源有8个信源符号 $a_0, a_1, a_2, a_3, a_4, a_5, a_6, a_7$ ，各符号的概率分别为 0.1, 0.1, 0.1, 0.1, 0.1, 0.4, 0.05, 0.05。
+
+(1) 对信源进行码长方差最小的二元 Huffman 编码，求平均码长、码长的方差，以及码率和编码效率。
+
+| 信源符号 | 码字 |
+| --- | --- |
+| $a_0$ | 010 |
+| $a_1$ | 100 |
+| $a_2$ | 101 |
+| $a_3$ | 110 |
+| $a_4$ | 111 |
+| $a_5$ | 00 |
+| $a_6$ | 0110 |
+| $a_7$ | 0111 |
+
+$ overline(l) = 5 times 0.1 times 3 + 0.4 times 2 + 0.1 times 4 = 2.7 " 码元/信源符号" $
+
+$ sigma ^2 = sum _i p_i l_i^2 - overline(l)^2 = 5 times 0.1 times 3^2 + 0.4 times 2^2 + 2 times 0.05 times 4^2 - 2.7^2 = 0.41 $
+$ H(X) = 2.622 " 比特/信源符号", quad R = overline(l) log _2 2 = 2.7 " 比特/信源符号" $
+
+编码效率为：
+$ eta = frac(H(X), R) = frac(2.622, 2.7) approx 97.11\% $
+
+(2) 将信源符号编成香农码，求平均码长、码长的方差，以及码率和编码效率。
+无参考答案，嘻嘻。
+
+== 第六章 离散信道及其容量
+
+_习题_ 6.6
+设二元对称信道的概率转移矩阵为
+$ beginpmatrix 3/4 & 1/4 \\ 1/4 & 3/4 endpmatrix $
+
+(1) 若 $p(0) = 1/3$ ，求 $I(x=0;y=1), I(x=1;Y), I(X;Y)$ 。
+设输出概率为 $q_0, q_1$，有
+$ (q_0, q_1) = (p_0, p_1)P = (1/3 quad 2/3) beginpmatrix 3/4 & 1/4 \\ 1/4 & 3/4 endpmatrix = (5/12 quad 7/12) $
+$ beginalignedI(x=0; y=1) = log frac(p(y=1|x=0), p(y=1)) = log _2 frac(1/4, 7/12) = -1.22 " bit" \\
+I(x=1; Y) = sum _j p_(ij) log fracp_(ij)q_j = frac(1, 4) log _2 frac(1/4, 5/12) + frac(3, 4) log _2 frac(3/4, 7/12) = 0.088 " 比特/符号" \\
+I(x=0; Y) = sum _j p_(ij) log fracp_(ij)q_j = frac(3, 4) log _2 frac(3/4, 5/12) + frac(1, 4) log _2 frac(1/4, 7/12) = 0.33 " 比特/符号" \\
+I(X; Y) = sum _i p(x) I(x; Y) = frac(1, 3) I(x=0; Y) + frac(2, 3) I(x=1; Y) = 0.169 " 比特/符号"
+endaligned $
+
+(2) 求该信道的容量及其达到容量时的输入概率分布。
+该信道为二元对称信道，达到容量时输入等概，即 $p_0 = p_1 = 1/2$，输出也等概。
+$ C = 1 - H(frac(1, 4)) = 1 - 0.811 = 0.189 " 比特/符号" $
+
+_习题_ 6.11
+一个离散无记忆信道如图6.22所示：
+
+(1) 写出该信道的转移概率矩阵；
+信道的转移概率矩阵为
+$ P = beginpmatrix
+1/2 & 1/4 & 1/4 \\
+0 & 1 & 0 \\
+1/4 & 1/4 & 1/2
+endpmatrix $
+(2) 该信道是否为对称信道？
+该信道不是对称信道。
+(3) 求该信道的信道容量；
+由 $P beta = -h$，可得
+$ beginpmatrix
+1/2 & 1/4 & 1/4 \\
+0 & 1 & 0 \\
+1/4 & 1/4 & 1/2
+endpmatrix
+beginpmatrix
+beta _0 \\
+beta _1 \\
+beta _2
+endpmatrix =
+beginpmatrix
+frac12log frac12 + frac14log frac14 + frac14log frac14 \\
+0 \\
+frac12log frac12 + frac14log frac14 + frac14log frac14
+endpmatrix $
+
+解得 $beta _0 = -2, beta _1 = 0, beta _2 = -2$。
+
+$ C = log (2^(-2) + 2^0 + 2^(-2)) = log _2 frac(3, 2) = 0.585 " 比特/符号" $
+(4) 求达到信道容量时的输出概率分布。
+$ q_0 = q_2 = frac(1, 6), quad q_1 = frac(2, 3) $
+
+$ p_0 = p_2 = frac(2, 9), quad p_1 = frac(5, 9) $
+
+_习题_ 6.12
+一个 Z 信道的转移概率如图6.23所示：
+(1) 求信道容量；
+？考试考这个我似了算了
+信道转移矩阵为
+$ P = beginpmatrix
+1 & 0 \\
+epsilon & 1-epsilon 
+endpmatrix, quad P^(-1) = beginpmatrix
+1 & 0 \\
+frac(-epsilon , 1-epsilon ) & frac(1, 1-epsilon )
+endpmatrix $
+$ h = beginpmatrix
+0 \\
+H(epsilon )
+endpmatrix, quad beta = -P^(-1) h = beginpmatrix
+0 \\
+-frac(H(epsilon ), 1-epsilon )
+endpmatrix, quad q_0 = frac(1, 1+2^(-fracH(epsilon )){1-epsilon )}, quad q_1 = frac(2^(-fracH(epsilon ), 1-epsilon ))1+2^(-frac(H(epsilon ), 1-epsilon )) $
+
+$ (p_0quad p_1) = (q_0quad q_1) P^(-1) = ( 1-frac(epsilon ^(fracepsilon , 1-epsilon ))1+(1-epsilon )epsilon ^frac(epsilon , 1-epsilon ) quad frac(epsilon ^(fracepsilon , 1-epsilon ))1+(1-epsilon )epsilon ^frac(epsilon , 1-epsilon ) ) $
+
+输入概率均大于零，所以信道容量为
+$ C = log ( 1 + 2^(-frac(H(epsilon ), 1-epsilon )) ) $
+(2) 若将两个同样的 Z 信道串接，求串接后信道的转移概率矩阵；
+(3) 求 (2) 中串接信道的容量和达到容量时的输入的概率分布；
+(4) 将 n 个同样的 Z 信道串接，求串接后信道的转移概率矩阵和信道容量。
+
+_习题_ 6.14
+给定如图6.25所示的级联信道，求：
+感觉这题答案有点问题
+(1) $X$ 与 $Y$ 之间的信道容量 $C_1$；
+由于 $X$ 与 $Y$ 之间的信道转移概率矩阵为
+$ P_1 = beginpmatrix
+1 - epsilon & epsilon \\
+epsilon & 1 - epsilon 
+endpmatrix $
+
+所以信道为弱对称信道，当输入等概时达到容量。
+
+$ C_1 = log 2 - H(epsilon ) = log 2 + epsilon log epsilon + (1 - epsilon ) log (1 - epsilon ) $
+(2) $Y$ 与 $Z$ 之间的信道容量 $C_2$；
+$Y$ 和 $Z$ 之间的信道转移矩阵为
+$ P_2 = beginpmatrix
+3/4 & 0 & 1/4 \\
+0 & 3/4 & 1/4
+endpmatrix $
+
+由于信道为弱对称信道，当 $p_1 = p_2 = 1/2$ 时达到信道容量 $C_2$，此时输出概率分布为 $(3/8, 3/8, 1/4)$，所以信道容量
+$ C_2 = H(3/8, 3/8, 1/4) - H(1/4, 3/4) = 3/4 " 比特/符号" $
+(3) $X$ 与 $Z$ 之间的信道容量 $C_3$ 及达到容量时的输入概率分布。
+$X$ 和 $Z$ 之间的转移概率矩阵 $P_3 = P_1 times P_2$，所以
+$ P_3 = beginpmatrix
+1 - epsilon & epsilon \\
+epsilon & 1 - epsilon 
+endpmatrix
+beginpmatrix
+3/4 & 1/4 & 0 \\
+0 & 1/4 & 3/4
+endpmatrix=
+beginpmatrix
+3(1-epsilon )/4 & 1/4 & (3epsilon )/4 \\
+(3epsilon )/4 & 1/4 & 3(1-epsilon )/4
+endpmatrix $
+
+该信道是弱对称信道，当输入等概率分布时达到信道容量 $C_3$，此时
+$ q_0 = q_1 = 3/8,quad q_2 = 1/4 $
+
+所以
+$ C_3 = H ( frac(3, 8), frac(3, 8), frac(1, 4) ) - H ( frac(3(1-epsilon ), 4), frac(1, 4), frac(3epsilon , 4) ) = frac(3, 4) [log 2 - H(epsilon )] $
+
+输入等概时达到容量。
+
+== 第七章 有噪信道编码
+
+_习题_ 7.3
+一信道输入符号集 $A = 0,1/2,1$ ，输出符号集 $B = 0, 1$ ，信道的转移概率矩阵为
+$ P = beginpmatrix 1 & 0 \\ 1/2 & 1/2 \\ 0 & 1 endpmatrix $
+
+现有 4 个等概率消息通过此信道输出，若选择这样的信道编码：$C_b: a_1, a_2, 1/2, 1/2$, $a_i = 0$ 或 $1 \ (i = 1, 2)$ ，码长为 4，并选择如下译码规则：
+$ f: (y_1, y_2, y_3, y_4) = (y_1, y_2, 1/2, 1/2) $
+
+(1) 编码后信息传输速率等于多少？
+编码后信息传输速率：
+$ R = frac(log _2 4, 4) = 0.5 " 比特/符号" $
+(2) 证明在此译码规则下，对于码字的译码错误率 $P_E^((i)) = 0, i = 1, 2, 3, 4$ 。
+设 4 个消息的编码分别为：(0, 0, 1/2, 1/2)，(0, 1, 1/2, 1/2)，(1, 0, 1/2, 1/2)，(1, 1, 1/2, 1/2)，通过信道传输后，每个码字的前两位无差错，所以不同的码字的传输得到不同的译码结果，无译码错误。
+
+_习题_ 7.4
+一个二元对称信道的转移概率矩阵为
+$ P = beginpmatrix 1-p & p \\ p & 1-p endpmatrix \ (p < 1/2) $
+
+信道输入符号 0,1 的概率分别为 $omega , 1 - omega$ 。
+
+(1) 求利用 MAP 准则的判决函数和平均错误率。
+MAP 准则
+
+联合概率矩阵：
+$ beginpmatrix
+(1-p) omega & p omega \\
+p(1-omega ) & (1-p)(1-omega )
+endpmatrix $
+
+当接收到 “0” 时：
+若 $(1-p) omega geqslant p (1-omega )$，则判断为 “0”；反之，则判断为 “1”。
+
+所以
+$ G(y=0) = begincases
+0 & (omega geqslant p) \\
+1 & (omega < p)
+endcases $
+
+同理，得
+$ G(y=1) = begincases
+0 & (omega geqslant 1-p) \\
+1 & (omega < 1-p)
+endcases $
+
+因为 $p < frac(1, 2)$，所以 $1-p > p$。可总结如下：
+
+- MAP 判决函数：
+$ G(y) = begincases
+ 0 & (omega geqslant 1-p) \\
+ 1 & (omega < p)
+ endcases $
+$ G(y=0) = 0, quad G(y=1) = 1 quad (p leqslant omega < 1-p) $
+
+- 平均错误率：
+$ p_E = begincases
+ 1-omega & (omega geqslant 1-p) \\
+ omega & (omega < p) \\
+ p & (p leqslant omega < 1-p)
+ endcases $
+
+  或
+$ p_E = min (1-omega , omega , p) $
+
+(2) 求利用 ML 准则的判决函数和平均错误率。
+利用 ML 准则
+
+当接收到 “0” 时，若 $(1-p) geqslant p$，则判断为“0”；反之，则判断为 “1”，而根据题意有 $1-p > p$。
+
+所以
+$ G(y=0) = 0 $
+
+同理，得
+$ G(y=1) = 1 $
+
+所以，有
+
+- ML 判决函数：
+$ G(y=0) = 0, quad G(y=1) = 1 $
+
+- 平均错误率：
+$ p_E = p $
+
+(3) 什么时候上述两准则的判决结果相同？
+当 $p < omega leqslant 1-p$ 时，上述两准则的判决结果相同。
+
+== 第八章 波形信道
+
+这个例题是关于离散时间无记忆加性噪声信道的输入和输出的互信息、信道容量及其概率分布的求解。具体问题和解答如下：
+
+_习题_ 8.3
+
+一个离散时间无记忆加性噪声信道的输入 $X$ 限制在 $[-2,2]$，独立于 $X$ 的噪声 $Z$ 在 $[-1,1]$ 区间均匀分布，熵为 $h(Z)$。信道输出 $Y$ 的熵为 $h(Y)$。
+
+（1）写出信道输入 $X$ 与输出 $Y$ 的平均互信息 $I(X;Y)$ 的表达式。
+（2）求信道容量和达到容量时的输出概率分布。
+（3）求达到容量时的输入概率分布。
+
+（1）$I(X;Y)$ 的表达式： $I(X;Y) = h(Y) - h(Z)$。
+
+（2）因为 $-2 leqslant X leqslant 2$， $-1 leqslant Z leqslant 1$，$y = x + z$，所以 $y$ 的范围是：$-3<y<3$，噪声熵 $h(Z) = log (1 + 1) = log 2$，所以当 $Y$ 有最大熵时，信道达到容量，此时 $Y$ 应在 $(-3,3)$ 范围均匀分布，$Y$ 的分布密度为
+   $$ p_Y(y) = \begin{cases}
+   1/6 & -3 < y < 3 \\\\
+   0 & \text{其他}
+   \end{cases} $$
+
+信道容量 $max I(X;Y) = log _2 (3 + 3) - log _2 2 = log _2 3 = 1.585$ 比特/自由度。
+
+（3）因为 $y = x + z$，且 $x$ 与 $z$ 相互独立，则 $y$ 的概率密度可以由 $x$ 与 $z$ 的概率密度卷积得到，设 $p_X(x) rightarrow X(omega )$, $p_Z(z) rightarrow Z(omega )$, $p_Y(y) rightarrow Y(omega )$，其中 $rightarrow$ 表示傅里叶变换关系，有 $X(omega ) Z(omega ) = Y(omega )$。
+
+$ Y(omega ) = integral _(-3)^(3) (frac(1, 6)) e^(-jomega y) dy = frac(sin (3omega ), 3omega ) $
+
+$ Z(omega ) = integral _(-1)^(1) (frac(1, 2)) e^(-jomega z) dz = frac(sin omega , omega ) $
+
+$ X(omega ) = frac(Y(omega ), Z(omega )) = frac(1, 3) (2 cos 2omega + 1) $
+
+做反变换，得
+
+$ X(omega ) = frac(Y(omega ), Z(omega )) = frac(1, 3) (2 cos 2omega + 1) arrow frac(1, 3) [ delta (x-2) + delta (x+2) + delta (x) ] $
+
+所以达到容量时，$X$ 的概率分布是
+
+$ p(x=0) = p(x=-2) = p(x=2) = frac(1, 3) $
+
+_习题_ 8.6
+
+设离散时间连续信道的输入与输出分别为 $X^N = (X_1, dots.c , X_N)$ 和 $Y^N = (Y_1, dots.c , Y_N)$，试证明：
+
+（1）信源无记忆时，有 $I(X^N; Y^N) geqslant sum _(i=1)^N I(X_i; Y_i)$，当且仅当信道无记忆时等式成立。
+$ beginaligned
+sum _(i=1)^N I(X_i; Y_i) - I(X^N; Y^N) &= sum _(i=1)^N [H(X_i) - H(X_i | Y_i)] - sum _(i=1)^N H(X_i) + H(X^N | Y^N) \\
+&= H(X^N | Y^N) - sum _(i=1)^N H(X_i | Y_i) \\
+&= sum _(i=1)^N H(X_i | Y^NX_1X_2dots.c X_(i-1)) - sum _(i=1)^N H(X_i | Y_i) leqslant 0
+endaligned $
+故：
+$ I(X^N; Y^N) geqslant sum _(i=1)^N I(X_i; Y_i) $
+
+（2）信道无记忆时，有 $I(X^N; Y^N) leqslant sum _(i=1)^N I(X_i; Y_i)$，当且仅当信源无记忆时等式成立。
+$ beginaligned
+I(X^N; Y^N) - sum _(i=1)^N I(X_i; Y_i) &= H(Y^N) - H(Y^N | X^N) - sum _(i=1)^N [H(Y_i) - H(Y_i | X_i)] \\
+&= H(Y^N) - sum _(i=1)^N H(Y_i) leqslant 0
+endaligned $
+故：
+$ I(X^N; Y^N) leqslant sum _(i=1)^N I(X_i; Y_i) $
+
+综上所述，当信源和信道无记忆时，这两个等式分别成立。
+
+== 第九章 信息率失真函数
+
+不用考，不学啦！

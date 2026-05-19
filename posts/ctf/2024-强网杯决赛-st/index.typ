@@ -1,0 +1,24 @@
+#import "../../../config.typ": *
+
+#show: template-post.with(
+  title: "2024 强网杯决赛 - st",
+  description: "SB 题",
+  tags: ("CTF", "Crypto",),
+  category: "CTF",
+  date: datetime(year: 2024, month: 12, day: 9)
+)
+#line(length: 100%)
+
+misc 搞一搞变成 re，然后塞到 crypto 里面，啥卵出题人的嘛嘛炸了。
+
+== 题目
+
+给一个 `encrypt` 和生成的密文 `data.bin`，然后让你解。
+
+== 分析
+
+首先 IDA 打开看一下，哎您猜怎么着，依托答辩，除了一开始的 MT19937 能瞪出来，后面一堆迷惑操作根本不知道在搞什么飞机
+这时需要选手稍微顿悟一下，猜出这是隐写算法 #link("http://dde.binghamton.edu/download/syndrome/")[Syndrome-Trellis Codes]
+
+// TODO
+Gao 了半天没 Gao 出来，我符号表都快还原到最底层了也没瞪出来他除了参数 `h` 还改了什么，有空再补。

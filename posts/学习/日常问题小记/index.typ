@@ -1,0 +1,147 @@
+#import "../../../config.typ": *
+
+#show: template-post.with(
+  title: "日常问题小记",
+  description: "记录一下平时遇到的问题和解决方法，以备后用。",
+  tags: ("计算机", "学习",),
+  category: "学习",
+  date: datetime(year: 2023, month: 5, day: 21)
+)
+
+== 无
+
+- WSL 运行后 CPU 占用过高
+
+  在 User 文件夹下新建一个 .wslconfig 文件，内容如下：
+
+  ```bash
+  [wsl2]
+  guiApplications=false
+  ```
+
+  后来发现好像没啥用？
+
+== Sagemath 报错
+
+=== 9.5
+
+```bash
+ImportError: libsingular-Singular-4.3.1.so: cannot open shared object file: No such file or directory
+```
+
+我装了 Sagemath9.5 但一直报这个错，GitHub 上也没 issue，发现是现在的 .so 版本已经到 4.3.2 了，执行下面的命令就好了：
+
+```bash
+sudo ln -s /usr/lib/x86_64-linux-gnu/libsingular-Singular-4.3.2.so /usr/lib/x86_64-linux-gnu/libsingular-Singular-4.3.1.so
+sudo ln -s /usr/lib/x86_64-linux-gnu/libsingular-polys-4.3.2.so /usr/lib/x86_64-linux-gnu/libsingular-polys-4.3.1.so
+sudo ln -s /usr/lib/x86_64-linux-gnu/libsingular-resources-4.3.2.so /usr/lib/x86_64-linux-gnu/libsingular-resources-4.3.1.so
+sudo ln -s /usr/lib/x86_64-linux-gnu/libsingular-omalloc-4.3.2+0.9.6.so /usr/lib/x86_64-linux-gnu/libsingular-omalloc-4.3.1+0.9.6.so
+sudo ln -s /usr/lib/x86_64-linux-gnu/libsingular-factory-4.3.2.so /usr/lib/x86_64-linux-gnu/libsingular-factory-4.3.1.so
+```
+
+=== 10.0
+
+重装了下系统，用 WSL 2 装了 Sagemath 10.0，直接按官方的 `mamba create -n sage sage python=3.11` 安装后，运行会报错：
+
+```bash
+$ sage
+┌────────────────────────────────────────────────────────────────────┐
+│ SageMath version 10.0, Release Date: 2023-05-20                    │
+│ Using Python 3.11.5. Type "help()" for help.                       │
+└────────────────────────────────────────────────────────────────────┘
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Warning: sage.all is not available; this is a limited REPL.        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+sage:
+```
+
+而且在 python 里 `import sage.all` 也会报错：
+
+```bash
+$ python
+Python 3.11.5 (main, Sep 11 2023, 13:54:46) [GCC 11.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from sage.all import *
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/xxx/mambaforge/envs/sage/lib/python3.11/site-packages/sage/all.py", line 75, in <module>
+    from sage.misc.all       import *         # takes a while
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/xxx/mambaforge/envs/sage/lib/python3.11/site-packages/sage/misc/all.py", line 72, in <module>
+    from .functional import (additive_order,
+  File "/home/xxx/mambaforge/envs/sage/lib/python3.11/site-packages/sage/misc/functional.py", line 26, in <module>
+    from sage.rings.complex_double import CDF
+ImportError: libgsl.so.25: cannot open shared object file: No such file or directory
+>>>
+```
+
+又尝试去源码 build，失败，最后和 GPT 通力合作（我们两个真厉害），发现是环境变量的问题，执行下面的命令就好了（`xxx` 要换成你的用户名）：
+
+```bash
+export LD_LIBRARY_PATH=/home/xxx/mambaforge/pkgs/gsl-2.7-he838d99_0/lib:$LD_LIBRARY_PATH
+```
+
+当然这样十分麻烦，每次启动 sage 环境要重新设置一次，所以可以把这个命令加到 mamba 启动时的脚本里。
+首先看看你 sage 装在哪：
+
+```bash
+mamba env list
+```
+
+然后在目录的 `etc/conda/activate.d/sage-activate.sh` 里末尾补一条 `export` 命令就好了。
+
+== 后台进程
+
+以下命令可以让程序在后台运行，避免退出终端时就断掉：
+
+```bash
+nohub <command> &
+```
+
+== VMWare 安装 Kali Linux 后启动黑屏
+
+用管理员运行cmd，输入命令 `netsh winsock reset`，重启电脑，这时能看到了，但是很卡，再关闭 3D 加速就好了。
+后来发现我操作系统勾的是 Windows，不知道有没有关系。
+
+== 改 `/etc/hosts` 后 squid 不能马上生效
+
+重载一下配置文件就好了：
+
+```bash
+sudo squid -k reconfigure
+```
+
+=== U 盘弹出的时候显示被占用
+
+参考#link("https://zhuanlan.zhihu.com/p/424874015")[这篇文章]：
+
+开始菜单右键 -> 事件查看器
+自定义视图 -> 管理事件
+再弹出一次移动硬盘
+刷新事件 -> 点击第一条
+下方框中 常规 -> 找到阻止弹出移动硬盘的进程ID
+
+基本就知道谁在占用了。
+
+=== WSL 默认用户为 root
+
+启动 WSL，在里面
+
+```bash
+sudo nano /etc/wsl.conf
+```
+
+写入
+
+```ini
+[user]
+default = your_username
+```
+
+然后关一下 WSL：
+
+```bash
+wsl --shutdown
+```
+
+再启动默认就是你指定的用户登录了。
