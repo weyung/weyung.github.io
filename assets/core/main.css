@@ -1985,16 +1985,17 @@ header.nav-menu-open .nav-sidebar {
 .post-license-item {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  align-items: baseline;
+  align-items: flex-start;
   line-height: 1.5rem;
-  flex: 1 0 auto;
+  /* Use rem to trigger wrap based on font size. 
+     If 3 items * 18rem > container, they will stack. */
+  flex: 1 0 18rem;
 }
 
 .post-license-label {
   flex-shrink: 0;
   user-select: none;
-  padding-right: 1.5rem;
+  min-width: 5rem;
   font-weight: 600;
 }
 
