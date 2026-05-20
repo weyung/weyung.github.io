@@ -749,12 +749,23 @@
   padding: 1.25rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Horizontal layout */
+  align-items: center; /* Vertically centered */
+  justify-content: space-between;
+  gap: 1rem;
   height: 100%;
   min-height: 8rem;
   position: relative;
   cursor: pointer;
   border-radius: 4px;
+}
+
+.friends-grid .friend-info {
+  flex: 1;
+  min-width: 0; /* Allow text to shrink/truncate if needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .friends-grid .friend-card:hover {
@@ -784,17 +795,9 @@ html[data-theme="gray-100"] .friends-grid .friend-card .post-card-link {
   }
 }
 
-.friends-grid .friend-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.75rem;
-}
-
 .friends-grid .friend-avatar {
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
@@ -805,7 +808,7 @@ html[data-theme="gray-100"] .friends-grid .friend-card .post-card-link {
 .friends-grid .post-title {
   font-size: 1.125rem;
   font-weight: 600;
-  margin-bottom: 0; /* Title margin moved to header gap */
+  margin-bottom: 0.5rem;
 }
 
 .friends-grid .post-description {
