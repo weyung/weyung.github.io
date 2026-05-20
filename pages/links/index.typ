@@ -40,7 +40,15 @@
             friend.desc
           })
         })
-        html.img(class: "friend-avatar", src: avatar-url, alt: friend.name)
+        html.div(class: "friend-avatar-container", {
+          html.elem("img", attrs: (
+            class: "friend-avatar", 
+            src: avatar-url, 
+            alt: friend.name,
+            onerror: "this.closest('.friend-card').classList.add('is-error');"
+          ))
+          html.div(class: "friend-avatar-placeholder", "网站似了")
+        })
       })
     }
   })
