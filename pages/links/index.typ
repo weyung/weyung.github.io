@@ -20,13 +20,12 @@
 // 提取公共的卡片网格渲染函数
 #let render-friend-group(friend-list) = {
   html.elem("div", attrs: (
-    class: "posts-grid",
-    style: "display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;"
+    class: "friends-grid",
   ), {
     for (i, friend) in friend-list.enumerate() {
       let bg-color = card-colors.at(calc.rem(i, card-colors.len()))
       html.elem("div", attrs: (
-        class: "post-card",
+        class: "friend-card",
         "data-post-url": friend.url, 
         "data-post-target": "_blank",
         style: "background-color: " + bg-color + ";",
@@ -82,6 +81,7 @@
   (name: "Lst4r", url: "https://lst4r-max.github.io/", desc: "小铁大客户"),
   (name: "夏槿", url: "https://uniya.work/", desc: "的小屋"),
   (name: "lbyxiaoliz", url: "https://blog.vh.gs", desc: "喵喵喵喵喵"),
+  (name: "Choco", url: "https://ch0ico.fun/", desc: "H4ck for fun"),
 )
 
 #render-friend-group(friends)
