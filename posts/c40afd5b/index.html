@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>Linux 学习笔记 | weyung's Blog</title>
+    <meta name="date" content="2022-07-07">
+    <link rel="canonical" href="https://weyung.cc/posts/c40afd5b/">
+    <meta property="og:title" content="Linux 学习笔记 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="最近用到 Linux 挺多，整理一下。">
+    <meta property="og:description" content="最近用到 Linux 挺多，整理一下。">
+    <meta property="og:url" content="https://weyung.cc/posts/c40afd5b/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">Linux 学习笔记</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>Linux 学习笔记</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>终端美化</h3>
+          <p>一个好看的终端确实是第一生产力</p>
+          <pre><code class="language-bash"># 安装 oh-my-posh
+sudo wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
+sudo chmod +x /usr/local/bin/oh-my-posh
+# 下载主题
+mkdir ~/.poshthemes
+wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/themes.zip -O ~/.poshthemes/themes.zip
+unzip ~/.poshthemes/themes.zip -d ~/.poshthemes
+chmod u+rw ~/.poshthemes/*.omp.*
+rm ~/.poshthemes/themes.zip</code></pre>
+          <p><code class="language-text">oh-my-posh get shell</code> 看看 shell，一般是 bash 的情况下，就在 <code class="language-text">~/.bashrc</code>（也可能是 <code class="language-text">~/.profile</code> 或 <code class="language-text">~/.bash_profile</code>）文件追加一行</p>
+          <pre><code class="language-bash">eval "$(oh-my-posh init bash --config ~/.poshthemes/.kali.omp.json))" # kali为主题名称，可以自己更换其他的</code></pre>
+          <p>说起来这个 kali 主题还是 GZTime 学长提的 pr ，当时他还打成了 kail 来着（笑 然后执行以下命令重载配置文件：</p>
+          <pre><code class="language-bash">exec bash</code></pre>
+          <div class="quote-block">oh-my-posh 官方文档：<a href="https://ohmyposh.dev/docs/" target="_blank" rel="noopener noreferrer">https://ohmyposh.dev/docs/</a></div>
+          <h3>换源</h3>
+          <p>CentOS 默认已经调好阿里源了，就不用换了，以下是 apt 换中大源的方法：</p>
+          <pre><code class="language-bash">sudo vim /etc/apt/sources.list</code></pre>
+          <p>按 <code class="language-text">i</code> 切换到编辑模式，然后全删了，写入 <code class="language-text">deb https://mirrors.matrix.moe/kali kali-rolling main non-free contrib</code>，<code class="language-text">Esc</code> 键退出编辑模式，<code class="language-text">:wq</code> 保存退出。</p>
+          <p>更新软件源列表：</p>
+          <pre><code class="language-bash">sudo apt update</code></pre>
+          <h3>ssh配置</h3>
+          <p>想起我闲置的阿里服务器，又折腾了好久。 首先新建用户： <code class="language-text">adduser &lt;用户名></code> 并设置好密码（网上说 CentOS 下的 adduser 和 useradd 是一样的，但我用的时候他也给我一整套配下来了，<code class="language-text">home</code> 下也有文件夹。）</p>
+          <pre><code class="language-bash">su &lt;用户名>
+ssh-keygen -t rsa   #生成密钥对，一路回车就行
+cd ~/.ssh
+cat id_rsa.pub >> authorized_keys   #把密钥添加到authorized_keys文件中
+chmod 600 authorized_keys
+chmod 700 ~/.ssh    #权限700的时候，sshd才能读到
+service sshd restart    #重启sshd服务</code></pre>
+          <h3>权限说明</h3>
+          <p>一般用三个数字表明文件的权限，第一个数字表示用户，第二个数字表示组，第三个数字表示公共。</p>
+          <p>4 表示可读， 2 表示可写， 1 表示可执行，加一起就是全部权限。 比如 755 表示用户可读，可写，可执行，组可读，可执行，公共可读，可执行。</p>
+          <p>可能你会问 222 权限啥意思，难道还能只写不读？ 其实还真是这样，笔者试过可以 <code class="language-text">cat >> file</code> 进行追加写入，但不能读取文件内容。</p>
+          <p>遇到文件执行不了的情况，试试 <code class="language-text">chmod +x [file]</code> ，就有执行权限了。</p>
+          <h3>编辑器（vim）</h3>
+          <p>虽然有 VSCode 的存在，但有时候由于 ssh 的用户权限不够等原因不可避免地要用到 vim （当然硬要避免也有在其他地方写好再 cp 过去等诡方法，但总是麻烦着点） vim 的三个模式：<strong>命令</strong>模式（ Command mode ），<strong>输入</strong>模式（ Insert mode ）和<strong>底线命令</strong>模式（ Last line mode ） 一般就按 <code class="language-text">i</code> 进入编辑模式， <code class="language-text">Esc</code> 退出编辑模式并 <code class="language-text">:wq</code> 保存退出。 在查看模式下，可以 <code class="language-text">h</code> 左移， <code class="language-text">j</code> 下移， <code class="language-text">k</code> 上移， <code class="language-text">l</code> 右移，按 <code class="language-text">/</code> 可以搜索。</p>
+          <h3>常用命令</h3>
+          <div class="quote-block">命令行 without 鼠标确实爽。</div>
+          <h4>chown</h4>
+          <p>即 change owner ，用于改变文件的所有者。</p>
+          <p>一般 <code class="language-text">chown [user] [file]</code> ，如果是目录还要加上 <code class="language-text">-R</code> 参数，意为改变目录下所有文件的所有者。</p>
+          <h4>ln</h4>
+          <p>即 link ，用于创建符号链接，和 Windows 的快捷方式类似。</p>
+          <p>一般 <code class="language-text">ln -s [old] [new]</code> ，就是创建一个符号链接，把 old 文件的内容链接到 new 文件，如果后面不加 <code class="language-text">[new]</code> 参数，那么就会默认创建到当前目录下。</p>
+          <h4>ps</h4>
+          <p>即 process status ，用于查看进程状态。</p>
+          <p>一般加 -aux 显示所有包含其他使用者的进程。 不过这只是一个快照，如果想看动态的，就用 <a href="#top">top</a> 命令。</p>
+          <h4>top</h4>
+          <p>没啥缩写了，就是 top ，用于实时显示进程的状态。</p>
+          <h4>grep</h4>
+          <pre><code class="language-bash">grep "pattern" filename # 在文件中查找 pattern 字符串
+grep -r "pattern" directory # 在目录中递归查找 pattern 字符串</code></pre>
+          <h4>du</h4>
+          <pre><code class="language-bash">du -h --max-depth=1 | sort -h   # 查看当前目录下各文件夹大小</code></pre>
+          <h3>参考</h3>
+          <p><a href="https://www.lxlinux.net/1431.html" target="_blank" rel="noopener noreferrer">https://www.lxlinux.net/1431.html</a> 菜鸟教程 <a href="https://blog.csdn.net/KevinChen2019/article/details/119697489" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/KevinChen2019/article/details/119697489</a> <a href="https://blog.csdn.net/lucky__peng/article/details/124268817" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/lucky__peng/article/details/124268817</a> <a href="https://blog.csdn.net/liuxiao723846/article/details/125042549" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/liuxiao723846/article/details/125042549</a></p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/linux/" style="--tag-background:var(--tag-background-red);--tag-color:var(--tag-color-red);--tag-background-hover:var(--tag-hover-red);--tag-border:var(--tag-border-red);--tag-border-hover:var(--tag-border-red);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-simple-linux.svg&quot;);"></span><span class="tag-content"><span>Linux</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2022 年 7 月 7 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/tutorial/">Tutorial</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/c40afd5b/">https://weyung.cc/posts/c40afd5b/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/08a53d43/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">小 CRT 指数非平衡 RSA 的密码分析论文分析</p></a><a class="post-neighbor" href="/posts/9eaa7315/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">2022 蓝帽杯 - corrupted_key</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

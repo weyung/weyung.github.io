@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>汇编学习笔记 | weyung's Blog</title>
+    <meta name="date" content="2022-04-06">
+    <link rel="canonical" href="https://weyung.cc/posts/04a7e57d/">
+    <meta property="og:title" content="汇编学习笔记 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="进行一些笔记的整理">
+    <meta property="og:description" content="进行一些笔记的整理">
+    <meta property="og:url" content="https://weyung.cc/posts/04a7e57d/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">汇编学习笔记</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>汇编学习笔记</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>前言</h3>
+          <p>上年暑假就学了 x86 汇编的实模式部分，当时用 Onenote 记了一些笔记，后来发现了 Markdown 这个好东西，就决定搬迁一下，也方便我上课查（bushi</p>
+          <p>格式有待整理（逃</p>
+          <h3>寄存器</h3>
+          <h4>通用寄存器</h4>
+          <p>寄存器| 全称 | 中文名称 :——–:|:——–:|:——-: CS|Code Segment |代码段寄存器 DS|Data Segment |数据段寄存器 ES|Extra Segment |附加段寄存器 SS|Stack Segment |栈段 SP|Stack Pointer |栈指针寄存器 IP|Instruction Pointer |指令指针寄存器 SI|Source Index |源索引（变址）寄存器 DI|Destination Index |目标索引寄存器 AX|Accumulator |累加器 BX|Base Address Register|基地址寄存器 CX|Counter |计数器 DX|Data |数据寄存器</p>
+          <h4>标志寄存器</h4>
+          <p>Index| 名称 | 说明 :——–:|:——–:|:——-: 第0位|CF|进位标志，进行算术操作时，如果最高位有向前进位或借位的情况发生，则CF=1，否则CF=0，少数指令除外（如inc和dec） 第2位|PF|奇偶标志，运算结果最低8位，有偶数个为1的比特则PF=1，否则PF=0 第4位|AF|无 第6位|ZF（Zero Flag）|零标志，当处理器执行一条算数或者逻辑运算指令后，抓住逻辑部件送出的结果除了送到指令中指定位置，还送到一个或非门，如果计算结果为0，ZF被置成1，表示计算结果为零是“真”的，否则清除此位（0） 第7位|SF（Sign Flag）|符号位，如dec计算结果的最高位是比特“0”，SF置“0”，否则置“1” 第8位|TF|无 第9位|IF|无 第10位|DF（Direction Flag）|方向标志，可控制movsb和movsw的传送方向 第11位|OF|即溢出标志，用于指示两个有符号数的运算结果是否错误，如果结果正确，则OF=0，否则OF=1</p>
+          <h3>指令</h3>
+          <h4>mov</h4>
+          <p>示例： mov ah,bh mov ax,dx mov [0x02],bl mov ax,[0x06] mov ah,0x05 mov word [0x1c],0xf000</p>
+          <h4>db（Declare Byte）</h4>
+          <p>伪指令，跟在后面的操作数都占一个字节的长度，如果要声明超过一个以上的数据，各个操作数之间必须以逗号隔开</p>
+          <h4>div</h4>
+          <ol>
+            <li>用16位的二进制数除以8位的二进制数：</li>
+          </ol>
+          <p>被除数必须在寄存器AX中，必须先传送到AX寄存器里，除数可以由8位的通用寄存器或者内存单元提供 执行后：商在AL中，余数在AH中</p>
+          <ol>
+            <li>用32位的二进制数除以16位的二进制数：</li>
+          </ol>
+          <p>被除数的高16位在DX中，低16位在AX中 执行后：商在AX中，余数在DX中</p>
+          <h4>xor</h4>
+          <p>0 xor 0 = 0 0 xor 1 = 1 1 xor 0 = 1 1 xor 1 = 0 常用于清零</p>
+          <h4>times</h4>
+          <p>伪指令，重复后面的指令若干次 例：times 100 db 0</p>
+          <h4>movsb和movsw</h4>
+          <p>原始数据串的段地址由 DS 指定，偏移地址由 SI 指定，简写为 DS：SI ，目的地址为 ES：DI ，传送的字节数或者字数由 CX 指定，每传送一次， CX 内容减一 正向传送时传送操作方向是从内存区域低地址端到高地址端，每传送一个字节或一个字时， SI 和 DI 加 1 或者加 2 ，反向传送则相反</p>
+          <h4>cld和std</h4>
+          <p><strong>cld</strong>:将 DF 标志清零，指示传送是正方向的 <strong>std</strong>:与 <code class="language-text">cld</code> 相反</p>
+          <h4>loop</h4>
+          <p>执行时 CX 减一，若 CX 内容不为零，转移到指定的位置执行，否则顺序后面的指令</p>
+          <h4>rep</h4>
+          <p>指令前缀，即 repeat CX 不为零则重复</p>
+          <h4>inc和dec</h4>
+          <p><strong>inc</strong>:加一指令，<code class="language-text">inc bx</code> 和 <code class="language-text">add bx,1</code> 功能一样，但前者机器码更短，速度更快 <strong>dec</strong>:减一指令，与 <code class="language-text">inc</code> 格式相同</p>
+          <h4>neg</h4>
+          <p>用 0 减去指令中指定的操作数</p>
+          <h4>cbw和cwd</h4>
+          <p>两条指令后都没有操作数 <strong>cbw</strong>（Convert Byte to Word）：将 AL 中的有符号数扩展到整个 AX <strong>cwd</strong>（Convert Word to Double-word）：将 AX 中的有符号数扩展到 DX：AX 中</p>
+          <h4>idiv</h4>
+          <p>div 为无符号除尘指令（Unsigned Divide） idiv 指令格式与 div 相同，专门用于计算有符号数</p>
+          <h4>sub</h4>
+          <p>与加法指令 <code class="language-text">add</code> 类似，但处理器没有减法运算电路，故 <code class="language-text">sub ah,al</code> 等效 neg al add ah,al</p>
+          <h4>cmp</h4>
+          <p>功能上和 <code class="language-text">sub</code> 指令相同，但仅影响相应标志位（CF、OF、SF、ZF、AF和PF），而不保留计算结果，因此不会改变两个操作数的原有内容</p>
+          <h4>or和and</h4>
+          <p>or | and ———|———- 0 xor 0 = 0|0 xor 0 = 0 0 xor 1 = 1|0 xor 1 = 0 1 xor 0 = 1|1 xor 0 = 0 1 xor 1 = 1|1 xor 1 = 1</p>
+          <p>对标志寄存器影响： OF 和 CF 位被清零， SF、ZF、PF 的状态依计算结果而定</p>
+          <h4>push和pop</h4>
+          <p>操作数可以是寄存器或者内存单元，逻辑地址为 SS：SP ，不影响任何标志位 <strong>push</strong>：执行时将 SP 内容减去操作数的字长，从高地址端向低地址端推进 <strong>pop</strong>：执行时将 SP 内容加上操作数的字长</p>
+          <h4>in和out</h4>
+          <p><code class="language-text">in</code> 指令是从端口读，一般形式是 in al,dx in ax,dx in 指令的操作数必须是寄存器 AL 或者 AX ，用于访问 8 位或 16 位的端口，源操作数应当是寄存器 DX ， <code class="language-text">in</code> 指令为 2 字节形式时，后一字节是立即数 <code class="language-text">out</code> 指令和 <code class="language-text">in</code> 指令相反 两个指令均不影响任何标志位</p>
+          <h4>call、ref和retf指令</h4>
+          <p>8086处理器支持四种调用方式 i. 16位相对近调用。近调用的意思是被调用的目标过程位于当前代码段内，而非另一个不同的代码段，故只需得到偏移地址即可，计算过程为：用目标过程的汇编地址减去当前call指令的汇编地址，再减去当前call指令以字节为单位的长度(3)，保留16位的结果，近调用的特征是在指令中使用关键字“near”，若没有提供任何关键字，则编译器认为该指令是近调用，其机器指令操作数是一个16位的有符号数，被调用过程的首地址必须位于距离当前call指令-32768 32767字节的地方 ii. 16位间接绝对近调用。这种调用也是近调用，只能调用当前代码段内的过程，指令中的操作数不是偏移量，而是被调用过程的真实偏移地址，故称为绝对地址，该偏移地址不直接出现在指令中，而是由16位的通用寄存器或者16位的内存单元间接提供，机器指令的操作是16位的绝对地址，故可以调用当前代码段任何位置处的过程 iii. 16位直接绝对远调用。这种调用属于段间调用，即调用另一个代码段的过程，“16位”是针对偏移地址来说的，而不是限定段地址，“直接”的意思，段地接和偏移地址直接在call指令中给出，先后将CS和IP进行压栈和出栈 iv. 16位间接绝对远调用。同样属于段间调用，“16位”同样用于限定偏移地址，必须使用关键字“far”，例： proc_1 dw 0x0102,0x2000 call far [proc_1] 0x0102是偏移地址，0x2000是段地址，指令执行时，处理器访问DS指向的数据段，从指令中指定的偏移地址处取得两个字（段地址0x2000和偏移地址0x0102），再将CS和IP分别压栈和取代 ref是近返回指令，从栈中弹出一个字到IP中 retf是远返回指令，分别从栈中弹出两个字到IP和CS中</p>
+          <h4>shr、shl、ror、rol</h4>
+          <p><strong>shr</strong>（Shift logical Right），即逻辑右移指令，将AX中的内容右移4位，执行时将操作数连续右移指定次数，每次溢出的比特被移到CF位，空出的位置用“0”填充，目的操作数可以是8位或16位通用寄存器/内存单元，源操作数可以是1或8位立即数或寄存器CL，当使用CL时，对于目的操作数是内存地址的情况，须使用关键字byte或word等来加限定，如： shr al,cl shr byte [bx],cl ror（Rotate Right），即循环右移指令，执行时每右移一次，移出的比特既送到CF位，也送进左边空出的位</p>
+          <h4>jmp</h4>
+          <p>若JMP之后是标号，则编译为相对转移指令0xE9，操作数为相对偏移题，执行时IP+操作数+长度，此时为相对近转移 8086处理器的无条件转移指令（“16位”意为要转移到的目标位置的偏移地址是16位的）</p>
+          <ol>
+            <li>相对短转移。操作码为0xEB，操作数是相对于目标位置的偏移量，仅1字节，且为有符号数，故该指令属于段内转移指令，且只允许转移到距离当前-128 127字节的地方，该指令须使用关键字“short”，例： jmp shor infinite</li>
+            <li>16位相对近转移。转移范围较相对短转移稍大，操作码为0xE9，操作数为2字节，属于段内转移，可转移到距当前指令-32768 32767字节的地方，该指令应使用关键字“near”</li>
+            <li>16位间接绝对近转移。转移到的目标偏移地址不是在指令中直接给出，而是用一个16位的通用寄存器或者内存地址间接给出，关键字“near“可以省略，例： jmp near bx jmp near cx jump_dest dw 0xc000 jmp [jump_dest] jmp [bx]</li>
+            <li>16位直接绝对远转移。在指令中直接给出段地址和偏移地址的转移指令，例： jmp 0x0000:0x7c00</li>
+            <li>16位间接绝对远转移。该指令要使用关键字”far”，例： jump_far dw 0x33c0,0xf000 jmp far [jump_far]</li>
+          </ol>
+          <p><strong>resb</strong>（REServe Byte）、resw和resd指令 <strong>resb</strong>:从当前位置开始，保留指定数量的字节，但不进行初始化</p>
+          <h4>mul</h4>
+          <p>可以用8位的通用寄存器或者内存单元中的数和寄存器AL中的内容相乘，结果是16位，在AX寄存器中，也可以用16位的通用寄存器或者内存单元中的数和寄存器AX中的内容相乘，结果是32位，高16位和低16位分别在DX和AX中，指令执行后，若结果的高一半全为0，则OF和CF清零，否则置1</p>
+          <h3>参考</h3>
+          <p>《x86汇编语言——从实模式到保护模式》——李忠 著</p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/汇编/" style="--tag-background:var(--tag-background-green);--tag-color:var(--tag-color-green);--tag-background-hover:var(--tag-hover-green);--tag-border:var(--tag-border-green);--tag-border-hover:var(--tag-border-green);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-microchip.svg&quot;);"></span><span class="tag-content"><span>汇编</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2022 年 4 月 6 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/学习/">学习</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/04a7e57d/">https://weyung.cc/posts/04a7e57d/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/d2198d80/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">Matrix 面试 - 算法&amp;计网篇</p></a><a class="post-neighbor" href="/posts/b5f9950c/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">NTRUEncrypt</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

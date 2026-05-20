@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>日常问题小记 | weyung's Blog</title>
+    <meta name="date" content="2023-05-21">
+    <link rel="canonical" href="https://weyung.cc/posts/5a6b6dd0/">
+    <meta property="og:title" content="日常问题小记 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="记录一下平时遇到的问题和解决方法，以备后用。">
+    <meta property="og:description" content="记录一下平时遇到的问题和解决方法，以备后用。">
+    <meta property="og:url" content="https://weyung.cc/posts/5a6b6dd0/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">日常问题小记</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>日常问题小记</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>无</h3>
+          <ul>
+            <li>
+              <p>WSL 运行后 CPU 占用过高</p>
+              <p>在 User 文件夹下新建一个 .wslconfig 文件，内容如下：</p>
+              <pre><code class="language-bash">[wsl2]
+guiApplications=false</code></pre>
+              <p>后来发现好像没啥用？</p>
+            </li>
+          </ul>
+          <h3>Sagemath 报错</h3>
+          <h4>9.5</h4>
+          <pre><code class="language-bash">ImportError: libsingular-Singular-4.3.1.so: cannot open shared object file: No such file or directory</code></pre>
+          <p>我装了 Sagemath9.5 但一直报这个错，GitHub 上也没 issue，发现是现在的 .so 版本已经到 4.3.2 了，执行下面的命令就好了：</p>
+          <pre><code class="language-bash">sudo ln -s /usr/lib/x86_64-linux-gnu/libsingular-Singular-4.3.2.so /usr/lib/x86_64-linux-gnu/libsingular-Singular-4.3.1.so
+sudo ln -s /usr/lib/x86_64-linux-gnu/libsingular-polys-4.3.2.so /usr/lib/x86_64-linux-gnu/libsingular-polys-4.3.1.so
+sudo ln -s /usr/lib/x86_64-linux-gnu/libsingular-resources-4.3.2.so /usr/lib/x86_64-linux-gnu/libsingular-resources-4.3.1.so
+sudo ln -s /usr/lib/x86_64-linux-gnu/libsingular-omalloc-4.3.2+0.9.6.so /usr/lib/x86_64-linux-gnu/libsingular-omalloc-4.3.1+0.9.6.so
+sudo ln -s /usr/lib/x86_64-linux-gnu/libsingular-factory-4.3.2.so /usr/lib/x86_64-linux-gnu/libsingular-factory-4.3.1.so</code></pre>
+          <h4>10.0</h4>
+          <p>重装了下系统，用 WSL 2 装了 Sagemath 10.0，直接按官方的 <code class="language-text">mamba create -n sage sage python=3.11</code> 安装后，运行会报错：</p>
+          <pre><code class="language-bash">$ sage
+┌────────────────────────────────────────────────────────────────────┐
+│ SageMath version 10.0, Release Date: 2023-05-20                    │
+│ Using Python 3.11.5. Type "help()" for help.                       │
+└────────────────────────────────────────────────────────────────────┘
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Warning: sage.all is not available; this is a limited REPL.        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+sage:</code></pre>
+          <p>而且在 python 里 <code class="language-text">import sage.all</code> 也会报错：</p>
+          <pre><code class="language-bash">$ python
+Python 3.11.5 (main, Sep 11 2023, 13:54:46) [GCC 11.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from sage.all import *
+Traceback (most recent call last):
+  File "&lt;stdin>", line 1, in &lt;module>
+  File "/home/xxx/mambaforge/envs/sage/lib/python3.11/site-packages/sage/all.py", line 75, in &lt;module>
+    from sage.misc.all       import *         # takes a while
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/xxx/mambaforge/envs/sage/lib/python3.11/site-packages/sage/misc/all.py", line 72, in &lt;module>
+    from .functional import (additive_order,
+  File "/home/xxx/mambaforge/envs/sage/lib/python3.11/site-packages/sage/misc/functional.py", line 26, in &lt;module>
+    from sage.rings.complex_double import CDF
+ImportError: libgsl.so.25: cannot open shared object file: No such file or directory
+>>></code></pre>
+          <p>又尝试去源码 build，失败，最后和 GPT 通力合作（我们两个真厉害），发现是环境变量的问题，执行下面的命令就好了（<code class="language-text">xxx</code> 要换成你的用户名）：</p>
+          <pre><code class="language-bash">export LD_LIBRARY_PATH=/home/xxx/mambaforge/pkgs/gsl-2.7-he838d99_0/lib:$LD_LIBRARY_PATH</code></pre>
+          <p>当然这样十分麻烦，每次启动 sage 环境要重新设置一次，所以可以把这个命令加到 mamba 启动时的脚本里。 首先看看你 sage 装在哪：</p>
+          <pre><code class="language-bash">mamba env list</code></pre>
+          <p>然后在目录的 <code class="language-text">etc/conda/activate.d/sage-activate.sh</code> 里末尾补一条 <code class="language-text">export</code> 命令就好了。</p>
+          <h3>后台进程</h3>
+          <p>以下命令可以让程序在后台运行，避免退出终端时就断掉：</p>
+          <pre><code class="language-bash">nohub &lt;command> &amp;</code></pre>
+          <h3>VMWare 安装 Kali Linux 后启动黑屏</h3>
+          <p>用管理员运行cmd，输入命令 <code class="language-text">netsh winsock reset</code>，重启电脑，这时能看到了，但是很卡，再关闭 3D 加速就好了。 后来发现我操作系统勾的是 Windows，不知道有没有关系。</p>
+          <h3>改 <code class="language-text">/etc/hosts</code> 后 squid 不能马上生效</h3>
+          <p>重载一下配置文件就好了：</p>
+          <pre><code class="language-bash">sudo squid -k reconfigure</code></pre>
+          <h4>U 盘弹出的时候显示被占用</h4>
+          <p>参考<a href="https://zhuanlan.zhihu.com/p/424874015" target="_blank" rel="noopener noreferrer">这篇文章</a>：</p>
+          <p>开始菜单右键 -> 事件查看器 自定义视图 -> 管理事件 再弹出一次移动硬盘 刷新事件 -> 点击第一条 下方框中 常规 -> 找到阻止弹出移动硬盘的进程ID</p>
+          <p>基本就知道谁在占用了。</p>
+          <h4>WSL 默认用户为 root</h4>
+          <p>启动 WSL，在里面</p>
+          <pre><code class="language-bash">sudo nano /etc/wsl.conf</code></pre>
+          <p>写入</p>
+          <pre><code class="language-ini">[user]
+default = your_username</code></pre>
+          <p>然后关一下 WSL：</p>
+          <pre><code class="language-bash">wsl --shutdown</code></pre>
+          <p>再启动默认就是你指定的用户登录了。</p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/计算机/" style="--tag-background:var(--tag-background-purple);--tag-color:var(--tag-color-purple);--tag-background-hover:var(--tag-hover-purple);--tag-border:var(--tag-border-purple);--tag-border-hover:var(--tag-border-purple);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-monitor.svg&quot;);"></span><span class="tag-content"><span>计算机</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/学习/" style="--tag-background:var(--tag-background-purple);--tag-color:var(--tag-color-purple);--tag-background-hover:var(--tag-hover-purple);--tag-border:var(--tag-border-purple);--tag-border-hover:var(--tag-border-purple);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-graduation-cap.svg&quot;);"></span><span class="tag-content"><span>学习</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2023 年 5 月 21 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/学习/">学习</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/5a6b6dd0/">https://weyung.cc/posts/5a6b6dd0/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/e87c1bec/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">Squid 代理简记</p></a><a class="post-neighbor" href="/posts/8f812862/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">BUUOJ 之 Web 刷题记</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

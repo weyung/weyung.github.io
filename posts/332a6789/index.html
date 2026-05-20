@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>OpenClaw 初体验 &amp; 踩坑记录 | weyung's Blog</title>
+    <meta name="date" content="2026-03-08">
+    <link rel="canonical" href="https://weyung.cc/posts/332a6789/">
+    <meta property="og:title" content="OpenClaw 初体验 &amp; 踩坑记录 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="古法编程要消失了吗">
+    <meta property="og:description" content="古法编程要消失了吗">
+    <meta property="og:url" content="https://weyung.cc/posts/332a6789/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">OpenClaw 初体验 &amp; 踩坑记录</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>OpenClaw 初体验 &amp; 踩坑记录</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>前言</h3>
+          <p>基于现在 AI 时代技术的快速迭代的背景，这篇文章的<strong>时效性可能极短</strong>，当你看到这里的时候，文章的内容也许已经<strong>全部过时</strong>了。</p>
+          <h3>常用命令</h3>
+          <ul>
+            <li><code class="language-text">/stop</code></li>
+            <li><code class="language-text">/new</code></li>
+            <li><code class="language-text">/help</code></li>
+          </ul>
+          <h3>遇到的问题 &amp; 解决方案</h3>
+          <p>其实大部分使用过程中出的问题都可以直接让他看日志进行分析。</p>
+          <h4>网关的访问</h4>
+          <p>因为对现在不完善 AI 的不信任，我也没有在我的台式电脑上装，而是在服务器上。 然后我发现最简单的方法还是用 SSH 做端口转发：</p>
+          <pre><code class="language-bash">ssh -L 18789:127.0.0.1:18789 user@ip</code></pre>
+          <p>不然的话还需要把 http 的问题搞定（默认不给直接访问 http，因为这样通信是裸的，不安全）</p>
+          <h4>权限不够</h4>
+          <p>第二次装上 OpenClaw 后，发现 exec 执行不了。</p>
+          <p>然后看到 3 月 2 号更新的版本里，默认只给 tools 比较低的权限，需要把 tools.profile 改成 full。</p>
+          <h4>上传文件失败</h4>
+          <p>飞书插件里是有做白名单的，除了 workspace 目录外，其他目录，包括 <code class="language-text">/tmp</code> 下的内容都是无法被发送出来的，目前暂时没有相关的解决方法，因为代码层面压根也没有给配置白名单的地方，只能让 agent 把文件复制到 workspace 再发给我了。</p>
+          <h4>无法接收文件</h4>
+          <p>看日志会看到报 411 错误码，让 openclaw 自己 debug，最后发现是 systemctl 里启动加了一行 https_proxy 导致的，去掉再重启就好了。</p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/llm/" style="--tag-background:var(--tag-background-orange);--tag-color:var(--tag-color-orange);--tag-background-hover:var(--tag-hover-orange);--tag-border:var(--tag-border-orange);--tag-border-hover:var(--tag-border-orange);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-cpu.svg&quot;);"></span><span class="tag-content"><span>LLM</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/agent/" style="--tag-background:var(--tag-background-orange);--tag-color:var(--tag-color-orange);--tag-background-hover:var(--tag-hover-orange);--tag-border:var(--tag-border-orange);--tag-border-hover:var(--tag-border-orange);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-brain.svg&quot;);"></span><span class="tag-content"><span>Agent</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2026 年 3 月 8 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/tutorial/">Tutorial</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/332a6789/">https://weyung.cc/posts/332a6789/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/793881a0/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">记一次在家搞返校报到</p></a><a class="post-neighbor" href="/posts/9b7c1500/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">DeepSeek-V4 技术报告分析学习</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

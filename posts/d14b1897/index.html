@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>Code-server 配置 | weyung's Blog</title>
+    <meta name="date" content="2022-03-30">
+    <link rel="canonical" href="https://weyung.cc/posts/d14b1897/">
+    <meta property="og:title" content="Code-server 配置 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="在 Windows 上使用 WSL ，在 WSL 上使用 VSCode ，在 VSCode 上使用 Code-server。">
+    <meta property="og:description" content="在 Windows 上使用 WSL ，在 WSL 上使用 VSCode ，在 VSCode 上使用 Code-server。">
+    <meta property="og:url" content="https://weyung.cc/posts/d14b1897/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">Code-server 配置</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>Code-server 配置</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <div class="quote-block">Code-server 感觉不错，免去我远程桌面的麻烦。</div>
+          <h3>安装</h3>
+          <ol>
+            <li>下载 Code-server</li>
+          </ol>
+          <p><a href="https://github.com/coder/code-server/releases/tag/v4.2.0" target="_blank" rel="noopener noreferrer">https://github.com/coder/code-server/releases/tag/v4.2.0</a></p>
+          <ol>
+            <li>解压 <code class="language-text">tar -xvzf code-server.tar.gz</code></li>
+            <li>cd 进解压后的目录，<code class="language-text">./code-server /home</code> <code class="language-text">/home</code> 可以替换成你想要的目录(这步不要在 VSCode 的终端执行)</li>
+          </ol>
+          <h3>配置</h3>
+          <p>找到  /.config/code-server/config.yaml ， <code class="language-text">bind-addr</code> 项可以改你想要的端口，如 <code class="language-text">127.0.0.1：8080</code> ， <code class="language-text">password</code> 项可以改密码。 然后用 Nginx 代理出去就能在局域网上访问了。</p>
+          <div class="quote-block"><em>ref:</em></div>
+          <p><a href="https://www.cnblogs.com/billyme/p/13769847.html" target="_blank" rel="noopener noreferrer">https://www.cnblogs.com/billyme/p/13769847.html</a> <a href="https://blog.csdn.net/mijichui2153/article/details/18880283" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/mijichui2153/article/details/18880283</a></p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/windows/" style="--tag-background:var(--tag-background-pink);--tag-color:var(--tag-color-pink);--tag-background-hover:var(--tag-hover-pink);--tag-border:var(--tag-border-pink);--tag-border-hover:var(--tag-border-pink);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-layout-grid.svg&quot;);"></span><span class="tag-content"><span>Windows</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/wsl/" style="--tag-background:var(--tag-background-indigo);--tag-color:var(--tag-color-indigo);--tag-background-hover:var(--tag-hover-indigo);--tag-border:var(--tag-border-indigo);--tag-border-hover:var(--tag-border-indigo);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-terminal.svg&quot;);"></span><span class="tag-content"><span>WSL</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/vscode/" style="--tag-background:var(--tag-background-blue);--tag-color:var(--tag-color-blue);--tag-background-hover:var(--tag-hover-blue);--tag-border:var(--tag-border-blue);--tag-border-hover:var(--tag-border-blue);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-code.svg&quot;);"></span><span class="tag-content"><span>VSCode</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/code-server/" style="--tag-background:var(--tag-background-cyan);--tag-color:var(--tag-color-cyan);--tag-background-hover:var(--tag-hover-cyan);--tag-border:var(--tag-border-cyan);--tag-border-hover:var(--tag-border-cyan);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-simple-coder.svg&quot;);"></span><span class="tag-content"><span>Code-server</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2022 年 3 月 30 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/环境搭建/">环境搭建</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/d14b1897/">https://weyung.cc/posts/d14b1897/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/c9820b90/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">记一次在局域网搭网站</p></a><a class="post-neighbor" href="/posts/d14ec074/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">灯，等灯等灯</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

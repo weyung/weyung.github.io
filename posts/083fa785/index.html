@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>CodeQL 从入门到哪里我也不知道啊啊啊 | weyung's Blog</title>
+    <meta name="date" content="2025-07-31">
+    <link rel="canonical" href="https://weyung.cc/posts/083fa785/">
+    <meta property="og:title" content="CodeQL 从入门到哪里我也不知道啊啊啊 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="怎么全是报错啊啊啊啊啊啊">
+    <meta property="og:description" content="怎么全是报错啊啊啊啊啊啊">
+    <meta property="og:url" content="https://weyung.cc/posts/083fa785/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">CodeQL 从入门到哪里我也不知道啊啊啊</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>CodeQL 从入门到哪里我也不知道啊啊啊</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>What is CodeQL?</h3>
+          <p>CodeQL 是由 GitHub 开发的一款语义代码分析引擎，它允许开发者和安全研究人员通过编写查询来发现代码中的漏洞和安全问题。与传统静态分析工具不同，CodeQL 将代码视为数据，通过查询代码中的数据关系来发现潜在问题。</p>
+          <p>跟 SQL 长挺像</p>
+          <p>需要少许数据库的基础，至少得能看懂简单的查询语句</p>
+          <h3>做个小测试</h3>
+          <p>假设有以下 Python 代码：</p>
+          <pre><code class="language-python">if error: pass</code></pre>
+          <p>很明显，这个 <code class="language-text">if</code> 语句是冗余的，因为它啥都没干，有没有都一样。 那么我们可以用 CodeQL 来查找这种冗余的 <code class="language-text">if</code> 语句。 使用以下 CodeQL 查询：</p>
+          <pre><code class="language-sql">import python
+
+from If ifstmt, Stmt pass
+where pass = ifstmt.getStmt(0) and
+  pass instanceof Pass
+select ifstmt, "This 'if' statement is redundant."</code></pre>
+          <p>那这个 QL 是什么意思呢</p>
+          <p><code class="language-text">import python</code> 是导入 Python 语言的 CodeQL 库，里面定义了如何处理 Python 代码，正如你平时的编程一样，一般情况下，库文件如何通过底层代码实现是无需理会的。 <code class="language-text">from If ifstmt, Stmt pass</code> 是在查询中定义了两个变量：<code class="language-text">ifstmt</code> 和 <code class="language-text">pass</code>，<code class="language-text">If</code> 和 <code class="language-text">Stmt</code> 分别是对应的 CodeQL 类型。<code class="language-text">If</code> 代表一个 if 语句，而 <code class="language-text">Stmt</code> 代表一个通用的语句。 <code class="language-text">where pass = ifstmt.getStmt(0) and pass instanceof Pass</code> 是查询的条件部分，包含两个条件：</p>
+          <ol>
+            <li><code class="language-text">pass = ifstmt.getStmt(0)</code>：表示 <code class="language-text">ifstmt</code> 的第一个语句是 <code class="language-text">pass</code>。</li>
+            <li><code class="language-text">pass instanceof Pass</code>：表示 <code class="language-text">pass</code> 是一个 <code class="language-text">Pass</code> 语句。</li>
+          </ol>
+          <p><code class="language-text">select ifstmt, "This 'if' statement is redundant."</code> 是查询的结果部分，表示如果满足上述条件，则返回 <code class="language-text">ifstmt</code> 和一条消息，如此就可以找到所有冗余的 if 语句。</p>
+          <h3>又老又新的语法，落后的 AI</h3>
+          <p>我用 AI 生成的 QL 查询语句，基本没有能跑的，查了好久发现 DataFlow 进行过一次<a href="https://github.blog/changelog/2023-08-14-new-dataflow-api-for-writing-custom-codeql-queries/" target="_blank" rel="noopener noreferrer">改革</a></p>
+          <p>旧语法在 2024 年 12 月开始就开始完全不支持了，但是互联网的资料基本都停留在 2020 年左右，导致基本没法抄</p>
+          <p>以下是传统派的写法：</p>
+          <pre><code class="language-sql">class SensitiveLoggerConfiguration extends TaintTracking::Configuration {
+  SensitiveLoggerConfiguration() { this = "SensitiveLoggerConfiguration" } // 6: characteristic predicate with dummy string value (see below)
+
+  override predicate isSource(DataFlow::Node source) { source.asExpr() instanceof CredentialExpr }
+
+  override predicate isSink(DataFlow::Node sink) { sinkNode(sink, "log-injection") }
+
+  override predicate isSanitizer(DataFlow::Node sanitizer) {
+    sanitizer.asExpr() instanceof LiveLiteral or
+    sanitizer.getType() instanceof PrimitiveType or
+    sanitizer.getType() instanceof BoxedType or
+    sanitizer.getType() instanceof NumberType or
+    sanitizer.getType() instanceof TypeType
+  }
+
+  override predicate isSanitizerIn(DataFlow::Node node) { this.isSource(node) }
+}
+
+import DataFlow::PathGraph
+
+from SensitiveLoggerConfiguration cfg, DataFlow::PathNode source, DataFlow::PathNode sink
+where cfg.hasFlowPath(source, sink)
+select sink.getNode(), source, sink, "This $@ is written to a log file.",
+ source.getNode(),
+  "potentially sensitive information"</code></pre>
+          <p>维新派则如下：</p>
+          <pre><code class="language-sql">module SensitiveLoggerConfig implements DataFlow::ConfigSig {  // 1: module always implements DataFlow::ConfigSig or DataFlow::StateConfigSig
+  predicate isSource(DataFlow::Node source) { source.asExpr() instanceof CredentialExpr } // 3: no need to specify 'override'
+  predicate isSink(DataFlow::Node sink) { sinkNode(sink, "log-injection") }
+
+  predicate isBarrier(DataFlow::Node sanitizer) {  // 4: 'isBarrier' replaces 'isSanitizer'
+    sanitizer.asExpr() instanceof LiveLiteral or
+    sanitizer.getType() instanceof PrimitiveType or
+    sanitizer.getType() instanceof BoxedType or
+    sanitizer.getType() instanceof NumberType or
+    sanitizer.getType() instanceof TypeType
+  }
+
+  predicate isBarrierIn(DataFlow::Node node) { isSource(node) } // 4: isBarrierIn instead of isSanitizerIn
+
+}
+
+module SensitiveLoggerFlow = TaintTracking::Global&lt;SensitiveLoggerConfig>; // 2: TaintTracking selected 
+
+import SensitiveLoggerFlow::PathGraph  // 7: the PathGraph specific to the module you are using
+
+from SensitiveLoggerFlow::PathNode source, SensitiveLoggerFlow::PathNode sink  // 8 &amp; 9: using the module directly
+where SensitiveLoggerFlow::flowPath(source, sink)  // 9: using the flowPath from the module 
+select sink.getNode(), source, sink, "This $@ is written to a log file.", source.getNode(),
+  "potentially sensitive information"</code></pre>
+          <p>上面的变化有空再慢慢研究</p>
+          <h3>遇到的问题</h3>
+          <p>可能会遇到权限问题，因为 CodeQL 在 <code class="language-text">sudo</code> 创建数据库时会把整个文件夹的权限改成 <code class="language-text">root</code>，导致后续执行 query 的时候报错：</p>
+          <pre><code class="language-bash">sudo chown -R $(whoami):$(whoami) &lt;dir></code></pre>
+          <p>现在我找到了一个 SQL 注入漏洞，想用 CodeQL 把它查出来，但是我不知道怎么写查询语句。</p>
+          <p>大概测了一下，发现 Source 和 Sink 都能找到，但是路径一条都没找出来。</p>
+          <p>因为现在漏洞还没公开，先暂停更新</p>
+          <h3>参考</h3>
+          <p><a href="https://codeql.github.com/docs/codeql-language-guides/basic-query-for-python-code/" target="_blank" rel="noopener noreferrer">https://codeql.github.com/docs/codeql-language-guides/basic-query-for-python-code/</a></p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/静态分析/" style="--tag-background:var(--tag-background-yellow);--tag-color:var(--tag-color-yellow);--tag-background-hover:var(--tag-hover-yellow);--tag-border:var(--tag-border-yellow);--tag-border-hover:var(--tag-border-yellow);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-search-code.svg&quot;);"></span><span class="tag-content"><span>静态分析</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2025 年 7 月 31 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/tutorial/">Tutorial</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/083fa785/">https://weyung.cc/posts/083fa785/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/21849513/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">漏洞分析之 CVE-2016-5195</p></a><a class="post-neighbor" href="/posts/63b0b16f/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">2025 强网拟态初赛</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

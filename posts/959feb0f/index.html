@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>2024 强网杯决赛 - st | weyung's Blog</title>
+    <meta name="date" content="2024-12-09">
+    <link rel="canonical" href="https://weyung.cc/posts/959feb0f/">
+    <meta property="og:title" content="2024 强网杯决赛 - st | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="SB 题">
+    <meta property="og:description" content="SB 题">
+    <meta property="og:url" content="https://weyung.cc/posts/959feb0f/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">2024 强网杯决赛 - st</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>2024 强网杯决赛 - st</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <p>misc 搞一搞变成 re，然后塞到 crypto 里面，啥卵出题人的嘛嘛炸了。</p>
+          <h3>题目</h3>
+          <p>给一个 <code class="language-text">encrypt</code> 和生成的密文 <code class="language-text">data.bin</code>，然后让你解。</p>
+          <h3>分析</h3>
+          <p>首先 IDA 打开看一下，哎您猜怎么着，依托答辩，除了一开始的 MT19937 能瞪出来，后面一堆迷惑操作根本不知道在搞什么飞机<br>这时需要选手稍微顿悟一下，猜出这是隐写算法 <a href="http://dde.binghamton.edu/download/syndrome/" target="_blank" rel="noopener noreferrer">Syndrome-Trellis Codes</a></p>
+          <p>Gao 了半天没 Gao 出来，我符号表都快还原到最底层了也没瞪出来他除了参数 <code class="language-text">h</code> 还改了什么，有空再补。</p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/ctf/" style="--tag-background:var(--tag-background-green);--tag-color:var(--tag-color-green);--tag-background-hover:var(--tag-hover-green);--tag-border:var(--tag-border-green);--tag-border-hover:var(--tag-border-green);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-flag.svg&quot;);"></span><span class="tag-content"><span>CTF</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/crypto/" style="--tag-background:var(--tag-background-blue);--tag-color:var(--tag-color-blue);--tag-background-hover:var(--tag-hover-blue);--tag-border:var(--tag-border-blue);--tag-border-hover:var(--tag-border-blue);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-lock.svg&quot;);"></span><span class="tag-content"><span>Crypto</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2024 年 12 月 9 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/ctf/">CTF</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/959feb0f/">https://weyung.cc/posts/959feb0f/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/1c64cadc/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">2024 强网拟态决赛 Crypto</p></a><a class="post-neighbor" href="/posts/786bcd69/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">2025 CISCN &amp; CCB - Crypto</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

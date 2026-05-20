@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>Squid 代理简记 | weyung's Blog</title>
+    <meta name="date" content="2023-05-14">
+    <link rel="canonical" href="https://weyung.cc/posts/e87c1bec/">
+    <meta property="og:title" content="Squid 代理简记 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="ChatGPT 确实是好东西">
+    <meta property="og:description" content="ChatGPT 确实是好东西">
+    <meta property="og:url" content="https://weyung.cc/posts/e87c1bec/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">Squid 代理简记</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>Squid 代理简记</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>前言</h3>
+          <p>之前一直用的 ChatGPT 的号还是当时淘宝买的，还充了 Plus，但是不能改密码，有点强迫症，就想自己开个号。 现在 ChatGPT 的号注册越来越麻烦了，万人骑的机场的 IP 已经被 ban 干净了，前几天就拜托一个新加坡的学长帮忙用自己邮箱的号开了个号，后继又想再帮同学开几个，但总不好一直叨扰学长，就想自己搭个梯子。</p>
+          <h3>服务器</h3>
+          <p>问一个微软学生大使的同学在 Azure 开了台美国的机子（学生邮箱也可以白嫖），但是 SSH 老是连不上，一试发现是校园网的问题，用我阿里云的服务器去 SSH 就能稳定连上，再不久也发现原来我机场梯子老掉也是校园网的缘故，用阿里云的机子走机场稳定秒开 Google，当时我就气炸了。 最终的方案是用阿里云的机子当跳板机去 SSH 美国的机子，<code class="language-text">./ssh/config</code> 配置如下</p>
+          <pre><code class="language-bash">Host &lt;你想叫啥就叫啥>
+  HostName &lt;x.x.x.x>
+  User &lt;user>
+  IdentityFile &lt;~/.ssh/US.pem>
+  ProxyCommand ssh -W %h:%p &lt;aliyun></code></pre>
+          <p>&lt;> 里的内容自行替换。</p>
+          <h3>Squid</h3>
+          <p>Squid 这个东西是 ChatGPT 推荐的，可以直接在机子开个 http 代理，简单方便。安装也是直接 <code class="language-text">sudo apt install squid</code> 就行，然后把 <code class="language-text">/etc/squid/squid.conf</code> 改成如下（不会用 vim 可以用 nano）：</p>
+          <pre><code class="language-bash"># ACLs all, manager, localhost, and to_localhost are predefined.
+acl SSL_ports port 443
+acl Safe_ports port 80          # http
+acl Safe_ports port 21          # ftp
+acl Safe_ports port 443         # https
+acl Safe_ports port 70          # gopher
+acl Safe_ports port 210         # wais
+acl Safe_ports port 1025-65535  # unregistered ports
+acl Safe_ports port 280         # http-mgmt
+acl Safe_ports port 488         # gss-http
+acl Safe_ports port 591         # filemaker
+acl Safe_ports port 777         # multiling http
+acl CONNECT method CONNECT
+
+# 拒绝所有非 Safe_ports 的请求
+http_access deny !Safe_ports
+
+# 拒绝所有非 SSL_prots 的 CONNECT请求
+http_access deny CONNECT !SSL_ports
+
+# 允许来自本地的请求
+http_access allow localhost
+
+# 拒绝所有请求，最后兜底的规则
+http_access deny all
+
+# 端口设为 3128
+http_port 3128
+
+# 高匿代理配置
+request_header_access Via deny all
+request_header_access X-Forwarded-For deny all
+request_header_access From deny all</code></pre>
+          <p>然后 <code class="language-text">sudo systemctl restart squid</code>，要等上一会，我应该等了差不多半分钟。</p>
+          <p>然后我端口转发搞了一天，失败得莫名其妙的，最终就直接用 VSCode SSH 后自带的端口转发顶着先了。</p>
+          <p>更新：后来用 SSH 的端口转发了，命令如下：</p>
+          <pre><code class="language-bash">ssh -N -L 0.0.0.0:55555:localhost:3128 &lt;your-azure></code></pre>
+          <p>这样就可以在本地的 55555 端口访问到远程的 3128 端口了，<code class="language-text">0.0.0.0</code> 是想给同一局域网的其他机子接，不需要的话可以只写端口，<code class="language-text">-N</code> 意思是不启动远程 shell，如果你希望在后台运行可以再加个 <code class="language-text">-f</code>。 但是这样不够优雅，就再搞了个 systemd 的服务，配置如下：</p>
+          <pre><code class="language-bash"># /etc/systemd/system/ssh-tunnel.service
+[Unit]
+Description=SSH tunnel service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/ssh ssh -N -L 0.0.0.0:55555:localhost:3128 &lt;your-azure>
+User=&lt;你的用户名>
+Restart=always
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+          <p>然后 <code class="language-text">sudo systemctl daemon-reload</code> 一下，再 <code class="language-text">sudo systemctl start ssh-tunnel</code> 就行了，<code class="language-text">sudo systemctl enable ssh-tunnel</code> 可以设置开机自启。</p>
+          <h3>参考</h3>
+          <ul>
+            <li><a href="https://zhuanlan.zhihu.com/p/562014043" target="_blank" rel="noopener noreferrer">https://zhuanlan.zhihu.com/p/562014043</a></li>
+          </ul>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/linux/" style="--tag-background:var(--tag-background-red);--tag-color:var(--tag-color-red);--tag-background-hover:var(--tag-hover-red);--tag-border:var(--tag-border-red);--tag-border-hover:var(--tag-border-red);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-simple-linux.svg&quot;);"></span><span class="tag-content"><span>Linux</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/代理/" style="--tag-background:var(--tag-background-orange);--tag-color:var(--tag-color-orange);--tag-background-hover:var(--tag-hover-orange);--tag-border:var(--tag-border-orange);--tag-border-hover:var(--tag-border-orange);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-network.svg&quot;);"></span><span class="tag-content"><span>代理</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2023 年 5 月 14 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/环境搭建/">环境搭建</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/e87c1bec/">https://weyung.cc/posts/e87c1bec/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/24ffc768/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">高数上笔记</p></a><a class="post-neighbor" href="/posts/5a6b6dd0/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">日常问题小记</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

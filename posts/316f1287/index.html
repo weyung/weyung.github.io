@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>pwn 入门 | weyung's Blog</title>
+    <meta name="date" content="2022-07-18">
+    <link rel="canonical" href="https://weyung.cc/posts/316f1287/">
+    <meta property="og:title" content="pwn 入门 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="浅记一下这些天学 pwn 的历程">
+    <meta property="og:description" content="浅记一下这些天学 pwn 的历程">
+    <meta property="og:url" content="https://weyung.cc/posts/316f1287/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">pwn 入门</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>pwn 入门</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>前言</h3>
+          <p>本文默认读者具有一定的汇编基础。</p>
+          <h3>ELF文件的结构</h3>
+          <p><strong>ELF</strong>（Executable and Linkable Format）即 Linux 下的可执行文件格式，和 Windows 下的 <strong>PE</strong> 格式类似，但 Linux 中的可执行文件一般不会加后缀名。 ELF 文件中有多个节（ Section ），主要有：</p>
+          <ul>
+            <li><strong>.text</strong> 节：即代码段，用来放代码</li>
+            <li><strong>.rodata</strong> 节：ro 即 read only ，<strong>只读</strong>数据段，用来放静态数据，如果尝试修改会报错 > <code class="language-text">.rdata</code> 和 <code class="language-text">.rodata</code> 的区别：两者都是只读数据段，但 <code class="language-text">.rdata</code> 是 Windows 的常用说法，而 Linux 中则一般称 <code class="language-text">.rodata</code></li>
+            <li><strong>.data</strong> 节：数据段，存放<strong>可修改</strong>的数据</li>
+            <li><strong>.bss</strong> 节：中文不知道叫什么名字的段，也是放<strong>可修改</strong>的数据，但是<strong>没有初始化</strong>，所以不占ELF文件的空间，程序运行时会自动分配内存</li>
+            <li><strong>.plt</strong> 节和 <strong>.got</strong> 节：外部调用段（也不知道叫什么名字，这个是 AI 给我打的），调用动态链接库的函数的时候会用到</li>
+          </ul>
+          <h3>Linux下的漏洞缓解措施</h3>
+          <p>有攻就有防，为了不被攻击者随便打烂，一些防范措施是必不可少的。 在终端里可以执行 <code class="language-text">checksec --file=文件名</code> 来查看 ELF 文件的保护机制。</p>
+          <ol>
+            <li><strong>NX</strong> ( No eXecute )(没错 X 就是大写，没打错) 基本规则为<strong>可写权限</strong>与<strong>可执行权限</strong>互斥，即可被修改写入 shellcode 的内存都不可执行，被执行的代码数据不可修改，至于 shellcode 是啥，后面再提。 gcc 默认开启，编译加 <code class="language-text">-z execstack</code> 参数可以关闭</li>
+            <li><strong>Stack Canary</strong> Canary 意为金丝雀，以前矿工进入矿井时都会随身带一只金丝雀，通过观察金丝雀的状态来判断氧气浓度等情况。这个保护专门针对栈溢出攻击。 gcc 同样默认开启，编译加 <code class="language-text">fno-stack-protector</code> 参数关闭</li>
+            <li><strong>ASLR</strong> ( Address Space Layout Randomization ) 将程序的堆栈地址和动态链接库的加载地址进行一定的随机化 ASLR 是系统级的保护机制，关闭要修改 /proc/sys/kernel/randomize_va_space 文件，写入 0 即可</li>
+            <li><strong>PIE</strong> ( Position Independent Executable ) 和 ASLR 类似，让 ELF 的地址随机化加载 高版本 gcc 默认开启，编译加 <code class="language-text">-no-pie</code> 参数可以关闭，旧版本则需加 <code class="language-text">-fpic-pie</code> 参数开启</li>
+            <li><strong>Full RELRO</strong> ( Read-Only Relocation ) 禁止写入 <code class="language-text">.got.plt</code> 表 gcc 编译加 <code class="language-text">-z relro</code> 参数开启。</li>
+          </ol>
+          <h3>GOT和PLT</h3>
+          <p><code class="language-text">.plt</code> 表是一段代码，可从内存中读取一个地址然后进行跳转，而 <code class="language-text">.got.plt</code> 表则存放函数的实际地址。 实际上，<code class="language-text">.got.plt</code> 表是一个函数指针数组，存放 ELF 所有用到的外部函数在内存中的地址，由操作系统初始化。 题目中如果没开 <code class="language-text">Full RELRO</code> 保护，那么就有可能通过修改 <code class="language-text">.got.plt</code> 表中的函数地址来偷梁换柱，比如把表中 <code class="language-text">puts</code> 的地址换成 <code class="language-text">system</code> 的地址就能使 <code class="language-text">puts("\bin\sh")</code> 变成 <code class="language-text">system("/bin/sh")</code>，从而拿到 shell 。</p>
+          <h3>常用工具</h3>
+          <ol>
+            <li>
+              <p><strong>IDA</strong></p>
+              <p>拿到程序第一件事——用 IDA 看看伪代码 分 32 位和 64 位两个版本，<strong>这个打开不行就换另一个</strong>，虽然我也不知道为啥不加个自动识别（） 把程序拖进去，弹出一个奇怪的选项框，初学者直接 <code class="language-text">enter</code>或者点 <code class="language-text">OK</code> 就完事，然后进到 <code class="language-text">IDA View-A</code> 标签页，这里初始时一般是流程图的形式，在此标签页按空格可以切换到普通模式，<strong>记住不是在 <code class="language-text">Pseudocode-A</code> 按</strong> 这时候按 <code class="language-text">F5</code> 生成伪代码，看到顶上的标签页切到了 <code class="language-text">Pseudocode-A</code> ， Pseudocode 是伪码的意思，至于这个 A ，你如果再按一次 <code class="language-text">F5</code> 就能新建一个 <code class="language-text">Pseudocode-B</code> 了（） 然后就可以这点点那点点发现新世界了，嘿嘿 如下是一些常用的快捷键：</p>
+              <ul>
+                <li>按 <code class="language-text">Esc</code> 可以返回刚才的页面</li>
+                <li>按 <code class="language-text">Tab</code> 可以在 <code class="language-text">IDA View-A</code> 和 <code class="language-text">Pseudocode-A</code> 等标签页之间切换</li>
+                <li>双击函数或者变量可以跳转到它所在的地方</li>
+                <li>点一下变量再按 <code class="language-text">N</code> 可以对变量重命名，有时方便分析</li>
+                <li><code class="language-text">Shift+F12</code> 查找字符串</li>
+              </ul>
+            </li>
+            <li>
+              <p><strong>pwntools</strong></p>
+              <p>python 的一个库，可以用与远程服务器或者本地程序交互，但不保证在 Windows 下能正常使用（反正我 Windows 跑 pwntools 是有问题的 常用操作：</p>
+              <ul>
+                <li><code class="language-text">r = process("./pwn")</code> 本地运行程序（其实本地一般用 <code class="language-text">p</code> 作变量表示process或者<code class="language-text">io</code>兼顾本地和远程，看个人习惯了</li>
+                <li><code class="language-text">r = remote(ip, port)</code> 连接服务器</li>
+                <li><code class="language-text">r.sendline(data)</code> 发送数据，末尾补 <code class="language-text">\x0a</code>（换行符）</li>
+                <li><code class="language-text">r.send(data)</code> 发送数据，末尾不补 <code class="language-text">\x0a</code></li>
+                <li><code class="language-text">r.recvline()</code> 接收一行数据</li>
+                <li><code class="language-text">r.recvuntil(str)</code> 接收直到遇到 <code class="language-text">str</code> 为止</li>
+                <li><code class="language-text">r.recv(n)</code>接收 <code class="language-text">n</code> 个字节</li>
+                <li><code class="language-text">r.interactive()</code> 开始人工手动交互</li>
+              </ul>
+              <p>pwntools 在 python3 中使用的话，交互的数据都是 <code class="language-text">bytes</code> 类型，而不是 <code class="language-text">str</code> 类型，意思就是 <code class="language-text">send</code> 里的东西要是字节串， <code class="language-text">recv</code> 出来的也是字节串，字符串转字节方法一般是 <code class="language-text">str.encode()</code> ，或者 <code class="language-text">send(b'hello')</code></p>
+            </li>
+            <li>
+              <p><strong>pwndbg</strong></p>
+              <p>pwn 里面少不了本地调试，正常人都不能肉眼分析，那么就要用到 gdb ，but 裸的 gdb 太朴素了，不能满足人们日益增长的对优雅的追求，所以就有了<strong>颜值极高</strong>的 gdb 插件—— pwndbg 安装方式：</p>
+              <pre><code class="language-bash">git clone https://github.com/pwndbg/pwndbg
+cd pwndbg
+./setup.sh</code></pre>
+              <p>然后康康 <code class="language-text">~/.gdbinit</code> 里有没有 <code class="language-text">source ~/pwndbg/gdbinit.py</code> ，如果没有就加上，然后 <code class="language-text">source ~/.gdbinit</code> ，然后就可以愉快地玩耍了 在 VSCode 里起 gdb 要用 tmux ，直接 <code class="language-text">sudo apt-get install tmux</code> 安装 > <strong>tmux的简单使用</strong>： <code class="language-text">tmux</code> 进入窗口 <code class="language-text">tmux ls</code> 查看会话列表 <code class="language-text">Ctrl+B</code> <code class="language-text">左右键</code> 切换会话窗口，一般默认左右分布，也可调成上下 <code class="language-text">Ctrl+B</code> <code class="language-text">D</code> 退出当前会话但不关闭，可以 <code class="language-text">tmux attach -t &lt;会话名></code> 再次进入</p>
+              <p>脚本里可以使用如下语句起 gdb：</p>
+              <pre><code class="language-python">p = process('./pwn')
+context.terminal = ['tmux','splitw','-h']
+gdb.attach(p,gdbscript="b main")</code></pre>
+              <p>pwndbg 界面由上至下依次为</p>
+              <ul>
+                <li><strong>legend</strong>：图例，一般指示黄色为 Stack（栈），蓝色为 Heap（堆），红色为 Code（代码），紫色为 Data（数据），白色下划线为RWX（不知道啥），白色为 Rodata（只读数据）</li>
+                <li><strong>registers</strong>：显示 CPU 的寄存器值</li>
+                <li><strong>disasm</strong>：显示当前地址的反汇编代码</li>
+                <li><strong>stack</strong>：显示栈的内容</li>
+                <li><strong>backtrace</strong>：显示调用堆栈（我也不知道具体干嘛的）</li>
+              </ul>
+              <p>常用操作：</p>
+              <ul>
+                <li><code class="language-text">x/4xg 0x400000</code> 查看内存中地址 <code class="language-text">0x400000</code> 开始的 4*16 个字节，以 8 个字节每组的 16 进制形式显示，一般在分析 64 位程序时使用，因为 64 位程序的地址是 8 个字节， 32 位时，命令可以换成 <code class="language-text">x/4x</code> ，每组 4 个字节，适用 32 位程序的地址</li>
+                <li><code class="language-text">ni</code> 也就是 next into ，执行下一条指令，如果是函数调用，就进入函数</li>
+                <li><code class="language-text">si</code> 也就是 step into ，执行下一条指令，如果是函数调用，就进入函数，但是不会执行函数内的第一条指令，而是停在函数内的第一条指令上</li>
+                <li><code class="language-text">c</code> continue ，继续执行，直到遇到断点或者程序结束</li>
+                <li><code class="language-text">q</code> quit ，退出 gdb</li>
+                <li><code class="language-text">vmmap</code> 查看内存映射，可以看到程序的基地址，栈地址，堆地址等，后面加个 <code class="language-text">libc</code> 可以单看 libc 的基地址（白色的那行</li>
+                <li><code class="language-text">set</code> 改变变量的值，比如 <code class="language-text">set $eax=0</code> 就把 eax 的值改成了 0</li>
+                <li><code class="language-text">b</code> 设置断点，后面加地址或者函数名，比如 <code class="language-text">b _0x400000</code> 或者 <code class="language-text">b main</code> ，后者是在 main 函数入口处设置断点，或者 <code class="language-text">b _main+111</code> 在 main 函数的第 111 条指令处设置断点</li>
+              </ul>
+            </li>
+          </ol>
+          <h3>常见攻击方式</h3>
+          <h4>整数溢出</h4>
+          <p>这个比较简单，大概就是通过溢出绕过一些大小判断，不再赘述。</p>
+          <h4>栈溢出</h4>
+          <p>先说几个概念 执行 call 指令时， CPU 会先把 call 指令的下一条指令地址压栈再跳转，返回时 ret 指令会从栈中把存放的地址弹出到 EIP 。 gets 不检查读入的字符串长度，所以可能会出现栈溢出。 当栈作为缓冲区时，如果输入的数据长度超过缓冲区的长度，就会发生栈溢出，从而覆盖返回地址，从而控制程序流程。</p>
+          <p>未完待续…</p>
+          <h3>参考</h3>
+          <ul>
+            <li>《从0到1：CTFer成长之路》——Nu1L战队[著]</li>
+            <li>《CTF竞赛权威指南.Pwn篇》——杨超[著]</li>
+            <li><a href="https://blog.csdn.net/sui_152/article/details/121650341" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/sui_152/article/details/121650341</a></li>
+            <li><a href="https://stackoverflow.com/questions/65745514/what-is-the-difference-between-rodata-and-rdata" target="_blank" rel="noopener noreferrer">https://stackoverflow.com/questions/65745514/what-is-the-difference-between-rodata-and-rdata</a></li>
+            <li><a href="https://blog.csdn.net/weixin_52553215/article/details/120690453" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/weixin_52553215/article/details/120690453</a></li>
+            <li><a href="https://blog.csdn.net/zino00/article/details/122716412" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/zino00/article/details/122716412</a></li>
+            <li><a href="https://blog.csdn.net/Demondai999/article/details/123875264" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/Demondai999/article/details/123875264</a></li>
+          </ul>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/ctf/" style="--tag-background:var(--tag-background-green);--tag-color:var(--tag-color-green);--tag-background-hover:var(--tag-hover-green);--tag-border:var(--tag-border-green);--tag-border-hover:var(--tag-border-green);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-flag.svg&quot;);"></span><span class="tag-content"><span>CTF</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/二进制安全/" style="--tag-background:var(--tag-background-red);--tag-color:var(--tag-color-red);--tag-background-hover:var(--tag-hover-red);--tag-border:var(--tag-border-red);--tag-border-hover:var(--tag-border-red);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-bug.svg&quot;);"></span><span class="tag-content"><span>二进制安全</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/pwn/" style="--tag-background:var(--tag-background-red);--tag-color:var(--tag-color-red);--tag-background-hover:var(--tag-hover-red);--tag-border:var(--tag-border-red);--tag-border-hover:var(--tag-border-red);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-skull.svg&quot;);"></span><span class="tag-content"><span>pwn</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2022 年 7 月 18 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/tutorial/">Tutorial</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/316f1287/">https://weyung.cc/posts/316f1287/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/9eaa7315/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">2022 蓝帽杯 - corrupted_key</p></a><a class="post-neighbor" href="/posts/f6662f68/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">高数下笔记</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>weyung&apos;s blog</title>
+  <link>https://weyung.cc/</link>
+  <description>Carbon Typst Blog RSS Feed</description>
+  <language>zh-cn</language>
+  <lastBuildDate>Sat, 18 Apr 2026 00:00:00 GMT</lastBuildDate>
+  <item>
+    <title>DeepSeek-V4 技术报告分析学习</title>
+    <link>https://weyung.cc/posts/9b7c1500/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/9b7c1500/</guid>
+    <pubDate>Sat, 18 Apr 2026 00:00:00 GMT</pubDate>
+    <description>感恩 DeepSeek，愿开源精神永存</description>
+    <category domain="category">AI</category>
+    <category domain="tag">LLM</category>
+    <category domain="tag">AI</category>
+  </item>
+  <item>
+    <title>OpenClaw 初体验 &amp; 踩坑记录</title>
+    <link>https://weyung.cc/posts/332a6789/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/332a6789/</guid>
+    <pubDate>Sun, 08 Mar 2026 00:00:00 GMT</pubDate>
+    <description>古法编程要消失了吗</description>
+    <category domain="category">Tutorial</category>
+    <category domain="tag">LLM</category>
+    <category domain="tag">Agent</category>
+  </item>
+  <item>
+    <title>记一次在家搞返校报到</title>
+    <link>https://weyung.cc/posts/793881a0/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/793881a0/</guid>
+    <pubDate>Sat, 28 Feb 2026 00:00:00 GMT</pubDate>
+    <description>怎么 2 月没有 29 号和 30 号的。</description>
+    <category domain="category">学习</category>
+    <category domain="tag">计算机</category>
+    <category domain="tag">学习</category>
+  </item>
+  <item>
+    <title>零知识证明</title>
+    <link>https://weyung.cc/posts/1ddd67c2/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/1ddd67c2/</guid>
+    <pubDate>Tue, 17 Feb 2026 00:00:00 GMT</pubDate>
+    <description>大年初一学数学</description>
+    <category domain="category">Crypto</category>
+    <category domain="tag">数学</category>
+    <category domain="tag">抽象代数</category>
+    <category domain="tag">Crypto</category>
+  </item>
+  <item>
+    <title>琐记 - 2</title>
+    <link>https://weyung.cc/posts/1ab77359/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/1ab77359/</guid>
+    <pubDate>Mon, 22 Dec 2025 00:00:00 GMT</pubDate>
+    <description>有时间，多陪陪家人。没时间，也多打点电话。</description>
+    <category domain="category">Life</category>
+    <category domain="tag">杂谈</category>
+  </item>
+  <item>
+    <title>2025 强网拟态初赛</title>
+    <link>https://weyung.cc/posts/63b0b16f/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/63b0b16f/</guid>
+    <pubDate>Mon, 27 Oct 2025 00:00:00 GMT</pubDate>
+    <description>我讨厌早上结束的比赛</description>
+    <category domain="category">CTF</category>
+    <category domain="tag">CTF</category>
+    <category domain="tag">Crypto</category>
+  </item>
+  <item>
+    <title>CodeQL 从入门到哪里我也不知道啊啊啊</title>
+    <link>https://weyung.cc/posts/083fa785/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/083fa785/</guid>
+    <pubDate>Thu, 31 Jul 2025 00:00:00 GMT</pubDate>
+    <description>怎么全是报错啊啊啊啊啊啊</description>
+    <category domain="category">Tutorial</category>
+    <category domain="tag">静态分析</category>
+  </item>
+  <item>
+    <title>漏洞分析之 CVE-2016-5195</title>
+    <link>https://weyung.cc/posts/21849513/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/21849513/</guid>
+    <pubDate>Mon, 14 Apr 2025 00:00:00 GMT</pubDate>
+    <description>Dirty Cow 提权漏洞复现。</description>
+    <category domain="category">CVE</category>
+    <category domain="tag">Web</category>
+    <category domain="tag">渗透</category>
+  </item>
+  <item>
+    <title>漏洞分析之 CVE-2021-44228</title>
+    <link>https://weyung.cc/posts/91356ab7/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/91356ab7/</guid>
+    <pubDate>Fri, 11 Apr 2025 00:00:00 GMT</pubDate>
+    <description>Log4j2 核弹级漏洞，时隔四年的复现。</description>
+    <category domain="category">CVE</category>
+    <category domain="tag">Web</category>
+    <category domain="tag">渗透</category>
+  </item>
+  <item>
+    <title>春秋云境笔记 - 1</title>
+    <link>https://weyung.cc/posts/35bd6be6/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/35bd6be6/</guid>
+    <pubDate>Wed, 09 Apr 2025 00:00:00 GMT</pubDate>
+    <description>GreatWall / *</description>
+    <category domain="category">Pentest</category>
+    <category domain="tag">Web</category>
+    <category domain="tag">渗透</category>
+  </item>
+  <item>
+    <title>Java 基础概念</title>
+    <link>https://weyung.cc/posts/8a6f9a7b/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/8a6f9a7b/</guid>
+    <pubDate>Wed, 09 Apr 2025 00:00:00 GMT</pubDate>
+    <description>捋一下 Java 是怎么个事</description>
+    <category domain="category">Tutorial</category>
+    <category domain="tag">Java</category>
+  </item>
+  <item>
+    <title>2025 XYCTF</title>
+    <link>https://weyung.cc/posts/da1de1c0/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/da1de1c0/</guid>
+    <pubDate>Fri, 04 Apr 2025 00:00:00 GMT</pubDate>
+    <description>又来学 Web 了</description>
+    <category domain="category">CTF</category>
+    <category domain="tag">CTF</category>
+    <category domain="tag">Web</category>
+  </item>
+  <item>
+    <title>Docker 安全问题浅析</title>
+    <link>https://weyung.cc/posts/1fb40e80/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/1fb40e80/</guid>
+    <pubDate>Thu, 03 Apr 2025 00:00:00 GMT</pubDate>
+    <description>学习一下常用的逃逸手法，以及如何设计一个安全的方案。</description>
+    <category domain="category">渗透</category>
+    <category domain="tag">Web</category>
+    <category domain="tag">渗透</category>
+  </item>
+  <item>
+    <title>SSRF &amp; CSRF</title>
+    <link>https://weyung.cc/posts/edd30768/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/edd30768/</guid>
+    <pubDate>Thu, 03 Apr 2025 00:00:00 GMT</pubDate>
+    <description>朝花夕拾。</description>
+    <category domain="category">Web</category>
+    <category domain="tag">CTF</category>
+    <category domain="tag">Web</category>
+    <category domain="tag">渗透</category>
+  </item>
+  <item>
+    <title>多线程：Python VS Golang</title>
+    <link>https://weyung.cc/posts/f4bdfdb8/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/f4bdfdb8/</guid>
+    <pubDate>Sun, 30 Mar 2025 00:00:00 GMT</pubDate>
+    <description>Golang 的牛皮之处</description>
+    <category domain="category">学习</category>
+    <category domain="tag">Python</category>
+    <category domain="tag">Golang</category>
+  </item>
+  <item>
+    <title>浅谈 SQL 注入</title>
+    <link>https://weyung.cc/posts/1b0be0cc/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/1b0be0cc/</guid>
+    <pubDate>Sat, 29 Mar 2025 00:00:00 GMT</pubDate>
+    <description>一边瞎扯一边学习，也是很爽的。</description>
+    <category domain="category">Web</category>
+    <category domain="tag">CTF</category>
+    <category domain="tag">Web</category>
+    <category domain="tag">渗透</category>
+  </item>
+  <item>
+    <title>2025 红明谷杯 - Crypto</title>
+    <link>https://weyung.cc/posts/535b1aa9/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/535b1aa9/</guid>
+    <pubDate>Sat, 22 Mar 2025 00:00:00 GMT</pubDate>
+    <description>队友把 flag 放生了，差点没重捕回来</description>
+    <category domain="category">CTF</category>
+    <category domain="tag">CTF</category>
+    <category domain="tag">Crypto</category>
+  </item>
+  <item>
+    <title>漏洞分析之 CVE-2024-21626</title>
+    <link>https://weyung.cc/posts/98d4da2d/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/98d4da2d/</guid>
+    <pubDate>Mon, 03 Mar 2025 00:00:00 GMT</pubDate>
+    <description>研究一下 Docker 的 CVE。</description>
+    <category domain="category">CVE</category>
+    <category domain="tag">Web</category>
+    <category domain="tag">渗透</category>
+  </item>
+  <item>
+    <title>2025 CISCN &amp; CCB - Crypto</title>
+    <link>https://weyung.cc/posts/786bcd69/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/786bcd69/</guid>
+    <pubDate>Tue, 17 Dec 2024 00:00:00 GMT</pubDate>
+    <description>四个一血，那就是四血，四血就是没血，没血就是菜鸡，所以我是菜鸡</description>
+    <category domain="category">CTF</category>
+    <category domain="tag">CTF</category>
+    <category domain="tag">Crypto</category>
+  </item>
+  <item>
+    <title>2024 强网杯决赛 - st</title>
+    <link>https://weyung.cc/posts/959feb0f/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/959feb0f/</guid>
+    <pubDate>Mon, 09 Dec 2024 00:00:00 GMT</pubDate>
+    <description>SB 题</description>
+    <category domain="category">CTF</category>
+    <category domain="tag">CTF</category>
+    <category domain="tag">Crypto</category>
+  </item>
+  <item>
+    <title>2024 强网拟态决赛 Crypto</title>
+    <link>https://weyung.cc/posts/1c64cadc/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/1c64cadc/</guid>
+    <pubDate>Fri, 29 Nov 2024 00:00:00 GMT</pubDate>
+    <description>特种兵 CTF 南京站，就打了两道密码，写一下</description>
+    <category domain="category">CTF</category>
+    <category domain="tag">CTF</category>
+    <category domain="tag">Crypto</category>
+  </item>
+  <item>
+    <title>信息论笔记</title>
+    <link>https://weyung.cc/posts/515e73d5/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/515e73d5/</guid>
+    <pubDate>Fri, 21 Jun 2024 00:00:00 GMT</pubDate>
+    <description>还是复习。</description>
+    <category domain="category">Course</category>
+    <category domain="tag">信息论</category>
+  </item>
+  <item>
+    <title>信号与系统笔记</title>
+    <link>https://weyung.cc/posts/c039eaee/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/c039eaee/</guid>
+    <pubDate>Fri, 21 Jun 2024 00:00:00 GMT</pubDate>
+    <description>感觉和自动控制原理有很多重复的地方。</description>
+    <category domain="category">Course</category>
+    <category domain="tag">信号与系统笔记</category>
+  </item>
+  <item>
+    <title>2022 CISCN - ezpop</title>
+    <link>https://weyung.cc/posts/dc2f66e7/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/dc2f66e7/</guid>
+    <pubDate>Wed, 05 Jun 2024 00:00:00 GMT</pubDate>
+    <description>两年前的意难平</description>
+    <category domain="category">CTF</category>
+    <category domain="tag">CTF</category>
+    <category domain="tag">Web</category>
+  </item>
+  <item>
+    <title>计组笔记</title>
+    <link>https://weyung.cc/posts/e4751ce4/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/e4751ce4/</guid>
+    <pubDate>Wed, 05 Jun 2024 00:00:00 GMT</pubDate>
+    <description>功夫再高，也怕挂科。</description>
+    <category domain="category">Course</category>
+    <category domain="tag">计组</category>
+    <category domain="tag">汇编</category>
+  </item>
+  <item>
+    <title>HackTheBox 笔记 - 2</title>
+    <link>https://weyung.cc/posts/19c2d3c3/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/19c2d3c3/</guid>
+    <pubDate>Tue, 04 Jun 2024 00:00:00 GMT</pubDate>
+    <description>Runner / FreeLancer / Blurry</description>
+    <category domain="category">Pentest</category>
+    <category domain="tag">Web</category>
+    <category domain="tag">渗透</category>
+  </item>
+  <item>
+    <title>GPT 面试官</title>
+    <link>https://weyung.cc/posts/c9231dbf/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/c9231dbf/</guid>
+    <pubDate>Sun, 02 Jun 2024 00:00:00 GMT</pubDate>
+    <description>提前拷打自己。</description>
+    <category domain="category">学习</category>
+    <category domain="tag">GPT</category>
+    <category domain="tag">面试</category>
+  </item>
+  <item>
+    <title>琐记 - 2</title>
+    <link>https://weyung.cc/posts/41370835/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/41370835/</guid>
+    <pubDate>Sat, 18 May 2024 00:00:00 GMT</pubDate>
+    <description>谨以此文，记念我的外婆。</description>
+    <category domain="category">Life</category>
+    <category domain="tag">杂谈</category>
+  </item>
+  <item>
+    <title>HackTheBox 笔记 - 1</title>
+    <link>https://weyung.cc/posts/d5a79138/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/d5a79138/</guid>
+    <pubDate>Fri, 17 May 2024 00:00:00 GMT</pubDate>
+    <description>不得不找饭吃了。
+Two Million / Mailing / BoardLight / Usage</description>
+    <category domain="category">Pentest</category>
+    <category domain="tag">Web</category>
+    <category domain="tag">渗透</category>
+  </item>
+  <item>
+    <title>琐记 - 1</title>
+    <link>https://weyung.cc/posts/f6af4933/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/f6af4933/</guid>
+    <pubDate>Tue, 21 Nov 2023 00:00:00 GMT</pubDate>
+    <description>第一篇技术无关的闲谈。</description>
+    <category domain="category">Life</category>
+    <category domain="tag">杂谈</category>
+  </item>
+  <item>
+    <title>Hackergame 2023 writeups</title>
+    <link>https://weyung.cc/posts/98bbe68b/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/98bbe68b/</guid>
+    <pubDate>Sun, 05 Nov 2023 00:00:00 GMT</pubDate>
+    <description>打 Hackergame 的第三年。</description>
+    <category domain="category">Hackergame</category>
+    <category domain="tag">CTF</category>
+  </item>
+  <item>
+    <title>2023 BricsCTF - random</title>
+    <link>https://weyung.cc/posts/59a2e215/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/59a2e215/</guid>
+    <pubDate>Sat, 30 Sep 2023 00:00:00 GMT</pubDate>
+    <description>持续复健中。。。</description>
+    <category domain="category">CTF</category>
+    <category domain="tag">CTF</category>
+    <category domain="tag">Crypto</category>
+  </item>
+  <item>
+    <title>BUUOJ 之 Web 刷题记</title>
+    <link>https://weyung.cc/posts/8f812862/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/8f812862/</guid>
+    <pubDate>Thu, 14 Sep 2023 00:00:00 GMT</pubDate>
+    <description>这学期好像没什么课，就想着学一下 Web ，于是就去 BUUOJ 上刷题了。（copilot 挺懂我）</description>
+    <category domain="category">Web</category>
+    <category domain="tag">CTF</category>
+    <category domain="tag">Web</category>
+  </item>
+  <item>
+    <title>日常问题小记</title>
+    <link>https://weyung.cc/posts/5a6b6dd0/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/5a6b6dd0/</guid>
+    <pubDate>Sun, 21 May 2023 00:00:00 GMT</pubDate>
+    <description>记录一下平时遇到的问题和解决方法，以备后用。</description>
+    <category domain="category">学习</category>
+    <category domain="tag">计算机</category>
+    <category domain="tag">学习</category>
+  </item>
+  <item>
+    <title>Squid 代理简记</title>
+    <link>https://weyung.cc/posts/e87c1bec/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/e87c1bec/</guid>
+    <pubDate>Sun, 14 May 2023 00:00:00 GMT</pubDate>
+    <description>ChatGPT 确实是好东西</description>
+    <category domain="category">环境搭建</category>
+    <category domain="tag">Linux</category>
+    <category domain="tag">代理</category>
+  </item>
+  <item>
+    <title>高数上笔记</title>
+    <link>https://weyung.cc/posts/24ffc768/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/24ffc768/</guid>
+    <pubDate>Fri, 05 May 2023 00:00:00 GMT</pubDate>
+    <description>忽然能转了，尝试速成高数上</description>
+    <category domain="category">Course</category>
+    <category domain="tag">数学</category>
+    <category domain="tag">高数</category>
+  </item>
+  <item>
+    <title>宿舍影院搭建 &amp; 五刷《铃芽之旅》后的浅评</title>
+    <link>https://weyung.cc/posts/0fce6864/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/0fce6864/</guid>
+    <pubDate>Wed, 19 Apr 2023 00:00:00 GMT</pubDate>
+    <description>越来越不务正业乐！</description>
+    <category domain="category">Life</category>
+    <category domain="tag">电影</category>
+    <category domain="tag">生活</category>
+  </item>
+  <item>
+    <title>材料力学笔记</title>
+    <link>https://weyung.cc/posts/86f14267/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/86f14267/</guid>
+    <pubDate>Tue, 24 Jan 2023 00:00:00 GMT</pubDate>
+    <description>莫名其妙考了个第一，来还个愿</description>
+    <category domain="category">Course</category>
+    <category domain="tag">材料力学</category>
+  </item>
+  <item>
+    <title>Hackergame 2022 writeups</title>
+    <link>https://weyung.cc/posts/082ac07f/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/082ac07f/</guid>
+    <pubDate>Sun, 30 Oct 2022 00:00:00 GMT</pubDate>
+    <description>好玩，爆赞！</description>
+    <category domain="category">Hackergame</category>
+    <category domain="tag">CTF</category>
+  </item>
+  <item>
+    <title>Coppersmith</title>
+    <link>https://weyung.cc/posts/f785dca9/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/f785dca9/</guid>
+    <pubDate>Sat, 15 Oct 2022 00:00:00 GMT</pubDate>
+    <description>研究一些多元 Coppersmith</description>
+    <category domain="category">Crypto</category>
+    <category domain="tag">数学</category>
+    <category domain="tag">抽象代数</category>
+    <category domain="tag">Crypto</category>
+    <category domain="tag">论文</category>
+  </item>
+  <item>
+    <title>复变函数笔记</title>
+    <link>https://weyung.cc/posts/11ebb1e8/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/11ebb1e8/</guid>
+    <pubDate>Sun, 09 Oct 2022 00:00:00 GMT</pubDate>
+    <description>高数写了笔记再考试效果挺好的 ~~（为什么挂科之前没这觉悟啊）~~，复变也记一下吧</description>
+    <category domain="category">Course</category>
+    <category domain="tag">数学</category>
+    <category domain="tag">高数</category>
+    <category domain="tag">复变函数</category>
+  </item>
+  <item>
+    <title>Reed-Solomon 纠错码</title>
+    <link>https://weyung.cc/posts/97a8985b/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/97a8985b/</guid>
+    <pubDate>Sat, 17 Sep 2022 00:00:00 GMT</pubDate>
+    <description>终于有时间整理一下了，爆破毕竟还是太粗鲁了。</description>
+    <category domain="category">Crypto</category>
+    <category domain="tag">数学</category>
+    <category domain="tag">Crypto</category>
+    <category domain="tag">抽象代数</category>
+    <category domain="tag">CTF</category>
+  </item>
+  <item>
+    <title>密码学论文记</title>
+    <link>https://weyung.cc/posts/81276c1f/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/81276c1f/</guid>
+    <pubDate>Thu, 18 Aug 2022 00:00:00 GMT</pubDate>
+    <description>记录一下读的 Papers</description>
+    <category domain="category">Crypto</category>
+    <category domain="tag">数学</category>
+    <category domain="tag">抽象代数</category>
+    <category domain="tag">Crypto</category>
+    <category domain="tag">论文</category>
+  </item>
+  <item>
+    <title>2022 巅峰极客 Crypto</title>
+    <link>https://weyung.cc/posts/bc807997/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/bc807997/</guid>
+    <pubDate>Thu, 18 Aug 2022 00:00:00 GMT</pubDate>
+    <description>有瓜吃，美滋滋</description>
+    <category domain="category">CTF</category>
+    <category domain="tag">CTF</category>
+    <category domain="tag">Crypto</category>
+  </item>
+  <item>
+    <title>2022 强网杯 Crypto</title>
+    <link>https://weyung.cc/posts/09630dba/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/09630dba/</guid>
+    <pubDate>Mon, 08 Aug 2022 00:00:00 GMT</pubDate>
+    <description>当场做是做不出来的，赛后分析学学吧，不定期更新</description>
+    <category domain="category">CTF</category>
+    <category domain="tag">CTF</category>
+    <category domain="tag">Crypto</category>
+  </item>
+  <item>
+    <title>高数下笔记</title>
+    <link>https://weyung.cc/posts/f6662f68/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/f6662f68/</guid>
+    <pubDate>Sun, 07 Aug 2022 00:00:00 GMT</pubDate>
+    <description>挂科了，还是要学好高数啊！</description>
+    <category domain="category">Course</category>
+    <category domain="tag">数学</category>
+    <category domain="tag">高数</category>
+  </item>
+  <item>
+    <title>pwn 入门</title>
+    <link>https://weyung.cc/posts/316f1287/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/316f1287/</guid>
+    <pubDate>Mon, 18 Jul 2022 00:00:00 GMT</pubDate>
+    <description>浅记一下这些天学 pwn 的历程</description>
+    <category domain="category">Tutorial</category>
+    <category domain="tag">CTF</category>
+    <category domain="tag">二进制安全</category>
+    <category domain="tag">pwn</category>
+  </item>
+  <item>
+    <title>2022 蓝帽杯 - corrupted_key</title>
+    <link>https://weyung.cc/posts/9eaa7315/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/9eaa7315/</guid>
+    <pubDate>Sat, 16 Jul 2022 00:00:00 GMT</pubDate>
+    <description>很有意思的一道题，涉及私钥文件的结构</description>
+    <category domain="category">CTF</category>
+    <category domain="tag">CTF</category>
+    <category domain="tag">Crypto</category>
+  </item>
+  <item>
+    <title>Linux 学习笔记</title>
+    <link>https://weyung.cc/posts/c40afd5b/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/c40afd5b/</guid>
+    <pubDate>Thu, 07 Jul 2022 00:00:00 GMT</pubDate>
+    <description>最近用到 Linux 挺多，整理一下。</description>
+    <category domain="category">Tutorial</category>
+    <category domain="tag">Linux</category>
+  </item>
+  <item>
+    <title>小 CRT 指数非平衡 RSA 的密码分析论文分析</title>
+    <link>https://weyung.cc/posts/08a53d43/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/08a53d43/</guid>
+    <pubDate>Fri, 27 May 2022 00:00:00 GMT</pubDate>
+    <description>直接读头晕，翻译更看不懂，就写篇文一点点细啃吧。</description>
+    <category domain="category">Crypto</category>
+    <category domain="tag">数学</category>
+    <category domain="tag">抽象代数</category>
+    <category domain="tag">Crypto</category>
+    <category domain="tag">论文</category>
+  </item>
+  <item>
+    <title>NTRUEncrypt</title>
+    <link>https://weyung.cc/posts/b5f9950c/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/b5f9950c/</guid>
+    <pubDate>Mon, 11 Apr 2022 00:00:00 GMT</pubDate>
+    <description>NTRUEncrypt 公钥加密系统</description>
+    <category domain="category">Crypto</category>
+    <category domain="tag">数学</category>
+    <category domain="tag">格</category>
+    <category domain="tag">抽象代数</category>
+    <category domain="tag">Crypto</category>
+  </item>
+  <item>
+    <title>汇编学习笔记</title>
+    <link>https://weyung.cc/posts/04a7e57d/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/04a7e57d/</guid>
+    <pubDate>Wed, 06 Apr 2022 00:00:00 GMT</pubDate>
+    <description>进行一些笔记的整理</description>
+    <category domain="category">学习</category>
+    <category domain="tag">汇编</category>
+  </item>
+  <item>
+    <title>Matrix 面试 - Summary</title>
+    <link>https://weyung.cc/posts/0b627d29/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/0b627d29/</guid>
+    <pubDate>Sun, 03 Apr 2022 00:00:00 GMT</pubDate>
+    <description>吃一堑，长一智。</description>
+    <category domain="category">学习</category>
+    <category domain="tag">前端</category>
+    <category domain="tag">算法</category>
+    <category domain="tag">计算机网络</category>
+  </item>
+  <item>
+    <title>Matrix 面试 - 前端篇</title>
+    <link>https://weyung.cc/posts/5763bcef/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/5763bcef/</guid>
+    <pubDate>Sun, 03 Apr 2022 00:00:00 GMT</pubDate>
+    <description>持续懵逼</description>
+    <category domain="category">学习</category>
+    <category domain="tag">前端</category>
+  </item>
+  <item>
+    <title>Matrix 面试 - 算法&amp;计网篇</title>
+    <link>https://weyung.cc/posts/d2198d80/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/d2198d80/</guid>
+    <pubDate>Sun, 03 Apr 2022 00:00:00 GMT</pubDate>
+    <description>开局暴击</description>
+    <category domain="category">学习</category>
+    <category domain="tag">算法</category>
+    <category domain="tag">计算机网络</category>
+  </item>
+  <item>
+    <title>灯，等灯等灯</title>
+    <link>https://weyung.cc/posts/d14ec074/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/d14ec074/</guid>
+    <pubDate>Thu, 31 Mar 2022 00:00:00 GMT</pubDate>
+    <description>线性同余方程组与格基约化问题</description>
+    <category domain="category">Crypto</category>
+    <category domain="tag">Python</category>
+    <category domain="tag">数学</category>
+    <category domain="tag">格</category>
+    <category domain="tag">抽象代数</category>
+    <category domain="tag">CVP</category>
+  </item>
+  <item>
+    <title>Code-server 配置</title>
+    <link>https://weyung.cc/posts/d14b1897/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/d14b1897/</guid>
+    <pubDate>Wed, 30 Mar 2022 00:00:00 GMT</pubDate>
+    <description>在 Windows 上使用 WSL ，在 WSL 上使用 VSCode ，在 VSCode 上使用 Code-server。</description>
+    <category domain="category">环境搭建</category>
+    <category domain="tag">Windows</category>
+    <category domain="tag">WSL</category>
+    <category domain="tag">VSCode</category>
+    <category domain="tag">Code-server</category>
+  </item>
+  <item>
+    <title>记一次在局域网搭网站</title>
+    <link>https://weyung.cc/posts/c9820b90/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/c9820b90/</guid>
+    <pubDate>Thu, 17 Mar 2022 00:00:00 GMT</pubDate>
+    <description>在学校里用自己电脑( Windows10 环境)当服务器搭了个网站，仅可在校园网下访问，图一乐。</description>
+    <category domain="category">小玩意</category>
+    <category domain="tag">Python</category>
+    <category domain="tag">Nginx</category>
+    <category domain="tag">Windows</category>
+    <category domain="tag">SSL</category>
+  </item>
+  <item>
+    <title>群</title>
+    <link>https://weyung.cc/posts/ed31fd3e/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/ed31fd3e/</guid>
+    <pubDate>Tue, 08 Mar 2022 00:00:00 GMT</pubDate>
+    <description>有人问一个小女孩，3+4 等于几啊？
+小女孩说：“不知道，但我知道 3+4 等于 4+3 .”
+这人只好接着问：“为什么呀？”
+小女孩答道：“因为整数与整数加法构成了阿贝尔群。”</description>
+    <category domain="category">Crypto</category>
+    <category domain="tag">数学</category>
+    <category domain="tag">抽象代数</category>
+    <category domain="tag">Crypto</category>
+  </item>
+  <item>
+    <title>变量指针指向的常量</title>
+    <link>https://weyung.cc/posts/c448eea1/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/c448eea1/</guid>
+    <pubDate>Thu, 30 Dec 2021 00:00:00 GMT</pubDate>
+    <description>关于 `char *s=&quot;ABCDE&quot;` 为什么是有问题的</description>
+    <category domain="category">C语言</category>
+    <category domain="tag">C</category>
+  </item>
+  <item>
+    <title>VSCode 写 C</title>
+    <link>https://weyung.cc/posts/249e2039/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/249e2039/</guid>
+    <pubDate>Wed, 29 Dec 2021 00:00:00 GMT</pubDate>
+    <description>一句话：VSCode 确实是一个好东西</description>
+    <category domain="category">环境搭建</category>
+    <category domain="tag">VSCode</category>
+    <category domain="tag">C</category>
+  </item>
+  <item>
+    <title>一个简单的本地判题脚本</title>
+    <link>https://weyung.cc/posts/411a7b28/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/411a7b28/</guid>
+    <pubDate>Tue, 28 Dec 2021 00:00:00 GMT</pubDate>
+    <description>在做程序设计作业的时候，题目经常是要输入 10 个数字，但用不起 Matrix 的我只能手动输入，不但麻烦，而且也很难模拟随机过程，想过做一个 OJ （在线判题平台），但又苦于不会用 Docker ，思来想去，就用 Python 写了个本地判题脚本，虽然还不能防恶意代码，也无法实现内存检查，但基本的输入输出还是能够做到，供君一乐。</description>
+    <category domain="category">小玩意</category>
+    <category domain="tag">Python</category>
+  </item>
+  <item>
+    <title>一个简单的作业提交平台</title>
+    <link>https://weyung.cc/posts/e20d14e7/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/e20d14e7/</guid>
+    <pubDate>Sun, 19 Dec 2021 00:00:00 GMT</pubDate>
+    <description>这个项目大概是上星期五晚开始做的，之所以现在才写这篇文，纯粹是因为没有时间，刚好今早把高数写完了， CAD 又不想动，于是便借此时间简单总结一下。</description>
+    <category domain="category">小项目</category>
+    <category domain="tag">PHP</category>
+  </item>
+  <item>
+    <title>Hackergame 2021 writeups</title>
+    <link>https://weyung.cc/posts/2195813b/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/2195813b/</guid>
+    <pubDate>Fri, 05 Nov 2021 00:00:00 GMT</pubDate>
+    <description>第一次打CTF比赛</description>
+    <category domain="category">Hackergame</category>
+    <category domain="tag">CTF</category>
+  </item>
+  <item>
+    <title>Typst 功能展示</title>
+    <link>https://weyung.cc/posts/25516c21/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/25516c21/</guid>
+    <pubDate>Sat, 18 Mar 2000 00:00:00 GMT</pubDate>
+    <description>本文主要展示了一些常用的 Typst 语法，并给出一些增强功能。</description>
+    <category domain="category">如何编写博客文章</category>
+    <category domain="tag">Typst</category>
+    <category domain="tag">写作指南</category>
+  </item>
+  <item>
+    <title>如何编写一篇博客文章</title>
+    <link>https://weyung.cc/posts/2b3a0ff1/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/2b3a0ff1/</guid>
+    <pubDate>Sat, 18 Mar 2000 00:00:00 GMT</pubDate>
+    <description>本文主要介绍在 Carbon Typst Blog 中添加和编写博客文章的步骤和注意事项。</description>
+    <category domain="category">如何编写博客文章</category>
+    <category domain="tag">Typst</category>
+    <category domain="tag">写作指南</category>
+  </item>
+  <item>
+    <title>如何调整除了博客文章之外的页面</title>
+    <link>https://weyung.cc/posts/65f86536/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/65f86536/</guid>
+    <pubDate>Sat, 18 Mar 2000 00:00:00 GMT</pubDate>
+    <description>本文主要介绍在 Carbon Typst Blog 中调整除了博客文章之外的页面（例如分类页、标签页、归档页等）的步骤和注意事项。</description>
+    <category domain="category">博客的构建和调整</category>
+    <category domain="tag">Typst</category>
+    <category domain="tag">配置指南</category>
+  </item>
+  <item>
+    <title>配置文件说明</title>
+    <link>https://weyung.cc/posts/e41bee17/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/e41bee17/</guid>
+    <pubDate>Sat, 18 Mar 2000 00:00:00 GMT</pubDate>
+    <description>本文主要介绍在 Carbon Typst Blog 中配置文件的作用和使用方法，以及如何通过配置文件来定制博客的外观和功能。</description>
+    <category domain="category">博客的构建和调整</category>
+    <category domain="tag">配置指南</category>
+  </item>
+  <item>
+    <title>Carbon Typst Blog 介绍</title>
+    <link>https://weyung.cc/posts/19bfeb00/</link>
+    <guid isPermaLink="true">https://weyung.cc/posts/19bfeb00/</guid>
+    <pubDate>Fri, 17 Mar 2000 00:00:00 GMT</pubDate>
+    <description>本文主要介绍 Carbon Typst Blog 的基本功能和配置方式。</description>
+    <category domain="category">博客的构建和调整</category>
+    <category domain="tag">博客搭建</category>
+  </item>
+</channel>
+</rss>

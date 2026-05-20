@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>记一次在家搞返校报到 | weyung's Blog</title>
+    <meta name="date" content="2026-02-28">
+    <link rel="canonical" href="https://weyung.cc/posts/793881a0/">
+    <meta property="og:title" content="记一次在家搞返校报到 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="怎么 2 月没有 29 号和 30 号的。">
+    <meta property="og:description" content="怎么 2 月没有 29 号和 30 号的。">
+    <meta property="og:url" content="https://weyung.cc/posts/793881a0/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">记一次在家搞返校报到</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>记一次在家搞返校报到</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>寒假将尽</h3>
+          <p>今年的春节本来也晚，2 月 25 号左右看了下学校好像最晚 3 月初报到，就觉得还有很久，后来才发现 28 号直接跳到 3 月 1 号了，此时已经来不及了，碰巧月末刚好是周末，匆匆赶上去觉得太挤，就心一横，打算研究一下改定位报到的事。</p>
+          <h3>安卓人、安卓手机和安卓电脑</h3>
+          <p>问了一下前两年毕业的老登，都说是用苹果来搞的，用的什么爱思助手 <s>（有没有配套的爱慕助手）</s></p>
+          <p>但是本人是安卓人，用的安卓手机和安卓电脑，于是就打算在 Windows 上试试先，实在不行再找苹果人借一台苹果手机和苹果电脑。</p>
+          <h4>PC 端抓包</h4>
+          <p>然后发现企微的小程序确实是能调用电脑的摄像头，<strong>但是不能获取位置信息</strong>，我也不知道怎么让他能获取到。</p>
+          <p>打开 Proxyman 尝试抓包，但是除了能看到获取列表信息和报到的信息外也没别的请求了。</p>
+          <h4>移动端抓包</h4>
+          <p>上 B 站搜了一下手机抓包，看到有用 httpcanary（现已经更名为 <a href="https://reqable.com/" target="_blank" rel="noopener noreferrer">reqable</a>）抓包的，装好证书开始抓包后，发现居然弹一个和电脑一样的报错框，说无法获取位置信息。</p>
+          <p>观察了两次后，发现小程序会先往 lbs.map.qq.com 发一个请求，如果证书不对劲，这个连接就会直接中断。于是配了一下 SSL 的规则，只拦截 *.sysu.edu.cn 就好了。</p>
+          <p>能看到小程序在获取位置信息后，往 <code class="language-text">/sign/submitPosition</code> 路由发了个请求，然后非常自然地弹出不在校区内的信息框。<br>把这个请求复制出来，只看到请求体有一个 <code class="language-text">sKey</code> 参数，值被加密了，当时比较困，以为里面只是类似 token 的身份信息，就睡觉先了。</p>
+          <h4>小程序解包源码</h4>
+          <p>第二天睡醒继续搞，思路是要拿到<strong>前端的源代码</strong>，才能搞懂他的逻辑。<br>根据群友 @xy3 提供的文章 <a href="https://blog.cccyun.cn/m/?post=473" target="_blank" rel="noopener noreferrer">https://blog.cccyun.cn/m/?post=473</a> 试了一下小程序解包，发现 <a href="https://github.com/biggerstar/wedecode" target="_blank" rel="noopener noreferrer">wedecode</a> 已经可以直接傻瓜式一把梭了，不用再管文章前面提到的解密程序。</p>
+          <p>wedecode 安装方式：</p>
+          <pre><code class="language-bash">npm i wedecode -g   # 记得装 nodejs，以及我更推荐 pnpm</code></pre>
+          <p>然后找了半天才发现忘记用的是<strong>企业微信</strong>了，还在微信的目录里盯。<br>于是在企微的文件夹（默认应该是 <code class="language-text">C:\Users\用户名\Documents\WXWork</code>） 下打开终端，然后启动 wedecode，选择指定目录扫描，再输一个 <code class="language-text">.</code> 表示当时目录，直接就定位到了签到的小程序，然后按一下 Enter 就直接顺利解包了。</p>
+          <p>小程序的开发框架有点类似 React 和 Vue，之前也简单学过 Vue 开发，所以看起小程序源码来也不难理解。<br>在 <code class="language-text">/app.js</code> 中看到如下源码：</p>
+          <pre><code class="language-js">var t = require("./utils/common/util");
+App({
+  onLaunch: function() {
+    var t = wx.getSystemInfoSync();
+    this.globalData.statusBarHeight = t.statusBarHeight
+  },
+  globalData: {
+    userInfo: null,
+    sAESKey: "73683132333435363738393031323334",
+    header: {
+      "content-type": "application/x-www-form-urlencoded"
+    },
+    httpUrl: "https://facerecog.sysu.edu.cn"
+  },
+  encode: function(e) {
+    return t.AESUtils.encodeECB(e, this.globalData.sAESKey)
+  }
+});</code></pre>
+          <p>然后找到 <code class="language-text">encode()</code> 函数的调用处，即 <code class="language-text">/utils/service/request.js</code> 中看到如下代码片段：</p>
+          <pre><code class="language-js">if (0 !== Object.keys(o).length) {
+    var m = c.encode(Object.values(o).join("##") + "##" + (new Date).getTime());
+    b.sKey = m
+}</code></pre>
+          <p>这时就可以看出来之前看到的 <code class="language-text">sKey</code> 其实是参数通过 <strong>AES ECB mode 加密</strong>后的东西，并且密钥 <code class="language-text">sh12345678901234</code> 是<strong>硬编码</strong>的，用 CyberChef 尝试解密了一下果然没问题，那后面的工作就更方便了。</p>
+          <p>接下来查看核心代码 <code class="language-text">/pages/sign-in/sign-in.js</code>，看到如下片段：</p>
+          <pre><code class="language-js">reportFn: function(t, e, a, s, c, r) {
+    var l = this;
+    i.default.submitPosition({
+      sPersonCode: t,
+      sActId: e,
+      wifiName: a,
+      longitude: s,
+      latitude: c
+    }, {
+      hideLoading: !0
+    }).then((function(a) {
+      1 === a.code ? (1 === r &amp;&amp; (0, n.creteImage2)(o.globalData.imgSrc, 1024, 1024, (function(a) {
+        i.default.submitSignFace({
+          sPersonCode: t,
+          sActId: e
+        }, {
+          sImage: a,
+          hideLoading: !0
+        }).then((function(t) {
+          1 === t.code ? l.getSignInfo(e) : l.setTime(), l.setData({
+            isShow: !0,
+            status: t.code,
+            text: t.msg
+          }), o.globalData.imgSrc = "", wx.hideLoading()
+        }))
+      })), 1 !== r &amp;&amp; (o.globalData.imgSrc = "", l.setData({
+        isShow: !0,
+        status: a.code,
+        text: a.msg
+      }), l.getSignInfo(e), wx.hideLoading())) : (l.setTime(), (0, n.showModal)({
+        content: a.msg
+      }), wx.hideLoading())
+    }))
+}</code></pre>
+          <p>大概可以看出来流程如下：</p>
+          <ol>
+            <li>往 <code class="language-text">/sign/submitPosition</code> 发一个带学号、活动 ID、WIFI 名（后台决定是否启用）和经纬度信息的请求；</li>
+            <li>若上面请求返回值为 0，则往 <code class="language-text">/sign/submitSignFace</code> 发一个带学号、活动 ID 和人脸图片的请求；</li>
+            <li>若上面请求返回值为 0，则显示报到成功。</li>
+          </ol>
+          <p>那么可以猜想，<strong>位置信息本质其实还是在本地做校验</strong>。</p>
+          <p>根据这个思路，使用 requable 的重写功能改包，规则为发往 <code class="language-text">/sign/submitPosition</code> 的请求返回值全部改为 0，然后就显示成功报到了。</p>
+          <p>基于此，实际上写一个脚本直接往 <code class="language-text">/sign/submitSignFace</code> 发送学号和人脸信息即可。</p>
+          <h4>搞定</h4>
+          <p>最终脚本如下：</p>
+          <pre><code class="language-python">"""
+【免责声明】
+本脚本仅用于学习和技术交流使用，严禁用于任何商业用途、非法用途。
+使用本脚本应遵守相关法律法规及平台规则，请勿侵犯他人合法权益。
+作者不对因使用本脚本导致的任何后果承担责任，使用前请自行评估风险。
+
+【使用说明】
+1. 确保安装依赖: pip install pycryptodome
+2. 准备人脸图片并放在代码同级目录，并命名为 face.jpg
+"""
+
+from Crypto.Util.Padding import pad
+from Crypto.Util.number import *
+from Crypto.Cipher import AES
+from datetime import datetime
+import requests as req
+import base64
+
+def getActID(stuID: str):
+    timestamp = int(datetime.now().timestamp())
+    plain = f"{stuID}##{timestamp}"
+    cipher = AES.new(long_to_bytes(int("73683132333435363738393031323334", 16)), AES.MODE_ECB)
+    m = cipher.encrypt(pad(plain.encode(), AES.block_size)).hex()
+
+    url = "https://facerecog.sysu.edu.cn/sign/getActivityList"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Linux; Android 16; FLC-AN00 Build/HONORFLC-AN00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/138.0.7204.180 Mobile Safari/537.36 XWEB/1380347 MMWEBSDK/20250202 MMWEBID/6351 wxwork/5.0.6.66174 MicroMessenger/8.0.28.48(0x28001c30) MiniProgramEnv/android Luggage/3.0.2.95ef3f83 NetType/WIFI Language/en ABI/arm64",
+        "Accept-Encoding": "gzip,compress,br,deflate",
+        "charset": "utf-8"
+    }
+    data = {
+        "sKey": m
+    }
+
+    res = req.post(url=url, data=data, headers=headers)
+    print(res.status_code)
+    return res.json()["data"]["rows"][0]["sActId"]
+
+def submitGPS(stuID: str, actID: str):
+    timestamp = int(datetime.now().timestamp())
+    # https://lbs.qq.com/getPoint/
+    plain = f"{stuID}##{actID}####113.9539##22.801604##{timestamp}"
+    cipher = AES.new(long_to_bytes(int("73683132333435363738393031323334", 16)), AES.MODE_ECB)
+    m = cipher.encrypt(pad(plain.encode(), AES.block_size)).hex()
+
+    url = "https://facerecog.sysu.edu.cn/sign/submitPosition"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Linux; Android 16; FLC-AN00 Build/HONORFLC-AN00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/138.0.7204.180 Mobile Safari/537.36 XWEB/1380347 MMWEBSDK/20250202 MMWEBID/6351 wxwork/5.0.6.66174 MicroMessenger/8.0.28.48(0x28001c30) MiniProgramEnv/android Luggage/3.0.2.95ef3f83 NetType/WIFI Language/en ABI/arm64",
+        "Accept-Encoding": "gzip,compress,br,deflate",
+        "charset": "utf-8"
+    }
+    data = {
+        "sKey": m
+    }
+
+    res = req.post(url=url, data=data, headers=headers)
+    print(res.status_code)
+    print(res.text)
+
+def image_to_base64(image_path):
+    try:
+        with open(image_path, 'rb') as f:
+            # 读取图片字节并转换为Base64
+            base64_data = base64.b64encode(f.read()).decode('utf-8')
+            return base64_data
+    except Exception as e:
+        print(f"图片转Base64失败：{str(e)}")
+        return None
+
+def submitFace(stuID: str, actID: str):
+    timestamp = int(datetime.now().timestamp())
+    base64_image = image_to_base64("face.jpg")
+    plain = f"{stuID}##{actID}##{timestamp}"
+    cipher = AES.new(long_to_bytes(int("73683132333435363738393031323334", 16)), AES.MODE_ECB)
+    m = cipher.encrypt(pad(plain.encode(), AES.block_size))
+    m = m.hex()
+
+    url = "https://facerecog.sysu.edu.cn/sign/submitSignFace"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Linux; Android 16; FLC-AN00 Build/HONORFLC-AN00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/138.0.7204.180 Mobile Safari/537.36 XWEB/1380347 MMWEBSDK/20250202 MMWEBID/6351 wxwork/5.0.6.66174 MicroMessenger/8.0.28.48(0x28001c30) MiniProgramEnv/android Luggage/3.0.2.95ef3f83 NetType/WIFI Language/en ABI/arm64",
+        "Accept-Encoding": "gzip,compress,br,deflate",
+        "charset": "utf-8"
+    }
+    data = {
+        "sKey": m,
+        "sImage": f"data:image/jpeg;base64,{base64_image}"
+    }
+
+    res = req.post(url=url, data=data, headers=headers)
+    print(res.status_code)
+    print(res.text)
+
+if __name__ == "__main__":
+    stuID = input("学号：")
+    actID = getActID(stuID)
+    # submitGPS(stuID, actID) # useless, enable to complete the entire interaction, if you want
+    submitFace(stuID, actID)</code></pre>
+          <h3>花絮</h3>
+          <p>一开始没看出来不需要发送位置信息，一直在研究 <code class="language-text">/sign/submitPosition</code> 路由的请求，但是把经纬度改了几次都不对，百度地图和谷歌地图的经纬度都试过了，然后忽然想到他用的是<strong>腾讯位置服务</strong>，于是在网站 <a href="https://lbs.qq.com/getPoint/" target="_blank" rel="noopener noreferrer">https://lbs.qq.com/getPoint/</a> 用坐标拾取器拿到经纬度交上去就通过了。</p>
+          <p>以及我的 GitHub Edu 还没续上，没有 Copilot，什么 AI inline suggestion 都没有，写起代码真是费劲多了，还好哥们密码题和 Web 题的解题脚本写得多，不然真写不下去。</p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/计算机/" style="--tag-background:var(--tag-background-purple);--tag-color:var(--tag-color-purple);--tag-background-hover:var(--tag-hover-purple);--tag-border:var(--tag-border-purple);--tag-border-hover:var(--tag-border-purple);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-monitor.svg&quot;);"></span><span class="tag-content"><span>计算机</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/学习/" style="--tag-background:var(--tag-background-purple);--tag-color:var(--tag-color-purple);--tag-background-hover:var(--tag-hover-purple);--tag-border:var(--tag-border-purple);--tag-border-hover:var(--tag-border-purple);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-graduation-cap.svg&quot;);"></span><span class="tag-content"><span>学习</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2026 年 2 月 28 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/学习/">学习</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/793881a0/">https://weyung.cc/posts/793881a0/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/1ddd67c2/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">零知识证明</p></a><a class="post-neighbor" href="/posts/332a6789/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">OpenClaw 初体验 &amp; 踩坑记录</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

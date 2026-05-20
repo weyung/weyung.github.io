@@ -1,0 +1,149 @@
+/* Base styles (Mobile first drawer) */
+.custom-toc {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16rem;
+  max-width: 80vw;
+  height: 100vh;
+  background-color: var(--layer1);
+  border-right: 1px solid var(--border-subtle1);
+  padding: 4rem 1.5rem 1.5rem 1.5rem;
+  z-index: 115;
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+  overflow-y: auto;
+  margin: 0;
+}
+
+.custom-toc.custom-toc-open {
+  transform: translateX(0);
+}
+
+.custom-toc-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 114;
+}
+
+.custom-toc-backdrop.custom-toc-open {
+  opacity: 0.6;
+  pointer-events: auto;
+}
+
+/* Floating button for mobile */
+.custom-toc-toggle {
+  position: fixed;
+  left: 1rem;
+  bottom: 5rem; /* Placed above the back-to-top button */
+  width: 3rem;
+  height: 3rem;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--interactive-background);
+  color: var(--text-on-color);
+  cursor: pointer;
+  z-index: 113;
+  transition: background-color 0.11s ease;
+}
+
+.custom-toc-toggle:hover {
+  background-color: var(--interactive-hover);
+}
+
+.custom-toc-toggle:active {
+  background-color: var(--interactive-active);
+}
+
+.custom-toc-toggle::before {
+  content: "";
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: currentColor;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-image: url("/assets/icons/menu.svg");
+}
+
+/* Common TOC styling */
+.custom-toc-title {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+  color: var(--text-primary);
+}
+
+.custom-toc ul {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.custom-toc li {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+  padding: 0 !important;
+}
+
+.custom-toc li::before {
+  content: none !important;
+}
+
+.custom-toc a {
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: color 0.11s;
+  font-size: 0.875rem;
+  display: block;
+}
+
+.custom-toc a:hover,
+.custom-toc a.active {
+  color: var(--link-hover);
+}
+
+.custom-toc a.active {
+  font-weight: 600;
+  color: var(--link);
+}
+
+/* Indentations based on heading level */
+.custom-toc .toc-h2 { margin-left: 0; font-weight: 500; }
+.custom-toc .toc-h3 { margin-left: 1rem; }
+.custom-toc .toc-h4 { margin-left: 2rem; }
+.custom-toc .toc-h5 { margin-left: 3rem; }
+.custom-toc .toc-h6 { margin-left: 4rem; }
+
+/* Large screens: docked to the left */
+@media (min-width: 1440px) {
+  .custom-toc-toggle {
+    display: none;
+  }
+
+  .custom-toc-backdrop {
+    display: none;
+  }
+
+  .custom-toc {
+    transform: translateX(0); /* Always visible */
+    top: 14rem; /* Lowered to avoid overlapping the initial uncollapsed header */
+    left: auto;
+    right: calc(50vw + 31rem); /* Aligns to the left of the article */
+    width: 14rem;
+    height: auto;
+    max-height: calc(100vh - 12rem);
+    background: transparent;
+    border: none;
+    border-right: 1px solid var(--border-subtle1); /* Line on the right to separate from content */
+    padding: 0 1rem 0 0;
+  }
+}

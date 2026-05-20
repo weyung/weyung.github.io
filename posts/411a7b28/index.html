@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>一个简单的本地判题脚本 | weyung's Blog</title>
+    <meta name="date" content="2021-12-28">
+    <link rel="canonical" href="https://weyung.cc/posts/411a7b28/">
+    <meta property="og:title" content="一个简单的本地判题脚本 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="在做程序设计作业的时候，题目经常是要输入 10 个数字，但用不起 Matrix 的我只能手动输入，不但麻烦，而且也很难模拟随机过程，想过做一个 OJ （在线判题平台），但又苦于不会用 Docker ，思来想去，就用 Python 写了个本地判题脚本，虽然还不能防恶意代码，也无法实现内存检查，但基本的输入输出还是能够做到，供君一乐。">
+    <meta property="og:description" content="在做程序设计作业的时候，题目经常是要输入 10 个数字，但用不起 Matrix 的我只能手动输入，不但麻烦，而且也很难模拟随机过程，想过做一个 OJ （在线判题平台），但又苦于不会用 Docker ，思来想去，就用 Python 写了个本地判题脚本，虽然还不能防恶意代码，也无法实现内存检查，但基本的输入输出还是能够做到，供君一乐。">
+    <meta property="og:url" content="https://weyung.cc/posts/411a7b28/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">一个简单的本地判题脚本</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>一个简单的本地判题脚本</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>源码</h3>
+          <h4>Windows下</h4>
+          <p>鉴于本人是追求实用（能跑就行），同理猜测读者也不关心这到底怎么实现，或者说不着急关心，于是直接附上 Windows 环境下的 Python 源码，开盒即用，只需要你有一点 Python 的基础，会装 subprocess 和 tqdm 库就行，然后在脚本所在的目录新建一个名为<code class="language-text">标准代码</code>的文件夹，并在里面放入一个<code class="language-text">std.c</code>作为测试输出的基准参照，同理新建一个<code class="language-text">测试代码</code>的文件夹并放入<code class="language-text">test.c</code>作为被测试的代码，<strong>同时安装好gcc</strong>，运行脚本，就能大功告成了。</p>
+          <pre><code class="language-python">import subprocess
+import random
+import sys
+from tqdm import tqdm
+
+def random_int_list(start, stop, length):
+    start, stop = (int(start), int(stop)) if start &lt;= stop else (
+        int(stop), int(start))
+    length = int(abs(length)) if length else 0
+    random_list = []
+    for i in range(length):
+        random_list.append(random.randint(start, stop))
+    return random_list
+
+def iotest(filename, path, data):
+    obj = subprocess.Popen([filename], stdin=subprocess.PIPE,
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=path, encoding="utf-8",shell=True)
+    obj.stdin.write(data)
+    out_info, out_error = obj.communicate()  # 简单写法，out_info：标准输出
+    # print(out_info,out_error)
+    return out_info
+
+if __name__ == '__main__':
+    stdpath = "%s\\标准代码\\" % sys.path[0]      # 标准代码所在路径
+    testpath = "%s\\测试代码\\" % sys.path[0]     # 测试代码所有路径
+    #编译标准及测试代码
+    result = subprocess.check_output("gcc -std=c99 -o std std.c", shell=True, cwd=stdpath)
+    result = subprocess.check_output("gcc -std=c99 -o test test.c", shell=True, cwd=testpath)
+
+    f = open('%s\测试结果.txt' % sys.path[0], 'w+', encoding='utf-8', newline="")
+    print('随机测试中...')
+    pas=0       # 通过次数
+    freq=10    # 测试次数
+    for index in tqdm(range(freq)):
+        # 生成测试数据
+        rtest = random_int_list(0, 99, 10)
+        s = ''
+        for i in rtest:
+            s = "%s%s " % (s, i)
+        s = "%s\n" % s
+        # 进行测试
+        output = iotest(".\\test.exe", testpath, s)
+        stdoutput = iotest(".\\std.exe", stdpath, s)
+        f.write("随机测试 - r,%d数据点\n"%index)
+        f.write("标准输入\n%s" % s)
+        f.write("实际输出\n%s\n" % output)
+        f.write("期望输出\n%s\n\n" % stdoutput)
+        if output==stdoutput:
+            f.write('通过「随机测试 - r,%d数据点」测试点\n\n'%index)
+            pas=pas+1
+        else:
+            f.write('未通过「随机测试 - r,%d数据点」测试点\n\n'%index)
+    f.close()
+    print('随机测试 %d/%d'%(pas,freq))
+    print('测试完成')</code></pre>
+          <p>同时附上样例标准代码：</p>
+          <pre><code class="language-C">#include &lt;stdio.h>
+#define N 10
+void inputarray(int *arr);
+void handlearray(int *arr);
+void outputarray(int *arr);
+void swap(int *p,int *q);
+int main()
+{
+    int array[N]= {0};
+    inputarray(array);
+    handlearray(array);
+    outputarray(array);
+    return 0;
+}
+void swap(int *p,int *q)
+{
+    int temp=*p;
+    *p=*q;
+    *q=temp;
+}
+void handlearray(int *arr)
+{
+    int *p=arr;
+    int max_index=0;
+    int min_index=0;
+    int max=arr[0];
+    int min=arr[0];
+    for(int i=1;i&lt;N;i++)
+    {
+        if(*(p+i)>max)
+        {
+            max=*(p+i);
+            max_index=i;
+        }
+        if(*(p+i)&lt;min)
+        {
+            min=*(p+i);
+            min_index=i;
+        }
+    }
+    swap((p+max_index),(p+9));
+    swap((p+min_index),(p+0));
+}
+void inputarray(int *arr)
+{
+    int *p=arr;
+    for(int i=0; i&lt;N; i++)
+    {
+        scanf("%d",(p+i));
+    }
+}
+void outputarray(int *arr)
+{
+    int *p=arr;
+    for(int i=0; i&lt;N; i++)
+    {
+        printf("%d ",*(p+i));
+    }
+}</code></pre>
+          <p>以及样例测试代码：</p>
+          <pre><code class="language-C">#include &lt;stdio.h>
+int main()
+{
+    void inv(int *x, int n);
+    int i, a[10];
+    for (i = 0; i &lt; 10; i++)
+        scanf("%d", &amp;a[i]);
+    //printf("\n");
+    inv(a, 10);
+    //printf("The array has been inverted:\n");
+    for (i = 0; i &lt; 10; i++)
+        printf("%d ", a[i]);
+    //printf("\n");
+    return 0;
+}
+
+void inv(int *x, int n)
+{
+    int *i, max, min, p, q, *c, *d;
+    max = *x;
+    min = *(x + 1);
+    c = x + 0;
+    d = x + 1;
+    for (i = x; i &lt; x + 10; i++)
+        if (*i > max)
+        {
+            max = *i;
+            c = i;
+        }
+    for (i = x; i &lt; x + 10; i++)
+        if (*i &lt; min)
+        {
+            min = *i;
+            d = i;
+        }
+    p = *x;
+    *x = *d;
+    *d = p;
+    q = *(x + 9);
+    *(x + 9) = *c;
+    *c = q;
+}</code></pre>
+          <h4>Linux 下的 Python 源码</h4>
+          <p>一个现象就是， Linux 下进行测试的速度明显比 Windows 下快，我测试的时候两者甚至相差 100 余倍，其中原因可留给读者细究。</p>
+          <pre><code class="language-python">import subprocess
+import random
+import sys
+from tqdm import tqdm
+
+def random_int_list(start, stop, length):
+    start, stop = (int(start), int(stop)) if start &lt;= stop else (
+        int(stop), int(start))
+    length = int(abs(length)) if length else 0
+    random_list = []
+    for i in range(length):
+        random_list.append(random.randint(start, stop))
+    return random_list
+
+def iotest(filename, path, data):
+    obj = subprocess.Popen([filename], stdin=subprocess.PIPE,
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=path, encoding="utf-8")
+    obj.stdin.write(data)
+    out_info, out_error = obj.communicate()  # 简单写法，out_info：标准输出
+    # print(out_info,out_error)
+    return out_info
+
+if __name__ == '__main__':
+    stdpath = "%s/标准代码/" % sys.path[0]      # 标准代码所在路径
+    testpath = "%s/测试代码/" % sys.path[0]     # 测试代码所有路径
+    #编译标准及测试代码
+    result = subprocess.check_output("gcc -std=c99 -o std std.c", shell=True, cwd=stdpath)
+    result = subprocess.check_output("gcc -std=c99 -o test test.c", shell=True, cwd=testpath)
+
+    f = open('%s/测试结果.txt' % sys.path[0], 'w+', encoding='utf-8', newline="")
+    print('随机测试中...')
+    pas=0       # 通过次数
+    freq=100    # 测试次数
+    for index in tqdm(range(freq)):
+        # 生成测试数据
+        rtest = random_int_list(0, 99, 10)
+        s = ''
+        for i in rtest:
+            s = "%s%s " % (s, i)
+        s = "%s\n" % s
+        # 进行测试
+        output = iotest("./test", testpath, s)
+        stdoutput = iotest("./std", stdpath, s)
+        f.write("随机测试 - r,%d数据点\n"%index)
+        f.write("标准输入\n%s" % s)
+        f.write("实际输出\n%s\n" % output)
+        f.write("期望输出\n%s\n\n" % stdoutput)
+        if output==stdoutput:
+            f.write('通过「随机测试 - r,%d数据点」测试点\n\n'%index)
+            pas=pas+1
+        else:
+            f.write('未通过「随机测试 - r,%d数据点」测试点\n\n'%index)
+    f.close()
+    print('随机测试 %d/%d'%(pas,freq))
+    print('测试完成')</code></pre>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/python/" style="--tag-background:var(--tag-background-green);--tag-color:var(--tag-color-green);--tag-background-hover:var(--tag-hover-green);--tag-border:var(--tag-border-green);--tag-border-hover:var(--tag-border-green);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-simple-python.svg&quot;);"></span><span class="tag-content"><span>Python</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2021 年 12 月 28 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/小玩意/">小玩意</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/411a7b28/">https://weyung.cc/posts/411a7b28/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/e20d14e7/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">一个简单的作业提交平台</p></a><a class="post-neighbor" href="/posts/249e2039/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">VSCode 写 C</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

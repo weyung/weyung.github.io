@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>变量指针指向的常量 | weyung's Blog</title>
+    <meta name="date" content="2021-12-30">
+    <link rel="canonical" href="https://weyung.cc/posts/c448eea1/">
+    <meta property="og:title" content="变量指针指向的常量 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="关于 `char *s=&quot;ABCDE&quot;` 为什么是有问题的">
+    <meta property="og:description" content="关于 `char *s=&quot;ABCDE&quot;` 为什么是有问题的">
+    <meta property="og:url" content="https://weyung.cc/posts/c448eea1/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">变量指针指向的常量</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>变量指针指向的常量</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>前言</h3>
+          <p>之所以会注意到这个问题，是因为老师布置的课堂小测的一道题，原题如下：</p>
+          <div class="quote-block">下面能正确进行字符串赋值操作的是<em></em><em></em>。 A. <code class="language-text">char s[5]={"ABCDE"}</code>; B. <code class="language-text">char s[5]={'A','B','C','D','E'}</code>; C. <code class="language-text">char \*s;s="ABCDE"</code>; D. <code class="language-text">char \*s;scanf("%s",s)</code>;</div>
+          <p>当看到答案选 B 的时候，我人傻了，<s>因为我上网查的答案是C</s>，纳闷着调试，结果如下：</p>
+          <div class="quote-block">B 选项的做法不会在后面补零终止符<code class="language-text">'\0'</code>，此时执行<code class="language-text">printf("%s",s);</code>会打印出ABCDE后面跟着一串乱码。 C 选项的做法会在后面补零终止符，且编译器编译不报错，运行同样不报错。</div>
+          <p>此时的我更加疑惑，B 选项这不是有问题了吗？询问老师，老师给出的解释是：</p>
+          <div class="quote-block">题干说进行<strong>字符串赋值操作</strong>，而 C 选项是给<strong>指针赋值</strong></div>
+          <p><s>这个解释离大谱</s>。</p>
+          <p>后来在 GZTime 及 Hanmur 学长的<s>无语</s>点拨下，我注意到了 C 选项的一个问题。</p>
+          <h3>常量指针与变量指针</h3>
+          <p>首先先引入常量指针与变量指针的概念，顾名思义，变量指针就是指向变量的指针，如：</p>
+          <pre><code class="language-C">int a=0;
+int *p=&amp;a;</code></pre>
+          <p>此时 <code class="language-text">a</code> 是一个变量， <code class="language-text">p</code> 则是一个指向变量 <code class="language-text">a</code> 的指针，即为变量指针。 而同理，常量指针是一个指向常量的指针，如：</p>
+          <pre><code class="language-C">const int a=0;
+const int *p=&amp;a;</code></pre>
+          <p>此时 <code class="language-text">a</code> 是一个常量， <code class="language-text">p</code> 是一个指向常量 <code class="language-text">a</code> 的指针，即为常量指针。 <strong>注意：</strong> 常量指针的声明格式为 <code class="language-text">数据类型 const _ 指针变量</code> 或者 <code class="language-text">const 数据类型 _指针变量。</code></p>
+          <h3>变量还是常量？</h3>
+          <p>那么问题来了，<code class="language-text">char \*s="ABCDE"</code>一句中， <code class="language-text">s</code> 指向的字符串是常量还是变量？ 一个很简单的区分方式是，尝试改变字符串的字符。</p>
+          <pre><code class="language-C">    char t[]="ABCDE";
+    t[0] = 'F';
+    char *s="ABCDE";
+    s[0]='F';</code></pre>
+          <p>运行结果是：前两句可以正常执行，而执行第 4 句时则会弹出 <strong>Segmentation fault</strong>。 对程序进行分析可以知道，<code class="language-text">char \*s="ABCDE";</code>一句会把字符串存储到<strong>只读</strong>的 <code class="language-text">rdata</code> 段，所以无法改变其中的内容。 也就是说，<code class="language-text">char \*s="ABCDE"</code>一句中，<strong>s 指向的字符串是常量</strong>。</p>
+          <h3>总结</h3>
+          <p>那么回到开始的问题，<code class="language-text">char \*s="ABCDE";</code> 为什么是错的 答案是，<strong>它用一个变量指针指向了一个常量</strong>！ 正确的写法应为： <code class="language-text">const char \*s="ABCDE";</code> 也许当你编译时不会报错，甚至运行时不去改变里面的值时也不会发生中断，但这个语句的的确确是有问题的。</p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/c/" style="--tag-background:var(--tag-background-yellow);--tag-color:var(--tag-color-yellow);--tag-background-hover:var(--tag-hover-yellow);--tag-border:var(--tag-border-yellow);--tag-border-hover:var(--tag-border-yellow);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-simple-c.svg&quot;);"></span><span class="tag-content"><span>C</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2021 年 12 月 30 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/c语言/">C语言</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/c448eea1/">https://weyung.cc/posts/c448eea1/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/249e2039/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">VSCode 写 C</p></a><a class="post-neighbor" href="/posts/ed31fd3e/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">群</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

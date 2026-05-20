@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>多线程：Python VS Golang | weyung's Blog</title>
+    <meta name="date" content="2025-03-30">
+    <link rel="canonical" href="https://weyung.cc/posts/f4bdfdb8/">
+    <meta property="og:title" content="多线程：Python VS Golang | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="Golang 的牛皮之处">
+    <meta property="og:description" content="Golang 的牛皮之处">
+    <meta property="og:url" content="https://weyung.cc/posts/f4bdfdb8/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">多线程：Python VS Golang</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>多线程：Python VS Golang</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>前言</h3>
+          <p>平时做密码题经常会用到并行计算加速爆破，但是一直没仔细研究过这方面的东西。</p>
+          <h3>Python 的多线程</h3>
+          <h4>Review: multiprocessing VS multithreading</h4>
+          <p>相信大家都听说过线程和进程，也相信有一部分读者跟我一样常常把它们搞混——这中文翻译得，都有一个程字就是说。</p>
+          <p>操作系统是有讲过的，<strong>进程（Process）是资源分配的基本单位，线程（Thread）则是 CPU 调度的基本单位。</strong></p>
+          <p>我们再详细分析他们的区别：</p>
+          <p>进程由于其资源是独立的，所以进程之间的通信需要 IPC（Inter-Process Communication）机制，比如管道、消息队列、共享内存等；而线程由于其资源是共享的，所以线程之间的通信就简单多了，直接读写共享变量就行了，创建和切换线程的开销也比进程小得多。</p>
+          <p>DeepSeek 的类比比较恰当：</p>
+          <p><strong>进程</strong>像一个“工厂”：拥有独立的场地（内存）、设备（资源）和工人（线程）。</p>
+          <p><strong>线程</strong>像工厂内的“工人”：共享工厂的资源，协作完成生产任务。</p>
+          <p><strong>多工厂（多进程）</strong>：需要复制多套场地和设备，成本高，但安全隔离。</p>
+          <p><strong>单工厂多工人（多线程）</strong>：效率高但需协调工人避免冲突。</p>
+          <p>相应地，并发和并行也是有说法的：<strong>多进程对应并行，多线程对应并发</strong>。多进程通过在不同的核上运行任务来实现并行，而多线程则是通过在同一个核上切换任务来实现并发。</p>
+          <h4>为什么说 Python 的多线程是伪多线程</h4>
+          <p>一切都缘于 GIL（Global Interpreter Lock），也就是 Python 的全局解释器锁，作为保护访问 Python 对象的线程安全的一种机制，<strong>GIL 使得同一时刻只有一个线程在执行 Python 字节码</strong>，一个线程在执行 Python 字节码时，其他线程只能等待，即线程是交替执行的。</p>
+          <h4>总结</h4>
+          <p>I/O 密集型任务使用多线程，CPU 密集型任务使用多进程。</p>
+          <p>那为什么 I/O 密集型任务不使用多进程呢？</p>
+          <p>上面已经提到，进程的开销比线程大得多，而且线程间是共享内存的，也意味的 fd 能复用，从而大大提高了 I/O 的效率。</p>
+          <h3>Golang 又是怎么个事</h3>
+          <p>对 Golang 有一定了解的读者应该知道，Golang 是原生支持并发的，通过一个叫 Goroutine 的东西来实现。</p>
+          <h4>Goroutine</h4>
+          <p>Goroutine 是一个轻量级线程，之所以轻量，是因为它的<strong>初始栈空间只有 2KB</strong>，而传统线程的栈空间通常需要 MB 级，这差距还是挺大的。</p>
+          <p>同时 goroutine <strong>运行在用户态</strong>，创建和销毁的开销也比传统线程小得多。</p>
+          <h4>GMP 模型</h4>
+          <p>Go 运行时通过 <strong>GMP 调度模型</strong> 管理 goroutine 和系统线程的映射关系：</p>
+          <p>G（Goroutine）：单个协程任务，包含栈、程序计数器等信息。</p>
+          <p>M（Machine）：操作系统线程（OS Thread），真正执行计算的资源。</p>
+          <p>P（Processor）：逻辑处理器，管理本地 goroutine 队列（每个 P 绑定一个 M）。</p>
+          <h4>Channel</h4>
+          <p>Channel 是 goroutine 之间的通信管道，这也是一个神奇的点，goroutine 之间不直接共享内存，而是通过 channel <strong>传递数据</strong>（所有权转移），天然避免并发访问冲突。</p>
+          <p>这个传递数据过程是一个所有权转移的过程，一旦发送到 channel，发送方就不再持有这个数据，只被接收方独占。而且 <strong>channel 的发送和接收本身都是原子性</strong>的，不需额外加锁。</p>
+          <p>但是注意这个并不是意味着它完全没有用到锁，观察其底层结构 <a href="https://go.dev/src/runtime/chan.go" target="_blank" rel="noopener noreferrer">hchan 的源码</a>：</p>
+          <pre><code class="language-go">type hchan struct {
+    qcount   uint           // total data in the queue
+    dataqsiz uint           // size of the circular queue
+    buf      unsafe.Pointer // points to an array of dataqsiz elements
+    elemsize uint16
+    synctest bool // true if created in a synctest bubble
+    closed   uint32
+    timer    *timer // timer feeding this chan
+    elemtype *_type // element type
+    sendx    uint   // send index
+    recvx    uint   // receive index
+    recvq    waitq  // list of recv waiters
+    sendq    waitq  // list of send waiters
+
+    // lock protects all fields in hchan, as well as several
+    // fields in sudogs blocked on this channel.
+    //
+    // Do not change another G's status while holding this lock
+    // (in particular, do not ready a G), as this can deadlock
+    // with stack shrinking.
+    lock mutex
+}</code></pre>
+          <p>还是可以看到有个互斥锁的，但是<strong>这个锁是用来保护 channel 的内部状态的</strong>，与用户数据并无关系。</p>
+          <h4>demo</h4>
+          <pre><code class="language-go">package main
+
+import "fmt"
+
+func worker(jobs &lt;-chan int, results chan&lt;- int) {
+    for j := range jobs {  // Receive job from channel
+        results &lt;- j * 2  // Send result to channel
+    }
+}
+
+func main() {
+    jobs := make(chan int, 100)
+    results := make(chan int, 100)
+
+    // Start 3 worker goroutines
+    for i := 0; i &lt; 3; i++ {
+        go worker(jobs, results)
+    }
+
+    // Send jobs to workers
+    for j := 0; j &lt; 5; j++ {
+        jobs &lt;- j
+    }
+    close(jobs)
+
+    // Collect results from workers
+    for i := 0; i &lt; 5; i++ {
+        fmt.Println(&lt;-results)
+    }
+}</code></pre>
+          <p>这段代码非常直白，就算没有接触过 Golang 的读者也能看懂大概。</p>
+          <p><code class="language-text">make(chan int, 100)</code> 的意思是创建一个容量为 100 的<strong>缓冲通道</strong>（Buffered channel），若为<strong>非缓冲通道</strong>则必须等待接收方准备好才能发送成功，也就是<strong>发送和接收操作必须同步发生</strong>。</p>
+          <p>缓冲区采用 FIFO 的方式，先发送的先接收。</p>
+          <p>那么现在就能理解上面那段代码的调度逻辑了：</p>
+          <ul>
+            <li>主 goroutine 创建 jobs/results channel。</li>
+            <li>3 个 worker goroutine 被调度到空闲的 P（逻辑处理器）上执行。</li>
+            <li>主 goroutine 发送任务到 jobs channel，worker 竞争接收任务。</li>
+            <li>当 channel 操作阻塞时，调度器自动切换执行的 goroutine。</li>
+          </ul>
+          <h3>参考</h3>
+          <p><a href="https://zm-j.github.io/2022/11/21/python-multiprocessing/" target="_blank" rel="noopener noreferrer">https://zm-j.github.io/2022/11/21/python-multiprocessing/</a> <a href="https://medium.com/capital-one-tech/python-guide-using-multiprocessing-versus-multithreading-55c4ea1788cd" target="_blank" rel="noopener noreferrer">https://medium.com/capital-one-tech/python-guide-using-multiprocessing-versus-multithreading-55c4ea1788cd</a> <a href="https://zhuanlan.zhihu.com/p/633279726" target="_blank" rel="noopener noreferrer">https://zhuanlan.zhihu.com/p/633279726</a></p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/python/" style="--tag-background:var(--tag-background-green);--tag-color:var(--tag-color-green);--tag-background-hover:var(--tag-hover-green);--tag-border:var(--tag-border-green);--tag-border-hover:var(--tag-border-green);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-simple-python.svg&quot;);"></span><span class="tag-content"><span>Python</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/golang/" style="--tag-background:var(--tag-background-purple);--tag-color:var(--tag-color-purple);--tag-background-hover:var(--tag-hover-purple);--tag-border:var(--tag-border-purple);--tag-border-hover:var(--tag-border-purple);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-simple-go.svg&quot;);"></span><span class="tag-content"><span>Golang</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2025 年 3 月 30 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/学习/">学习</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/f4bdfdb8/">https://weyung.cc/posts/f4bdfdb8/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/1b0be0cc/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">浅谈 SQL 注入</p></a><a class="post-neighbor" href="/posts/1fb40e80/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">Docker 安全问题浅析</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

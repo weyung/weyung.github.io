@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>Java 基础概念 | weyung's Blog</title>
+    <meta name="date" content="2025-04-09">
+    <link rel="canonical" href="https://weyung.cc/posts/8a6f9a7b/">
+    <meta property="og:title" content="Java 基础概念 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="捋一下 Java 是怎么个事">
+    <meta property="og:description" content="捋一下 Java 是怎么个事">
+    <meta property="og:url" content="https://weyung.cc/posts/8a6f9a7b/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">Java 基础概念</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>Java 基础概念</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>前言</h3>
+          <p>想复现一下关于 Log4j 的近古漏洞 CVE-2021-44228，并接触一下 Java 反序列化，但是哥们一直没写过 Java，所以还是先了解一下这门语言先吧。</p>
+          <h3>JRE JDK JVM</h3>
+          <p>JRE 全称 Java Runtime Environment，Java 运行环境。它是 Java 的运行时环境，包含了 Java 虚拟机（JVM）和 Java 核心类库。JRE 是运行 Java 程序的必要条件，但不包含开发工具。</p>
+          <p>JDK 全称 Java Development Kit，Java 开发工具包。它是 Java 的开发环境，包含了 JRE 和一些开发工具，如编译器（javac）、调试器（jdb）等。JDK 是开发 Java 程序的必要条件。</p>
+          <p>JVM 全称 Java Virtual Machine，Java 虚拟机，负责执行 Java 字节码。JVM 是 JRE 的一部分，是 Java 程序运行的核心组件。</p>
+          <p>也就是说，JDK = JRE + 开发/调试工具，JRE = JVM + 核心类库。</p>
+          <h3>Java 版本</h3>
+          <p>如果说还有一个令人迷惑的东西，那就是 Java 的版本了，其版本命名十分怪异，与 Python 之类规律版本命名方式完全不同。</p>
+          <p>光是平时就看见 Java8 和 Java22 之类的了。</p>
+          <p>Java 有三个主要版本：</p>
+          <ul>
+            <li>Java SE（Standard Edition）：标准版，适用于桌面和服务器应用程序。</li>
+            <li>Java EE（Enterprise Edition）：企业版，适用于大型企业级应用程序。</li>
+            <li>Java ME（Micro Edition）：微型版，适用于嵌入式和移动设备。</li>
+          </ul>
+          <p>而我们平时只需要关注 Java SE 就可以了。</p>
+          <p>然后提到 JDK，有一个简单的对应关系：一个 Java 版本对应一个 JDK 版本。</p>
+          <h4>发展历程</h4>
+          <p>最古早的时候，也就是 1996 年，Java 1.0 发布了，同时对应着 JDK 1.0。</p>
+          <p>那按道理来说下面就是 Java 1.1 和 JDK 1.1，然后是 Java 1.2 和 JDK 1.2，然后一直这样。</p>
+          <p>哎，他不</p>
+          <p>98 年，Java 1.1 的下一个版本变成了 J2SE 1.2，JDK 倒是一保持命名，也是 JDK 1.2。</p>
+          <p>然后到 04 年的时候，原本版本号应该是 J2SE 1.5，但是由于 Java 版本又有一个大便化，哎，改成了 Java SE 5.0，JDK 命令依旧不变，还是 JDK 1.5。</p>
+          <p>这时候你觉得 JDK 命名还挺稳定的</p>
+          <p>然而我们把时间拉到 2018 年，Java SE 10 发布，JDK 不叫 JDK 1.10 了，叫 JDK 10。</p>
+          <p>这种命名也一直延续至今，我写这篇文章的时候已经是 Java SE 24，这个版本也会在今年（2025 年）9 月停止更新，届时会发布一个 LTS（Long Term Support，即长期支持）版本 —— Java SE 25。</p>
+          <p>有几个 LTS 版本，分别是 8、11、17 和 21。</p>
+          <h3>参考</h3>
+          <p><a href="https://stackoverflow.com/questions/1906445/what-is-the-difference-between-jdk-and-jre" target="_blank" rel="noopener noreferrer">What is the difference between JDK and JRE?</a> <a href="https://blog.csdn.net/sinat_33921105/article/details/117513645" target="_blank" rel="noopener noreferrer">一文彻底搞懂令人疑惑的Java和JDK的版本命名！</a></p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/java/" style="--tag-background:var(--tag-background-pink);--tag-color:var(--tag-color-pink);--tag-background-hover:var(--tag-hover-pink);--tag-border:var(--tag-border-pink);--tag-border-hover:var(--tag-border-pink);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-coffee.svg&quot;);"></span><span class="tag-content"><span>Java</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2025 年 4 月 9 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/tutorial/">Tutorial</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/8a6f9a7b/">https://weyung.cc/posts/8a6f9a7b/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/35bd6be6/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">春秋云境笔记 - 1</p></a><a class="post-neighbor" href="/posts/91356ab7/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">漏洞分析之 CVE-2021-44228</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

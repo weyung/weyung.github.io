@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>群 | weyung's Blog</title>
+    <meta name="date" content="2022-03-08">
+    <link rel="canonical" href="https://weyung.cc/posts/ed31fd3e/">
+    <meta property="og:title" content="群 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="有人问一个小女孩，3+4 等于几啊？
+小女孩说：“不知道，但我知道 3+4 等于 4+3 .”
+这人只好接着问：“为什么呀？”
+小女孩答道：“因为整数与整数加法构成了阿贝尔群。”">
+    <meta property="og:description" content="有人问一个小女孩，3+4 等于几啊？
+小女孩说：“不知道，但我知道 3+4 等于 4+3 .”
+这人只好接着问：“为什么呀？”
+小女孩答道：“因为整数与整数加法构成了阿贝尔群。”">
+    <meta property="og:url" content="https://weyung.cc/posts/ed31fd3e/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">群</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>群</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>前言</h3>
+          <p>虽然之前大概也能 get 到笑点，但只觉得阿贝尔群是个高深的概念，也没有细究。后来我接触到密码学，然后就开始学习近世代数，才知道了阿贝尔群就是交换群（即群上的代数运算满足交换律）。 一开始是在 B 站看的视频，后来发现那个系列是纯数学的，不大适合我，于是转回来看一本叫《近世代数及其应用》的书，正式开始记下笔记。</p>
+          <p>思来想去，我还是把之前写的一堆定义公式删了，那些个符号我当时不想看，现在也不想写，就试着科普向一点吧，毕竟我写文章也不是为了自娱自乐。</p>
+          <h3>群的定义</h3>
+          <p>群，一个概念，也并非什么高深的东西，就是一个集合和集合上的运算，注意这个<strong>集合上的</strong>，已经包含了封闭律的意思，所谓封闭律，就是集合上的两个元素的运算结果还在这个集合，比如整数的加法和乘法，而整数的除法就不是了。而在这里的运算已经是一种泛义的说法，包括但不限于加法、乘法、除法、求余等等，甚于我定义出来的运算也是一种运算。在群中的运算一般用<span role="math"><svg class="typst-frame" style="overflow: visible; width: 0.412em; height: 0.683em;" viewBox="0 0 6.592 10.928" width="6.592pt" height="10.928pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:h5="http://www.w3.org/1999/xhtml"><g><g class="typst-text" transform="matrix(1 0 0 -1 0 10.928)"><use xlink:href="#gCC9F8C042270828FC37EEB8AD6BA577D" x="0" y="0" fill="#000000" fill-rule="nonzero"/></g></g><defs id="glyph"><symbol id="gCC9F8C042270828FC37EEB8AD6BA577D" overflow="visible"><path d="M 0 0m 5.696 4 c 0 0.8000002 -0.14400005 1.1360002 -0.704 1.6960001 c -0.46399975 0.46400023 -1.04 0.704 -1.6959999 0.704 c -1.3120002 0 -2.4 -1.0879998 -2.4 -2.4 c 0 -1.3119998 1.088 -2.4 2.4 -2.4 c 1.312 0 2.3999999 1.0880002 2.3999999 2.4 Z m -0.75199986 0 c 0 -0.67199993 -0.096000195 -0.79999995 -0.48000002 -1.168 c -0.32000017 -0.31999993 -0.704 -0.48000002 -1.168 -0.48000002 c -0.9120002 0 -1.6480001 0.73600006 -1.6480001 1.648 c 0 0.9120002 0.73599994 1.6480002 1.6480001 1.6480002 c 0.91199994 0 1.648 -0.73600006 1.648 -1.6480002 Z "/></symbol></defs></svg></span>或<span role="math"><svg class="typst-frame" style="overflow: visible; width: 0.278em; height: 0.683em;" viewBox="0 0 4.448 10.928" width="4.448pt" height="10.928pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:h5="http://www.w3.org/1999/xhtml"><g><g class="typst-text" transform="matrix(1 0 0 -1 0 10.928)"><use xlink:href="#g562E90191804B5346B7A3EBBA05A740E" x="0" y="0" fill="#000000" fill-rule="nonzero"/></g></g><defs id="glyph"><symbol id="g562E90191804B5346B7A3EBBA05A740E" overflow="visible"><path d="M 0 0m 3.072 4 c 0 0.46400023 -0.38399982 0.84800005 -0.8479998 0.84800005 c -0.4640001 0 -0.84800017 -0.38399982 -0.84800017 -0.84800005 c 0 -0.46399975 0.38400006 -0.8479998 0.84800017 -0.8479998 c 0.464 0 0.8479998 0.38400006 0.8479998 0.8479998 Z "/></symbol></defs></svg></span>表示，有时也姑且称之为乘，但注意大多时不是指数的乘法。 同时，群还满足<strong>结合律</strong>，存在<strong>单位元</strong>和<strong>逆元</strong>。</p>
+          <p>结合律不必多说，就是括号随便加，而单位元的意思就是，集合中任意元素与这个单位元运算后还是本身，比如任意整数加 0 都不变，那么 0 就是整数加群中的单位元，同理1是有理乘法群中的单位元。 而逆元同样是针对集合上每个元素，性质就是任意元素与其逆元作运算后都等于单位元，比如整数加群中，1 的逆元是 −1，10086 的逆元是 −10086 ；有理乘法群中，1 的逆元还是 1 ，10086 的逆元是 1/10086 。注意到，对于整数和数的乘法而言，10086 并没有逆元，故整数和数的乘法不作成群。</p>
+          <div class="quote-block">插播一下：混进一个抽代群时有一个进群验证，题目是给出 <strong>A5 的全部正规子群</strong>，而我甚至连 A5 是啥都不知道，but 我有<strong>sagemath</strong>，嘿嘿，直接跑出单位元和 A5 本身，我又试了几下，发现只有 A4 除开单位元和自身外有其他正规子群，非常奇妙。代码如下：</div>
+          <pre><code class="language-Python">#!sage
+x=5
+Ax = AlternatingGroup(x)
+for i in Ax.conjugacy_classes_subgroups():
+    if i.is_normal(Ax):
+        if(i==Ax):
+            print('Ax')
+        else:
+            print(i)
+            for j in i.list():
+                print(j)</code></pre>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/数学/" style="--tag-background:var(--tag-background-purple);--tag-color:var(--tag-color-purple);--tag-background-hover:var(--tag-hover-purple);--tag-border:var(--tag-border-purple);--tag-border-hover:var(--tag-border-purple);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-calculator.svg&quot;);"></span><span class="tag-content"><span>数学</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/抽象代数/" style="--tag-background:var(--tag-background-pink);--tag-color:var(--tag-color-pink);--tag-background-hover:var(--tag-hover-pink);--tag-border:var(--tag-border-pink);--tag-border-hover:var(--tag-border-pink);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-boxes.svg&quot;);"></span><span class="tag-content"><span>抽象代数</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/crypto/" style="--tag-background:var(--tag-background-blue);--tag-color:var(--tag-color-blue);--tag-background-hover:var(--tag-hover-blue);--tag-border:var(--tag-border-blue);--tag-border-hover:var(--tag-border-blue);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-lock.svg&quot;);"></span><span class="tag-content"><span>Crypto</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2022 年 3 月 8 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/crypto/">Crypto</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/ed31fd3e/">https://weyung.cc/posts/ed31fd3e/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/c448eea1/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">变量指针指向的常量</p></a><a class="post-neighbor" href="/posts/c9820b90/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">记一次在局域网搭网站</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>

