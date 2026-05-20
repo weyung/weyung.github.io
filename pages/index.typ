@@ -16,10 +16,8 @@
 #if route-page != 1 [
   = 文章列表
 ] else {
-  html.div(class: "homepage-header", {
-    html.div(class: "homepage-header-carbon", "Carbon")
-    html.div(class: "homepage-header-typst", "Typst")
-    html.div(class: "homepage-header-blog", "Blog")
+  html.div(class: "homepage-header-avatar-container", {
+    html.img(class: "homepage-header-avatar", src: "/assets/avatar.png", alt: "Avatar")
   })
 }
 
