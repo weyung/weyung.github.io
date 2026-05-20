@@ -4,7 +4,7 @@ const isTextSelectionActive = () => {
 };
 
 const installPostCardClick = () => {
-  const cards = document.querySelectorAll('.posts-grid .post-card[data-post-url]');
+  const cards = document.querySelectorAll('[data-post-url]');
   if (cards.length === 0) {
     return;
   }
