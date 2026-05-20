@@ -784,10 +784,28 @@ html[data-theme="gray-100"] .friends-grid .friend-card .post-card-link {
   }
 }
 
+.friends-grid .friend-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.friends-grid .friend-avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid var(--border-subtle1);
+  background-color: var(--white);
+}
+
 .friends-grid .post-title {
   font-size: 1.125rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0; /* Title margin moved to header gap */
 }
 
 .friends-grid .post-description {
