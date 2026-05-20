@@ -4,10 +4,13 @@ on:
   push:
     branches:
       - main
+      - test
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai
 
     permissions:
       contents: write
@@ -24,19 +27,25 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Setup Typst
         uses: typst-community/setup-typst@v4
         with:
           typst-version: '0.14.2'
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Build site
-        run: npm run build:fast
+        run: pnpm run build:fast
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
           publish_dir: ./_site
