@@ -89,6 +89,7 @@
   author: query-input("author", default: none),
   include-rss-link: false,
   feed-path: "/rss.xml",
+  favicon: none,
   canonical-path: none,
   date-meta: none,
   head-extra: none,
@@ -139,6 +140,10 @@
 
           if head-extra != none {
             head-extra
+          }
+
+          if favicon != none {
+            html.link(rel: "icon", href: favicon)
           }
 
           html.link(rel: "preconnect", href: "https://cdn.jsdelivr.net")
@@ -201,6 +206,7 @@
   custom-script: (),
   footer-content: none,
   tag-options: (:),
+  favicon: none,
 
   tags: (),
   category: "",
@@ -252,6 +258,7 @@
       include-description-meta: true,
       website-url: website-url,
       author: author,
+      favicon: favicon,
       canonical-path: "/posts/" + page-path,
       date-meta: date,
       header-node: make-post-header(header-links, site-title, title),
@@ -294,6 +301,7 @@
   custom-css: (),
   custom-script: (),
   footer-content: none,
+  favicon: none,
   page-wrapper: content => html-guard(() => {
     html.main({
       content
@@ -317,6 +325,7 @@
     include-description-meta: true,
     website-url: website-url,
     author: author,
+    favicon: favicon,
     include-rss-link: true,
     canonical-path: query-input("page-path", default: ""),
     date-meta: datetime.today(),
@@ -339,6 +348,7 @@
   custom-css: (),
   custom-script: (),
   footer-content: none,
+  favicon: none,
   description: "",
   website-url: query-input("website-url", default: none),
   author: query-input("author", default: none),
@@ -388,6 +398,7 @@
     custom-css: custom-css,
     custom-script: custom-script,
     footer-content: footer-content,
+    favicon: favicon,
     description: description,
     website-url: website-url,
     author: author,
@@ -403,6 +414,7 @@
     custom-css: custom-css,
     custom-script: custom-script,
     footer-content: footer-content,
+    favicon: favicon,
     page-wrapper: page-wrapper,
     description: description,
     website-url: website-url,

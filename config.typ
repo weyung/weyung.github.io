@@ -72,6 +72,7 @@
   title: "Typst Blog",
   lang: "zh",
   footer-content: footer-content,
+  favicon: "/assets/avatar.png",
   tag-options: tag-options,
   page-scripts: (
     "/assets/core/render-code.js",
