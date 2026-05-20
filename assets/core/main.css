@@ -103,6 +103,26 @@
   --tag-hover-red: var(--red-20-hover);
   --tag-border-red: var(--red-40);
 
+  --tag-background-orange: var(--orange-20);
+  --tag-color-orange: var(--orange-70);
+  --tag-hover-orange: var(--orange-20-hover);
+  --tag-border-orange: var(--orange-40);
+
+  --tag-background-yellow: var(--yellow-20);
+  --tag-color-yellow: var(--yellow-70);
+  --tag-hover-yellow: var(--yellow-20-hover);
+  --tag-border-yellow: var(--yellow-40);
+
+  --tag-background-pink: var(--magenta-20);
+  --tag-color-pink: var(--magenta-70);
+  --tag-hover-pink: var(--magenta-20-hover);
+  --tag-border-pink: var(--magenta-40);
+
+  --tag-background-indigo: var(--purple-20);
+  --tag-color-indigo: var(--purple-70);
+  --tag-hover-indigo: var(--purple-20-hover);
+  --tag-border-indigo: var(--purple-40);
+
   --tag-background-magenta: var(--magenta-20);
   --tag-color-magenta: var(--magenta-70);
   --tag-hover-magenta: var(--magenta-20-hover);
@@ -405,6 +425,26 @@ html:not([data-theme]) {
     --tag-hover-red: var(--red-70-hover);
     --tag-border-red: var(--red-50);
 
+    --tag-background-orange: var(--orange-70);
+    --tag-color-orange: var(--orange-20);
+    --tag-hover-orange: var(--orange-70-hover);
+    --tag-border-orange: var(--orange-50);
+
+    --tag-background-yellow: var(--yellow-70);
+    --tag-color-yellow: var(--yellow-20);
+    --tag-hover-yellow: var(--yellow-70-hover);
+    --tag-border-yellow: var(--yellow-50);
+
+    --tag-background-pink: var(--magenta-70);
+    --tag-color-pink: var(--magenta-20);
+    --tag-hover-pink: var(--magenta-70-hover);
+    --tag-border-pink: var(--magenta-50);
+
+    --tag-background-indigo: var(--purple-70);
+    --tag-color-indigo: var(--purple-20);
+    --tag-hover-indigo: var(--purple-70-hover);
+    --tag-border-indigo: var(--purple-50);
+
     --tag-background-magenta: var(--magenta-70);
     --tag-color-magenta: var(--magenta-20);
     --tag-hover-magenta: var(--magenta-70-hover);
@@ -534,9 +574,28 @@ html[data-theme="gray-90"] {
   --tag-hover-red: var(--red-70-hover);
   --tag-border-red: var(--red-50);
 
+  --tag-background-orange: var(--orange-70);
+  --tag-color-orange: var(--orange-20);
+  --tag-hover-orange: var(--orange-70-hover);
+  --tag-border-orange: var(--orange-50);
+
+  --tag-background-yellow: var(--yellow-70);
+  --tag-color-yellow: var(--yellow-20);
+  --tag-hover-yellow: var(--yellow-70-hover);
+  --tag-border-yellow: var(--yellow-50);
+
+  --tag-background-pink: var(--magenta-70);
+  --tag-color-pink: var(--magenta-20);
+  --tag-hover-pink: var(--magenta-70-hover);
+  --tag-border-pink: var(--magenta-50);
+
+  --tag-background-indigo: var(--purple-70);
+  --tag-color-indigo: var(--purple-20);
+  --tag-hover-indigo: var(--purple-70-hover);
+  --tag-border-indigo: var(--purple-50);
+
   --tag-background-magenta: var(--magenta-70);
-  --tag-color-magenta: var(--magenta-20);
-  --tag-hover-magenta: var(--magenta-70-hover);
+  --tag-color-magenta: var(--magenta-20);  --tag-hover-magenta: var(--magenta-70-hover);
   --tag-border-magenta: var(--magenta-50);
 
   --tag-background-purple: var(--purple-70);
@@ -662,9 +721,28 @@ html[data-theme="gray-100"] {
   --tag-hover-red: var(--red-70-hover);
   --tag-border-red: var(--red-50);
 
+  --tag-background-orange: var(--orange-70);
+  --tag-color-orange: var(--orange-20);
+  --tag-hover-orange: var(--orange-70-hover);
+  --tag-border-orange: var(--orange-50);
+
+  --tag-background-yellow: var(--yellow-70);
+  --tag-color-yellow: var(--yellow-20);
+  --tag-hover-yellow: var(--yellow-70-hover);
+  --tag-border-yellow: var(--yellow-50);
+
+  --tag-background-pink: var(--magenta-70);
+  --tag-color-pink: var(--magenta-20);
+  --tag-hover-pink: var(--magenta-70-hover);
+  --tag-border-pink: var(--magenta-50);
+
+  --tag-background-indigo: var(--purple-70);
+  --tag-color-indigo: var(--purple-20);
+  --tag-hover-indigo: var(--purple-70-hover);
+  --tag-border-indigo: var(--purple-50);
+
   --tag-background-magenta: var(--magenta-70);
-  --tag-color-magenta: var(--magenta-20);
-  --tag-hover-magenta: var(--magenta-70-hover);
+  --tag-color-magenta: var(--magenta-20);  --tag-hover-magenta: var(--magenta-70-hover);
   --tag-border-magenta: var(--magenta-50);
 
   --tag-background-purple: var(--purple-70);
