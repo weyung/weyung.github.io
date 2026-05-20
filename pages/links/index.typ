@@ -47,7 +47,7 @@
             alt: friend.name,
             onerror: "this.closest('.friend-card').classList.add('is-error');"
           ))
-          html.div(class: "friend-avatar-placeholder", "网站似了")
+          html.div(class: "friend-avatar-placeholder", "疑似寄了")
         })
       })
     }
@@ -71,7 +71,7 @@
 
 #let dalaos = (
   (name: "GZTime", url: "https://blog.gztime.cc/", avatar: "https://cdn.gzti.me/avatar/GZTime_2021.png", desc: "Walking on the Time Axis."),
-  (name: "小傅Fox", url: "https://xfox.me/", avatar: "https://secure.gravatar.com/avatar/602f37e408ec20ba063a83bc2605f883", desc: "一个博客不写技术的 dalao"),
+  (name: "小傅Fox", url: "https://xfox.me/", avatar: "https://xfox.me/img/avatar-v5-anime_hu6918242492962866339.jpg", desc: "一个博客不写技术的 dalao"),
   (name: "Darkyzhou", url: "https://darkyzhou.net/", avatar: "https://darkyzhou.net/assets/avatar.jpg", desc: "MC 爱好者"),
   (name: "jiahonzheng", url: "https://blog.jiahonzheng.com/", avatar: "https://www.jiahonzheng.com/img/icon.png", desc: "请叫他 ++"),
   (name: "春哥", url: "https://www.zhihu.com/people/ZM_________J/", avatar: "https://picx.zhimg.com/v2-a346a03dffa66826cbe51cde9f4f5500_xll.jpg", desc: "一人攻沙虐全场"),
