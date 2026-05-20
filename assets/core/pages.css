@@ -769,16 +769,16 @@ html[data-theme="gray-100"] .friends-grid .friend-card {
   border-color: var(--border-subtle1);
 }
 
+html[data-theme="gray-90"] .friends-grid .friend-card .post-card-link,
+html[data-theme="gray-100"] .friends-grid .friend-card .post-card-link {
+  color: var(--text-primary) !important;
+}
+
 @media (prefers-color-scheme: dark) {
   html:not([data-theme]) .friends-grid .friend-card {
     background-color: var(--layer1) !important;
     border-color: var(--border-subtle1);
   }
-}
-
-html[data-theme="gray-90"] .friends-grid .friend-card .post-card-link,
-html[data-theme="gray-100"] .friends-grid .friend-card .post-card-link,
-@media (prefers-color-scheme: dark) {
   html:not([data-theme]) .friends-grid .friend-card .post-card-link {
     color: var(--text-primary) !important;
   }
