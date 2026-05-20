@@ -3,5 +3,6 @@
   "siteUrl": "https://weyung.cc",
   "author": "weyung",
   "description": "Carbon Typst Blog RSS Feed",
-  "language": "zh-cn"
+  "language": "zh-cn",
+  "postUrlStyle": "short-hash"
 }
