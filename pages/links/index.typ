@@ -61,7 +61,7 @@
     ```yaml
     - name: weyung
       link: https://blog.weyung.cc/
-      avatar: https://blog.weyung.cc/images/avatar.png
+      avatar: https://blog.weyung.cc/assets/avatar.png
       descr: 写一些和我一样菜也能看懂的文章
     ```
   ]
