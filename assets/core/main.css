@@ -1971,26 +1971,24 @@ header.nav-menu-open .nav-sidebar {
 
 .post-license {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.75rem 2.5rem;
   margin-top: 2rem;
-  padding: 1rem;
+  padding: 1.25rem;
   background-color: var(--layer1);
   font-size: 0.875rem;
   color: var(--text-secondary);
+  border-left: 4px solid var(--border-interactive);
 }
 
 .post-license-item {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
   line-height: 1.5rem;
-}
-
-@media (max-width: 768px) {
-  .post-license-item {
-    flex-direction: column;
-    gap: 0.25rem;
-  }
+  flex: 1 0 auto;
 }
 
 .post-license-label {
