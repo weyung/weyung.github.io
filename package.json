@@ -6,5 +6,8 @@
     "build:fast": "pnpm run build -- --jobs 4",
     "build:preview": "pnpm run build -- --out _site-preview",
     "build:preview_fast": "pnpm run build -- --jobs 4 --out _site-preview"
+  },
+  "devDependencies": {
+    "undici": "^8.3.0"
   }
 }
