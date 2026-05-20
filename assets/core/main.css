@@ -1971,9 +1971,8 @@ header.nav-menu-open .nav-sidebar {
 
 .post-license {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 0.75rem 2.5rem;
+  flex-direction: column;
+  gap: 0.75rem;
   margin-top: 2rem;
   padding: 1.25rem;
   background-color: var(--layer1);
@@ -1985,11 +1984,9 @@ header.nav-menu-open .nav-sidebar {
 .post-license-item {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap; /* Label and value can stack if cramped */
   align-items: flex-start;
   line-height: 1.5rem;
-  /* Use rem to trigger wrap based on font size. 
-     If 3 items * 18rem > container, they will stack. */
-  flex: 1 0 18rem;
 }
 
 .post-license-label {
@@ -1997,6 +1994,15 @@ header.nav-menu-open .nav-sidebar {
   user-select: none;
   min-width: 5rem;
   font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.post-license-item a, 
+.post-license-item span:not(.post-license-label) {
+  flex: 1 0 15rem; /* The value part will drop to next line if width < 15rem + 5rem */
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 .post-license a {
