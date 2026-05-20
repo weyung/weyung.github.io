@@ -1493,6 +1493,25 @@ article .quote-block > *:last-child {
 .post-neighbors .post-neighbor .post-neighbor-title {
   font-size: 1.25rem;
   margin: 0;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .post-neighbors {
+    padding: 0;
+  }
+
+  .post-neighbors-inner {
+    flex-direction: column;
+  }
+
+  .post-neighbors .post-neighbor {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .post-neighbors .post-neighbor:last-child {
+    border-bottom: none;
+  }
 }
 
 footer {
@@ -1965,6 +1984,13 @@ header.nav-menu-open .nav-sidebar {
   line-height: 1.5rem;
 }
 
+@media (max-width: 768px) {
+  .post-license-item {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
 .post-license-label {
   flex-shrink: 0;
   user-select: none;
@@ -1974,6 +2000,8 @@ header.nav-menu-open .nav-sidebar {
 .post-license a {
   color: var(--link);
   text-decoration: none;
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 .post-license a:hover {
