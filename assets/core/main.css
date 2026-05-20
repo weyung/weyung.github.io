@@ -905,6 +905,8 @@ article strong {
 article a {
   color: var(--link);
   text-decoration: none;
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 article a:hover {
