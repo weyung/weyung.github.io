@@ -40,39 +40,76 @@ const copyText = async (text) => {
 document.addEventListener('DOMContentLoaded', async function() {
   let codeBlocks = document.querySelectorAll('code');
 
-  await Promise.all(Array.from(codeBlocks).map(async function(codeBlock) {
-
-    let language = 'plaintext';
-    codeBlock.classList.forEach(cls => {
-      if (cls.startsWith('language-')) {
-        language = cls.replace('language-', '');
-      }
-    });
-
-    const pre = codeBlock.parentElement;
-    if (!pre.matches('pre')) {
-      if (codeBlock.querySelector('.shiki-inline')) return;
-      codeBlock.innerHTML = await codeToHtml(codeBlock.textContent, {
-        lang: language,
-        themes: {
-          light: 'github-light',
-          dark: 'github-dark',
-        },
-        structure: 'inline'
+  try {
+    await Promise.all(Array.from(codeBlocks).map(async function(codeBlock) {
+      let language = 'plaintext';
+      codeBlock.classList.forEach(cls => {
+        if (cls.startsWith('language-')) {
+          language = cls.replace('language-', '');
+        }
       });
-      codeBlock.classList.add('shiki-inline');
-      return;
-    }
 
-    if (pre.querySelector('.shiki')) return;
-    pre.outerHTML = await codeToHtml(codeBlock.textContent, {
-      lang: language,
-      themes: {
-        light: 'github-light',
-        dark: 'github-dark',
+      const pre = codeBlock.parentElement;
+      
+      // Inline code handling
+      if (!pre || !pre.matches('pre')) {
+        if (codeBlock.querySelector('.shiki-inline')) return;
+        try {
+          codeBlock.innerHTML = await codeToHtml(codeBlock.textContent, {
+            lang: language,
+            themes: { light: 'github-light', dark: 'github-dark' },
+            structure: 'inline'
+          });
+        } catch (e) {
+          // Silent fallback for inline
+        }
+        codeBlock.classList.add('shiki-inline');
+        return;
       }
-    });
-  }));
+
+      if (pre.querySelector('.shiki')) return;
+
+      // Block code handling with error reporting
+      try {
+        const highlighted = await codeToHtml(codeBlock.textContent, {
+          lang: language,
+          themes: { light: 'github-light', dark: 'github-dark' }
+        });
+        pre.outerHTML = highlighted;
+      } catch (e) {
+        console.error(`[Shiki] Failed to render language "${language}":`, e);
+        
+        try {
+          // Render as plaintext instead
+          const fallbackHtml = await codeToHtml(codeBlock.textContent, {
+            lang: 'plaintext',
+            themes: { light: 'github-light', dark: 'github-dark' }
+          });
+          
+          const wrapper = document.createElement('div');
+          wrapper.innerHTML = fallbackHtml;
+          const newPre = wrapper.querySelector('pre');
+          
+          if (newPre) {
+            newPre.classList.add('shiki-is-error');
+            // Add a visible error badge
+            const badge = document.createElement('div');
+            badge.className = 'shiki-error-badge';
+            badge.textContent = `Unsupported Language: ${language}`;
+            badge.title = e.message;
+            newPre.appendChild(badge);
+            pre.outerHTML = wrapper.innerHTML;
+          } else {
+            // Last resort: just keep original
+          }
+        } catch (e2) {
+          console.error('[Shiki] Fallback rendering failed:', e2);
+        }
+      }
+    }));
+  } catch (globalError) {
+    console.error('[Shiki] Global rendering error:', globalError);
+  }
 
   codeBlocks = document.querySelectorAll('pre > code');
 
