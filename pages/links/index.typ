@@ -86,7 +86,7 @@
   (name: "yescallop", url: "https://yescallop.cn/", avatar: "https://yescallop.cn/avatar.png", desc: "Rust 水平相当高"),
   (name: "FluoriteFire", url: "https://fluoritefire.github.io/", avatar: "https://fluoritefire.github.io/img/image.jpg", desc: "Walking to a new world"),
   (name: "Tel", url: "https://l1nyz-tel.cc/", avatar: "https://l1nyz-tel.cc/images/avatar.png", desc: "where are you"),
-  (name: "a39", url: "http://www.asuka39.top/", avatar: "http://www.asuka39.top/images/avatar.png", desc: "歩いても、歩いても"),
+  (name: "a39", url: "https://asuka39.github.io/", avatar: "https://asuka39.github.io/ruru_hu6fc9e95890d991a393a9c455b7c9435a_31641_400x400_fill_q75_h2_box_smart1.webp", desc: "歩いても、歩いても"),
   (name: "Elapsedf", url: "https://elapsedf.cn/", avatar: "https://elapsedf.cn/images/avatar.png", desc: "Think what you want"),
   (name: "Pazuris", url: "https://blog.pazuris.cn/", avatar: "https://blog.pazuris.cn/images/avatar.jpg", desc: "Fear neither hardship nor darkness"),
   (name: "yring", url: "https://yring-me.com/", avatar: "https://yring-me.oss-cn-beijing.aliyuncs.com/test/202305221933187.jpeg", desc: "冥冥之中 自有天意"),

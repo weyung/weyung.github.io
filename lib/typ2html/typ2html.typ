@@ -75,8 +75,8 @@
   title: "Carbon & Typst Blog",
   lang: "en",
   css: (
-    "https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css",
-    "https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css",
+    "https://npm.elemecdn.com/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css",
+    "https://npm.elemecdn.com/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css",
     "/assets/core/colors.css",
     "/assets/core/main.css",
   ),
@@ -146,8 +146,8 @@
             html.link(rel: "icon", href: favicon)
           }
 
-          html.link(rel: "preconnect", href: "https://cdn.jsdelivr.net")
-          html.link(rel: "dns-prefetch", href: "https://cdn.jsdelivr.net")
+          html.link(rel: "preconnect", href: "https://npm.elemecdn.com")
+          html.link(rel: "dns-prefetch", href: "https://npm.elemecdn.com")
 
           make-theme-preload-script()
 
@@ -192,8 +192,8 @@
   lang: "en",
 
   css: (
-    "https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css",
-    "https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css",
+    "https://npm.elemecdn.com/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css",
+    "https://npm.elemecdn.com/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css",
     "/assets/core/colors.css",
     "/assets/core/main.css",
   ),
@@ -287,8 +287,8 @@
   title: "Carbon & Typst Blog",
   lang: "en",
   css: (
-    "https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css",
-    "https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css",
+    "https://npm.elemecdn.com/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css",
+    "https://npm.elemecdn.com/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css",
     "/assets/core/colors.css",
     "/assets/core/main.css",
     "/assets/core/pages.css",
@@ -355,8 +355,8 @@
   tag-options: (:),
 
   post-css: (
-    "https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css",
-    "https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css",
+    "https://npm.elemecdn.com/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css",
+    "https://npm.elemecdn.com/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css",
     "/assets/core/colors.css",
     "/assets/core/main.css",
   ),
@@ -367,8 +367,8 @@
   ),
 
   page-css: (
-    "https://cdn.jsdelivr.net/npm/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css",
-    "https://cdn.jsdelivr.net/npm/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css",
+    "https://npm.elemecdn.com/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css",
+    "https://npm.elemecdn.com/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css",
     "/assets/core/colors.css",
     "/assets/core/main.css",
     "/assets/core/pages.css",
