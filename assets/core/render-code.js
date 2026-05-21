@@ -1,4 +1,4 @@
-import { codeToHtml } from 'https://esm.sh/shiki@3.0.0';
+import { codeToHtml } from 'https://fastly.jsdelivr.net/npm/shiki@3.0.0/+esm';
 
 const fallbackCopyText = (text) => {
   const textarea = document.createElement('textarea');
