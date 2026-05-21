@@ -2128,8 +2128,27 @@ header.nav-menu-open .nav-sidebar {
   outline-offset: -3px;
 }
 
-article :focus-visible, a.footnote-ref-link:focus, footer a:focus-visible {
-  outline-offset: 0px;
+.shiki-error-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 3rem; /* Leave space for copy button */
+  background-color: var(--error);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-family: var(--font-family-sans);
+  padding: 0.125rem 0.5rem;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.9;
+}
+
+@media (max-width: 672px) {
+  .shiki-error-badge {
+    right: 0.5rem;
+    top: auto;
+    bottom: 0.5rem;
+  }
 }
 
 article button:focus-visible {
