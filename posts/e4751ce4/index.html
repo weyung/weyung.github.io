@@ -26,12 +26,13 @@
     <link rel="stylesheet" href="https://npm.elemecdn.com/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css">
     <link rel="stylesheet" href="https://npm.elemecdn.com/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css">
     <link rel="stylesheet" href="/assets/core/colors.css">
-    <link rel="stylesheet" href="/assets/core/main.css">
+    <link rel="stylesheet" href="/assets/core/main.css?v=20260628-search-icon">
     <link rel="stylesheet" href="/assets/custom.css">
     <link rel="stylesheet" href="/assets/custom-toc.css">
     <script type="module" src="/assets/core/render-code.js"></script>
     <script type="module" src="/assets/core/theme.js"></script>
     <script type="module" src="/assets/core/post-nav-switch.js"></script>
+    <script type="module" src="/assets/core/home-search.js?v=20260710-description-preview"></script>
     <script type="module" src="/assets/custom-toc.js"></script>
   </head>
   <body>
@@ -49,10 +50,25 @@
                 </div>
                 <div class="nav-body-lower">计组笔记</div>
               </div>
-              <button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
+              <button class="nav-search-switch" type="button" aria-label="搜索文章" title="搜索文章" aria-haspopup="dialog" aria-controls="site-search-dialog" aria-expanded="false"></button><button class="nav-theme-switch" type="button" aria-label="切换主题"></button>
             </nav>
             <div class="nav-sidebar-backdrop"></div>
             <aside class="nav-sidebar"><a class="nav-sidebar-item" href="/">首页</a><a class="nav-sidebar-item" href="/categories/">分类</a><a class="nav-sidebar-item" href="/tags/">标签</a><a class="nav-sidebar-item" href="/archive/">归档</a><a class="nav-sidebar-item" href="/links/">友链</a><a class="nav-sidebar-item" href="/about/">关于</a></aside>
+            <div class="site-search-overlay" id="site-search-overlay" hidden="hidden">
+              <section class="site-search-dialog" id="site-search-dialog" role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="site-search-title">
+                <div class="site-search-data" id="site-search-data" data-search-index="/search-index.json" hidden="hidden"></div>
+                <div class="site-search-header">
+                  <div>
+                    <h2 id="site-search-title">搜索文章</h2>
+                    <div class="site-search-subtitle">搜索文章标题、简介和正文</div>
+                  </div>
+                  <button class="site-search-close" type="button" aria-label="关闭搜索" title="关闭搜索"></button>
+                </div>
+                <div class="site-search-field"><input class="site-search-input" id="site-search-input" type="search" placeholder="输入关键词" autocomplete="off" spellcheck="false" aria-describedby="site-search-status"></div>
+                <div class="site-search-status" id="site-search-status" aria-live="polite">输入关键词开始搜索</div>
+                <div class="site-search-results" id="site-search-results" hidden="hidden"></div>
+              </section>
+            </div>
           </div>
         </div>
       </header>
