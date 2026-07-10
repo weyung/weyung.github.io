@@ -78,7 +78,7 @@
     "https://npm.elemecdn.com/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css",
     "https://npm.elemecdn.com/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css",
     "/assets/core/colors.css",
-    "/assets/core/main.css",
+    "/assets/core/main.css?v=20260628-search-icon",
   ),
   scripts: (),
   custom-css: (),
@@ -195,7 +195,7 @@
     "https://npm.elemecdn.com/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css",
     "https://npm.elemecdn.com/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css",
     "/assets/core/colors.css",
-    "/assets/core/main.css",
+    "/assets/core/main.css?v=20260628-search-icon",
   ),
   scripts: (
     "/assets/core/render-code.js",
@@ -290,7 +290,7 @@
     "https://npm.elemecdn.com/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css",
     "https://npm.elemecdn.com/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css",
     "/assets/core/colors.css",
-    "/assets/core/main.css",
+    "/assets/core/main.css?v=20260628-search-icon",
     "/assets/core/pages.css",
   ),
   scripts: (
@@ -358,7 +358,7 @@
     "https://npm.elemecdn.com/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css",
     "https://npm.elemecdn.com/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css",
     "/assets/core/colors.css",
-    "/assets/core/main.css",
+    "/assets/core/main.css?v=20260628-search-icon",
   ),
   post-scripts: (
     "/assets/core/render-code.js",
@@ -370,7 +370,7 @@
     "https://npm.elemecdn.com/@ibm/plex-sans@1.1.0/css/ibm-plex-sans-all.min.css",
     "https://npm.elemecdn.com/@ibm/plex-mono@1.1.0/css/ibm-plex-mono-all.min.css",
     "/assets/core/colors.css",
-    "/assets/core/main.css",
+    "/assets/core/main.css?v=20260628-search-icon",
     "/assets/core/pages.css",
   ),
   page-scripts: (

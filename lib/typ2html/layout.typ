@@ -27,6 +27,16 @@
       })
 
       html.elem("button", attrs: (
+        class: "nav-search-switch",
+        type: "button",
+        "aria-label": "搜索文章",
+        title: "搜索文章",
+        "aria-haspopup": "dialog",
+        "aria-controls": "site-search-dialog",
+        "aria-expanded": "false",
+      ))[]
+
+      html.elem("button", attrs: (
         class: "nav-theme-switch",
         type: "button",
         "aria-label": "切换主题",
@@ -38,6 +48,60 @@
       for (href, name) in links {
         html.a(class: "nav-sidebar-item", href: href, name)
       }
+    })
+
+    html.elem("div", attrs: (
+      class: "site-search-overlay",
+      id: "site-search-overlay",
+      hidden: "hidden",
+    ), {
+      html.elem("section", attrs: (
+        class: "site-search-dialog",
+        id: "site-search-dialog",
+        role: "dialog",
+        "aria-modal": "true",
+        "aria-labelledby": "site-search-title",
+      ), {
+        html.elem("div", attrs: (
+          class: "site-search-data",
+          id: "site-search-data",
+          "data-search-index": "/search-index.json",
+          hidden: "hidden",
+        ))[]
+        html.div(class: "site-search-header", {
+          html.div({
+            html.elem("h2", attrs: (id: "site-search-title"), "搜索文章")
+            html.div(class: "site-search-subtitle", "搜索标题、描述、正文、标签或分类")
+          })
+          html.elem("button", attrs: (
+            class: "site-search-close",
+            type: "button",
+            "aria-label": "关闭搜索",
+            title: "关闭搜索",
+          ))[]
+        })
+        html.div(class: "site-search-field", {
+          html.elem("input", attrs: (
+            class: "site-search-input",
+            id: "site-search-input",
+            type: "search",
+            placeholder: "输入关键词",
+            autocomplete: "off",
+            spellcheck: "false",
+            "aria-describedby": "site-search-status",
+          ))[]
+        })
+        html.elem("div", attrs: (
+          class: "site-search-status",
+          id: "site-search-status",
+          "aria-live": "polite",
+        ), "输入关键词开始搜索")
+        html.elem("div", attrs: (
+          class: "site-search-results",
+          id: "site-search-results",
+          hidden: "hidden",
+        ))[]
+      })
     })
   })
 }

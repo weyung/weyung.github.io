@@ -74,11 +74,18 @@
   footer-content: footer-content,
   favicon: "/assets/avatar.png",
   tag-options: tag-options,
+  post-scripts: (
+    "/assets/core/render-code.js",
+    "/assets/core/theme.js",
+    "/assets/core/post-nav-switch.js",
+    "/assets/core/home-search.js",
+  ),
   page-scripts: (
     "/assets/core/render-code.js",
     "/assets/core/theme.js",
     "/assets/core/post-nav-switch.js",
     "/assets/core/post-card-click.js",
+    "/assets/core/home-search.js",
   ),
   custom-css: (
     "/assets/custom.css",
