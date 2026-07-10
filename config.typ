@@ -78,14 +78,14 @@
     "/assets/core/render-code.js",
     "/assets/core/theme.js",
     "/assets/core/post-nav-switch.js",
-    "/assets/core/home-search.js",
+    "/assets/core/home-search.js?v=20260710-search-fixes",
   ),
   page-scripts: (
     "/assets/core/render-code.js",
     "/assets/core/theme.js",
     "/assets/core/post-nav-switch.js",
     "/assets/core/post-card-click.js",
-    "/assets/core/home-search.js",
+    "/assets/core/home-search.js?v=20260710-search-fixes",
   ),
   custom-css: (
     "/assets/custom.css",

@@ -59,6 +59,7 @@
         class: "site-search-dialog",
         id: "site-search-dialog",
         role: "dialog",
+        tabindex: "-1",
         "aria-modal": "true",
         "aria-labelledby": "site-search-title",
       ), {

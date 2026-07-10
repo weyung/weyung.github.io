@@ -1,4 +1,12 @@
 const SEARCH_LOCALE = 'zh-CN';
+const SEARCH_FOCUSABLE_SELECTOR = [
+  'a[href]',
+  'button:not([disabled])',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  'textarea:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])',
+].join(',');
 
 const normalizeSearchText = (value) => {
   return String(value || '')
@@ -245,6 +253,64 @@ const installHomeSearch = () => {
   let previousFocus = null;
   let postsPromise = null;
   let renderToken = 0;
+  const backgroundInertStates = new Map();
+
+  const setBackgroundInert = (enabled) => {
+    if (!enabled) {
+      for (const [element, wasInert] of backgroundInertStates) {
+        if (!wasInert) {
+          element.removeAttribute('inert');
+        }
+      }
+      backgroundInertStates.clear();
+      return;
+    }
+
+    let branch = overlay;
+    while (branch && branch !== document.body) {
+      const parent = branch.parentElement;
+      if (!parent) {
+        break;
+      }
+
+      for (const sibling of parent.children) {
+        if (sibling === branch || !(sibling instanceof HTMLElement)) {
+          continue;
+        }
+        if (!backgroundInertStates.has(sibling)) {
+          backgroundInertStates.set(sibling, sibling.hasAttribute('inert'));
+        }
+        sibling.setAttribute('inert', '');
+      }
+      branch = parent;
+    }
+  };
+
+  const keepFocusInDialog = (event) => {
+    const focusableElements = Array.from(dialog.querySelectorAll(SEARCH_FOCUSABLE_SELECTOR))
+      .filter((element) => element.getClientRects().length > 0);
+
+    if (focusableElements.length === 0) {
+      event.preventDefault();
+      dialog.focus();
+      return;
+    }
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+    const activeElement = document.activeElement;
+
+    if (!dialog.contains(activeElement)) {
+      event.preventDefault();
+      firstElement.focus();
+    } else if (event.shiftKey && activeElement === firstElement) {
+      event.preventDefault();
+      lastElement.focus();
+    } else if (!event.shiftKey && activeElement === lastElement) {
+      event.preventDefault();
+      firstElement.focus();
+    }
+  };
 
   const loadPosts = () => {
     if (!postsPromise) {
@@ -320,9 +386,14 @@ const installHomeSearch = () => {
   };
 
   const openSearch = () => {
+    if (!overlay.hidden) {
+      return;
+    }
+
     previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     resetSearch();
     overlay.hidden = false;
+    setBackgroundInert(true);
     openButton.setAttribute('aria-expanded', 'true');
     document.documentElement.classList.add('site-search-open');
     requestAnimationFrame(() => {
@@ -336,6 +407,7 @@ const installHomeSearch = () => {
     openButton.setAttribute('aria-expanded', 'false');
     document.documentElement.classList.remove('site-search-open');
     resetSearch();
+    setBackgroundInert(false);
     if (previousFocus && typeof previousFocus.focus === 'function') {
       previousFocus.focus();
     }
@@ -349,8 +421,14 @@ const installHomeSearch = () => {
     }
   });
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && !overlay.hidden) {
+    if (overlay.hidden) {
+      return;
+    }
+
+    if (event.key === 'Escape') {
       closeSearch();
+    } else if (event.key === 'Tab') {
+      keepFocusInDialog(event);
     }
   });
   input.addEventListener('input', renderResults);
