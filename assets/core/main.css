@@ -2057,6 +2057,35 @@ header .site-search-empty {
   overflow-wrap: anywhere;
 }
 
+header .site-search-load-error {
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+header .site-search-retry {
+  appearance: none;
+  min-height: 2.5rem;
+  border: 0;
+  padding: 0 1rem;
+  background-color: var(--button-primary);
+  color: var(--text-on-color);
+  font: inherit;
+  cursor: pointer;
+}
+
+header .site-search-retry:hover {
+  background-color: var(--button-primary-hover);
+}
+
+header .site-search-retry:active {
+  background-color: var(--button-primary-active);
+}
+
+header .site-search-retry:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
 @media (max-width: 480px) {
   header .site-search-overlay {
     padding: 0.75rem;

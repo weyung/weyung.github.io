@@ -71,17 +71,21 @@ const appendHighlightedText = (parent, value, terms) => {
 
 const fetchSearchPosts = async (dataNode) => {
   if (!dataNode) {
-    return [];
+    throw new Error('Search index configuration is missing');
   }
 
   const indexPath = dataNode.getAttribute('data-search-index') || '/search-index.json';
   const response = await fetch(indexPath, { cache: 'no-cache' });
   if (!response.ok) {
-    return [];
+    throw new Error(`Search index request failed with status ${response.status}`);
   }
 
   const posts = await response.json();
-  return Array.isArray(posts) ? posts : [];
+  if (!Array.isArray(posts)) {
+    throw new Error('Search index has an invalid format');
+  }
+
+  return posts;
 };
 
 const getPostSearchText = (post) => {
@@ -178,6 +182,17 @@ const renderEmptyState = () => {
   return createElement('div', 'site-search-empty', '没有找到相关文章');
 };
 
+const renderLoadError = (onRetry) => {
+  const state = createElement('div', 'site-search-empty site-search-load-error');
+  state.append(createElement('div', 'site-search-load-error-message', '搜索索引暂时不可用'));
+
+  const retryButton = createElement('button', 'site-search-retry', '重试');
+  retryButton.type = 'button';
+  retryButton.addEventListener('click', onRetry);
+  state.append(retryButton);
+  return state;
+};
+
 const installSearchResultCards = (results) => {
   results.addEventListener('click', (event) => {
     if (isTextSelectionActive()) {
@@ -217,10 +232,15 @@ const installHomeSearch = () => {
 
   const loadPosts = () => {
     if (!postsPromise) {
-      postsPromise = fetchSearchPosts(dataNode).then((posts) => posts.map((post) => ({
-        ...post,
-        searchText: getPostSearchText(post),
-      })));
+      postsPromise = fetchSearchPosts(dataNode)
+        .then((posts) => posts.map((post) => ({
+          ...post,
+          searchText: getPostSearchText(post),
+        })))
+        .catch((error) => {
+          postsPromise = null;
+          throw error;
+        });
     }
 
     return postsPromise;
@@ -239,7 +259,20 @@ const installHomeSearch = () => {
     }
 
     status.textContent = '正在搜索...';
-    const posts = await loadPosts();
+    let posts;
+    try {
+      posts = await loadPosts();
+    } catch (error) {
+      if (token !== renderToken) {
+        return;
+      }
+
+      results.hidden = false;
+      status.textContent = '搜索索引加载失败';
+      results.append(renderLoadError(renderResults));
+      return;
+    }
+
     if (token !== renderToken) {
       return;
     }
