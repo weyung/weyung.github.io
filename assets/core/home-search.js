@@ -99,8 +99,19 @@ const fetchSearchPosts = async (dataNode) => {
 const getPostSearchText = (post) => {
   return normalizeSearchText([
     post.title,
+    post.description,
     post.content,
   ].filter(Boolean).join(' '));
+};
+
+const getMatchedDescription = (post, terms) => {
+  const description = String(post.description || '').trim();
+  if (!description) {
+    return '';
+  }
+
+  const normalizedDescription = normalizeSearchText(description);
+  return terms.some((term) => normalizedDescription.includes(term)) ? description : '';
 };
 
 const getMatchSnippets = (post, terms) => {
@@ -144,12 +155,16 @@ const getMatchSnippets = (post, terms) => {
 
 const scorePost = (post, terms) => {
   const title = normalizeSearchText(post.title);
+  const description = normalizeSearchText(post.description);
   const content = normalizeSearchText(post.content);
   let score = 0;
 
   for (const term of terms) {
     if (title.includes(term)) {
       score += 8;
+    }
+    if (description.includes(term)) {
+      score += 4;
     }
     if (content.includes(term)) {
       score += 1;
@@ -170,6 +185,7 @@ const searchPosts = (posts, query) => {
     .map((post) => ({
       ...post,
       score: scorePost(post, terms),
+      descriptionMatch: getMatchedDescription(post, terms),
       snippets: getMatchSnippets(post, terms),
     }))
     .sort((a, b) => {
@@ -191,6 +207,12 @@ const renderPostCard = (post, terms) => {
   title.append(titleLink);
 
   card.append(title);
+
+  if (post.descriptionMatch) {
+    const description = createElement('div', 'site-search-snippet site-search-description-match');
+    appendHighlightedText(description, post.descriptionMatch, terms);
+    card.append(description);
+  }
 
   for (const snippetText of post.snippets) {
     const snippet = createElement('div', 'site-search-snippet');
