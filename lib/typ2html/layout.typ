@@ -71,7 +71,7 @@
         html.div(class: "site-search-header", {
           html.div({
             html.elem("h2", attrs: (id: "site-search-title"), "搜索文章")
-            html.div(class: "site-search-subtitle", "搜索标题、描述、正文、标签或分类")
+            html.div(class: "site-search-subtitle", "搜索文章标题和正文")
           })
           html.elem("button", attrs: (
             class: "site-search-close",
