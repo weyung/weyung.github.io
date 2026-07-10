@@ -95,27 +95,43 @@ const getPostSearchText = (post) => {
   ].filter(Boolean).join(' '));
 };
 
-const getMatchSnippet = (post, terms) => {
+const getMatchSnippets = (post, terms) => {
   const content = String(post.content || '').replace(/\s+/g, ' ').trim();
   if (!content) {
-    return '';
+    return [];
   }
 
+  const normalizedTitle = normalizeSearchText(post.title);
   const normalizedContent = normalizeSearchText(content);
-  const indexes = terms
+  const ranges = terms
+    .filter((term) => !normalizedTitle.includes(term))
     .map((term) => normalizedContent.indexOf(term))
-    .filter((index) => index >= 0);
+    .filter((index) => index >= 0)
+    .map((index) => ({
+      start: Math.max(0, index - 80),
+      end: Math.min(content.length, index + 160),
+    }))
+    .sort((a, b) => a.start - b.start);
 
-  if (indexes.length === 0) {
-    return '';
+  if (ranges.length === 0) {
+    return [];
   }
 
-  const index = Math.min(...indexes);
-  const start = Math.max(0, index - 80);
-  const end = Math.min(content.length, index + 160);
-  const prefix = start > 0 ? '...' : '';
-  const suffix = end < content.length ? '...' : '';
-  return `${prefix}${content.slice(start, end)}${suffix}`;
+  const mergedRanges = [];
+  for (const range of ranges) {
+    const previous = mergedRanges[mergedRanges.length - 1];
+    if (previous && range.start <= previous.end) {
+      previous.end = Math.max(previous.end, range.end);
+    } else {
+      mergedRanges.push({ ...range });
+    }
+  }
+
+  return mergedRanges.map(({ start, end }) => {
+    const prefix = start > 0 ? '...' : '';
+    const suffix = end < content.length ? '...' : '';
+    return `${prefix}${content.slice(start, end)}${suffix}`;
+  });
 };
 
 const scorePost = (post, terms) => {
@@ -146,7 +162,7 @@ const searchPosts = (posts, query) => {
     .map((post) => ({
       ...post,
       score: scorePost(post, terms),
-      snippet: getMatchSnippet(post, terms),
+      snippets: getMatchSnippets(post, terms),
     }))
     .sort((a, b) => {
       if (b.score !== a.score) {
@@ -168,9 +184,9 @@ const renderPostCard = (post, terms) => {
 
   card.append(title);
 
-  if (post.snippet) {
+  for (const snippetText of post.snippets) {
     const snippet = createElement('div', 'site-search-snippet');
-    appendHighlightedText(snippet, post.snippet, terms);
+    appendHighlightedText(snippet, snippetText, terms);
     card.append(snippet);
   }
 
