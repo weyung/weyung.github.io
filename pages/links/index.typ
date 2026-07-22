@@ -95,6 +95,7 @@
   (name: "夏槿", url: "https://uniya.work/", avatar: "https://uniya.work/favicon.png", desc: "的小屋"),
   (name: "lbyxiaoliz", url: "https://blog.vh.gs", avatar: "https://i1.vh.gs/2025/11/25/6925b04d8ca2b.jpg", desc: "喵喵喵喵喵"),
   (name: "Choco", url: "https://ch0ico.fun/", avatar: "https://img.dkdun.cn/v1/2024/7/2df56d82ecff1a64.jpeg", desc: "H4ck for fun"),
+  (name: "刃律RenAhsAcme", url: "https://renahsacme.cc", avatar: "https://avatars.githubusercontent.com/u/130288076?v=4", desc: "你看到了吗？一切已经迎来了黎明。Did you see? Everything has ushered in the dawn."),
 )
 
 #render-friend-group(friends)
